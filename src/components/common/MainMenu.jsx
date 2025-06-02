@@ -5,67 +5,63 @@ import {
   propertyItems,
   pageItems,
 } from "@/data/navItems";
-import { Link} from "react-router-dom";
-import {useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const MainMenu = () => {
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
   const [topMenu, setTopMenu] = useState("");
   const [submenu, setSubmenu] = useState("");
 
-
   useEffect(() => {
-    homeItems.forEach((elm) => {
-      if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-        setTopMenu("home");
-      }
-    });
-    blogItems.forEach((elm) => {
-      if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-        setTopMenu("blog");
-      }
-    });
-    pageItems.forEach((elm) => {
-      if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-        setTopMenu("pages");
-      }
-    });
-    propertyItems.forEach((item) =>
-      item.subMenuItems.forEach((elm) => {
-        if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-          setTopMenu("property");
-          setSubmenu(item.label);
-        }
-      })
-    );
-    listingItems.forEach((item) =>
-      item.submenu.forEach((elm) => {
-        if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-          setTopMenu("listing");
-          setSubmenu(item.title);
-        }
-      })
-    );
+    if ("home-v2" == pathname.split("/")[1]) {
+      setTopMenu("home");
+    }
+    if ("grid-full-3-col" == pathname.split("/")[1]) {
+      setTopMenu("listing");
+    }
+
+    // blogItems.forEach((elm) => {
+    //   if (elm.href.split("/")[1] == pathname.split("/")[1]) {
+    //     setTopMenu("blog");
+    //   }
+    // });
+    // pageItems.forEach((elm) => {
+    //   if (elm.href.split("/")[1] == pathname.split("/")[1]) {
+    //     setTopMenu("pages");
+    //   }
+    // });
+    // propertyItems.forEach((item) =>
+    //   item.subMenuItems.forEach((elm) => {
+    //     if (elm.href.split("/")[1] == pathname.split("/")[1]) {
+    //       setTopMenu("property");
+    //       setSubmenu(item.label);
+    //     }
+    //   })
+    // );
   }, [pathname]);
 
-  const handleActive = (link) => {
-    if (link.split("/")[1] == pathname.split("/")[1]) {
-      return "menuActive";
-    }
-  };
+  // const handleActive = (link) => {
+  //   if (link.split("/")[1] == pathname.split("/")[1]) {
+  //     return "menuActive";
+  //   }
+  // };
   return (
     <ul className="ace-responsive-menu">
-      <li className="visible_list dropitem">
+      <li className="">
         <a className="list-item" href="#">
-          <span className={topMenu == "home" ? "title menuActive" : "title"}>
+          <Link
+            className={topMenu == "home" ? "title menuActive" : "title"}
+            to={"/home-v2"}
+          >
             Home
-          </span>
-          <span className="arrow"></span>
+          </Link>
+          {/* <span className="arrow"></span> */}
         </a>
         {/* Level Two*/}
-        <ul className="sub-menu">
+        {/* <ul className="sub-menu">
           {homeItems.map((item, index) => (
             <li key={index}>
               <Link className={`${handleActive(item.href)}`} to={item.href}>
@@ -73,18 +69,23 @@ const MainMenu = () => {
               </Link>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </li>
       {/* End homeItems */}
 
-      <li className="megamenu_style dropitem">
+      <li className="">
         <a className="list-item" href="#">
-          <span className={topMenu == "listing" ? "title menuActive" : "title"}>
-            Listing
+          <span>
+            <Link
+              className={topMenu == "listing" ? "title menuActive" : "title"}
+              to={"/grid-full-3-col"}
+            >
+              Listings
+            </Link>
           </span>
-          <span className="arrow"></span>
+          {/* <span className="arrow"></span> */}
         </a>
-        <ul className="row dropdown-megamenu sub-menu">
+        {/* <ul className="row dropdown-megamenu sub-menu">
           {listingItems.map((item, index) => (
             <li className="col mega_menu_list" key={index}>
               <h4 className="title">{item.title}</h4>
@@ -102,11 +103,91 @@ const MainMenu = () => {
               </ul>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </li>
-      {/* End listings */}
 
-      <li className="visible_list dropitem">
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "buy" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Buy
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "offplan" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Off-Plan
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "luxury" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Luxury
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "agents" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Agents
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "whoweare" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Who We Are
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+      <li className="">
+        <a className="list-item" href="#">
+          <span>
+            <Link
+              className={topMenu == "contactus" ? "title menuActive" : "title"}
+              to={"#"}
+            >
+              Contact Us
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
+        </a>
+      </li>
+
+      {/* <li className="visible_list dropitem">
         <a className="list-item" href="#">
           <span
             className={topMenu == "property" ? "title menuActive" : "title"}
@@ -144,7 +225,6 @@ const MainMenu = () => {
           ))}
         </ul>
       </li>
-      {/* End property Items */}
 
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
@@ -163,7 +243,6 @@ const MainMenu = () => {
           ))}
         </ul>
       </li>
-      {/* End blog Items */}
 
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
@@ -181,8 +260,7 @@ const MainMenu = () => {
             </li>
           ))}
         </ul>
-      </li>
-      {/* End pages Items */}
+      </li> */}
     </ul>
   );
 };

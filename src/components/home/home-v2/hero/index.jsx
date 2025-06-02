@@ -9,7 +9,7 @@ const Hero = () => {
         <h2 className="hero-title" data-aos="fade-up" data-aos-delay="150">
           Find Your Dream Home
         </h2>
-        <p className="hero-text fz15" data-aos="fade-up" data-aos-delay="250">
+        <p style={{marginTop: "-15px"}} className="hero-text fz15" data-aos="fade-up" data-aos-delay="250">
           Let’s find a home that’s perfect for you
         </p>
       </div>

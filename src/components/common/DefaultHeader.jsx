@@ -33,9 +33,9 @@ const DefaultHeader = () => {
         }`}
       >
         <nav className="posr">
-          <div className="container posr menu_bdrt1">
-            <div className="row align-items-center justify-content-between">
-              <div className="col-auto">
+          <div className="container posr menu_bdrt1 maxw1600 ">
+            <div className="row align-items-center justify-content-between  ">
+              <div className="col-auto ">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">

@@ -24,15 +24,15 @@ const metaInformation = {
 
 const Home_V2 = () => {
   return (
-    <> <MetaData meta={metaInformation} />
+    <>
+      {" "}
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
-
       {/* Mobile Nav  */}
       <MobileMenu />
       {/* End Mobile Nav  */}
-
       {/* Home Banner Style V2 */}
       <section className="home-banner-style2 p0">
         <div className="home-style2">
@@ -48,7 +48,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Home Banner Style V2 */}
-
       {/* Explore Apartment */}
       <section className="pb90 pb30-md">
         <div className="container">
@@ -60,7 +59,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Explore Apartment */}
-
       {/* Featured Listings */}
       <section className="pt0 pb60 pb30-md bgc-white">
         <div className="container">
@@ -94,7 +92,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* Explore Featured Listings */}
-
       {/* Property Cities */}
       <section className="pt0 pb90 pb50-md">
         <div className="container">
@@ -150,7 +147,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End property cities */}
-
       {/* Explore Apartment */}
       <section className="p-0">
         <div className="how-we-help position-relative mx-auto bgc-thm-light maxw1600 pt120 pt60-md pb90 pb30-md bdrs12 mx20-lg">
@@ -177,7 +173,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Explore Apartment */}
-
       {/* About Us */}
       <section className="about-us">
         <div className="container">
@@ -185,7 +180,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End About Us */}
-
       {/* Our Testimonials */}
       <section className="our-testimonial p-0">
         <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt110 pt60-md pb110 pb60-md bdrs12 position-relative">
@@ -219,7 +213,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Our Testimonials */}
-
       {/* Exclusive Agents */}
       <section className="pb90">
         <div className="container">
@@ -274,7 +267,6 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* Exclusive Agents */}
-
       {/* Our Partners */}
       <section className="our-partners pt0">
         <div className="container">
@@ -299,11 +291,9 @@ const Home_V2 = () => {
         </div>
       </section>
       {/* End Our Partners */}
-
       {/* Our CTA */}
       <Cta />
       {/* End Our CTA */}
-
       {/* Start Our Footer */}
       <section className="footer-style1 at-home2 pb-0">
         <Footer />

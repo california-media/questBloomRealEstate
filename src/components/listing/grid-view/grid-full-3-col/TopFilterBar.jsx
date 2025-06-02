@@ -1,14 +1,43 @@
-
-
 import React from "react";
 import ListingStatus from "../../sidebar/ListingStatus";
 import PropertyType from "../../sidebar/PropertyType";
 import PriceRange from "../../sidebar/PriceRange";
 import Bedroom from "../../sidebar/Bedroom";
 import Bathroom from "../../sidebar/Bathroom";
+import Select from "react-select";
 
-const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColstyle}) => {
-  
+const customStyles = {
+  option: (styles, { isFocused, isSelected, isHovered }) => {
+    return {
+      ...styles,
+    
+      backgroundColor: isSelected
+        ? "#eb6753"
+        : isHovered
+        ? "#eb675312"
+        : isFocused
+        ? "#eb675312"
+        : undefined,
+    };
+  },
+};
+const locationOptions = [
+  { value: "All Cities", label: "All Cities" },
+  { value: "California", label: "California" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "New Jersey", label: "New Jersey" },
+  { value: "New York", label: "New York" },
+  { value: "San Diego", label: "San Diego" },
+  { value: "San Francisco", label: "San Francisco" },
+  { value: "Texas", label: "Texas" },
+];
+
+const TopFilterBar = ({
+  filterFunctions,
+  setCurrentSortingOption,
+  colstyle,
+  setColstyle,
+}) => {
   return (
     <>
       <div className="col-xl-9 d-none d-lg-block">
@@ -42,7 +71,7 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
             </li>
             {/* End li Listing Status */}
 
-            <li className="list-inline-item position-relative">
+            {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -55,7 +84,7 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
                 <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
                   <h6 className="list-title">Property Type</h6>
                   <div className="checkbox-style1">
-                    <PropertyType filterFunctions={filterFunctions}/>
+                    <PropertyType filterFunctions={filterFunctions} />
                   </div>
                 </div>
                 <div className="text-end mt10 pr10">
@@ -67,7 +96,7 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
                   </button>
                 </div>
               </div>
-            </li>
+            </li> */}
             {/* End li Property Type */}
 
             <li className="list-inline-item position-relative">
@@ -85,7 +114,7 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
                   <h6 className="list-title">Price Range</h6>
                   {/* Range Slider Desktop Version */}
                   <div className="range-slider-style1">
-                    <PriceRange filterFunctions={filterFunctions}/>
+                    <PriceRange filterFunctions={filterFunctions} />
                   </div>
                 </div>
                 <div className="text-end mt10 pr10">
@@ -99,8 +128,23 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
               </div>
             </li>
             {/* End li Price */}
-
-            <li className="list-inline-item position-relative">
+            <li className="list-inline-item position-relative font-bold">
+              <Select
+                defaultValue={[locationOptions[0]]}
+                name="colors"
+                styles={customStyles}
+                options={locationOptions}
+                className=" mb15 dropdown-toggle"
+                value={{
+                  value: filterFunctions?.location,
+                  label: filterFunctions?.location,
+                }}
+                classNamePrefix="select"
+                onChange={(e) => filterFunctions?.handlelocation(e.value)}
+                required
+              />
+            </li>
+            {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -132,11 +176,10 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
                   </button>
                 </div>
               </div>
-            </li>
+            </li> */}
             {/* End bed and bathroom check */}
 
             <li className="list-inline-item">
-              {/* Advance Features modal trigger */}
               <button
                 type="button"
                 className="open-btn mb15"
@@ -155,7 +198,13 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
         <div className="page_control_shorting d-flex align-items-center justify-content-center justify-content-sm-end">
           <div className="pcs_dropdown pr10 d-flex align-items-center">
             <span style={{ minWidth: "60px" }}>Sort by</span>
-            <select className="form-select" onChange={(e)=>setCurrentSortingOption && setCurrentSortingOption(e.target.value)} >
+            <select
+              className="form-select"
+              onChange={(e) =>
+                setCurrentSortingOption &&
+                setCurrentSortingOption(e.target.value)
+              }
+            >
               <option>Newest</option>
               <option>Best Seller</option>
               <option>Best Match</option>
@@ -163,10 +212,20 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
               <option>Price High</option>
             </select>
           </div>
-          <div className={`pl15 pr15 bdrl1 bdrr1 d-none d-md-block  cursor ${!colstyle? 'menuActive':'#' } `}    onClick={()=>setColstyle(false)}>
+          <div
+            className={`pl15 pr15 bdrl1 bdrr1 d-none d-md-block  cursor ${
+              !colstyle ? "menuActive" : "#"
+            } `}
+            onClick={() => setColstyle(false)}
+          >
             Grid
           </div>
-          <div className={`pl15 d-none d-md-block  cursor ${colstyle? 'menuActive':'#' }`}   onClick={()=>setColstyle(true)}>
+          <div
+            className={`pl15 d-none d-md-block  cursor ${
+              colstyle ? "menuActive" : "#"
+            }`}
+            onClick={() => setColstyle(true)}
+          >
             List
           </div>
         </div>

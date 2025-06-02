@@ -34,7 +34,7 @@ const Header = () => {
       >
         <nav className="posr">
           <div className="container maxw1600 posr">
-            <div className="row align-items-center justify-content-between">
+            <div className="row align-items-center justify-content-between ">
               <div className="col-auto">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="logos mr40">
