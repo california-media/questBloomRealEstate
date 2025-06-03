@@ -101,7 +101,12 @@ const SingleV5 = () => {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30 mt30">Address</h4>
-                <div className="row">{/* <PropertyAddress /> */}</div>
+                <div className="row">
+                  <PropertyAddress
+                    property={property}
+                    coordinates={property?.coordinates}
+                  />
+                </div>
               </div>
               {/* End .ps-widget */}
 
