@@ -37,7 +37,6 @@ const SingleV5 = () => {
   const { id } = params;
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchProperty = async () => {
       const response = await api.get(`/properties/${id}`);
@@ -62,7 +61,11 @@ const SingleV5 = () => {
 
       {/* Property Slider Gallery */}
       <section className="p-0 bgc-white">
-        <PropertyGallery loading={loading} architecture={property?.architecture} />
+        <PropertyGallery
+          loading={loading}
+          architecture={property?.architecture}
+          coordinates={property?.coordinates}
+        />
       </section>
       {/* End Property Slider Gallery */}
 
@@ -98,9 +101,7 @@ const SingleV5 = () => {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30 mt30">Address</h4>
-                <div className="row">
-                  {/* <PropertyAddress /> */}
-                </div>
+                <div className="row">{/* <PropertyAddress /> */}</div>
               </div>
               {/* End .ps-widget */}
 

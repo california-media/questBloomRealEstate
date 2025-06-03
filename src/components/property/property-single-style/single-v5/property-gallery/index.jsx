@@ -2,7 +2,9 @@ import React from "react";
 import GalleryBox from "./GalleryBox";
 import GoogleMapEmbed from "./Map";
 
-const PropertyGallery = ({ architecture, loading }) => {
+const PropertyGallery = ({ architecture, loading, coordinates }) => {
+  const coords = coordinates?.split(",")?.map(Number);
+
   return (
     <>
       <div className="container">
@@ -89,7 +91,13 @@ const PropertyGallery = ({ architecture, loading }) => {
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
           >
-            <GoogleMapEmbed location={{ lat: 25.0657, lng: 55.1713 }} />
+            <GoogleMapEmbed
+              location={
+                coords
+                  ? { lat: coords[0], lng: coords[1] }
+                  : { lat: 25.0657, lng: 55.1713 }
+              }
+            />
           </div>
           {/* End tab-pane map */}
 
