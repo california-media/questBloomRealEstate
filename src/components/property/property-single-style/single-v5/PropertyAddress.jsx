@@ -11,14 +11,7 @@ const PropertyAddress = () => {
       area: "Brookside",
       country: "United States",
     },
-    {
-      address: "10 Downing Street",
-      city: "London",
-      state: "Greater London",
-      zipCode: "SW1A 2AA",
-      area: "Westminster",
-      country: "United Kingdom",
-    },
+
   ];
 
   return (

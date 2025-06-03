@@ -25,16 +25,33 @@ import WalkScore from "@/components/property/property-single-style/common/WalkSc
 
 import MetaData from "@/components/common/MetaData";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "@/api/axios";
 
 const metaInformation = {
   title: "Property Single V5 || Homez - Real Estate ReactJS Template",
 };
 
 const SingleV5 = () => {
-  let params = useParams();
+  const params = useParams();
+  const { id } = params;
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      const response = await api.get(`/properties/${id}`);
+      setProperty({ ...response.data, id });
+      setLoading(false);
+    };
+
+    if (id) {
+      fetchProperty();
+    }
+  }, [id]);
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -45,7 +62,7 @@ const SingleV5 = () => {
 
       {/* Property Slider Gallery */}
       <section className="p-0 bgc-white">
-        <PropertyGallery id={params.id} />
+        <PropertyGallery loading={loading} architecture={property?.architecture} />
       </section>
       {/* End Property Slider Gallery */}
 
@@ -53,7 +70,7 @@ const SingleV5 = () => {
       <section className="pt30 pb90 bgc-f7">
         <div className="container">
           <div className="row sp-v5-property-details">
-            <PropertyHeader id={params.id}  />
+            <PropertyHeader property={property} />
           </div>
           {/* End .row */}
 
@@ -62,19 +79,19 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
-                  <OverView id={params.id}  />
+                  <OverView property={property} />
                 </div>
               </div>
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Property Description</h4>
-                <ProperytyDescriptions />
+                <ProperytyDescriptions property={property} />
                 {/* End property description */}
 
                 <h4 className="title fz17 mb30 mt50">Property Details</h4>
                 <div className="row">
-                  <PropertyDetails id={params.id}  />
+                  <PropertyDetails property={property} />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -82,7 +99,7 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30 mt30">Address</h4>
                 <div className="row">
-                  <PropertyAddress />
+                  {/* <PropertyAddress /> */}
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -202,7 +219,7 @@ const SingleV5 = () => {
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Home Value</h4>
-                  <div className="row" >
+                  <div className="row">
                     <HomeValueChart />
                   </div>
                 </div>

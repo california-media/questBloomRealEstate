@@ -1,16 +1,25 @@
 import React from "react";
 
-const ProperytyDescriptions = () => {
+const PropertyDescriptions = ({ property }) => {
+  // Extract the 'Project general facts' section using regex
+  const extractOverview = (overview) => {
+    if (!overview) return "";
+
+    const match = overview.match(
+      /##### Project general facts\s+([\s\S]*?)(?:#####|$)/
+    );
+    if (!match) return "";
+
+    return match[1].trim().replace(/\n+/g, " ");
+  };
+
+  const cleanedOverview = extractOverview(property?.overview);
+
   return (
     <>
       <p className="text mb10">
-        This 3-bed with a loft, 2-bath home in the gated community of The
-        Hideout has it all. From the open floor plan to the abundance of light
-        from the windows, this home is perfect for entertaining. The living room
-        and dining room have vaulted ceilings and a beautiful fireplace. You
-        will love spending time on the deck taking in the beautiful views. In
-        the kitchen, you&apos;ll find stainless steel appliances and a tile
-        backsplash, as well as a breakfast bar.
+        {cleanedOverview ||
+          "This property offers a unique blend of modern architecture and natural elements, creating a peaceful and innovative living experience."}
       </p>
       <div className="agent-single-accordion">
         <div className="accordion accordion-flush" id="accordionFlushExample">
@@ -20,16 +29,14 @@ const ProperytyDescriptions = () => {
               className="accordion-collapse collapse"
               aria-labelledby="flush-headingOne"
               data-bs-parent="#accordionFlushExample"
-              style={{}}
             >
               <div className="accordion-body p-0">
                 <p className="text">
-                  Placeholder content for this accordion, which is intended to
-                  demonstrate the class. This is the first item&apos;s accordion
-                  body you get groundbreaking performance and amazing battery
-                  life. Add to that a stunning Liquid Retina XDR display, the
-                  best camera and audio ever in a Mac notebook, and all the
-                  ports you need.
+                  Residents enjoy access to a wide range of lifestyle amenities
+                  including a gym, clubhouse, swimming pools, and smart home
+                  technology. Designed for both tranquility and innovation, this
+                  development promotes well-being through its nature-integrated
+                  architecture.
                 </p>
               </div>
             </div>
@@ -52,4 +59,4 @@ const ProperytyDescriptions = () => {
   );
 };
 
-export default ProperytyDescriptions;
+export default PropertyDescriptions;

@@ -1,9 +1,8 @@
 import React from "react";
 import GalleryBox from "./GalleryBox";
-import Map from "./Map";
-import RealMapView from "./RealMapView";
+import GoogleMapEmbed from "./Map";
 
-const PropertyGallery = () => {
+const PropertyGallery = ({ architecture, loading }) => {
   return (
     <>
       <div className="container">
@@ -43,7 +42,7 @@ const PropertyGallery = () => {
                     <span className="flaticon-map text-white fz20" />
                   </button>
                 </li>
-                <li className="nav-item" role="presentation">
+                {/* <li className="nav-item" role="presentation">
                   <button
                     className="nav-link"
                     id="pills-contact-tab"
@@ -56,7 +55,7 @@ const PropertyGallery = () => {
                   >
                     <span className="flaticon-maps-1 text-white fz20" />
                   </button>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -76,7 +75,7 @@ const PropertyGallery = () => {
               <div className="row" data-aos="fade-up" data-aos-delay="300">
                 <div className="col-lg-12">
                   <div className="ps-v4-hero-slider-2">
-                    <GalleryBox />
+                    <GalleryBox loading={loading} imageUrls={architecture} />
                   </div>
                 </div>
               </div>
@@ -90,18 +89,18 @@ const PropertyGallery = () => {
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
           >
-            <Map />
+            <GoogleMapEmbed location={{ lat: 25.0657, lng: 55.1713 }} />
           </div>
           {/* End tab-pane map */}
 
-          <div
+          {/* <div
             className="tab-pane fade"
             id="pills-contact"
             role="tabpanel"
             aria-labelledby="pills-contact-tab"
           >
             <RealMapView />
-          </div>
+          </div> */}
           {/* End tab-pane real location */}
         </div>
         {/* End tab-content */}

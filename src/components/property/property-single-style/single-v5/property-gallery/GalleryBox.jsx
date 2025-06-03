@@ -1,12 +1,11 @@
-
-
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-const GalleryBox = () => {
-  const imageUrls = ["/images/listings/listing-single-slide4.jpg"];
-
+const GalleryBox = ({
+  imageUrls = ["/images/listings/listing-single-slide4.jpg"],
+  loading = true,
+}) => {
   return (
     <>
       <Swiper
@@ -22,13 +21,27 @@ const GalleryBox = () => {
       >
         {imageUrls.map((imageUrl, index) => (
           <SwiperSlide key={index}>
-            <div className="item">
-              <img
-              
-                className=" w-100 h-100 cover"
-                src={imageUrl}
-                alt={`Image ${index + 1}`}
-              />
+            <div
+              style={{
+                aspectRatio: "3.2",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="item"
+            >
+              {loading ? (
+                <div class="spinner-border mx-auto m-5" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                <img
+                  className=" w-100 h-100 cover"
+                  src={imageUrl.url}
+                  alt={`Image ${index + 1}`}
+                />
+              )}
             </div>
           </SwiperSlide>
         ))}

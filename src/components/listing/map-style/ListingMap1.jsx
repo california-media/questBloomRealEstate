@@ -1,4 +1,3 @@
-
 import {
   GoogleMap,
   Marker,
@@ -214,102 +213,97 @@ export default function ListingMap1() {
 
   return (
     <>
-      {!isLoaded ? (
-        <p>Loading...</p>
-      ) : (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={4}
-          options={option}
-        >
-          <MarkerClusterer>
-            {(clusterer) =>
-              listings.slice(0, 6).map((marker) => (
-                <Marker
-                  key={marker.id}
-                  position={{
-                    lat: marker.lat,
-                    lng: marker.long,
-                  }}
-                  clusterer={clusterer}
-                  onClick={() => locationHandler(marker)}
-                ></Marker>
-              ))
-            }
-          </MarkerClusterer>
-          {getLocation !== null && (
-            <InfoWindow
-              position={{
-                lat: getLocation.lat,
-                lng: getLocation.long,
-              }}
-              onCloseClick={closeCardHandler}
-            >
-              <div>
-                <div className="listing-style1">
-                  <div className="list-thumb">
-                    <img
-                      
-                      className="w-100 h-100 cover"
-                      src={getLocation.image}
-                      alt="listings"
-                    />
-                    <div className="sale-sticker-wrap">
-                      {!getLocation.forRent && (
-                        <div className="list-tag fz12">
-                          <span className="flaticon-electricity me-2" />
-                          FEATURED
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="list-price">
-                      {getLocation.price} / <span>mo</span>
-                    </div>
-                  </div>
-                  <div className="list-content">
-                    <h6 className="list-title">
-                      <Link to={`/single-v1/${getLocation.id}`}>
-                        {getLocation.title}
-                      </Link>
-                    </h6>
-                    <p className="list-text">{getLocation.location}</p>
-                    <div className="list-meta d-flex align-items-center">
-                      <a href="#">
-                        <span className="flaticon-bed" /> {getLocation.bed} bed
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-shower" /> {getLocation.bath}{" "}
-                        bath
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-expand" /> {getLocation.sqft}{" "}
-                        sqft
-                      </a>
-                    </div>
-                    <hr className="mt-2 mb-2" />
-                    <div className="list-meta2 d-flex justify-content-between align-items-center">
-                      <span className="for-what">For Rent</span>
-                      <div className="icons d-flex align-items-center">
-                        <a href="#">
-                          <span className="flaticon-fullscreen" />
-                        </a>
-                        <a href="#">
-                          <span className="flaticon-new-tab" />
-                        </a>
-                        <a href="#">
-                          <span className="flaticon-like" />
-                        </a>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={4}
+        options={option}
+      >
+        <MarkerClusterer>
+          {(clusterer) =>
+            listings.slice(0, 6).map((marker) => (
+              <Marker
+                key={marker.id}
+                position={{
+                  lat: marker.lat,
+                  lng: marker.long,
+                }}
+                clusterer={clusterer}
+                onClick={() => locationHandler(marker)}
+              ></Marker>
+            ))
+          }
+        </MarkerClusterer>
+        {getLocation !== null && (
+          <InfoWindow
+            position={{
+              lat: getLocation.lat,
+              lng: getLocation.long,
+            }}
+            onCloseClick={closeCardHandler}
+          >
+            <div>
+              <div className="listing-style1">
+                <div className="list-thumb">
+                  <img
+                    className="w-100 h-100 cover"
+                    src={getLocation.image}
+                    alt="listings"
+                  />
+                  <div className="sale-sticker-wrap">
+                    {!getLocation.forRent && (
+                      <div className="list-tag fz12">
+                        <span className="flaticon-electricity me-2" />
+                        FEATURED
                       </div>
+                    )}
+                  </div>
+
+                  <div className="list-price">
+                    {getLocation.price} / <span>mo</span>
+                  </div>
+                </div>
+                <div className="list-content">
+                  <h6 className="list-title">
+                    <Link to={`/single-v1/${getLocation.id}`}>
+                      {getLocation.title}
+                    </Link>
+                  </h6>
+                  <p className="list-text">{getLocation.location}</p>
+                  <div className="list-meta d-flex align-items-center">
+                    <a href="#">
+                      <span className="flaticon-bed" /> {getLocation.bed} bed
+                    </a>
+                    <a href="#">
+                      <span className="flaticon-shower" /> {getLocation.bath}{" "}
+                      bath
+                    </a>
+                    <a href="#">
+                      <span className="flaticon-expand" /> {getLocation.sqft}{" "}
+                      sqft
+                    </a>
+                  </div>
+                  <hr className="mt-2 mb-2" />
+                  <div className="list-meta2 d-flex justify-content-between align-items-center">
+                    <span className="for-what">For Rent</span>
+                    <div className="icons d-flex align-items-center">
+                      <a href="#">
+                        <span className="flaticon-fullscreen" />
+                      </a>
+                      <a href="#">
+                        <span className="flaticon-new-tab" />
+                      </a>
+                      <a href="#">
+                        <span className="flaticon-like" />
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      )}
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
     </>
   );
 }
