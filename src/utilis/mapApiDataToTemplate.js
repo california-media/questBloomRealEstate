@@ -15,6 +15,11 @@ export default function mapApiDataToTemplate(apiData) {
     id: apiData.id,
     image: imageUrl || "/images/fallback.jpg", // fallback image
     title: apiData.name || "Untitled Property",
+    developer:
+      apiData.developer && apiData.developer != "Object 1"
+        ? apiData.developer
+        : "Unknown",
+    post_handover: apiData.post_handover || false,
     city: apiData.area || "Unknown",
     location: apiData.area || "Unknown", // you can enhance this with more context if needed
     bed: "0", // Not available in API
@@ -29,8 +34,10 @@ export default function mapApiDataToTemplate(apiData) {
     propertyType: "Houses", // or infer from developer/sale_status
     yearBuilding: apiData.completion_datetime
       ? new Date(apiData.completion_datetime).getFullYear()
-      : null,
+      : "N/A",
     featured: false, //apiData.is_partner_project || false,
+    sale_status: apiData.sale_status,
+    status: apiData.status,
     lat,
     long,
     features: [], // You may fill this manually or enhance the API if possible

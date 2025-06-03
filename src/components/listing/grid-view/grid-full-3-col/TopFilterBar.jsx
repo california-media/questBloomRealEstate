@@ -10,7 +10,6 @@ const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => {
     return {
       ...styles,
-    
       backgroundColor: isSelected
         ? "#eb6753"
         : isHovered
@@ -21,22 +20,23 @@ const customStyles = {
     };
   },
 };
-const locationOptions = [
-  { value: "All Cities", label: "All Cities" },
-  { value: "California", label: "California" },
-  { value: "Los Angeles", label: "Los Angeles" },
-  { value: "New Jersey", label: "New Jersey" },
-  { value: "New York", label: "New York" },
-  { value: "San Diego", label: "San Diego" },
-  { value: "San Francisco", label: "San Francisco" },
-  { value: "Texas", label: "Texas" },
-];
+// const locationOptions = [
+//   { value: "All Cities", label: "All Cities" },
+//   { value: "California", label: "California" },
+//   { value: "Los Angeles", label: "Los Angeles" },
+//   { value: "New Jersey", label: "New Jersey" },
+//   { value: "New York", label: "New York" },
+//   { value: "San Diego", label: "San Diego" },
+//   { value: "San Francisco", label: "San Francisco" },
+//   { value: "Texas", label: "Texas" },
+// ];
 
 const TopFilterBar = ({
   filterFunctions,
   setCurrentSortingOption,
   colstyle,
   setColstyle,
+  locationOptions = [],
 }) => {
   return (
     <>
@@ -128,7 +128,10 @@ const TopFilterBar = ({
               </div>
             </li>
             {/* End li Price */}
-            <li className="list-inline-item position-relative font-bold">
+            <li
+              className="list-inline-item position-relative font-bold"
+              style={{ width: "200px" }}
+            >
               <Select
                 defaultValue={[locationOptions[0]]}
                 name="colors"
@@ -179,7 +182,7 @@ const TopFilterBar = ({
             </li> */}
             {/* End bed and bathroom check */}
 
-            <li className="list-inline-item">
+            {/* <li className="list-inline-item">
               <button
                 type="button"
                 className="open-btn mb15"
@@ -188,7 +191,7 @@ const TopFilterBar = ({
               >
                 <i className="flaticon-settings me-2" /> More Filter
               </button>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
@@ -206,8 +209,6 @@ const TopFilterBar = ({
               }
             >
               <option>Newest</option>
-              <option>Best Seller</option>
-              <option>Best Match</option>
               <option>Price Low</option>
               <option>Price High</option>
             </select>

@@ -11,8 +11,9 @@ import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 export default function ProperteyFiltering() {
   const [filteredData, setFilteredData] = useState([]);
   const [listings, setListings] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
+  const [locationOptions, setLocationOptions] = useState([]);
 
   const [sortedFilteredData, setSortedFilteredData] = useState([]);
 
@@ -128,16 +129,32 @@ export default function ProperteyFiltering() {
   };
   useEffect(() => {
     async function fetchListings() {
+      setLoading(true);
+
       const { data } = await api.get("/properties");
-      const newListings = data.items.map((item) =>
-        mapApiDataToTemplate(item)
-      );
+      const newListings = data.items.map((item) => mapApiDataToTemplate(item));
       setListings(newListings);
+
+      setLoading(false);
     }
+
     fetchListings();
   }, []);
 
   useEffect(() => {
+    // Extract unique area values
+    const uniqueAreas = Array.from(
+      new Set(listings.map((item) => item.location).filter(Boolean))
+    );
+    console.log(uniqueAreas);
+    const options = [
+      { value: "All Cities", label: "All Cities" },
+      ...uniqueAreas.map((area) => ({
+        value: area,
+        label: area,
+      })),
+    ];
+    setLocationOptions(options);
     const refItems = listings.filter((elm) => {
       if (listingStatus == "All") {
         return true;
@@ -147,7 +164,6 @@ export default function ProperteyFiltering() {
         return elm.forRent;
       }
     });
-    console.log("og",refItems);
     let filteredArrays = [];
 
     // if (propertyTypes.length > 0) {
@@ -156,7 +172,6 @@ export default function ProperteyFiltering() {
     //   );
     //   filteredArrays = [...filteredArrays, filtered];
     // }
-
 
     // filteredArrays = [
     //   ...filteredArrays,
@@ -182,7 +197,6 @@ export default function ProperteyFiltering() {
         refItems.filter((el) => el.city == location),
       ];
     }
-   
 
     if (priceRange.length > 0) {
       const filtered = refItems.filter(
@@ -300,13 +314,22 @@ export default function ProperteyFiltering() {
             setColstyle={setColstyle}
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
+            locationOptions={locationOptions}
           />
         </div>
         {/* End TopFilterBar */}
+        {loading ? (
+          <div className="row">
+            <div class="spinner-border mx-auto m-5" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <div className="row">
+            <FeaturedListings colstyle={colstyle} data={pageItems} />
+          </div>
+        )}
 
-        <div className="row">
-          <FeaturedListings colstyle={colstyle} data={pageItems} />
-        </div>
         {/* End .row */}
 
         <div className="row">
