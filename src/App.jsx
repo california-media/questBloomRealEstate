@@ -87,7 +87,7 @@ function App() {
           <ScrollTopBehaviour />
           <Routes>
             <Route path="/">
-              <Route index element={<Mainpage />} />
+              <Route index element={<Home_V2 />} />
 
               <Route path="home-v2" element={<Home_V2 />} />
               <Route path="home-v3" element={<Home_V3 />} />

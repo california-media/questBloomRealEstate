@@ -34,7 +34,7 @@ const GridFull3Col = () => {
                 <h2 className="title">UAE Homes for Sale</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
-                  <a href="#">For Rent</a>
+                  <a href="#">For Buying and Renting</a>
                 </div>
                 <a
                   className="filter-btn-left mobile-filter-btn d-block d-lg-none"
