@@ -110,7 +110,10 @@ function App() {
               <Route path="list-all-style" element={<ListV1All />} />
               <Route path="list-v1" element={<ListV1 />} />
 
-              <Route path="header-map-style" element={<HeaderMapStyle />} />
+              <Route
+                path="header-map-style/:region"
+                element={<HeaderMapStyle />}
+              />
               <Route path="map-v1" element={<MapV1 />} />
               <Route path="map-v2" element={<MapV2 />} />
               <Route path="map-v3" element={<MapV3 />} />
