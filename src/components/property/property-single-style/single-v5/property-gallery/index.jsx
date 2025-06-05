@@ -19,6 +19,9 @@ const PropertyGallery = ({ architecture, loading, coordinates }) => {
                 <li className="nav-item" role="presentation">
                   <button
                     className="nav-link active mr10"
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -33,6 +36,9 @@ const PropertyGallery = ({ architecture, loading, coordinates }) => {
                 <li className="nav-item" role="presentation">
                   <button
                     className="nav-link mr10"
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"

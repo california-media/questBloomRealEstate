@@ -36,7 +36,7 @@ const BuildingDetails = ({ buildings }) => {
   }
 
   return (
-    <div className="accordion" id="accordionBuildings">
+    <div className="accordion " id="accordionBuildings">
       {buildingList.map((building, index) => (
         <div
           className={`accordion-item ${index === 0 ? "active" : ""}`}
@@ -51,19 +51,19 @@ const BuildingDetails = ({ buildings }) => {
               aria-expanded={index === 0 ? "true" : "false"}
               aria-controls={`buildingCollapse${index}`}
             >
-              <span className="w-100 d-md-flex align-items-center">
-                <span className="mr10-sm">
+              <span className="w-100 d-md-flex align-items-start">
+                <span className="mr10-sm ">
                   <span className="fw600">Name: </span>
                   {building.Name || `Building ${index + 1}`}
                 </span>
                 <span className="ms-auto d-md-flex align-items-center justify-content-end">
-                  <span className="me-2 me-md-4">
+                  <span className="me-2 me-md-4 d-flex flex-column">
                     <span className="fw600">Description: </span>
                     <span className="text">
                       {building.Description || "N/A"}
                     </span>
                   </span>
-                  <span>
+                  <span className=" text-center pr10">
                     <span className="fw600">Completion: </span>
                     <span className="text">
                       {formatCompletionDate(building.Completion_date)}
