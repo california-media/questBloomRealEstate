@@ -1,7 +1,7 @@
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-
+const isDev = import.meta.env.DEV;
 const GalleryBox = ({
   imageUrls = ["/images/listings/listing-single-slide4.jpg"],
   loading = true,
@@ -38,7 +38,11 @@ const GalleryBox = ({
               ) : (
                 <img
                   className=" w-100 h-100 cover"
-                  src={imageUrl.url}
+                  src={
+                    isDev ////in development normally fetch the URL, but in production use the serverless proxy
+                      ? imageUrl.url
+                      : `/api/image-proxy/${fullUrl.split("/vault/")[1]}`
+                  }
                   alt={`Image ${index + 1}`}
                 />
               )}
