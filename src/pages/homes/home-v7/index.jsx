@@ -26,7 +26,7 @@ const metaInformation = {
 const Home_V7 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
@@ -136,7 +136,7 @@ const Home_V7 = () => {
       {/* End Featured Homes */}
 
       {/* Popular Property */}
-      <PropertyListing/>
+      <PropertyListing />
       {/* Popular Property */}
 
       {/* Explore Apartment Explore cities */}
@@ -165,13 +165,11 @@ const Home_V7 = () => {
       {/* Our Funfact */}
       <section className="bgc-thm-light pb90 pb30-md">
         <img
-         
           className="funfact-floating-img1 d-none d-lg-block "
           src="/images/resource/h7-bg-1.png"
           alt="illustration"
         />
         <img
-        
           className="funfact-floating-img2 wow zoomIn d-none d-lg-block "
           src="/images/resource/h7-bg-2.png"
           alt="illustration"
@@ -325,7 +323,6 @@ const Home_V7 = () => {
               <div className="inquiry-form">
                 <div className="inquiry-img">
                   <img
-                   
                     className="w-100 h-100 cover"
                     src="/images/about/about-4.png"
                     alt="about"

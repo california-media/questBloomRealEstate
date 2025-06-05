@@ -8,7 +8,6 @@ import SearchBox from "@/components/property/dashboard/dashboard-message/SearchB
 import UserChatBoxContent from "@/components/property/dashboard/dashboard-message/UserChatBoxContent";
 import UserInboxList from "@/components/property/dashboard/dashboard-message/UserInboxList";
 
-
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
@@ -18,7 +17,7 @@ const metaInformation = {
 const DashboardMessage = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DashboardHeader />
       {/* End Main Header Nav */}
@@ -76,7 +75,6 @@ const DashboardMessage = () => {
                       <div className="wrap">
                         <span className="contact-status online" />
                         <img
-                         
                           className="img-fluid mr10"
                           src="/images/inbox/ms3.png"
                           alt="ms3.png"

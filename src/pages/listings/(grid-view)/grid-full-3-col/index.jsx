@@ -16,7 +16,7 @@ const metaInformation = {
 const GridFull3Col = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -53,7 +53,7 @@ const GridFull3Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <ProperteyFiltering/>
+      <ProperteyFiltering />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

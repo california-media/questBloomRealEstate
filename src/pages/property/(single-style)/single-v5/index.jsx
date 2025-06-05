@@ -2,7 +2,6 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import EnergyClass from "@/components/property/property-single-style/common/EnergyClass";
-import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
 import HomeValueChart from "@/components/property/property-single-style/common/HomeValueChart";
 import InfoWithForm from "@/components/property/property-single-style/common/more-info";
 import NearbySimilarProperty from "@/components/property/property-single-style/common/NearbySimilarProperty";
@@ -12,12 +11,11 @@ import PropertyDetails from "@/components/property/property-single-style/single-
 import PropertyFeaturesAminites from "@/components/property/property-single-style/common/PropertyFeaturesAminites";
 import PropertyHeader from "@/components/property/property-single-style/single-v5/PropertyHeader";
 import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
-import PropertyVideo from "@/components/property/property-single-style/common/PropertyVideo";
+import MasterPlan from "@/components/property/property-single-style/common/MasterPlan";
 import PropertyViews from "@/components/property/property-single-style/common/property-view";
 import ProperytyDescriptions from "@/components/property/property-single-style/common/ProperytyDescriptions";
 import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
-import VirtualTour360 from "@/components/property/property-single-style/common/VirtualTour360";
-import AllReviews from "@/components/property/property-single-style/common/reviews";
+import Lobby from "@/components/property/property-single-style/common/Lobby";
 import ScheduleTour from "@/components/property/property-single-style/sidebar/ScheduleTour";
 import PropertyGallery from "@/components/property/property-single-style/single-v5/property-gallery";
 import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
@@ -28,6 +26,12 @@ import MetaData from "@/components/common/MetaData";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "@/api/axios";
+import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
+import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
+import InteriorImages from "@/components/property/property-single-style/common/InteriorImages";
+import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
+// import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
+// import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
 const metaInformation = {
   title: "Property Single V5 || Homez - Real Estate ReactJS Template",
@@ -121,7 +125,7 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
                 <div className="row">
-                  <PropertyFeaturesAminites />
+                  <PropertyFeaturesAminites facilities={property?.facilities} />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -135,11 +139,11 @@ const SingleV5 = () => {
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Floor Plans</h4>
+                <h4 className="title fz17 mb30">Unit Plans</h4>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="accordion-style1 style2">
-                      <FloorPlans />
+                      <FloorPlans property={property} />
                     </div>
                   </div>
                 </div>
@@ -147,9 +151,9 @@ const SingleV5 = () => {
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Video</h4>
+                <h4 className="title fz17 mb30">Master Plan</h4>
                 <div className="row">
-                  <PropertyVideo />
+                  <MasterPlan master_plan={property?.master_plan} />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -157,7 +161,24 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <div className="row">
                   {/* <AllComments /> */}
-                  <AllReviews />
+                  <div className="product_single_content mb50">
+                    <div className="mbp_pagination_comments">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="total_review d-flex align-items-center justify-content-between mb20">
+                            <h6 className="fz17 mb15">
+                              <i className="fas fa-couch fz18 pe-2" />
+                              Interior Images
+                            </h6>
+                          </div>
+                        </div>
+                        {/* End review filter */}
+
+                        <InteriorImages interior={property?.interior} />
+                        {/* End reviews */}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -181,9 +202,10 @@ const SingleV5 = () => {
                 </div>
                 {/* End .Schedule a tour */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <div className="ps-widget mt-4 bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Get More Information</h4>
-                  <InfoWithForm />
+                  {/* <InfoWithForm /> */}
+                  <SingleAgentInfo developer_data={property?.developer_data} />
                 </div>
                 {/* End Get More Information */}
 
@@ -198,7 +220,7 @@ const SingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                   <div className="row">
-                    <PropertyNearby />
+                    <PropertyNearby map_points={property?.map_points} />
                   </div>
                 </div>
                 {/* End What&apos;s Nearby? */}
@@ -217,16 +239,16 @@ const SingleV5 = () => {
                 {/* End Walkscore */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">360° Virtual Tour</h4>
+                  <h4 className="title fz17 mb30">Lobby</h4>
                   <div className="row">
-                    <VirtualTour360 />
+                    <Lobby lobby={property?.lobby} />
                   </div>
                 </div>
                 {/* End .360° Virtual Tour */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p10 mb30 overflow-hidden position-relative">
                   <div className="row">
-                    <PropertyViews />
+                    <BuildingDetails buildings={property?.buildings} />
                   </div>
                 </div>
                 {/* End PropertyViews */}

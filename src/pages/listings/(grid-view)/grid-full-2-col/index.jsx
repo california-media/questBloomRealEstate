@@ -4,9 +4,6 @@ import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import PropertyFiltering from "@/components/listing/grid-view/grid-full-2-col/PropertyFiltering";
 
-
-
-
 import React from "react";
 
 import MetaData from "@/components/common/MetaData";
@@ -18,7 +15,7 @@ const metaInformation = {
 const GridFull2Col = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -55,8 +52,8 @@ const GridFull2Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <PropertyFiltering/>
-      
+      <PropertyFiltering />
+
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

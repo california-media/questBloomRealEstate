@@ -8,7 +8,7 @@ import ReviewBoxForm from "@/components/property/ReviewBoxForm";
 import AvailableAgent from "@/components/property/agency-single/AvailableAgent";
 import ListingItemsContainer from "@/components/property/agency-single/ListingItems";
 import SingleAgencyCta from "@/components/property/agency-single/SingleAgencyCta";
-import AllReviews from "@/components/property/reviews";
+// import AllReviews from "@/components/property/reviews";
 
 import { Link, useParams } from "react-router-dom";
 import React from "react";
@@ -23,7 +23,7 @@ const AgencySingle = () => {
   let params = useParams();
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -41,20 +41,16 @@ const AgencySingle = () => {
                 <SingleAgencyCta id={params.id} />
                 <div className="img-box-12 position-relative d-none d-xl-block">
                   <img
-                   
-                    
                     className="img-1 spin-right"
                     src="/images/about/element-12.png"
                     alt="agents"
                   />
                   <img
-                   
                     className="img-2 bounce-x"
                     src="/images/about/element-13.png"
                     alt="agents"
                   />
                   <img
-                  
                     className="img-3 bounce-y"
                     src="/images/about/element-11.png"
                     alt="agents"
@@ -132,7 +128,7 @@ const AgencySingle = () => {
               </div>
               {/* End .row */}
 
-              <ListingItemsContainer/>
+              <ListingItemsContainer />
               {/* End .row */}
 
               <div className="row pt30 bdrb1">
@@ -145,7 +141,7 @@ const AgencySingle = () => {
 
               <div className="row">
                 <div className="col-lg-12">
-                  <AllReviews />
+                  {/* <AllReviews /> */}
                   {/* End  AllReviews */}
 
                   <div className="bsp_reveiw_wrt">

@@ -5,7 +5,6 @@ import MobileMenu from "@/components/common/mobile-menu";
 import { Link } from "react-router-dom";
 import React from "react";
 
-
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
@@ -15,7 +14,7 @@ const metaInformation = {
 const NotFound = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -32,7 +31,6 @@ const NotFound = () => {
               <div className="animate_content text-center text-xl-start">
                 <div className="animate_thumb">
                   <img
-                  
                     className="w-100 h-100 cover"
                     src="/images/icon/error-page-img.svg"
                     alt="error-page-img"

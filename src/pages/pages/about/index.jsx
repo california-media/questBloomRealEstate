@@ -19,7 +19,7 @@ const metaInformation = {
 const About = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -85,7 +85,6 @@ const About = () => {
             <div className="col-lg-12">
               <div className="about-page-img">
                 <img
-                 
                   className="w-100 h-100 cover"
                   src="/images/about/about-page-banner.jpg"
                   alt="about banner"

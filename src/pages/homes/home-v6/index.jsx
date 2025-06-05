@@ -23,7 +23,7 @@ const metaInformation = {
 const Home_V6 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
@@ -67,7 +67,6 @@ const Home_V6 = () => {
                   <i className="fal fa-arrow-right-long" />
                 </Link>
                 <img
-                 
                   className="img-1 cover"
                   src="/images/about/home6-about-1.png"
                   alt="about"

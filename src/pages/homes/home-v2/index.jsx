@@ -13,7 +13,6 @@ import React from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
 
-
 import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";

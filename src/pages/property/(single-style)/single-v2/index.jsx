@@ -1,4 +1,4 @@
-// 
+//
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
@@ -12,11 +12,11 @@ import PropertyAddress from "@/components/property/property-single-style/common/
 import PropertyDetails from "@/components/property/property-single-style/common/PropertyDetails";
 import PropertyFeaturesAminites from "@/components/property/property-single-style/common/PropertyFeaturesAminites";
 import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
-import PropertyVideo from "@/components/property/property-single-style/common/PropertyVideo";
+import PropertyVideo from "@/components/property/property-single-style/common/MasterPlan";
 import PropertyViews from "@/components/property/property-single-style/common/property-view";
 import ProperytyDescriptions from "@/components/property/property-single-style/common/ProperytyDescriptions";
 import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
-import VirtualTour360 from "@/components/property/property-single-style/common/VirtualTour360";
+import VirtualTour360 from "@/components/property/property-single-style/common/Lobby";
 import AllReviews from "@/components/property/property-single-style/common/reviews";
 import ContactWithAgent from "@/components/property/property-single-style/single-v2/ContactWithAgent";
 import PropertyGallery from "@/components/property/property-single-style/single-v2/PropertyGallery";
@@ -36,7 +36,7 @@ const SingleV2 = () => {
   let params = useParams();
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -173,7 +173,7 @@ const SingleV2 = () => {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Home Value</h4>
-                <div className="row" >
+                <div className="row">
                   <HomeValueChart />
                 </div>
               </div>

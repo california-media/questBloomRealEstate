@@ -14,7 +14,7 @@ const metaInformation = {
 const Agents = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -42,8 +42,8 @@ const Agents = () => {
       {/* End Breadcumb Sections */}
 
       {/* Agent Section Area */}
-      <FilteringAgent/>
-      
+      <FilteringAgent />
+
       {/* End Agent Section Area */}
 
       {/* Start Our Footer */}

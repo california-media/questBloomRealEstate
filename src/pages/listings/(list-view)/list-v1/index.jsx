@@ -14,7 +14,7 @@ const metaInformation = {
 const ListV1 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -51,8 +51,8 @@ const ListV1 = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <PropertyFilteringList/>
-     
+      <PropertyFilteringList />
+
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

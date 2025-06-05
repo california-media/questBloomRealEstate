@@ -14,7 +14,7 @@ const metaInformation = {
 const Agency = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -42,7 +42,7 @@ const Agency = () => {
       {/* End Breadcumb Sections */}
 
       {/* Agent Section Area */}
-      <FilteringAgency/>
+      <FilteringAgency />
 
       {/* End Agent Section Area */}
 

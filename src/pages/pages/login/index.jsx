@@ -12,11 +12,10 @@ const metaInformation = {
 const Login = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Our Compare Area */}
       <section className="our-compare pt60 pb60">
         <img
-         
           src="/images/icon/login-page-icon.svg"
           alt="logo"
           className="login-bg-icon contain"
@@ -30,7 +29,6 @@ const Login = () => {
                 <div className="text-center mb40">
                   <Link to="/">
                     <img
-                     
                       className="mb25"
                       src="/images/header-logo2.svg"
                       alt="logo"

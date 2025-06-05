@@ -16,8 +16,6 @@ import Agents from "@/components/home/home-v10/Agents";
 import BannerSlider from "@/components/home/home-v10/BannerSlider";
 import MetaData from "@/components/common/MetaData";
 
-
-
 const metaInformation = {
   title: "Home v10 || Homez - Real Estate ReactJS Template",
 };
@@ -25,7 +23,7 @@ const metaInformation = {
 const Home_V10 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}

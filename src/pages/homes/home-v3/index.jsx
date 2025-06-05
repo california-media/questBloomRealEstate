@@ -24,7 +24,7 @@ const metaInformation = {
 const Home_V3 = () => {
   return (
     <>
-     <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
@@ -46,25 +46,21 @@ const Home_V3 = () => {
               <div className="col-xl-4 d-none d-xl-block">
                 <div className="home3-img-box1">
                   <img
-                   
                     className="img-1"
                     src="/images/about/about-3.png"
                     alt="about"
                   />
                   <img
-                   
                     className="img-2 spin-right"
                     src="/images/about/element-3.png"
                     alt="about"
                   />
                   <img
-                 
                     className="img-3 spin-right"
                     src="/images/about/element-3.png"
                     alt="about"
                   />
                   <img
-                   
                     className="img-4 default-box-shadow1 bounce-y"
                     src="/images/about/about-1.png"
                     alt="about"
@@ -253,7 +249,6 @@ const Home_V3 = () => {
               <div className="inquiry-form">
                 <div className="inquiry-img">
                   <img
-                   
                     className="w-100 h-100 cover"
                     src="/images/about/about-4.png"
                     alt="about"
