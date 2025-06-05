@@ -106,10 +106,7 @@ const ExploreCities = () => {
             <div className="item">
               <Link to={`/header-map-style/${city.name}`}>
                 <div className="feature-style2 mb30">
-                  <div
-                    className="feature-img bg-success"
-                    style={{ height: "180px" }}
-                  >
+                  <div className="feature-img " style={{ height: "180px" }}>
                     <img
                       className="w-100 h-100 cover"
                       src={city.image}

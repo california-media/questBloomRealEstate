@@ -347,10 +347,25 @@ export default function ProperteyFiltering({ region }) {
         {/* End TopFilterBar */}
         {loading ? (
           <div className="row">
-            <div className="spinner-border mx-auto m-5" role="status">
+            <div
+              style={{
+                margin: "300px",
+              }}
+              className="spinner-border mx-auto "
+              role="status"
+            >
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
+        ) : pageItems.length === 0 ? (
+          <h5
+            style={{
+              margin: "300px",
+            }}
+            className=" text-center"
+          >
+            No listings found.
+          </h5>
         ) : (
           <div className="row">
             <FeaturedListings colstyle={colstyle} data={pageItems} />

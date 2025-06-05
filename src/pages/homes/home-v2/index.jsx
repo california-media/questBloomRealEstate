@@ -85,7 +85,7 @@ const Home_V2 = () => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
               <div className="feature-listing-slider">
-                {/* <FeaturedListings /> */}
+                <FeaturedListings />
               </div>
             </div>
           </div>
