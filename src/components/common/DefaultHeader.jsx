@@ -73,15 +73,15 @@ const DefaultHeader = () => {
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
                   </a>
-                  <Link
+                  {/* <Link
                     className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"
                   >
                     Add Property
                     <i className="fal fa-arrow-right-long" />
-                  </Link>
+                  </Link> */}
                   <a
-                    className="sidemenu-btn filter-btn-right"
+                    className="sidemenu-btn m20 filter-btn-right"
                     href="#"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#SidebarPanel"

@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 import ContactInfo from "./ContactInfo";
@@ -19,18 +18,10 @@ const MobileMenu = () => {
                 data-bs-target="#mobileMenu"
                 aria-controls="mobileMenu"
               >
-                <img
-                 
-                  src="/images/mobile-dark-nav-icon.svg"
-                  alt="mobile icon"
-                />
+                <img src="/images/mobile-dark-nav-icon.svg" alt="mobile icon" />
               </a>
               <Link className="mobile_logo" to="/">
-                <img
-                 
-                  src="/images/header-logo2.svg"
-                  alt="logo"
-                />
+                <img src="/images/header-logo2.svg" alt="logo" />
               </Link>
               <Link to="/login">
                 <span className="icon fz18 far fa-user-circle" />

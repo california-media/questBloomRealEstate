@@ -62,7 +62,7 @@ const Agents = () => {
           agents.slice(0, 7).map((agent, index) => (
             <SwiperSlide key={index}>
               <div className="item" key={index}>
-                <Link to={`/agent-single/${agent.id}`}>
+                <Link to={`#`}>
                   <div className="team-style1 mb30">
                     <div className="team-img">
                       <img
@@ -82,7 +82,9 @@ const Agents = () => {
 
                       <p className="text fz15 mb-0">
                         <i className="fas fa-globe-americas pe-2 mt-1 text-secondary" />
-                        <span>{agent.website.replace(/\/$/, "")}</span>
+                        <a target="_blank" href={agent.website}>
+                          {agent.website.replace(/\/$/, "")}
+                        </a>
                       </p>
                     </div>
                   </div>

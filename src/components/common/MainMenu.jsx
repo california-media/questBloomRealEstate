@@ -80,7 +80,7 @@ const MainMenu = () => {
               className={topMenu == "listing" ? "title menuActive" : "title"}
               to={"/grid-full-3-col"}
             >
-              Listings
+              Off-Plan
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
@@ -126,7 +126,7 @@ const MainMenu = () => {
               className={topMenu == "offplan" ? "title menuActive" : "title"}
               to={"#"}
             >
-              Off-Plan
+              Listings
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
@@ -140,7 +140,7 @@ const MainMenu = () => {
               className={topMenu == "luxury" ? "title menuActive" : "title"}
               to={"#"}
             >
-              Luxury
+              Rent
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
