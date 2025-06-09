@@ -11,7 +11,7 @@ const customStyles = {
     return {
       ...styles,
       backgroundColor: isSelected
-        ? "#eb6753"
+        ? "#797631"
         : isHovered
         ? "#eb675312"
         : isFocused

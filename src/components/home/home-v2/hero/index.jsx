@@ -6,10 +6,25 @@ const Hero = () => {
     <>
       <div className="inner-banner-style2 text-center position-relative">
         <HeroContent />
-        <h2 className="hero-title" data-aos="fade-up" data-aos-delay="150">
+        <h2
+          style={{
+            textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+          }}
+          className="hero-title "
+          data-aos="fade-up"
+          data-aos-delay="150"
+        >
           Find Your Dream Home
         </h2>
-        <p style={{marginTop: "-15px"}} className="hero-text fz15" data-aos="fade-up" data-aos-delay="250">
+        <p
+          style={{
+            marginTop: "-15px",
+            textShadow: "0px 0px 7px rgba(0, 0, 0, 0.9)",
+          }}
+          className="hero-text fz15"
+          data-aos="fade-up"
+          data-aos-delay="250"
+        >
           Let’s find a home that’s perfect for you
         </p>
       </div>

@@ -147,7 +147,7 @@ const Home_V2 = () => {
       </section>
       {/* End property cities */}
       {/* Explore Apartment */}
-      <section className="p-0">
+      {/* <section className="p-0">
         <div className="how-we-help position-relative mx-auto bgc-thm-light maxw1600 pt120 pt60-md pb90 pb30-md bdrs12 mx20-lg">
           <div className="container">
             <div className="row">
@@ -163,21 +163,20 @@ const Home_V2 = () => {
                 </div>
               </div>
             </div>
-            {/* End .row */}
 
             <div className="row">
               <Explore />
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Explore Apartment */}
       {/* About Us */}
-      <section className="about-us">
+      {/* <section className="about-us">
         <div className="container">
           <About />
         </div>
-      </section>
+      </section> */}
       {/* End About Us */}
       {/* Our Testimonials */}
       <section className="our-testimonial p-0">

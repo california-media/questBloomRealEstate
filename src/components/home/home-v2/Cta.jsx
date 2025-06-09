@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import React from "react";
 
@@ -8,7 +7,6 @@ const Cta = () => {
       <div className="cta-banner2 bgc-thm maxw1600 mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
         <div className="img-box-5">
           <img
-            
             className="img-1 spin-right"
             src="/images/about/element-1.png"
             alt="element"
@@ -16,20 +14,19 @@ const Cta = () => {
         </div>
         <div className="img-box-6">
           <img
-           
             className="img-1 spin-left"
             src="/images/about/element-2.png"
             alt="element"
           />
         </div>
         <div
-          className="cta-style2 d-none d-lg-block"
+          className="cta-style2 d-none d-lg-block "
           data-aos="fade-left"
           data-aos-delay="300"
         >
           <img
-           
-            src="/images/about/cta-img-1.png"
+            style={{ width: "35%" }}
+            src="/images/cta-image.jpg"
             alt="element"
           />
         </div>
@@ -41,14 +38,10 @@ const Cta = () => {
               data-aos-delay="500"
             >
               <div className="cta-style2">
-                <h2 className="cta-title">
-                  Start Listing or Buying a Property With Realton
-                </h2>
-                <p className="cta-text">
-                  Talk to our experts or Browse through more properties.
-                </p>
-                <Link to="/contact" className="ud-btn btn-dark mt10">
-                  Learn More
+                <h2 className="cta-title">Buying a Property With Questbloom</h2>
+                <p className="cta-text">Browse through more properties.</p>
+                <Link to="/off-plan" className="ud-btn btn-dark mt10">
+                  Let's Get Started
                   <i className="fal fa-arrow-right-long" />
                 </Link>
               </div>
