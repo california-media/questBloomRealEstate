@@ -10,14 +10,14 @@ const Footer = () => {
   return (
     <>
       <div className="container">
-        <div className="row gx-5">
+        <div className="row gx-5 ">
           <div className="col-lg-5">
             <div className="footer-widget mb-4 mb-lg-5">
               <Link className="header-logo logo1" to="/">
                 <img
                   className="mb40"
                   style={{ height: "50px" }}
-                  src="/images/QMC-logo.webp"
+                  src="/images/Questrealstatewhite.svg"
                   alt="Header Logo"
                 />
               </Link>
@@ -33,8 +33,7 @@ const Footer = () => {
 
           <div className="col-lg-7">
             <div className="footer-widget mb-4 mb-lg-5">
-              <Subscribe />
-              <div className="row justify-content-between">
+              <div className="row justify-content-between ">
                 <MenuWidget />
               </div>
             </div>

@@ -44,6 +44,7 @@ const SingleV5 = () => {
   const { id } = params;
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [metaInformation, setMetaInformation] = useState({});
   useEffect(() => {
     const fetchProperty = async () => {
       const response = isDev
@@ -53,7 +54,6 @@ const SingleV5 = () => {
               id,
             },
           });
-      console.log("property fetched is", response.data);
       setProperty({ ...response.data, id });
       setLoading(false);
     };
@@ -62,6 +62,14 @@ const SingleV5 = () => {
       fetchProperty();
     }
   }, [id]);
+
+  useEffect(() => {
+    if (property) {
+      setMetaInformation({
+        title: property.name,
+      });
+    }
+  }, [property]);
   return (
     <>
       <MetaData meta={metaInformation} />

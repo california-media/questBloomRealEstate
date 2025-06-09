@@ -1,10 +1,10 @@
-import {
-  homeItems,
-  blogItems,
-  listingItems,
-  propertyItems,
-  pageItems,
-} from "@/data/navItems";
+// import {
+//   homeItems,
+//   blogItems,
+//   listingItems,
+//   propertyItems,
+//   pageItems,
+// } from "@/data/navItems";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -16,10 +16,10 @@ const MainMenu = () => {
   const [submenu, setSubmenu] = useState("");
 
   useEffect(() => {
-    if ("home-v2" == pathname.split("/")[1]) {
+    if ("home" == pathname.split("/")[1]) {
       setTopMenu("home");
     }
-    if ("grid-full-3-col" == pathname.split("/")[1]) {
+    if ("off-plan" == pathname.split("/")[1]) {
       setTopMenu("listing");
     }
 
@@ -54,7 +54,7 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <Link
             className={topMenu == "home" ? "title menuActive" : "title"}
-            to={"/home-v2"}
+            to={"/home"}
           >
             Home
           </Link>
@@ -78,7 +78,7 @@ const MainMenu = () => {
           <span>
             <Link
               className={topMenu == "listing" ? "title menuActive" : "title"}
-              to={"/grid-full-3-col"}
+              to={"/off-plan"}
             >
               Off-Plan
             </Link>

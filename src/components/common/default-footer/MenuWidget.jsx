@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MenuWidget = () => {
   const quickLinks = [
-    { label: "Home", href: "/home-v2" },
-    { label: "Off-Plan", href: "/grid-full-3-col" },
+    { label: "Home", href: "/home" },
+    { label: "Off-Plan", href: "/off-plan" },
     { label: "Buy", href: "#" },
     { label: "Listings", href: "#" },
     { label: "Rent", href: "#" },
