@@ -14,7 +14,7 @@ const metaInformation = {
 const DashboardAddProperty = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DashboardHeader />
       {/* End Main Header Nav */}

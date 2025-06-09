@@ -13,7 +13,6 @@ import React from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
 
-
 import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
@@ -223,7 +222,7 @@ const Home_V2 = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">Our Exclusive Agetns</h2>
+                <h2 className="title">Our Exclusive Agents</h2>
                 <p className="paragraph">
                   Aliquam lacinia diam quis lacus euismod
                 </p>

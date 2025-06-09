@@ -72,12 +72,13 @@ const FeaturedListings = ({ data, colstyle }) => {
               </div>
               <hr className="mt-2 mb-2" />
               <div className="list-meta2 d-flex justify-content-between align-items-center">
-                <span className="for-what">
-                  {listing.forRent ? "For Rent" : "For Sale"}
-                </span>
                 <div>
-                  <ChartNoAxesCombined className="mb-1" size={16} color="gray" />{" "}
-                  {listing.status + " , " + listing.sale_status}
+                  <ChartNoAxesCombined
+                    className="mb-1"
+                    size={16}
+                    color="gray"
+                  />{" "}
+                  {listing.sale_status}
                 </div>
               </div>
             </div>

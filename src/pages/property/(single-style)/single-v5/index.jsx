@@ -2,7 +2,6 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import EnergyClass from "@/components/property/property-single-style/common/EnergyClass";
-import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
 import HomeValueChart from "@/components/property/property-single-style/common/HomeValueChart";
 import InfoWithForm from "@/components/property/property-single-style/common/more-info";
 import NearbySimilarProperty from "@/components/property/property-single-style/common/NearbySimilarProperty";
@@ -12,21 +11,29 @@ import PropertyDetails from "@/components/property/property-single-style/single-
 import PropertyFeaturesAminites from "@/components/property/property-single-style/common/PropertyFeaturesAminites";
 import PropertyHeader from "@/components/property/property-single-style/single-v5/PropertyHeader";
 import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
-import PropertyVideo from "@/components/property/property-single-style/common/PropertyVideo";
+import MasterPlan from "@/components/property/property-single-style/common/MasterPlan";
 import PropertyViews from "@/components/property/property-single-style/common/property-view";
 import ProperytyDescriptions from "@/components/property/property-single-style/common/ProperytyDescriptions";
 import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
-import VirtualTour360 from "@/components/property/property-single-style/common/VirtualTour360";
-import AllReviews from "@/components/property/property-single-style/common/reviews";
+import Lobby from "@/components/property/property-single-style/common/Lobby";
 import ScheduleTour from "@/components/property/property-single-style/sidebar/ScheduleTour";
 import PropertyGallery from "@/components/property/property-single-style/single-v5/property-gallery";
 import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
 import WalkScore from "@/components/property/property-single-style/common/WalkScore";
 
+const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "@/api/axios";
+import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
+import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
+import InteriorImages from "@/components/property/property-single-style/common/InteriorImages";
+import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
+import PaymentPlans from "@/components/property/property-single-style/common/PaymentPlans";
+import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
+// import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
+// import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
 const metaInformation = {
   title: "Property Single V5 || Homez - Real Estate ReactJS Template",
@@ -37,10 +44,16 @@ const SingleV5 = () => {
   const { id } = params;
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchProperty = async () => {
-      const response = await api.get(`/properties/${id}`);
+      const response = isDev
+        ? await api.get(`/properties/${id}`)
+        : await api.get("/property", {
+            params: {
+              id,
+            },
+          });
+      console.log("property fetched is", response.data);
       setProperty({ ...response.data, id });
       setLoading(false);
     };
@@ -62,7 +75,11 @@ const SingleV5 = () => {
 
       {/* Property Slider Gallery */}
       <section className="p-0 bgc-white">
-        <PropertyGallery loading={loading} architecture={property?.architecture} />
+        <PropertyGallery
+          loading={loading}
+          architecture={property?.architecture}
+          coordinates={property?.coordinates}
+        />
       </section>
       {/* End Property Slider Gallery */}
 
@@ -99,7 +116,10 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30 mt30">Address</h4>
                 <div className="row">
-                  {/* <PropertyAddress /> */}
+                  <PropertyAddress
+                    property={property}
+                    coordinates={property?.coordinates}
+                  />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -107,25 +127,25 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
                 <div className="row">
-                  <PropertyFeaturesAminites />
+                  <PropertyFeaturesAminites facilities={property?.facilities} />
                 </div>
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Energy Class</h4>
                 <div className="row">
                   <EnergyClass />
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Floor Plans</h4>
+                <h4 className="title fz17 mb30">Unit Plans</h4>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="accordion-style1 style2">
-                      <FloorPlans />
+                      <FloorPlans property={property} />
                     </div>
                   </div>
                 </div>
@@ -133,97 +153,113 @@ const SingleV5 = () => {
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Video</h4>
+                <h4 className="title fz17 mb30">Master Plan</h4>
                 <div className="row">
-                  <PropertyVideo />
+                  <MasterPlan master_plan={property?.master_plan} />
                 </div>
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <div className="row">
-                  {/* <AllComments /> */}
-                  <AllReviews />
-                </div>
-              </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Leave A Review</h4>
                 <div className="row">
                   <ReviewBoxForm />
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
             </div>
             {/* End .col-8 */}
 
             <div className="col-lg-6">
               <div className="column">
-                <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
+                {/* <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
                   <h4 className="form-title mb5">Schedule a tour</h4>
                   <p className="text">Choose your preferred day</p>
                   <ScheduleTour />
-                </div>
+                </div> */}
                 {/* End .Schedule a tour */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Get More Information</h4>
-                  <InfoWithForm />
+                  {/* <InfoWithForm /> */}
+                  <SingleAgentInfo developer_data={property?.developer_data} />
                 </div>
                 {/* End Get More Information */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Mortgage Calculator</h4>
                   <div className="row">
                     <MortgageCalculator />
                   </div>
-                </div>
+                </div> */}
                 {/* End .Mortgage Calculator */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                   <div className="row">
-                    <PropertyNearby />
+                    <PropertyNearby map_points={property?.map_points} />
                   </div>
                 </div>
                 {/* End What&apos;s Nearby? */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Walkscore</h4>
+                  <h4 className="title fz17 mb30">Payment Plans</h4>
                   <div className="row">
                     <div className="col-md-12">
-                      <h4 className="fw400 mb20">
-                        10425 Tabor St Los Angeles CA 90034 USA
-                      </h4>
-                      <WalkScore />
+                      {/* <WalkScore /> */}
+                      <PaymentPlans payment_plans={property?.payment_plans} />
                     </div>
                   </div>
                 </div>
                 {/* End Walkscore */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">360° Virtual Tour</h4>
+                  <h4 className="title fz17 mb30">Lobby</h4>
                   <div className="row">
-                    <VirtualTour360 />
+                    <Lobby lobby={property?.lobby} />
                   </div>
                 </div>
                 {/* End .360° Virtual Tour */}
 
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
+                  <div className="row">
+                    <h4 className="title fz17 mb30 pl20">Building Details</h4>
+                    <BuildingDetails buildings={property?.buildings} />
+                  </div>
+                </div>
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <div className="row">
-                    <PropertyViews />
+                    {/* <AllComments /> */}
+                    <div className="product_single_content mb50">
+                      <div className="mbp_pagination_comments">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className="total_review d-flex align-items-center justify-content-between mb20">
+                              <h6 className="fz17 mb15">
+                                <i className="fas fa-couch fz18 pe-2" />
+                                Interior Images
+                              </h6>
+                            </div>
+                          </div>
+                          {/* End review filter */}
+
+                          <InteriorImages interior={property?.interior} />
+                          {/* End reviews */}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* End PropertyViews */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Home Value</h4>
                   <div className="row">
                     <HomeValueChart />
                   </div>
-                </div>
-                {/* End Home Value */}
+                </div> */}
               </div>
             </div>
           </div>
@@ -274,10 +310,17 @@ const SingleV5 = () => {
           </div>
           {/* End .row */}
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
               <div className="property-city-slider">
                 <NearbySimilarProperty />
+              </div>
+            </div>
+          </div> */}
+          <div className="row">
+            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+              <div className="feature-listing-slider">
+                <FeaturedListings />
               </div>
             </div>
           </div>

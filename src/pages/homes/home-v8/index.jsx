@@ -24,7 +24,7 @@ const metaInformation = {
 const Home_V8 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}

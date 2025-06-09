@@ -15,7 +15,7 @@ const metaInformation = {
 const BannerSearchV1 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -25,7 +25,7 @@ const BannerSearchV1 = () => {
       {/* End Mobile Nav  */}
 
       {/* Home Banner Style V1 */}
-      <PropertyFilteringBanner/>
+      <PropertyFilteringBanner />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

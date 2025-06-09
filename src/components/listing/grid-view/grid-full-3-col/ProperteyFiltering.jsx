@@ -8,7 +8,7 @@ import PaginationTwo from "../../PaginationTwo";
 import api from "@/api/axios";
 import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 
-export default function ProperteyFiltering() {
+export default function ProperteyFiltering({ region }) {
   const [filteredData, setFilteredData] = useState([]);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function ProperteyFiltering() {
   const [colstyle, setColstyle] = useState(false);
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
-
+  const [saleStatuses, setSaleStatuses] = useState([]);
   useEffect(() => {
     setPageItems(
       sortedFilteredData.slice((pageNumber - 1) * 9, pageNumber * 9)
@@ -38,7 +38,7 @@ export default function ProperteyFiltering() {
   const [priceRange, setPriceRange] = useState([0, 10000000]);
   const [bedrooms, setBedrooms] = useState(0);
   const [bathroms, setBathroms] = useState(0);
-  const [location, setLocation] = useState("All Cities");
+  const [location, setLocation] = useState("All Locations");
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -46,10 +46,10 @@ export default function ProperteyFiltering() {
   const resetFilter = () => {
     setListingStatus("All");
     setPropertyTypes([]);
-    setPriceRange([0, 100000]);
+    setPriceRange([0, 10000000]);
     setBedrooms(0);
     setBathroms(0);
-    setLocation("All Cities");
+    setLocation("All Locations");
     setSquirefeet([]);
     setyearBuild([0, 2050]);
     setCategories([]);
@@ -59,7 +59,7 @@ export default function ProperteyFiltering() {
     });
 
     document.querySelectorAll(".filterSelect").forEach(function (element) {
-      element.value = "All Cities";
+      element.value = "All Locations";
     });
   };
 
@@ -86,7 +86,6 @@ export default function ProperteyFiltering() {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
-    console.log(elm);
     setLocation(elm);
   };
   const handlesquirefeet = (elm) => {
@@ -131,11 +130,41 @@ export default function ProperteyFiltering() {
     async function fetchListings() {
       setLoading(true);
 
-      const { data } = await api.get("/properties");
-      const newListings = data.items.map((item) => mapApiDataToTemplate(item));
-      setListings(newListings);
+      try {
+        const { data } = region
+          ? await api.get("/properties", {
+              params: {
+                region,
+              },
+            })
+          : await api.get("/properties");
+        const newListings = data.items.map((item) =>
+          mapApiDataToTemplate(item)
+        );
+        setListings(newListings);
 
-      setLoading(false);
+        // Extract unique sale_status values
+        const rawStatuses = [
+          ...new Set(
+            newListings.map((item) => item.sale_status).filter(Boolean)
+          ),
+        ];
+
+        // Convert to desired options format
+        const formattedStatuses = [
+          { id: "flexRadioDefault0", label: "All", defaultChecked: true },
+          ...rawStatuses.map((status, index) => ({
+            id: `flexRadioDefault${index + 1}`,
+            label: status,
+          })),
+        ];
+
+        setSaleStatuses(formattedStatuses); // Assuming you renamed the state
+      } catch (error) {
+        console.error("Failed to fetch listings", error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchListings();
@@ -146,9 +175,8 @@ export default function ProperteyFiltering() {
     const uniqueAreas = Array.from(
       new Set(listings.map((item) => item.location).filter(Boolean))
     );
-    console.log(uniqueAreas);
     const options = [
-      { value: "All Cities", label: "All Cities" },
+      { value: "All Locations", label: "All Locations" },
       ...uniqueAreas.map((area) => ({
         value: area,
         label: area,
@@ -156,13 +184,11 @@ export default function ProperteyFiltering() {
     ];
     setLocationOptions(options);
     const refItems = listings.filter((elm) => {
-      if (listingStatus == "All") {
+      if (listingStatus === "All") {
         return true;
-      } else if (listingStatus == "Buy") {
-        return !elm.forRent;
-      } else if (listingStatus == "Rent") {
-        return elm.forRent;
       }
+
+      return elm.sale_status === listingStatus;
     });
     let filteredArrays = [];
 
@@ -191,7 +217,7 @@ export default function ProperteyFiltering() {
     //       ),
     // ];
 
-    if (location != "All Cities") {
+    if (location != "All Locations") {
       filteredArrays = [
         ...filteredArrays,
         refItems.filter((el) => el.city == location),
@@ -315,15 +341,31 @@ export default function ProperteyFiltering() {
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={locationOptions}
+            saleStatuses={saleStatuses}
           />
         </div>
         {/* End TopFilterBar */}
         {loading ? (
           <div className="row">
-            <div class="spinner-border mx-auto m-5" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div
+              style={{
+                margin: "300px",
+              }}
+              className="spinner-border mx-auto "
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
+        ) : pageItems.length === 0 ? (
+          <h5
+            style={{
+              margin: "300px",
+            }}
+            className=" text-center"
+          >
+            No listings found.
+          </h5>
         ) : (
           <div className="row">
             <FeaturedListings colstyle={colstyle} data={pageItems} />

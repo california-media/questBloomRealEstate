@@ -15,7 +15,7 @@ const metaInformation = {
 const BlogV1 = () => {
   return (
     <div className="bgc-f7">
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}

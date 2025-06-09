@@ -5,8 +5,6 @@ import MobileMenu from "@/components/common/mobile-menu";
 
 import PropertyFilteringCol from "@/components/listing/grid-view/grid-full-1-col-v2/PropertyFilteringCol";
 
-
-
 import React from "react";
 
 import MetaData from "@/components/common/MetaData";
@@ -18,7 +16,7 @@ const metaInformation = {
 const GridFull1ColV2 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -28,11 +26,11 @@ const GridFull1ColV2 = () => {
       {/* End Mobile Nav  */}
 
       {/* Advance Search */}
-      
+
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <PropertyFilteringCol/>
+      <PropertyFilteringCol />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

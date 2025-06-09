@@ -1,64 +1,22 @@
 import React from "react";
 
-const PropertyNearby = () => {
+const PropertyNearby = ({ map_points }) => {
+  // Define tabs based on map_points
   const tabsData = [
     {
-      title: "Education",
-      details: [
-        {
-          rating: "4",
-          schoolName: "South Londonderry Elementary School",
-          grades: "PK-6",
-          distance: "3.7 mi",
-        },
-        {
-          rating: "5",
-          schoolName: "Londonderry Senior High School",
-          grades: "PK-6",
-          distance: "3.7 mi",
-        },
-        {
-          rating: "5",
-          schoolName: "Londonderry Middle School",
-          grades: "PK-6",
-          distance: "3.7 mi",
-        },
-      ],
-    },
-    {
-      title: "Health & Medical",
-      details: [
-        { rating: "4", facilityName: "Health Facility 1", distance: "3.7 mi" },
-        { rating: "5", facilityName: "Health Facility 2", distance: "3.7 mi" },
-        { rating: "5", facilityName: "Health Facility 3", distance: "3.7 mi" },
-      ],
-    },
-    {
-      title: "Transportation",
-      details: [
-        {
-          rating: "4",
-          transportationName: "Transportation 1",
-          distance: "3.7 mi",
-        },
-        {
-          rating: "5",
-          transportationName: "Transportation 2",
-          distance: "3.7 mi",
-        },
-        {
-          rating: "5",
-          transportationName: "Transportation 3",
-          distance: "3.7 mi",
-        },
-      ],
+      title: "Nearby Places",
+      details:
+        map_points?.map((point) => ({
+          name: point.name,
+          distance: `${point.distance_km} km`,
+        })) || [],
     },
   ];
 
   return (
     <div className="col-md-12">
       <div className="navtab-style1">
-        <nav>
+        {/* <nav>
           <div className="nav nav-tabs mb20" id="nav-tab2" role="tablist">
             {tabsData.map((tab, index) => (
               <button
@@ -76,7 +34,7 @@ const PropertyNearby = () => {
               </button>
             ))}
           </div>
-        </nav>
+        </nav> */}
         {/* End nav tabs */}
 
         <div className="tab-content" id="nav-tabContent">
@@ -90,40 +48,24 @@ const PropertyNearby = () => {
               role="tabpanel"
               aria-labelledby={`nav-item${index + 1}-tab`}
             >
-              {tab.details.map((detail, detailIndex) => (
-                <div
-                  key={detailIndex}
-                  className="nearby d-sm-flex align-items-center mb20"
-                >
-                  <div className="rating dark-color mr15 ms-1 mt10-xs mb10-xs">
-                    <span className="fw600 fz14">{detail.rating}</span>
-                    <span className="text fz14">/10</span>
-                  </div>
-                  <div className="details">
-                    <p className="dark-color fw600 mb-0">
-                      {tab.title === "Education"
-                        ? detail.schoolName
-                        : detail.facilityName || detail.transportationName}
-                    </p>
-                    <p className="text mb-0">
-                      {tab.title === "Education"
-                        ? `Grades: ${detail.grades} Distance: ${detail.distance}`
-                        : `Distance: ${detail.distance}`}
-                    </p>
-                    <div className="blog-single-review">
-                      <ul className="mb0 ps-0">
-                        {[1, 2, 3, 4, 5].map((starIndex) => (
-                          <li key={starIndex} className="list-inline-item me-0">
-                            <a href="#">
-                              <i className="fas fa-star review-color2 fz10" />
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
+              {tab.details.length > 0 ? (
+                tab.details.map((detail, detailIndex) => (
+                  <div
+                    key={detailIndex}
+                    className="nearby d-sm-flex align-items-center mb20"
+                  >
+                    <div
+                      style={{ justifyContent: "space-between", width: "100%" }}
+                      className="details d-flex "
+                    >
+                      <p className="dark-color fw600 mb-0">{detail.name}</p>
+                      <p className="text mb-0">Distance: {detail.distance}</p>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text">No nearby places available.</p>
+              )}
             </div>
           ))}
         </div>

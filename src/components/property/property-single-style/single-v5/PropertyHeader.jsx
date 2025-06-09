@@ -71,7 +71,7 @@ const PropertyHeader = ({ property }) => {
           <h2
             className="sp-lg-title"
             style={{
-              textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+              textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
             }}
           >
             {property?.name || "Property Name"}
@@ -80,7 +80,7 @@ const PropertyHeader = ({ property }) => {
             <p
               className="text fz15 mb-0 bdrr1 pr10 bdrrn-sm"
               style={{
-                textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+                textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
               }}
             >
               {property?.area}, {property?.country}
@@ -91,7 +91,7 @@ const PropertyHeader = ({ property }) => {
               className="ff-heading text-thm fz15 bdrr1 pr10 bdrrn-sm"
               href="#"
               style={{
-                textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+                textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
               }}
             >
               <i className="fas fa-circle fz10 pe-2" />
@@ -102,7 +102,7 @@ const PropertyHeader = ({ property }) => {
                 className="ff-heading bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm"
                 href="#"
                 style={{
-                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
                 }}
               >
                 <i className="far fa-clock pe-2" />
@@ -114,7 +114,7 @@ const PropertyHeader = ({ property }) => {
                 className="ff-heading ml10 ml0-sm fz15"
                 href="#"
                 style={{
-                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
                 }}
               >
                 <i className="flaticon-fullscreen pe-2 align-text-top" />
@@ -130,29 +130,65 @@ const PropertyHeader = ({ property }) => {
         <div className="single-property-content">
           <div className="property-action text-lg-end">
             <div className="d-flex mb20 mb10-md align-items-center justify-content-lg-end">
-              <a className="icon mr10" href="#">
+              <a
+                className="icon mr10"
+                href="#"
+                style={{
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                }}
+              >
                 <span className="flaticon-like" />
               </a>
-              <a className="icon mr10" href="#">
+              <a
+                className="icon mr10"
+                href="#"
+                style={{
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                }}
+              >
                 <span className="flaticon-new-tab" />
               </a>
-              <a className="icon mr10" href="#">
+              <a
+                className="icon mr10"
+                href="#"
+                style={{
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                }}
+              >
                 <span className="flaticon-share-1" />
               </a>
-              <a className="icon" href="#">
+              <a
+                className="icon"
+                href="#"
+                style={{
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                }}
+              >
                 <span className="flaticon-printer" />
               </a>
             </div>
-            <h3 className="price mb-0">{"AED " + getPriceDisplay()}</h3>
+            <h3
+              style={{
+                textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+              }}
+              className="price mb-0"
+            >
+              {"AED " + getPriceDisplay()}
+            </h3>
             {property?.unit_blocks && property?.unit_blocks.length > 0 && (
-              <p className="text space fz15">
+              <p
+                className="text space fz15"
+                style={{
+                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                }}
+              >
                 Starting from{" "}
                 {formatPrice(
-                  (Math.min(
+                  Math.min(
                     ...property?.unit_blocks
                       .filter((block) => block.units_price_from_aed)
                       .map((block) => block.units_price_from_aed)
-                  ) / getAreaDisplay()) || "N/A"
+                  ) / getAreaDisplay() || "N/A"
                 ) + " AED/sqft"}
               </p>
             )}

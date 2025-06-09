@@ -16,7 +16,6 @@ import Blog from "../../../components/common/Blog";
 import { Link } from "react-router-dom";
 import PopulerProperty from "../../../components/home/home-v1/PopulerProperty";
 
-
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
@@ -26,16 +25,12 @@ const metaInformation = {
 const Home_V1 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
-  
+      <MetaData meta={metaInformation} />
+
       <Header />
-    
 
-     
       <MobileMenu />
-     
 
-    
       <section className="home-banner-style1 p0">
         <div className="home-style1">
           <div className="container">
@@ -45,15 +40,10 @@ const Home_V1 = () => {
               </div>
             </div>
           </div>
-        
 
           <a href="#explore-property">
             <div className="mouse_scroll animate-up-4">
-              <img
-              
-                src="/images/about/home-scroll.png"
-                alt="scroll image"
-              />
+              <img src="/images/about/home-scroll.png" alt="scroll image" />
             </div>
           </a>
         </div>

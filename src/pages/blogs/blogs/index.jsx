@@ -12,7 +12,6 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 
-
 import MetaData from "@/components/common/MetaData";
 import { useParams } from "react-router-dom";
 
@@ -21,11 +20,11 @@ const metaInformation = {
 };
 
 const BlogSingle = () => {
-    let params = useParams();
-   
+  let params = useParams();
+
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -36,10 +35,7 @@ const BlogSingle = () => {
 
       {/* Blog Section Area */}
       <section className="our-blog pt50">
-
-        <Details  id={params.id} />
-       
-
+        <Details id={params.id} />
 
         <div className="container">
           <div className="roww" data-aos="fade-up" data-aos-delay="500">

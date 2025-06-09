@@ -2,7 +2,9 @@ import React from "react";
 import GalleryBox from "./GalleryBox";
 import GoogleMapEmbed from "./Map";
 
-const PropertyGallery = ({ architecture, loading }) => {
+const PropertyGallery = ({ architecture, loading, coordinates }) => {
+  const coords = coordinates?.split(",")?.map(Number);
+
   return (
     <>
       <div className="container">
@@ -17,6 +19,9 @@ const PropertyGallery = ({ architecture, loading }) => {
                 <li className="nav-item" role="presentation">
                   <button
                     className="nav-link active mr10"
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -31,6 +36,9 @@ const PropertyGallery = ({ architecture, loading }) => {
                 <li className="nav-item" role="presentation">
                   <button
                     className="nav-link mr10"
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -89,7 +97,13 @@ const PropertyGallery = ({ architecture, loading }) => {
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
           >
-            <GoogleMapEmbed location={{ lat: 25.0657, lng: 55.1713 }} />
+            <GoogleMapEmbed
+              location={
+                coords
+                  ? { lat: coords[0], lng: coords[1] }
+                  : { lat: 25.0657, lng: 55.1713 }
+              }
+            />
           </div>
           {/* End tab-pane map */}
 

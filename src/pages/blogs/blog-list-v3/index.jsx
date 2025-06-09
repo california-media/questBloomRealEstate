@@ -15,7 +15,7 @@ const metaInformation = {
 const BlogV3 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -43,7 +43,7 @@ const BlogV3 = () => {
       {/* End Breadcrumb Start */}
 
       {/* Blog Section Area */}
-      <BlogFilterContainer/>
+      <BlogFilterContainer />
       {/* End Blog Section Area */}
 
       {/* Start Our Footer */}

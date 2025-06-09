@@ -30,7 +30,6 @@ const Invoice = () => {
                       <div className="main_logo mb30-md">
                         <Link to="/">
                           <img
-                           
                             src="/images/header-logo2.svg"
                             alt="header-logo2"
                           />

@@ -114,9 +114,10 @@ const preset_cities = [
 
 const ExploreCities = () => {
   const [cities, setCities] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchCities = async () => {
+      setLoading(true);
       try {
         // Step 1: Fetch regions
         const regionRes = await api.get("/regions");
@@ -146,6 +147,7 @@ const ExploreCities = () => {
       } catch (error) {
         console.error("Failed to fetch city listings", error);
       }
+      setLoading(false);
     };
 
     fetchCities();
@@ -218,28 +220,35 @@ const ExploreCities = () => {
           },
         }}
       >
-        {cities.map((city, index) => (
-          <SwiperSlide key={index}>
-            <div className="item">
-              <Link to="/header-map-style">
-                <div className="feature-style2 mb30">
-                  <div className="feature-img bg-success" style={{ height: "180px" }}>
-                    <img
-                      className="w-100 h-100 cover"
-                     
-                      src={city.image}
-                      alt="city listings"
-                    />
-                  </div>
-                  <div className="feature-content pt20">
-                    <h6 className="title mb-1">{city.name}</h6>
-                    <p className="text fz15">{city.number} Properties</p>
-                  </div>
-                </div>
-              </Link>
+        {loading ? (
+          <div className="row">
+            <div className="spinner-border mx-auto m-5" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
-          </SwiperSlide>
-        ))}
+          </div>
+        ) : (
+          cities.map((city, index) => (
+            <SwiperSlide key={index}>
+              <div className="item">
+                <Link to={`/header-map-style/${city.name}`}>
+                  <div className="feature-style2 mb30">
+                    <div className="feature-img " style={{ height: "180px" }}>
+                      <img
+                        className="w-100 h-100 cover"
+                        src={city.image}
+                        alt="city listings"
+                      />
+                    </div>
+                    <div className="feature-content pt20">
+                      <h6 className="title mb-1">{city.name}</h6>
+                      <p className="text fz15">{city.number} Properties</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </>
   );

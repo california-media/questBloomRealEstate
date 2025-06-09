@@ -5,7 +5,6 @@ import MobileMenu from "@/components/common/mobile-menu";
 
 import ProperteyFiltering from "@/components/listing/grid-view/grid-full-4-col/PropertyFiltering";
 
-
 import React from "react";
 
 import MetaData from "@/components/common/MetaData";
@@ -17,7 +16,7 @@ const metaInformation = {
 const GridFull4Col = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -54,8 +53,8 @@ const GridFull4Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <ProperteyFiltering/>
-      
+      <ProperteyFiltering />
+
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

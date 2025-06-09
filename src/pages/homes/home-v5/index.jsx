@@ -23,7 +23,7 @@ const metaInformation = {
 const Home_V5 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}

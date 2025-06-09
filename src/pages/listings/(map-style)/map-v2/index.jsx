@@ -15,7 +15,7 @@ const metaInformation = {
 const MapV2 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -23,10 +23,9 @@ const MapV2 = () => {
       {/* Mobile Nav  */}
       <MobileMenu />
       {/* End Mobile Nav  */}
-            {/* Property Filtering */}
-      <PropertyFilteringThree/>
+      {/* Property Filtering */}
+      <PropertyFilteringThree />
 
-     
       {/* Property Filtering */}
     </>
   );

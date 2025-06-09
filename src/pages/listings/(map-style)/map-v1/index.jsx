@@ -15,7 +15,7 @@ const metaInformation = {
 const MapV1 = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -23,10 +23,10 @@ const MapV1 = () => {
       {/* Mobile Nav  */}
       <MobileMenu />
       {/* End Mobile Nav  */}
-      <PropertyFilteringTwo/>
+      <PropertyFilteringTwo />
 
       {/* <!-- Advance Feature Modal Start --> */}
-     
+
       {/* Property Filtering */}
     </>
   );

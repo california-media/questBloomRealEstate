@@ -10,7 +10,6 @@ import ListingItemsContainer from "@/components/property/agency-single/ListingIt
 import SingleAgentCta from "@/components/property/agent-single/SingleAgentCta";
 import AllReviews from "@/components/property/reviews";
 
-
 import React from "react";
 
 import MetaData from "@/components/common/MetaData";
@@ -24,7 +23,7 @@ const AgentSingle = () => {
   let params = useParams();
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -39,22 +38,19 @@ const AgentSingle = () => {
           <div className="container">
             <div className="row align-items-center">
               <div className="col-xl-7">
-                <SingleAgentCta id={params.id}/>
+                <SingleAgentCta id={params.id} />
                 <div className="img-box-11 position-relative d-none d-xl-block">
                   <img
-                  
                     className="img-1 spin-right"
                     src="/images/about/element-3.png"
                     alt="agents"
                   />
                   <img
-                    
                     className="img-2 bounce-x"
                     src="/images/about/element-5.png"
                     alt="agents"
                   />
                   <img
-                   
                     className="img-3 bounce-y"
                     src="/images/about/element-7.png"
                     alt="agents"
@@ -132,7 +128,7 @@ const AgentSingle = () => {
               </div>
               {/* End .row */}
 
-              <ListingItemsContainer/>
+              <ListingItemsContainer />
               <div className="row">
                 <div className="col-lg-12">
                   <AllReviews />

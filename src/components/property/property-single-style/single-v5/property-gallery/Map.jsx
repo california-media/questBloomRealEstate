@@ -1,4 +1,4 @@
-const GoogleMapEmbed = ({ location = { lat: 25.0657, lng: 55.1713 } }) => {
+const GoogleMapEmbed = ({ location }) => {
   const isCoords =
     typeof location === "object" &&
     location !== null &&
@@ -12,7 +12,15 @@ const GoogleMapEmbed = ({ location = { lat: 25.0657, lng: 55.1713 } }) => {
       )}&output=embed`;
 
   return (
-    <div style={{ height: "600px", width: "100%", backgroundColor: "red" }}>
+    <div
+      style={{
+        aspectRatio: "3.2",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <iframe
         src={mapSrc}
         width="100%"

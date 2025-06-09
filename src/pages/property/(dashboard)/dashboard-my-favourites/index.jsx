@@ -15,7 +15,7 @@ const metaInformation = {
 const DashboardMyFavourites = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DashboardHeader />
       {/* End Main Header Nav */}

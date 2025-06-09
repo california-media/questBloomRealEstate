@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  ////this is for developement only, in vercel production deployment the vercel serverless api folder will take over
   server: {
     proxy: {
       "/api": {

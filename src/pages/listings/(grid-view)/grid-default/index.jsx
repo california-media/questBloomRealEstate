@@ -14,7 +14,7 @@ const metaInformation = {
 const GridDefault = () => {
   return (
     <>
-    <MetaData meta={metaInformation} />
+      <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -51,7 +51,7 @@ const GridDefault = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <PropertyFiltering/>
+      <PropertyFiltering />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}
