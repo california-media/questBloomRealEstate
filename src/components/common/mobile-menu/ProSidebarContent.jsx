@@ -11,10 +11,10 @@ const ProSidebarContent = () => {
   const [topMenu, setTopMenu] = useState("");
 
   useEffect(() => {
-    if ("home-v2" == pathname.split("/")[1]) {
+    if ("home" == pathname.split("/")[1]) {
       setTopMenu("home");
     }
-    if ("grid-full-3-col" == pathname.split("/")[1]) {
+    if ("off-plan" == pathname.split("/")[1]) {
       setTopMenu("listing");
     }
 
@@ -44,7 +44,7 @@ const ProSidebarContent = () => {
           <a className="list-item" href="#">
             <Link
               className={topMenu == "home" ? "title menuActive" : "title"}
-              to={"/home-v2"}
+              to={"/home"}
             >
               Home
             </Link>
@@ -59,7 +59,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "listing" ? "title menuActive" : "title"}
-                to={"/grid-full-3-col"}
+                to={"/off-plan"}
               >
                 Off-Plan
               </Link>

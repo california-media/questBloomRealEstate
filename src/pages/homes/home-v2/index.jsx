@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v2 || Homez - Real Estate ReactJS Template",
+  title: "Home",
 };
 
 const Home_V2 = () => {

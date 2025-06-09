@@ -39,7 +39,7 @@ const Header = () => {
                     <Link className="header-logo logo1" to="/">
                       <img
                         style={{ height: "50px" }}
-                        src="/images/QMC-logo.webp"
+                        src="/images/Questrealstatewhite.svg"
                         alt="Header Logo"
                       />
                     </Link>
@@ -63,10 +63,12 @@ const Header = () => {
                 <div className="d-flex align-items-center">
                   <a
                     className="login-info d-flex align-items-center me-3"
-                    href="tel:+012305094502"
+                    href="tel:+9710564065672"
                   >
                     <i className="far fa-phone fz16 me-2"></i>{" "}
-                    <span className="d-none d-xl-block">+971 56 406 5672</span>
+                    <span className="d-none d-xl-block">
+                      +971 (56) 406 5672
+                    </span>
                   </a>
                   <a
                     href="#"
@@ -124,7 +126,7 @@ const Header = () => {
           aria-hidden="true"
         >
           <div className="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
-            <LoginSignupModal />
+            {/* <LoginSignupModal /> */}
           </div>
         </div>
       </div>

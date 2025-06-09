@@ -21,10 +21,14 @@ const MobileMenu = () => {
                 <img src="/images/mobile-dark-nav-icon.svg" alt="mobile icon" />
               </a>
               <Link className="mobile_logo" to="/">
-                <img src="/images/header-logo2.svg" alt="logo" />
+                <img
+                  style={{ height: "50px" }}
+                  src="/images/QMC-logo.webp"
+                  alt="Header Logo"
+                />
               </Link>
-              <Link to="/login">
-                <span className="icon fz18 far fa-user-circle" />
+              <Link to="#">
+             
               </Link>
             </div>
           </div>
@@ -48,7 +52,7 @@ const MobileMenu = () => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">Welcome to Homez</h4>
+            <h4 className="title">Welcome to Questbloom</h4>
           </div>
           {/* End header */}
 
@@ -63,14 +67,14 @@ const MobileMenu = () => {
                 </div>
                 {/* End .row */}
 
-                <div className="row pt30 pb30 bdrt1">
+                {/* <div className="row pt30 pb30 bdrt1">
                   <div className="col-auto">
                     <div className="social-style-sidebar d-flex align-items-center pl30">
                       <h6 className="me-4 mb-0">Follow us</h6>
                       <Social />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               {/* hiddenbar_footer */}
             </div>

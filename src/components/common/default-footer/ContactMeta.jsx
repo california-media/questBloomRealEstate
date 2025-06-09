@@ -4,7 +4,7 @@ const ContactMeta = () => {
   const contactInfoList = [
     {
       title: "Total Free Customer Care",
-      phone: "+(0) 971 056 406 56 72",
+      phone: "+971 (56) 406 5672",
       phoneLink: "tel:+9710564065672",
     },
     {
@@ -37,7 +37,7 @@ const ContactMeta = () => {
             )}
             {contact.address && (
               <h6 className="info-mail">
-                <a href="#">{contact.address}</a>
+                <p className="text-white">{contact.address}</p>
               </h6>
             )}
           </div>
