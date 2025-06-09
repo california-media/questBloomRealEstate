@@ -1,5 +1,3 @@
-
-
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
@@ -40,15 +38,15 @@ const Header = () => {
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">
                       <img
-                       
-                        src="/images/header-logo.svg"
+                        style={{ height: "50px" }}
+                        src="/images/QMC-logo.webp"
                         alt="Header Logo"
                       />
                     </Link>
                     <Link className="header-logo logo2" to="/">
                       <img
-                       
-                        src="/images/header-logo2.svg"
+                        style={{ height: "50px" }}
+                        src="/images/QMC-logo.webp"
                         alt="Header Logo"
                       />
                     </Link>
@@ -68,7 +66,7 @@ const Header = () => {
                     href="tel:+012305094502"
                   >
                     <i className="far fa-phone fz16 me-2"></i>{" "}
-                    <span className="d-none d-xl-block">2 911 098 7654</span>
+                    <span className="d-none d-xl-block">+971 56 406 5672</span>
                   </a>
                   <a
                     href="#"
@@ -77,8 +75,8 @@ const Header = () => {
                     data-bs-target="#loginSignupModal"
                     role="button"
                   >
-                    <i className="far fa-user-circle fz16 me-2" />{" "}
-                    <span className="d-none d-xl-block">Login / Register</span>
+                    {/* <i className="far fa-user-circle fz16 me-2" />{" "} */}
+                    {/* <span className="d-none d-xl-block">Login / Register</span> */}
                   </a>
                   {/* <Link
                     className="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
@@ -95,14 +93,12 @@ const Header = () => {
                     aria-controls="SidebarPanelLabel"
                   >
                     <img
-                     
                       className="img-1"
                       src="/images/icon/nav-icon-white.svg"
                       alt="humberger menu"
                     />
 
                     <img
-                     
                       className="img-2"
                       src="/images/icon/nav-icon-dark.svg"
                       alt="humberger menu"

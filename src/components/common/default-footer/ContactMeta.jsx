@@ -4,13 +4,18 @@ const ContactMeta = () => {
   const contactInfoList = [
     {
       title: "Total Free Customer Care",
-      phone: "+(0) 123 050 945 02",
-      phoneLink: "tel:+012305094502", // Changed phoneLink to tel: URI
+      phone: "+(0) 971 056 406 56 72",
+      phoneLink: "tel:+9710564065672",
     },
     {
       title: "Need Live Support?",
-      mail: "hi@homez.com",
-      mailLink: "mailto:hi@homez.com", // Changed mailLink to direct email address
+      mail: "Info@questbloom.ae",
+      mailLink: "mailto:Info@questbloom.ae",
+    },
+    {
+      title: "We are located at",
+      address:
+        "Office 1004, 10th Floor, Bayswater, Business Bay, P.O. Box 113225, Dubai, UAE",
     },
   ];
 
@@ -28,6 +33,11 @@ const ContactMeta = () => {
             {contact.mail && (
               <h6 className="info-mail">
                 <a href={contact.mailLink}>{contact.mail}</a>
+              </h6>
+            )}
+            {contact.address && (
+              <h6 className="info-mail">
+                <a href="#">{contact.address}</a>
               </h6>
             )}
           </div>

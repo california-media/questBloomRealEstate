@@ -1,5 +1,3 @@
-
-
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
@@ -40,15 +38,15 @@ const DefaultHeader = () => {
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">
                       <img
-                        
-                        src="/images/header-logo2.svg"
+                        style={{ height: "50px" }}
+                        src="/images/QMC-logo.webp"
                         alt="Header Logo"
                       />
                     </Link>
                     <Link className="header-logo logo2" to="/">
                       <img
-                       
-                        src="/images/header-logo2.svg"
+                        style={{ height: "50px" }}
+                        src="/images/QMC-logo.webp"
                         alt="Header Logo"
                       />
                     </Link>
@@ -63,7 +61,7 @@ const DefaultHeader = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                  <a
+                  {/* <a
                     href="#"
                     className="login-info d-flex align-items-cente"
                     data-bs-toggle="modal"
@@ -72,7 +70,7 @@ const DefaultHeader = () => {
                   >
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
-                  </a>
+                  </a> */}
                   {/* <Link
                     className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"
@@ -88,13 +86,11 @@ const DefaultHeader = () => {
                     aria-controls="SidebarPanelLabel"
                   >
                     <img
-                    
                       className="img-1"
                       src="/images/dark-nav-icon.svg"
                       alt="humberger menu"
                     />
                     <img
-                     
                       className="img-2"
                       src="/images/dark-nav-icon.svg"
                       alt="humberger menu"
