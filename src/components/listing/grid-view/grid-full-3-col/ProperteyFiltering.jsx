@@ -7,10 +7,12 @@ import Pagination from "../../Pagination";
 import PaginationTwo from "../../PaginationTwo";
 import api from "@/api/axios";
 import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
+const isDev = import.meta.env.DEV;
 
-export default function ProperteyFiltering({ region }) {
+export default function ProperteyFiltering({ region, search }) {
   const [filteredData, setFilteredData] = useState([]);
   const [listings, setListings] = useState([]);
+  const [propertyId, setPropertyId] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [locationOptions, setLocationOptions] = useState([]);
@@ -35,6 +37,8 @@ export default function ProperteyFiltering({ region }) {
 
   const [listingStatus, setListingStatus] = useState("All");
   const [propertyTypes, setPropertyTypes] = useState([]);
+  const [selectedPropertyType, setSelectedPropertyType] =
+    useState("All Property Types");
   const [priceRange, setPriceRange] = useState([0, 10000000]);
   const [bedrooms, setBedrooms] = useState(0);
   const [bathroms, setBathroms] = useState(0);
@@ -42,10 +46,12 @@ export default function ProperteyFiltering({ region }) {
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [facilityOptions, setFacilityOptions] = useState([]);
 
   const resetFilter = () => {
     setListingStatus("All");
-    setPropertyTypes([]);
+    setPropertyId("");
+    setSelectedPropertyType("All Property Types");
     setPriceRange([0, 10000000]);
     setBedrooms(0);
     setBathroms(0);
@@ -66,15 +72,11 @@ export default function ProperteyFiltering({ region }) {
   const handlelistingStatus = (elm) => {
     setListingStatus((pre) => (pre == elm ? "All" : elm));
   };
-
-  const handlepropertyTypes = (elm) => {
-    if (elm == "All") {
-      setPropertyTypes([]);
-    } else {
-      setPropertyTypes((pre) =>
-        pre.includes(elm) ? [...pre.filter((el) => el != elm)] : [...pre, elm]
-      );
-    }
+  const handlePropertyId = (elm) => {
+    setPropertyId(elm.trim());
+  };
+  const handlepropertyType = (elm) => {
+    setSelectedPropertyType(elm);
   };
   const handlepriceRange = (elm) => {
     setPriceRange(elm);
@@ -95,17 +97,13 @@ export default function ProperteyFiltering({ region }) {
     setyearBuild(elm);
   };
   const handlecategories = (elm) => {
-    if (elm == "All") {
-      setCategories([]);
-    } else {
-      setCategories((pre) =>
-        pre.includes(elm) ? [...pre.filter((el) => el != elm)] : [...pre, elm]
-      );
-    }
+    setCategories((pre) =>
+      pre.includes(elm) ? [...pre.filter((el) => el != elm)] : [...pre, elm]
+    );
   };
   const filterFunctions = {
     handlelistingStatus,
-    handlepropertyTypes,
+    handlepropertyType,
     handlepriceRange,
     handlebedrooms,
     handlebathroms,
@@ -117,14 +115,13 @@ export default function ProperteyFiltering({ region }) {
     listingStatus,
     propertyTypes,
     resetFilter,
-
+    handlePropertyId,
     bedrooms,
     bathroms,
     location,
     squirefeet,
     yearBuild,
     categories,
-    setPropertyTypes,
   };
   useEffect(() => {
     async function fetchListings() {
@@ -132,25 +129,34 @@ export default function ProperteyFiltering({ region }) {
 
       try {
         const { data } = region
-          ? await api.get("/properties", {
-              params: {
-                region,
-              },
-            })
+          ? await api.get("/properties", { params: { region } })
+          : search
+          ? await api.get("/properties", { params: { search_query: search } })
           : await api.get("/properties");
-        const newListings = data.items.map((item) =>
-          mapApiDataToTemplate(item)
-        );
-        setListings(newListings);
 
-        // Extract unique sale_status values
+        const detailedListings = await Promise.all(
+          data.items.map(async (listing) => {
+            const id = listing.id; // assuming each listing has an `id`
+            const { data: detailedData } = isDev
+              ? await api.get(`/properties/${id}`)
+              : await api.get("/property", { params: { id } });
+
+            return detailedData;
+          })
+        );
+
+        // Set listings
+        setListings(
+          detailedListings.map((detailedData, index) =>
+            mapApiDataToTemplate(data.items[index], detailedData)
+          )
+        );
+        // 1️⃣ Extract unique sale_status values
         const rawStatuses = [
           ...new Set(
-            newListings.map((item) => item.sale_status).filter(Boolean)
+            data.items.map((item) => item.sale_status).filter(Boolean)
           ),
         ];
-
-        // Convert to desired options format
         const formattedStatuses = [
           { id: "flexRadioDefault0", label: "All", defaultChecked: true },
           ...rawStatuses.map((status, index) => ({
@@ -158,8 +164,30 @@ export default function ProperteyFiltering({ region }) {
             label: status,
           })),
         ];
+        setSaleStatuses(formattedStatuses);
 
-        setSaleStatuses(formattedStatuses); // Assuming you renamed the state
+        // 2️⃣ Extract unique facility (amenity) names
+        const allFacilities = detailedListings.flatMap(
+          (d) => d.facilities?.map((f) => f.name) || []
+        );
+        const uniqueFacilities = [...new Set(allFacilities)];
+        setFacilityOptions(uniqueFacilities); // <-- Add this state hook: const [facilityOptions, setFacilityOptions] = useState([])
+
+        // 3️⃣ Extract unique unit types from unit_blocks
+        const allPropertyTypes = detailedListings.flatMap(
+          (d) => d.unit_blocks?.map((u) => u.unit_type) || []
+        );
+        const uniquePropertyTypes = [...new Set(allPropertyTypes)];
+        const options = [
+          { value: "All Property Types", label: "All Property Types" },
+          ...uniquePropertyTypes.map((type) => ({
+            value: type,
+            label: type,
+          })),
+        ];
+        setPropertyTypes(options); // <-- Add this state hook: const [propertyTypeOptions, setPropertyTypeOptions] = useState([])
+
+        console.log("all fetched");
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
@@ -169,9 +197,7 @@ export default function ProperteyFiltering({ region }) {
 
     fetchListings();
   }, []);
-
   useEffect(() => {
-    // Extract unique area values
     const uniqueAreas = Array.from(
       new Set(listings.map((item) => item.location).filter(Boolean))
     );
@@ -183,6 +209,11 @@ export default function ProperteyFiltering({ region }) {
       })),
     ];
     setLocationOptions(options);
+  }, [listings]);
+
+  useEffect(() => {
+    // Extract unique area values
+
     const refItems = listings.filter((elm) => {
       if (listingStatus === "All") {
         return true;
@@ -191,31 +222,36 @@ export default function ProperteyFiltering({ region }) {
       return elm.sale_status === listingStatus;
     });
     let filteredArrays = [];
+    /// property type
+    if (selectedPropertyType != "All Property Types") {
+      const filtered = refItems.filter((elm) =>
+        elm.propertyTypes.includes(selectedPropertyType)
+      );
+      filteredArrays = [...filteredArrays, filtered];
+    } else {
+      filteredArrays = [...filteredArrays, refItems];
+    }
 
-    // if (propertyTypes.length > 0) {
-    //   const filtered = refItems.filter((elm) =>
-    //     propertyTypes.includes(elm.propertyType)
-    //   );
-    //   filteredArrays = [...filteredArrays, filtered];
-    // }
-
-    // filteredArrays = [
-    //   ...filteredArrays,
-    //   refItems.filter((el) => el.bed >= bedrooms),
-    // ];
+    ///beds
+    filteredArrays = [
+      ...filteredArrays,
+      refItems.filter((el) => {
+        return el.bed >= bedrooms;
+      }),
+    ];
     // filteredArrays = [
     //   ...filteredArrays,
     //   refItems.filter((el) => el.bath >= bathroms),
     // ];
 
-    // filteredArrays = [
-    //   ...filteredArrays,
-    //   !categories.length
-    //     ? [...refItems]
-    //     : refItems.filter((elm) =>
-    //         categories.every((elem) => elm.features.includes(elem))
-    //       ),
-    // ];
+    filteredArrays = [
+      ...filteredArrays,
+      !categories.length
+        ? [...refItems]
+        : refItems.filter((elm) =>
+            categories.every((elem) => elm.features.includes(elem))
+          ),
+    ];
 
     if (location != "All Locations") {
       filteredArrays = [
@@ -234,12 +270,28 @@ export default function ProperteyFiltering({ region }) {
       filteredArrays = [...filteredArrays, filtered];
     }
 
-    // if (squirefeet.length > 0 && squirefeet[1]) {
-    //   const filtered = refItems.filter(
-    //     (elm) => elm.sqft >= squirefeet[0] && elm.sqft <= squirefeet[1]
-    //   );
-    //   filteredArrays = [...filteredArrays, filtered];
-    // }
+    if (
+      squirefeet.length > 0 &&
+      squirefeet[1] &&
+      squirefeet[0] <= squirefeet[1] &&
+      squirefeet[0] != 0 &&
+      squirefeet[1] != 0
+    ) {
+      const filtered = refItems.filter((elm) => {
+        const [rangeMin, rangeMax] = squirefeet;
+        console.log(Number(rangeMin), Number(rangeMax));
+
+        const minInRange =
+          elm.min_sqft >= Number(rangeMin) && elm.min_sqft <= Number(rangeMax);
+        const maxInRange =
+          elm.max_sqft >= Number(rangeMin) && elm.max_sqft <= Number(rangeMax);
+        const rangeWithinElm =
+          Number(rangeMin) >= elm.min_sqft && Number(rangeMax) <= elm.max_sqft;
+
+        return minInRange || maxInRange || rangeWithinElm;
+      });
+      filteredArrays = [...filteredArrays, filtered];
+    }
     if (yearBuild.length > 0) {
       const filtered = refItems.filter(
         (elm) =>
@@ -248,9 +300,9 @@ export default function ProperteyFiltering({ region }) {
       filteredArrays = [...filteredArrays, filtered];
     }
 
-    const commonItems = refItems.filter((item) =>
-      filteredArrays.every((array) => array.includes(item))
-    );
+    const commonItems = refItems
+      .filter((item) => filteredArrays.every((array) => array.includes(item)))
+      .filter((item) => (propertyId !== "" ? item.id == propertyId : true));
 
     setFilteredData(commonItems);
   }, [
@@ -264,6 +316,9 @@ export default function ProperteyFiltering({ region }) {
     yearBuild,
     categories,
     listings,
+    facilityOptions,
+    propertyId,
+    selectedPropertyType,
   ]);
 
   useEffect(() => {
@@ -328,7 +383,12 @@ export default function ProperteyFiltering({ region }) {
             aria-labelledby="advanceSeachModalLabel"
             aria-hidden="true"
           >
-            <AdvanceFilterModal filterFunctions={filterFunctions} />
+            <AdvanceFilterModal
+              locationOptions={locationOptions}
+              propertyTypes={propertyTypes}
+              facilityOptions={facilityOptions}
+              filterFunctions={filterFunctions}
+            />
           </div>
         </div>
         {/* <!-- Advance Feature Modal End --> */}

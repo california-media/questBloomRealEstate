@@ -230,7 +230,7 @@ const ExploreCities = () => {
           cities.map((city, index) => (
             <SwiperSlide key={index}>
               <div className="item">
-                <Link to={`/header-map-style/${city.name}`}>
+                <Link to={`/city-properties/${city.name}`}>
                   <div className="feature-style2 mb30">
                     <div className="feature-img " style={{ height: "180px" }}>
                       <img

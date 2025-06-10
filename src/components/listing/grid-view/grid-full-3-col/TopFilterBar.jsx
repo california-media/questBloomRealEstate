@@ -186,16 +186,16 @@ const TopFilterBar = ({
             </li> */}
             {/* End bed and bathroom check */}
 
-            {/* <li className="list-inline-item">
+            <li className="list-inline-item">
               <button
                 type="button"
                 className="open-btn mb15"
                 data-bs-toggle="modal"
                 data-bs-target="#advanceSeachModal"
               >
-                <i className="flaticon-settings me-2" /> More Filter
+                <i className="flaticon-settings me-2" /> Advanced Filter
               </button>
-            </li> */}
+            </li>
           </ul>
         </div>
       </div>

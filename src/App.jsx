@@ -67,6 +67,7 @@ import AgentSingle from "./pages/property/(agents)/agent-single";
 import AgencySingle from "./pages/property/(agents)/agency-single";
 import ListV1 from "./pages/listings/(list-view)/list-v1";
 import ScrollTopBehaviour from "./components/common/ScrollTopBehaviour";
+import SearchProperties from "./pages/listings/(map-style)/search-properties";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -111,8 +112,12 @@ function App() {
               <Route path="list-v1" element={<ListV1 />} />
 
               <Route
-                path="header-map-style/:region"
+                path="city-properties/:region"
                 element={<HeaderMapStyle />}
+              />
+              <Route
+                path="search-properties/:search"
+                element={<SearchProperties />}
               />
               <Route path="map-v1" element={<MapV1 />} />
               <Route path="map-v2" element={<MapV2 />} />

@@ -1,39 +1,25 @@
-
 import Select from "react-select";
 import PriceRange from "./PriceRange";
 import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 import Amenities from "./Amenities";
 
-const AdvanceFilterModal = ({ filterFunctions }) => {
-  const catOptions = [
-    { value: "Houses", label: "Houses" },
-    { value: "Office", label: "Office" },
-    { value: "Apartments", label: "Apartments" },
-    { value: "Villa", label: "Villa" },
-  ];
-
-  const locationOptions = [
-    { value: "All Cities", label: "All Cities" },
-    { value: "California", label: "California" },
-    { value: "Los Angeles", label: "Los Angeles" },
-    { value: "New Jersey", label: "New Jersey" },
-    { value: "New York", label: "New York" },
-    { value: "San Diego", label: "San Diego" },
-    { value: "San Francisco", label: "San Francisco" },
-    { value: "Texas", label: "Texas" },
-  ];
-
+const AdvanceFilterModal = ({
+  filterFunctions,
+  propertyTypes,
+  locationOptions,
+  facilityOptions,
+}) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#DDE5C2"
           : isFocused
-          ? "#eb675312"
+          ? "#DDE5C2"
           : undefined,
       };
     },
@@ -74,12 +60,12 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                 <h6 className="list-title">Type</h6>
                 <div className="form-style2 input-group">
                   <Select
-                    defaultValue={[catOptions[1]]}
+                    defaultValue={propertyTypes[0] || null}
                     name="colors"
-                    options={catOptions}
+                    options={propertyTypes}
                     styles={customStyles}
                     onChange={(e) =>
-                      filterFunctions?.setPropertyTypes([e.value])
+                      filterFunctions?.handlepropertyType(e.value)
                     }
                     className="select-custom"
                     classNamePrefix="select"
@@ -98,6 +84,9 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                     type="text"
                     className="form-control"
                     placeholder="RT04949213"
+                    onChange={(e) =>
+                      filterFunctions?.handlePropertyId(e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -117,14 +106,14 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
             </div>
             {/* End .col-md-6 */}
 
-            <div className="col-sm-6">
+            {/* <div className="col-sm-6">
               <div className="widget-wrapper">
                 <h6 className="list-title">Bathrooms</h6>
                 <div className="d-flex">
                   <Bathroom filterFunctions={filterFunctions} />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* End .col-md-6 */}
           </div>
           {/* End .row */}
@@ -135,7 +124,7 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                 <h6 className="list-title">Location</h6>
                 <div className="form-style2 input-group">
                   <Select
-                    defaultValue={[locationOptions[0]]}
+                    defaultValue={locationOptions[0] || null}
                     name="colors"
                     styles={customStyles}
                     options={locationOptions}
@@ -201,7 +190,10 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                 <h6 className="list-title mb10">Amenities</h6>
               </div>
             </div>
-            <Amenities filterFunctions={filterFunctions} />
+            <Amenities
+              facilityOptions={facilityOptions}
+              filterFunctions={filterFunctions}
+            />
           </div>
         </div>
         {/* End modal body */}
