@@ -78,7 +78,7 @@ const HeroContent = () => {
                     <button
                       className="advance-search-icon ud-btn btn-thm ms-4"
                       type="button"
-                      onClick={() => navigate("/grid-default")}
+                      // onClick={() => navigate("/grid-default")}
                     >
                       <span className="flaticon-search" />
                     </button>

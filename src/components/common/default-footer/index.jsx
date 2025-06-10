@@ -22,7 +22,7 @@ const Footer = () => {
                 />
               </Link>
               <ContactMeta />
-              <AppWidget />
+              {/* <AppWidget /> */}
               {/* <div className="social-widget">
                 <h6 className="text-white mb20">Follow us on social media</h6>
                 <Social />

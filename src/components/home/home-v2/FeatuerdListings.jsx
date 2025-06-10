@@ -94,7 +94,7 @@ const FeaturedListings = () => {
 
                   <div className="list-content">
                     <h6 className="list-title">
-                      <Link to={`/single-v5/${listing.id}`}>
+                      <Link to={`/off-plan/${listing.id}`}>
                         {listing.title}
                       </Link>
                     </h6>
