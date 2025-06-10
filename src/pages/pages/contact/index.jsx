@@ -28,7 +28,7 @@ const Contact = () => {
         <iframe
           className="home8-map contact-page"
           loading="lazy"
-          src="https://maps.google.com/maps?q=London%20Eye%2C%20London%2C%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6957.852267119998!2d55.25420309357912!3d25.184291000000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69d1f120e711%3A0xf19c0504f3cb24ec!2sBayswater%20Tower!5e1!3m2!1sen!2s!4v1749557024096!5m2!1sen!2s"
           title="London Eye, London, United Kingdom"
           aria-label="London Eye, London, United Kingdom"
         />
@@ -55,9 +55,8 @@ const Contact = () => {
                 from you.
               </h2>
               <p className="text">
-                We are here to answer any question you may have. As a partner of
-                corporates, realton has more than 9,000 offices of all sizes and
-                all potential of session.
+                Let us know how we can help! Fill out our contact form and we
+                will get back to you as soon as possible.
               </p>
             </div>
             {/* End .col */}
@@ -77,18 +76,18 @@ const Contact = () => {
             >
               <div className="main-title text-center">
                 <h2 className="title">Visit Our Office</h2>
-                <p className="paragraph">
-                  Realton has more than 9,000 offices of all sizes and all
-                  potential of session.
+                <p className="paragraph mt25">
+                  Office 1004, 10th Floor, Bayswater, Business Bay, P.O. Box
+                  113225, Dubai, UAE
                 </p>
               </div>
             </div>
           </div>
           {/* End .row */}
 
-          <div className="row" data-aos="fade-up" data-aos-delay="100">
+          {/* <div className="row" data-aos="fade-up" data-aos-delay="100">
             <Office />
-          </div>
+          </div> */}
           {/* End .row */}
         </div>
       </section>

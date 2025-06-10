@@ -3,13 +3,18 @@ import PriceRange from "./PriceRange";
 import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 import Amenities from "./Amenities";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdvanceFilterModal = ({
   filterFunctions,
   propertyTypes,
   locationOptions,
   facilityOptions,
+  searchTerm,
+  loading,
 }) => {
+  const navigate = useNavigate();
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -23,6 +28,35 @@ const AdvanceFilterModal = ({
           : undefined,
       };
     },
+  };
+  ///local state befrore actually applying filter
+  const [propertyType, setPropertyType] = useState(
+    filterFunctions?.selectedPropertyType || "All Property Types"
+  );
+  const [propertyId, setPropertyId] = useState(
+    filterFunctions?.propertyId || ""
+  );
+  const [location, setLocation] = useState(
+    filterFunctions?.location || "All Locations"
+  );
+  const [squareFeet, setSquareFeet] = useState(
+    filterFunctions?.squirefeet || [0, 0]
+  );
+  const [bedroomCount, setBedroomCount] = useState(
+    filterFunctions?.bedrooms || 0
+  );
+  const [amenities, setAmenities] = useState(filterFunctions?.categories || []);
+
+  const handleSearch = () => {
+    filterFunctions?.handlepropertyType(propertyType);
+    filterFunctions?.handlePropertyId(propertyId);
+    filterFunctions?.handlelocation(location);
+    filterFunctions?.handlesquirefeet(squareFeet);
+    filterFunctions?.handlebedrooms(bedroomCount);
+    filterFunctions?.handlecategories(amenities);
+    searchTerm
+      ? navigate("/search-properties/" + searchTerm)
+      : navigate("/search-properties/");
   };
 
   return (
@@ -64,9 +98,11 @@ const AdvanceFilterModal = ({
                     name="colors"
                     options={propertyTypes}
                     styles={customStyles}
-                    onChange={(e) =>
-                      filterFunctions?.handlepropertyType(e.value)
-                    }
+                    value={{
+                      value: propertyType,
+                      label: propertyType,
+                    }}
+                    onChange={(e) => setPropertyType(e.value)}
                     className="select-custom"
                     classNamePrefix="select"
                     required
@@ -82,11 +118,9 @@ const AdvanceFilterModal = ({
                 <div className="form-style2">
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control property-id-reset"
                     placeholder="RT04949213"
-                    onChange={(e) =>
-                      filterFunctions?.handlePropertyId(e.target.value)
-                    }
+                    onChange={(e) => setPropertyId(e.target.value)}
                   />
                 </div>
               </div>
@@ -100,7 +134,10 @@ const AdvanceFilterModal = ({
               <div className="widget-wrapper">
                 <h6 className="list-title">Bedrooms</h6>
                 <div className="d-flex">
-                  <Bedroom filterFunctions={filterFunctions} />
+                  <Bedroom
+                    setBedroomCount={setBedroomCount}
+                    bedroomCount={bedroomCount}
+                  />
                 </div>
               </div>
             </div>
@@ -130,11 +167,11 @@ const AdvanceFilterModal = ({
                     options={locationOptions}
                     className="select-custom filterSelect"
                     value={{
-                      value: filterFunctions?.location,
-                      label: filterFunctions?.location,
+                      value: location,
+                      label: location,
                     }}
                     classNamePrefix="select"
-                    onChange={(e) => filterFunctions?.handlelocation(e.value)}
+                    onChange={(e) => setLocation(e.value)}
                     required
                   />
                 </div>
@@ -152,9 +189,9 @@ const AdvanceFilterModal = ({
                         type="number"
                         className="form-control filterInput"
                         onChange={(e) =>
-                          filterFunctions?.handlesquirefeet([
-                            e.target.value,
-                            document.getElementById("maxFeet3").value / 1,
+                          setSquareFeet([
+                            parseInt(e.target.value, 10),
+                            squareFeet[0],
                           ])
                         }
                         placeholder="Min."
@@ -169,9 +206,9 @@ const AdvanceFilterModal = ({
                         placeholder="Max"
                         id="maxFeet3"
                         onChange={(e) =>
-                          filterFunctions?.handlesquirefeet([
-                            document.getElementById("minFeet3").value / 1,
-                            e.target.value,
+                          setSquareFeet([
+                            squareFeet[1],
+                            parseInt(e.target.value, 10),
                           ])
                         }
                       />
@@ -190,10 +227,30 @@ const AdvanceFilterModal = ({
                 <h6 className="list-title mb10">Amenities</h6>
               </div>
             </div>
-            <Amenities
-              facilityOptions={facilityOptions}
-              filterFunctions={filterFunctions}
-            />
+
+            {loading ? (
+              <div
+                className="row"
+                style={{ marginTop: "100px", marginBottom: "100px" }}
+              >
+                <div className="spinner-border mx-auto " role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : facilityOptions.length === 0 ? (
+              <h5
+                style={{ marginTop: "100px", marginBottom: "100px" }}
+                className=" text-center "
+              >
+                No Amenities found.
+              </h5>
+            ) : (
+              <Amenities
+                facilityOptions={facilityOptions}
+                amenities={amenities}
+                setAmenities={setAmenities}
+              />
+            )}
           </div>
         </div>
         {/* End modal body */}
@@ -201,13 +258,26 @@ const AdvanceFilterModal = ({
         <div className="modal-footer justify-content-between">
           <button
             className="reset-button"
-            onClick={() => filterFunctions?.resetFilter()}
+            onClick={() => {
+              filterFunctions?.resetFilter();
+              setBedroomCount(0);
+              setSquareFeet([0, 0]);
+              setAmenities([]);
+              setLocation("All Locations");
+              setPropertyId("");
+              setPropertyType("All Property Types");
+            }}
           >
             <span className="flaticon-turn-back" />
             <u>Reset all filters</u>
           </button>
           <div className="btn-area">
-            <button type="submit" className="ud-btn btn-thm">
+            <button
+              type="button"
+              className="ud-btn btn-thm"
+              data-bs-dismiss="modal"
+              onClick={handleSearch}
+            >
               <span className="flaticon-search align-text-top pr10" />
               Search
             </button>

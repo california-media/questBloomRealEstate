@@ -119,6 +119,10 @@ function App() {
                 path="search-properties/:search"
                 element={<SearchProperties />}
               />
+              <Route
+                path="search-properties"
+                element={<SearchProperties />}
+              />
               <Route path="map-v1" element={<MapV1 />} />
               <Route path="map-v2" element={<MapV2 />} />
               <Route path="map-v3" element={<MapV3 />} />

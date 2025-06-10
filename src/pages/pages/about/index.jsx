@@ -6,7 +6,6 @@ import MobileMenu from "@/components/common/mobile-menu";
 import Agents from "@/components/pages/about/Agents";
 import Features from "@/components/pages/about/Features";
 import FunFact from "@/components/pages/about/FunFact";
-import Mission from "@/components/pages/about/Mission";
 
 import { Link } from "react-router-dom";
 
@@ -29,15 +28,39 @@ const About = () => {
       {/* End Mobile Nav  */}
 
       {/* Breadcrumb Sections */}
+      
       <section className="breadcumb-section2 p-0">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="breadcumb-style1">
-                <h2 className="title">About Us</h2>
+              <div className="breadcumb-style1 ml80 mt60">
+                <h2
+                  className="title text-white"
+                  style={{
+                    textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                  }}
+                >
+                  About Us
+                </h2>
                 <div className="breadcumb-list">
-                  <a href="#">Home</a>
-                  <a href="#">About</a>
+                  <a
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
+                    className="text-white"
+                    href="#"
+                  >
+                    Home
+                  </a>
+                  <a
+                    style={{
+                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                    }}
+                    className="text-white"
+                    href="#"
+                  >
+                    About
+                  </a>
                 </div>
               </div>
             </div>
@@ -49,29 +72,40 @@ const About = () => {
       {/* Our About Area */}
       <section className="our-about pb90">
         <div className="container">
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
+          <div className="row mx-6" data-aos="fade-up" data-aos-delay="300">
             <div className="col-lg-6">
-              <h2>
-                We&apos;re on a Mission to Change{" "}
-                <br className="d-none d-lg-block" /> View of Real Estate Field.
-              </h2>
+              <h2>Our Mission</h2>
+              <p>
+                At Questbloom Real Estate, our mission is to guide you on your
+                journey to finding the perfect home in Dubai. We prioritize
+                unparalleled service, expertise, and personalized attention for
+                every client. Our goal is to redefine the real estate experience
+                by putting your needs first and foremost. With a commitment to
+                excellence, we strive to be your trusted partner in navigating
+                the dynamic Dubai real estate market. Whether you're in search
+                of a luxurious waterfront villa, a chic urban apartment, or a
+                serene beachfront retreat, we're here to make your dreams come
+                true. Experience the difference with Questbloom Real Estate –
+                where our mission is to guide you every step of the way towards
+                your dream home in Dubai.
+              </p>
             </div>
             <div className="col-lg-6">
-              <p className="text mb25">
-                It doesn’t matter how organized you are — a surplus of toys will
-                always ensure your house is a mess waiting to happen.
-                Fortunately, getting kids on board with the idea of ditching
-                their stuff is a lot easier than it sounds.
+              <h2>Our Vision</h2>
+              <p>
+                At Questbloom Real Estate, our vision is to redefine the
+                standard of excellence in Dubai's real estate market. We aim to
+                be the premier choice for clients seeking unparalleled service,
+                expertise, and personalized attention. Our vision encompasses
+                creating lasting relationships built on trust, transparency, and
+                integrity. We strive to exceed expectations by consistently
+                delivering exceptional results and guiding clients towards their
+                dream homes. With a forward-thinking approach and a commitment
+                to innovation, we envision a future where every client's real
+                estate journey is seamless, rewarding, and unforgettable.
+                Experience our vision come to life at Questbloom Real Estate –
+                where your dreams become reality.
               </p>
-              <p className="text mb55">
-                Maecenas quis viverra metus, et efficitur ligula. Nam congue
-                augue et ex congue, sed luctus lectus congue. Integer convallis
-                condimentum sem. Duis elementum tortor eget condimentum tempor.
-                Praesent sollicitudin lectus ut pharetra pulvinar.
-              </p>
-              <div className="row">
-                <Mission />
-              </div>
             </div>
           </div>
         </div>

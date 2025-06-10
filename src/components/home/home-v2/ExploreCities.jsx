@@ -131,10 +131,7 @@ const ExploreCities = () => {
             const propRes = await api.get("/properties", {
               params: { region: city.name },
             });
-            console.log(
-              "image",
-              preset_cities.find((c) => c.name === city.name)?.src || ""
-            );
+
             return {
               name: city.name,
               image: preset_cities.find((c) => c.name === city.name)?.src || "",
@@ -142,7 +139,6 @@ const ExploreCities = () => {
             };
           })
         );
-        console.log(cityData);
         setCities(cityData);
       } catch (error) {
         console.error("Failed to fetch city listings", error);

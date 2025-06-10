@@ -15,7 +15,7 @@ function convertFacilityOptions(facilityOptions, defaultCheckedOptions = []) {
   return grouped;
 }
 
-const Amenities = ({ filterFunctions, facilityOptions }) => {
+const Amenities = ({ facilityOptions, amenities = [], setAmenities }) => {
   return (
     <>
       {convertFacilityOptions(facilityOptions, []).map(
@@ -27,12 +27,17 @@ const Amenities = ({ filterFunctions, facilityOptions }) => {
                   <label className="custom_checkbox" key={amenityIndex}>
                     {amenity.label}
                     <input
-                      checked={filterFunctions?.categories.includes(
-                        amenity.label
-                      )}
-                      onChange={() =>
-                        filterFunctions?.handlecategories(amenity.label)
-                      }
+                      checked={amenities.some((item) => item === amenity.label)}
+                      onChange={() => {
+                        setAmenities(
+                          (prevAmenities) =>
+                            prevAmenities.includes(amenity.label)
+                              ? prevAmenities.filter(
+                                  (item) => item !== amenity.label
+                                ) // Remove if exists
+                              : [...prevAmenities, amenity.label] // Add if doesn't exist
+                        );
+                      }}
                       type="checkbox"
                     />
                     <span className="checkmark" />

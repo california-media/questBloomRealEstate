@@ -3,27 +3,65 @@ import ListingSidebar from "../../sidebar";
 import AdvanceFilterModal from "@/components/common/advance-filter-two";
 import TopFilterBar from "./TopFilterBar";
 import FeaturedListings from "./FeatuerdListings";
-import Pagination from "../../Pagination";
 import PaginationTwo from "../../PaginationTwo";
 import api from "@/api/axios";
 import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
+import usePropertyStore from "@/store/propertyStore"; // Import the store
+
 const isDev = import.meta.env.DEV;
 
 export default function ProperteyFiltering({ region, search }) {
-  const [filteredData, setFilteredData] = useState([]);
-  const [listings, setListings] = useState([]);
-  const [propertyId, setPropertyId] = useState("");
-  const [loading, setLoading] = useState(false);
+  // Get all data and actions from store
+  const {
+    listings,
+    filteredData,
+    sortedFilteredData,
+    loading,
+    selectedPropertyType,
+    priceRange,
+    location,
+    categories,
+    bedrooms,
+    bathroms,
+    squirefeet,
+    yearBuild,
+    propertyId,
+    listingStatus,
+    locationOptions,
+    propertyTypes,
+    facilityOptions,
+    saleStatuses,
+    setListings,
+    setFilteredData,
+    setSortedFilteredData,
+    setLoading,
+    setDataFetched,
+    setLocationOptions,
+    setPropertyTypes,
+    setFacilityOptions,
+    setSaleStatuses,
+    handlePropertyType,
+    handlePriceRange,
+    handleLocation,
+    handleCategories,
+    handleBedrooms,
+    handleBathroms,
+    handleSquirefeet,
+    handleYearBuild,
+    handlePropertyId,
+    handleListingStatus,
+    resetAllFilters,
+    shouldFetchData,
+    setDetailedListings,
+  } = usePropertyStore();
+
+  // Local component states (only UI-related states that don't need global access)
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
-  const [locationOptions, setLocationOptions] = useState([]);
-
-  const [sortedFilteredData, setSortedFilteredData] = useState([]);
-
   const [pageNumber, setPageNumber] = useState(1);
   const [colstyle, setColstyle] = useState(false);
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
-  const [saleStatuses, setSaleStatuses] = useState([]);
+
   useEffect(() => {
     setPageItems(
       sortedFilteredData.slice((pageNumber - 1) * 9, pageNumber * 9)
@@ -35,31 +73,12 @@ export default function ProperteyFiltering({ region, search }) {
     ]);
   }, [pageNumber, sortedFilteredData]);
 
-  const [listingStatus, setListingStatus] = useState("All");
-  const [propertyTypes, setPropertyTypes] = useState([]);
-  const [selectedPropertyType, setSelectedPropertyType] =
-    useState("All Property Types");
-  const [priceRange, setPriceRange] = useState([0, 10000000]);
-  const [bedrooms, setBedrooms] = useState(0);
-  const [bathroms, setBathroms] = useState(0);
-  const [location, setLocation] = useState("All Locations");
-  const [squirefeet, setSquirefeet] = useState([]);
-  const [yearBuild, setyearBuild] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [facilityOptions, setFacilityOptions] = useState([]);
-
   const resetFilter = () => {
-    setListingStatus("All");
-    setPropertyId("");
-    setSelectedPropertyType("All Property Types");
-    setPriceRange([0, 10000000]);
-    setBedrooms(0);
-    setBathroms(0);
-    setLocation("All Locations");
-    setSquirefeet([]);
-    setyearBuild([0, 2050]);
-    setCategories([]);
     setCurrentSortingOption("Newest");
+
+    // Reset all store filters
+    resetAllFilters();
+
     document.querySelectorAll(".filterInput").forEach(function (element) {
       element.value = null;
     });
@@ -67,64 +86,44 @@ export default function ProperteyFiltering({ region, search }) {
     document.querySelectorAll(".filterSelect").forEach(function (element) {
       element.value = "All Locations";
     });
+
+    document.querySelectorAll(".property-id-reset").forEach(function (element) {
+      element.value = "";
+    });
   };
 
-  const handlelistingStatus = (elm) => {
-    setListingStatus((pre) => (pre == elm ? "All" : elm));
-  };
-  const handlePropertyId = (elm) => {
-    setPropertyId(elm.trim());
-  };
-  const handlepropertyType = (elm) => {
-    setSelectedPropertyType(elm);
-  };
-  const handlepriceRange = (elm) => {
-    setPriceRange(elm);
-  };
-  const handlebedrooms = (elm) => {
-    setBedrooms(elm);
-  };
-  const handlebathroms = (elm) => {
-    setBathroms(elm);
-  };
-  const handlelocation = (elm) => {
-    setLocation(elm);
-  };
-  const handlesquirefeet = (elm) => {
-    setSquirefeet(elm);
-  };
-  const handleyearBuild = (elm) => {
-    setyearBuild(elm);
-  };
-  const handlecategories = (elm) => {
-    setCategories((pre) =>
-      pre.includes(elm) ? [...pre.filter((el) => el != elm)] : [...pre, elm]
-    );
-  };
+  // Filter functions object for components that need access to handlers
   const filterFunctions = {
-    handlelistingStatus,
-    handlepropertyType,
-    handlepriceRange,
-    handlebedrooms,
-    handlebathroms,
-    handlelocation,
-    handlesquirefeet,
-    handleyearBuild,
-    handlecategories,
+    handlelistingStatus: handleListingStatus,
+    handlepropertyType: handlePropertyType,
+    handlepriceRange: handlePriceRange,
+    handlebedrooms: handleBedrooms,
+    handlebathroms: handleBathroms,
+    handlelocation: handleLocation,
+    handlesquirefeet: handleSquirefeet,
+    handleyearBuild: handleYearBuild,
+    handlecategories: handleCategories,
+    handlePropertyId: handlePropertyId,
     priceRange,
     listingStatus,
     propertyTypes,
     resetFilter,
-    handlePropertyId,
     bedrooms,
     bathroms,
     location,
     squirefeet,
     yearBuild,
     categories,
+    selectedPropertyType,
   };
+
   useEffect(() => {
     async function fetchListings() {
+      // Only fetch if data hasn't been fetched or if data is empty
+      if (!shouldFetchData(region, search)) {
+        return;
+      }
+
       setLoading(true);
 
       try {
@@ -136,7 +135,7 @@ export default function ProperteyFiltering({ region, search }) {
 
         const detailedListings = await Promise.all(
           data.items.map(async (listing) => {
-            const id = listing.id; // assuming each listing has an `id`
+            const id = listing.id;
             const { data: detailedData } = isDev
               ? await api.get(`/properties/${id}`)
               : await api.get("/property", { params: { id } });
@@ -144,13 +143,13 @@ export default function ProperteyFiltering({ region, search }) {
             return detailedData;
           })
         );
-
-        // Set listings
-        setListings(
-          detailedListings.map((detailedData, index) =>
-            mapApiDataToTemplate(data.items[index], detailedData)
-          )
+        setDetailedListings(detailedListings);
+        // Set listings in store
+        const mappedListings = detailedListings.map((detailedData, index) =>
+          mapApiDataToTemplate(data.items[index], detailedData)
         );
+        setListings(mappedListings);
+
         // 1️⃣ Extract unique sale_status values
         const rawStatuses = [
           ...new Set(
@@ -168,10 +167,11 @@ export default function ProperteyFiltering({ region, search }) {
 
         // 2️⃣ Extract unique facility (amenity) names
         const allFacilities = detailedListings.flatMap(
-          (d) => d.facilities?.map((f) => f.name) || []
+          (d) => d.facilities?.map((f) => f.name.trim()) || []
         );
         const uniqueFacilities = [...new Set(allFacilities)];
-        setFacilityOptions(uniqueFacilities); // <-- Add this state hook: const [facilityOptions, setFacilityOptions] = useState([])
+
+        setFacilityOptions(uniqueFacilities);
 
         // 3️⃣ Extract unique unit types from unit_blocks
         const allPropertyTypes = detailedListings.flatMap(
@@ -185,9 +185,10 @@ export default function ProperteyFiltering({ region, search }) {
             label: type,
           })),
         ];
-        setPropertyTypes(options); // <-- Add this state hook: const [propertyTypeOptions, setPropertyTypeOptions] = useState([])
+        setPropertyTypes(options);
 
-        console.log("all fetched");
+        // Mark data as fetched
+        setDataFetched(true);
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
@@ -196,34 +197,49 @@ export default function ProperteyFiltering({ region, search }) {
     }
 
     fetchListings();
-  }, []);
-  useEffect(() => {
-    const uniqueAreas = Array.from(
-      new Set(listings.map((item) => item.location).filter(Boolean))
-    );
-    const options = [
-      { value: "All Locations", label: "All Locations" },
-      ...uniqueAreas.map((area) => ({
-        value: area,
-        label: area,
-      })),
-    ];
-    setLocationOptions(options);
-  }, [listings]);
+  }, [
+    region,
+    search,
+    shouldFetchData,
+    setListings,
+    setFacilityOptions,
+    setPropertyTypes,
+    setSaleStatuses,
+    setLoading,
+    setDataFetched,
+  ]);
 
   useEffect(() => {
-    // Extract unique area values
+    if (listings.length > 0) {
+      const uniqueAreas = Array.from(
+        new Set(listings.map((item) => item.location).filter(Boolean))
+      );
+      const options = [
+        { value: "All Locations", label: "All Locations" },
+        ...uniqueAreas.map((area) => ({
+          value: area,
+          label: area,
+        })),
+      ];
+      setLocationOptions(options);
+    }
+  }, [listings, setLocationOptions]);
+
+  // Filtering logic using all store values
+  useEffect(() => {
+    if (listings.length === 0) return;
 
     const refItems = listings.filter((elm) => {
       if (listingStatus === "All") {
         return true;
       }
-
       return elm.sale_status === listingStatus;
     });
+
     let filteredArrays = [];
-    /// property type
-    if (selectedPropertyType != "All Property Types") {
+
+    // Property type filter
+    if (selectedPropertyType !== "All Property Types") {
       const filtered = refItems.filter((elm) =>
         elm.propertyTypes.includes(selectedPropertyType)
       );
@@ -232,34 +248,43 @@ export default function ProperteyFiltering({ region, search }) {
       filteredArrays = [...filteredArrays, refItems];
     }
 
-    ///beds
+    // Beds filter
     filteredArrays = [
       ...filteredArrays,
       refItems.filter((el) => {
         return el.bed >= bedrooms;
       }),
     ];
-    // filteredArrays = [
-    //   ...filteredArrays,
-    //   refItems.filter((el) => el.bath >= bathroms),
-    // ];
 
+    // Bathrooms filter
+    filteredArrays = [
+      ...filteredArrays,
+      refItems.filter((el) => {
+        return el.bath >= bathroms;
+      }),
+    ];
+
+    // Categories filter
     filteredArrays = [
       ...filteredArrays,
       !categories.length
         ? [...refItems]
         : refItems.filter((elm) =>
-            categories.every((elem) => elm.features.includes(elem))
+            categories.every((elem) =>
+              elm.features.some((feature) => feature.trim() === elem.trim())
+            )
           ),
     ];
 
-    if (location != "All Locations") {
+    // Location filter
+    if (location !== "All Locations") {
       filteredArrays = [
         ...filteredArrays,
-        refItems.filter((el) => el.city == location),
+        refItems.filter((el) => el.city === location),
       ];
     }
 
+    // Price range filter
     if (priceRange.length > 0) {
       const filtered = refItems.filter(
         (elm) =>
@@ -270,16 +295,16 @@ export default function ProperteyFiltering({ region, search }) {
       filteredArrays = [...filteredArrays, filtered];
     }
 
+    // Square feet filter
     if (
       squirefeet.length > 0 &&
       squirefeet[1] &&
       squirefeet[0] <= squirefeet[1] &&
-      squirefeet[0] != 0 &&
-      squirefeet[1] != 0
+      squirefeet[0] !== 0 &&
+      squirefeet[1] !== 0
     ) {
       const filtered = refItems.filter((elm) => {
         const [rangeMin, rangeMax] = squirefeet;
-        console.log(Number(rangeMin), Number(rangeMax));
 
         const minInRange =
           elm.min_sqft >= Number(rangeMin) && elm.min_sqft <= Number(rangeMax);
@@ -292,6 +317,8 @@ export default function ProperteyFiltering({ region, search }) {
       });
       filteredArrays = [...filteredArrays, filtered];
     }
+
+    // Year built filter
     if (yearBuild.length > 0) {
       const filtered = refItems.filter(
         (elm) =>
@@ -307,7 +334,7 @@ export default function ProperteyFiltering({ region, search }) {
     setFilteredData(commonItems);
   }, [
     listingStatus,
-    propertyTypes,
+    selectedPropertyType,
     priceRange,
     bedrooms,
     bathroms,
@@ -316,26 +343,25 @@ export default function ProperteyFiltering({ region, search }) {
     yearBuild,
     categories,
     listings,
-    facilityOptions,
     propertyId,
-    selectedPropertyType,
+    setFilteredData,
   ]);
 
   useEffect(() => {
     setPageNumber(1);
-    if (currentSortingOption == "Newest") {
+    if (currentSortingOption === "Newest") {
       const sorted = [...filteredData].sort(
         (a, b) => a.yearBuilding - b.yearBuilding
       );
       setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price Low") {
+    } else if (currentSortingOption.trim() === "Price Low") {
       const sorted = [...filteredData].sort(
         (a, b) =>
           a.price.split("$")[1].split(",").join("") -
           b.price.split("$")[1].split(",").join("")
       );
       setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price High") {
+    } else if (currentSortingOption.trim() === "Price High") {
       const sorted = [...filteredData].sort(
         (a, b) =>
           b.price.split("$")[1].split(",").join("") -
@@ -345,7 +371,7 @@ export default function ProperteyFiltering({ region, search }) {
     } else {
       setSortedFilteredData(filteredData);
     }
-  }, [filteredData, currentSortingOption]);
+  }, [filteredData, currentSortingOption, setSortedFilteredData]);
 
   return (
     <section className="pt0 pb90 bgc-f7">

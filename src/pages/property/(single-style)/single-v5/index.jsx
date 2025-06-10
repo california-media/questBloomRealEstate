@@ -32,6 +32,7 @@ import InteriorImages from "@/components/property/property-single-style/common/I
 import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 import PaymentPlans from "@/components/property/property-single-style/common/PaymentPlans";
 import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
+import usePropertyStore from "@/store/propertyStore";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -45,23 +46,50 @@ const SingleV5 = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
+
+  const { detailedListings, loading: storePropertiesLoading } =
+    usePropertyStore();
   useEffect(() => {
     const fetchProperty = async () => {
-      const response = isDev
-        ? await api.get(`/properties/${id}`)
-        : await api.get("/property", {
-            params: {
-              id,
-            },
-          });
-      setProperty({ ...response.data, id });
-      setLoading(false);
+      // First, check if the property already exists in the store
+      if (storePropertiesLoading) {
+        return;
+      }
+      const existingProperty = detailedListings.find(
+        (listing) => listing.id == id
+      );
+
+      if (existingProperty) {
+        // Use cached data from store
+        console.log("Using cached property data from store");
+        setProperty({ ...existingProperty, id });
+        setLoading(false);
+        return;
+      }
+
+      // If not found in store, fetch from API
+      try {
+        console.log("Fetching property data from API");
+        const response = isDev
+          ? await api.get(`/properties/${id}`)
+          : await api.get("/property", {
+              params: {
+                id,
+              },
+            });
+        setProperty({ ...response.data, id });
+      } catch (error) {
+        console.error("Failed to fetch property:", error);
+        // Handle error appropriately
+      } finally {
+        setLoading(false);
+      }
     };
 
     if (id) {
       fetchProperty();
     }
-  }, [id]);
+  }, [id, detailedListings, storePropertiesLoading]); // Add listings as dependency
 
   useEffect(() => {
     if (property) {
@@ -170,12 +198,12 @@ const SingleV5 = () => {
 
               {/* End .ps-widget */}
 
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Leave A Review</h4>
                 <div className="row">
                   <ReviewBoxForm />
                 </div>
-              </div> */}
+              </div>
               {/* End .ps-widget */}
             </div>
             {/* End .col-8 */}

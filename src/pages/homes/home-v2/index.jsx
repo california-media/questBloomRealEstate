@@ -35,8 +35,10 @@ const Home_V2 = () => {
       {/* Home Banner Style V2 */}
       <section className="home-banner-style2 p0">
         <div className="home-style2">
-          <div className="container maxw1600">
-            <div className="home2-hero-banner bdrs12"></div>
+          <div style={{}} className="container maxw1600 ">
+            <div className="d-flex justify-content-center">
+              <div className="home2-hero-banner mbdrs12"></div>
+            </div>
             <div className="row">
               <div className="col-xl-10 mx-auto">
                 <Hero />
