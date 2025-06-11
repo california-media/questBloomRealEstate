@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-const SelectDropdown = ({ propertyTypes, filterFunctions }) => {
+const SelectDropdown = ({ saleStatuses = [], filterFunctions }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -15,24 +15,24 @@ const SelectDropdown = ({ propertyTypes, filterFunctions }) => {
       };
     },
   };
-
+  const statuses = saleStatuses.map((option) => ({
+    value: option,
+    label: option,
+  }));
   return (
     <>
       <Select
-        defaultValue={propertyTypes[0] || null}
+        defaultValue={statuses[0] || null}
         name="colors"
-        options={propertyTypes}
+        options={statuses}
         styles={customStyles}
         className="text-start select-borderless"
         value={{
-          value: filterFunctions?.selectedPropertyType,
-          label:
-            propertyTypes.find(
-              (option) => option.value === filterFunctions?.selectedPropertyType
-            )?.label || "All Property Types",
+          value: filterFunctions?.listingStatus,
+          label: filterFunctions?.listingStatus,
         }}
         classNamePrefix="select"
-        onChange={(e) => filterFunctions?.handlepropertyType(e.value)}
+        onChange={(e) => filterFunctions?.handlelistingStatus(e.value)}
         required
       />
     </>

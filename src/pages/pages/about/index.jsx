@@ -28,7 +28,7 @@ const About = () => {
       {/* End Mobile Nav  */}
 
       {/* Breadcrumb Sections */}
-      
+
       <section className="breadcumb-section2 p-0">
         <div className="container">
           <div className="row">
@@ -117,10 +117,11 @@ const About = () => {
         <div className="container">
           <div className="row" data-aos="fade-up" data-aos-delay="300">
             <div className="col-lg-12">
-              <div className="about-page-img">
+              <div className="about-page-img d-flex justify-content-center">
                 <img
-                  className="w-100 h-100 cover"
-                  src="/images/about/about-page-banner.jpg"
+                  style={{ margin: "auto" }}
+                  className="w-60  h-100 cover "
+                  src="/images/background/team.webp"
                   alt="about banner"
                 />
               </div>
@@ -154,7 +155,7 @@ const About = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">Our Exclusive Agetns</h2>
+                <h2 className="title">Our Exclusive Agents</h2>
                 <p className="paragraph">
                   Aliquam lacinia diam quis lacus euismod
                 </p>
@@ -165,9 +166,14 @@ const About = () => {
           {/* End .row */}
 
           <div className="row">
-            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
-              <div className="property-city-slider">
-                <Agents />
+            <div
+              className="col-lg-12  "
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <div className="property-city-slider ">
+                  {/* Add this wrapper to center content */}
+                  <Agents />
               </div>
             </div>
           </div>

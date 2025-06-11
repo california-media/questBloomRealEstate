@@ -30,9 +30,8 @@ const Agents = () => {
             <div className="col-lg-12">
               <div className="breadcumb-style1">
                 <h2 className="title">Agents</h2>
-                <div className="breadcumb-list">
-                  <a href="#">Home</a>
-                  <a href="#">For Rent</a>
+                <div className="text ">
+                  <a href="#">Our Exclusive Agents</a>
                 </div>
               </div>
             </div>

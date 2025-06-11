@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
     const response = await fetch(
-      "https://search-listings-production.up.railway.app/v1/developers",
+      "https://search-listings-production.up.railway.app/v1/unit-types",
       {
         method: "GET",
         headers: {
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       return res
         .status(response.status)
-        .json({ error: "Failed to fetch developers" });
+        .json({ error: "Failed to fetch unit-types" });
     }
 
     const data = await response.json();

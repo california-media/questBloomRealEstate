@@ -7,7 +7,7 @@ import TopFilter from './TopFilter'
 
 import AllAgents from './agents/AllAgents';
 import agents from '@/data/agents';
-import PaginationTwo from '../listing/PaginationTwo';
+// import PaginationTwo from '../listing/PaginationTwo';
 export default function FilteringAgent() {
     const [filteredData, setFilteredData] = useState([]);
     const [currentSortingOption, setCurrentSortingOption] = useState('Newest')
@@ -104,13 +104,13 @@ export default function FilteringAgent() {
   return (
     <section className="our-agents pt-0">
         <div className="container">
-          <div className="row align-items-center mb20">
+          {/* <div className="row align-items-center mb20">
             <TopFilter  filterFunctions={filterFunctions} />
-          </div>
+          </div> */}
           {/* End .row */}
 
           <div
-            className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
+            className="row row-cols-4 gx4"
             data-aos="fade-up"
             data-aos-delay="100"
           >
@@ -119,7 +119,7 @@ export default function FilteringAgent() {
           {/* End .row */}
 
           <div className="row justify-content-center mt20">
-            <PaginationTwo pageNumber={pageNumber} setPageNumber={setPageNumber} data={sortedFilteredData} pageCapacity={15}/>
+            {/* <PaginationTwo pageNumber={pageNumber} setPageNumber={setPageNumber} data={sortedFilteredData} pageCapacity={15}/> */}
           </div>
         </div>
       </section>

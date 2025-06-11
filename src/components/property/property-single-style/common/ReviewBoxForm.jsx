@@ -1,4 +1,3 @@
-
 import Select from "react-select";
 
 const ReviewBoxForm = () => {
@@ -15,11 +14,11 @@ const ReviewBoxForm = () => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#DDE5C2"
           : isFocused
-          ? "#eb675312"
+          ? "#DDE5C2"
           : undefined,
       };
     },
@@ -38,6 +37,7 @@ const ReviewBoxForm = () => {
             <label className="fw600 ff-heading mb-2">Email</label>
             <input
               type="email"
+              name="email"
               className="form-control"
               placeholder="ibthemes21@gmail.com"
               required
@@ -48,11 +48,12 @@ const ReviewBoxForm = () => {
 
         <div className="col-md-6">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Title</label>
+            <label className="fw600 ff-heading mb-2">Name</label>
             <input
               type="text"
+              name="name"
               className="form-control"
-              placeholder="Enter Title"
+              placeholder="Enter Name"
               required
             />
           </div>
@@ -60,20 +61,15 @@ const ReviewBoxForm = () => {
         {/* End .col-6 */}
 
         <div className="col-md-6">
-          <div className="widget-wrapper sideborder-dropdown mb-4">
-            <label className="fw600 ff-heading mb-2">Rating</label>
-            <div className="form-style2 input-group">
-              <Select
-                defaultValue={[inqueryType[0]]}
-                name="colors"
-                options={inqueryType}
-                styles={customStyles}
-                className="custom-react_select"
-                classNamePrefix="select"
-                required
-                isClearable={false}
-              />
-            </div>
+          <div className="mb-4">
+            <label className="fw600 ff-heading mb-2">Phone</label>
+            <input
+              type="number"
+              name="phone"
+              className="form-control"
+              placeholder="Enter Name"
+              required
+            />
           </div>
         </div>
         {/* End .col-6 */}

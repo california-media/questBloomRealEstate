@@ -34,8 +34,10 @@ const Hero = () => {
     handleYearBuild,
     handlePropertyId,
     handleListingStatus,
+    listingStatus,
     resetAllFilters,
     shouldFetchData,
+    saleStatuses,
   } = usePropertyStore();
 
   const resetFilter = () => {
@@ -73,25 +75,19 @@ const Hero = () => {
     location,
     propertyId,
     squirefeet,
+    listingStatus,
     categories,
     selectedPropertyType,
     setDataFetched,
+    setSaleStatuses,
   };
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     async function fetchOptions() {
-      // Fetch other options if needed
-      // if (saleStatuses?.length === 0) {
-      //   const newSaleStatuses = await api.get("/sale-statuses");
-      //   const formattedStatuses = [
-      //     { id: "flexRadioDefault0", label: "All", defaultChecked: true },
-      //     ...newSaleStatuses.data.map((status, index) => ({
-      //       id: `flexRadioDefault${index + 1}`,
-      //       label: status,
-      //     })),
-      //   ];
-      //   setSaleStatuses(formattedStatuses);
-      // }
+      // Must refetch this since the format in whcih they are fetched on home page is different
+      const { data: newSaleStatuses } = await api.get("/sale-statuses");
+
+      setSaleStatuses(newSaleStatuses);
       try {
         setLoading(true);
         setFacilityOptions(hardcoded_facilities);
@@ -142,6 +138,7 @@ const Hero = () => {
     <>
       <div className="inner-banner-style2 text-center position-relative">
         <HeroContent
+          saleStatuses={saleStatuses}
           propertyTypes={propertyTypes}
           filterFunctions={filterFunctions}
           searchTerm={searchTerm}
