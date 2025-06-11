@@ -45,7 +45,15 @@ const HeroContent = ({
               <div className="row align-items-center justify-content-start justify-content-md-center">
                 <div className="col-md-5 col-lg-6">
                   <div className="advance-search-field position-relative text-start bdrr1 bdrrn-sm bb1-sm">
-                    <form className="form-search position-relative">
+                    <form
+                      className="form-search position-relative"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        searchTerm
+                          ? navigate("/search-properties/" + searchTerm)
+                          : navigate("/search-properties");
+                      }}
+                    >
                       <div className="box-search">
                         <span className="icon flaticon-home-1" />
                         <input

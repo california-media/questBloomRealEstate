@@ -87,7 +87,7 @@ const PropertyDetails = ({ property }) => {
   // Helper function to get price range
   const getPriceRange = () => {
     if (!property?.unit_blocks || property.unit_blocks.length === 0) {
-      return "N/A";
+      return "Ask for price";
     }
 
     const prices = property.unit_blocks
@@ -98,7 +98,7 @@ const PropertyDetails = ({ property }) => {
       )
       .map((block) => parseFloat(block.units_price_from_aed));
 
-    if (prices.length === 0) return "N/A";
+    if (prices.length === 0) return "Ask for price";
 
     const min = Math.min(...prices);
     const max = Math.max(...prices);

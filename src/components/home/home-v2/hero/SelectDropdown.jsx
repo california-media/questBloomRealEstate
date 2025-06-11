@@ -24,11 +24,17 @@ const SelectDropdown = ({ propertyTypes, filterFunctions }) => {
         options={propertyTypes}
         styles={customStyles}
         className="text-start select-borderless"
+        value={{
+          value: filterFunctions?.selectedPropertyType,
+          label:
+            propertyTypes.find(
+              (option) => option.value === filterFunctions?.selectedPropertyType
+            )?.label || "All Property Types",
+        }}
         classNamePrefix="select"
         onChange={(e) => filterFunctions?.handlepropertyType(e.value)}
         required
       />
-
     </>
   );
 };

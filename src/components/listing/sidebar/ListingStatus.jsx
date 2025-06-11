@@ -1,6 +1,10 @@
 import React from "react";
 
-const ListingStatus = ({ filterFunctions, saleStatuses = [] }) => {
+const ListingStatus = ({
+  filterFunctions,
+  saleStatuses = [],
+  setDataFetched,
+}) => {
   return (
     <>
       {saleStatuses.map((option) => (
@@ -12,7 +16,10 @@ const ListingStatus = ({ filterFunctions, saleStatuses = [] }) => {
             className="form-check-input"
             type="radio"
             checked={filterFunctions?.listingStatus == option.label}
-            onChange={() => filterFunctions.handlelistingStatus(option.label)}
+            onChange={() => {
+              setDataFetched(false);
+              filterFunctions.handlelistingStatus(option.label);
+            }}
           />
           <label className="form-check-label" htmlFor={option.id}>
             {option.label}
