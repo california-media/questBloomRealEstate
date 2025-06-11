@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeroContent = ({
   propertyTypes,
+  saleStatuses,
   filterFunctions,
   searchTerm,
   setSearchTerm,
@@ -76,7 +77,7 @@ const HeroContent = ({
                   <div className="bdrr1 bdrrn-sm pe-0 pe-lg-3 bb1-sm">
                     <div className="bootselect-multiselect">
                       <SelectDropdown
-                        propertyTypes={propertyTypes}
+                        saleStatuses={saleStatuses}
                         filterFunctions={filterFunctions}
                       />
                     </div>

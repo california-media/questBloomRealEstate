@@ -12,6 +12,7 @@ const UnitPlans = ({ property }) => {
   // Helper function to extract bedroom count for display
   const getBedroomCount = (name) => {
     // Extract bedroom info from name (e.g., "1 bedroom" or "1,5 bedroom")
+    if (!name) return "N/A";
     const match = name.match(/(\d+(?:,\d+)?)\s*bedroom/i);
     if (match) {
       const bedrooms = match[1].replace(",", ".");

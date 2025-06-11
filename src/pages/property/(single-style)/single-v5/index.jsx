@@ -81,7 +81,7 @@ const SingleV5 = () => {
               },
             });
         setProperty({ ...response.data, id });
-        setDetailedListings([...detailedListings, { ...response.data, id }]);   
+        setDetailedListings([...detailedListings, { ...response.data, id }]);
       } catch (error) {
         console.error("Failed to fetch property:", error);
         // Handle error appropriately
@@ -198,17 +198,30 @@ const SingleV5 = () => {
                   <MasterPlan master_plan={property?.master_plan} />
                 </div>
               </div>
-              {/* End .ps-widget */}
-
-              {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Leave A Review</h4>
                 <div className="row">
-                  <ReviewBoxForm />
+                  {/* <AllComments /> */}
+                  <div className="product_single_content mb50">
+                    <div className="mbp_pagination_comments">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="total_review d-flex align-items-center justify-content-between mb20">
+                            <h6 className="fz17 mb15">
+                              <i className="fas fa-couch fz18 pe-2" />
+                              Interior Images
+                            </h6>
+                          </div>
+                        </div>
+                        {/* End review filter */}
+
+                        <InteriorImages interior={property?.interior} />
+                        {/* End reviews */}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              {/* End .ps-widget */}
             </div>
             {/* End .col-8 */}
 
@@ -270,28 +283,12 @@ const SingleV5 = () => {
                   </div>
                 </div>
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                  <h4 className="title fz17 mb30">Leave A Review</h4>
                   <div className="row">
-                    {/* <AllComments /> */}
-                    <div className="product_single_content mb50">
-                      <div className="mbp_pagination_comments">
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <div className="total_review d-flex align-items-center justify-content-between mb20">
-                              <h6 className="fz17 mb15">
-                                <i className="fas fa-couch fz18 pe-2" />
-                                Interior Images
-                              </h6>
-                            </div>
-                          </div>
-                          {/* End review filter */}
-
-                          <InteriorImages interior={property?.interior} />
-                          {/* End reviews */}
-                        </div>
-                      </div>
-                    </div>
+                    <ReviewBoxForm />
                   </div>
                 </div>
+
                 {/* End PropertyViews */}
 
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">

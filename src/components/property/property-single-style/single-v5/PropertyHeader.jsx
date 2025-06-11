@@ -184,22 +184,21 @@ const PropertyHeader = ({ property }) => {
                   textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
                 }}
               >
-                Starting from{" "}
-                {formatPrice(
-                  Math.min(
-                    ...property?.unit_blocks
-                      .filter((block) => block.units_price_from_aed)
-                      .map((block) => block.units_price_from_aed)
-                  ) / getAreaDisplay() || "Ask for price"
-                ) === Infinity
-                  ? ""
-                  : formatPrice(
+                {Math.min(
+                  ...property?.unit_blocks
+                    .filter((block) => block.units_price_from_aed)
+                    .map((block) => block.units_price_from_aed)
+                ) !== Infinity
+                  ? "Starting from AED " +
+                    Math.floor(
                       Math.min(
                         ...property?.unit_blocks
                           .filter((block) => block.units_price_from_aed)
                           .map((block) => block.units_price_from_aed)
-                      ) / getAreaDisplay() || "Ask for price"
-                    ) + " AED/sqft"}
+                      ) / getAreaDisplay()
+                    ) +
+                    " per sqft"
+                  : ""}
               </p>
             )}
           </div>

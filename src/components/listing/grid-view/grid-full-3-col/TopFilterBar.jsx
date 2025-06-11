@@ -1,9 +1,9 @@
 import React from "react";
 import ListingStatus from "../../sidebar/ListingStatus";
-import PropertyType from "../../sidebar/PropertyType";
-import PriceRange from "../../sidebar/PriceRange";
-import Bedroom from "../../sidebar/Bedroom";
-import Bathroom from "../../sidebar/Bathroom";
+// import PropertyType from "../../sidebar/PropertyType";
+// import PriceRange from "../../sidebar/PriceRange";
+// import Bedroom from "../../sidebar/Bedroom";
+// import Bathroom from "../../sidebar/Bathroom";
 import Select from "react-select";
 
 const customStyles = {

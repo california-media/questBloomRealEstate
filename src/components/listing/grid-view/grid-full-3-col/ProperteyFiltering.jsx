@@ -194,10 +194,10 @@ export default function ProperteyFiltering({ region, search }) {
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
-      if (!shouldFetchData()) {
-        console.log("blocked by shouldFetchData");
-        return;
-      }
+      // if (!shouldFetchData()) {
+      //   console.log("blocked by shouldFetchData");
+      //   return;
+      // }
       // if (detailedListings.length > 0 || listings.length > 0) return;
 
       setLoading(true);
@@ -257,18 +257,17 @@ export default function ProperteyFiltering({ region, search }) {
         setPaginationInfo(data.pagination);
         setFetchedPages(new Set([1]));
 
-        // Fetch other options if needed
-        if (saleStatuses?.length === 0) {
-          const newSaleStatuses = await api.get("/sale-statuses");
-          const formattedStatuses = [
-            { id: "flexRadioDefault0", label: "All", defaultChecked: true },
-            ...newSaleStatuses.data.map((status, index) => ({
-              id: `flexRadioDefault${index + 1}`,
-              label: status,
-            })),
-          ];
-          setSaleStatuses(formattedStatuses);
-        }
+        // Must refetch since the format in whcih they are fetched on home page is different
+        const newSaleStatuses = await api.get("/sale-statuses");
+        const formattedStatuses = [
+          { id: "flexRadioDefault0", label: "All", defaultChecked: true },
+          ...newSaleStatuses.data.map((status, index) => ({
+            id: `flexRadioDefault${index + 1}`,
+            label: status,
+          })),
+        ];
+        console.log("saleStatuses", formattedStatuses);
+        setSaleStatuses(formattedStatuses);
 
         setFacilityOptions(hardcoded_facilities);
 
@@ -293,7 +292,6 @@ export default function ProperteyFiltering({ region, search }) {
               label: area.name,
             })),
           ];
-          console.log(options);
           setLocationOptions(options);
         }
         setPageNumber(1);
