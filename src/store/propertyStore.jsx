@@ -106,7 +106,7 @@ const usePropertyStore = create((set, get) => ({
   // Check if data needs to be fetched
   shouldFetchData: () => {
     const state = get();
-    return !state.dataFetched || state.listings.length === 0;
+    return !state.dataFetched;
   },
 }));
 

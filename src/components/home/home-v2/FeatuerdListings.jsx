@@ -85,7 +85,7 @@ const FeaturedListings = () => {
                     <div className="list-price">
                       {"AED " +
                         (Number(listing.price.split("$")[1]) === 0
-                          ? "N/A"
+                          ? "Ask for price"
                           : Number(
                               listing.price.split("$")[1]
                             ).toLocaleString())}

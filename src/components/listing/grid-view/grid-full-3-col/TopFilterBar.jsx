@@ -13,9 +13,9 @@ const customStyles = {
       backgroundColor: isSelected
         ? "#797631"
         : isHovered
-        ? "#eb675312"
+        ? "#DDE5C2"
         : isFocused
-        ? "#eb675312"
+        ? "#DDE5C2"
         : undefined,
     };
   },
@@ -33,6 +33,7 @@ const customStyles = {
 
 const TopFilterBar = ({
   filterFunctions,
+  setDataFetched,
   setCurrentSortingOption,
   colstyle,
   setColstyle,
@@ -58,6 +59,7 @@ const TopFilterBar = ({
                   <h6 className="list-title">Listing Status</h6>
                   <div className="radio-element">
                     <ListingStatus
+                      setDataFetched={setDataFetched}
                       filterFunctions={filterFunctions}
                       saleStatuses={saleStatuses}
                     />
@@ -103,7 +105,7 @@ const TopFilterBar = ({
             </li> */}
             {/* End li Property Type */}
 
-            <li className="list-inline-item position-relative">
+            {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -116,7 +118,6 @@ const TopFilterBar = ({
               <div className="dropdown-menu dd3">
                 <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
                   <h6 className="list-title">Price Range</h6>
-                  {/* Range Slider Desktop Version */}
                   <div className="range-slider-style1">
                     <PriceRange filterFunctions={filterFunctions} />
                   </div>
@@ -130,24 +131,30 @@ const TopFilterBar = ({
                   </button>
                 </div>
               </div>
-            </li>
+            </li> */}
             {/* End li Price */}
             <li
               className="list-inline-item position-relative font-bold"
               style={{ width: "200px" }}
             >
               <Select
-                defaultValue={[locationOptions[0]]}
+                defaultValue={locationOptions[0] || null}
                 name="colors"
                 styles={customStyles}
                 options={locationOptions}
-                className=" mb15 dropdown-toggle"
+                className="select-custom filterSelect"
+                classNamePrefix="select"
                 value={{
                   value: filterFunctions?.location,
-                  label: filterFunctions?.location,
+                  label: locationOptions.find(
+                    (option) => option.value === filterFunctions?.location
+                  )?.label || "All Locations",
                 }}
-                classNamePrefix="select"
-                onChange={(e) => filterFunctions?.handlelocation(e.value)}
+                onChange={(e) => {
+                  setDataFetched(false);
+                  console.log(e.value)
+                  filterFunctions?.handlelocation(e.value);
+                }}
                 required
               />
             </li>

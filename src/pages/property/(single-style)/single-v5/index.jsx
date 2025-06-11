@@ -47,8 +47,11 @@ const SingleV5 = () => {
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
 
-  const { detailedListings, loading: storePropertiesLoading } =
-    usePropertyStore();
+  const {
+    detailedListings,
+    setDetailedListings,
+    loading: storePropertiesLoading,
+  } = usePropertyStore();
   useEffect(() => {
     const fetchProperty = async () => {
       // First, check if the property already exists in the store
@@ -78,6 +81,7 @@ const SingleV5 = () => {
               },
             });
         setProperty({ ...response.data, id });
+        setDetailedListings([...detailedListings, { ...response.data, id }]);   
       } catch (error) {
         console.error("Failed to fetch property:", error);
         // Handle error appropriately

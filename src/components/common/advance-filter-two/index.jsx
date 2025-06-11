@@ -12,9 +12,12 @@ const AdvanceFilterModal = ({
   locationOptions,
   facilityOptions,
   searchTerm,
+  setPageNumber,
   loading,
+  setDataFetched,
 }) => {
   const navigate = useNavigate();
+  // console.log(filterFunctions?.location, locationOptions)
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -33,6 +36,9 @@ const AdvanceFilterModal = ({
   const [propertyType, setPropertyType] = useState(
     filterFunctions?.selectedPropertyType || "All Property Types"
   );
+  const [priceRange, setPriceRange] = useState(
+    filterFunctions?.priceRange || [0, 10000000]
+  );
   const [propertyId, setPropertyId] = useState(
     filterFunctions?.propertyId || ""
   );
@@ -40,7 +46,9 @@ const AdvanceFilterModal = ({
     filterFunctions?.location || "All Locations"
   );
   const [squareFeet, setSquareFeet] = useState(
-    filterFunctions?.squirefeet || [0, 0]
+    filterFunctions?.squirefeet.length === 0
+      ? [0, 0]
+      : filterFunctions?.squirefeet
   );
   const [bedroomCount, setBedroomCount] = useState(
     filterFunctions?.bedrooms || 0
@@ -48,12 +56,16 @@ const AdvanceFilterModal = ({
   const [amenities, setAmenities] = useState(filterFunctions?.categories || []);
 
   const handleSearch = () => {
+    setDataFetched(false); ////
+    console.log("requesting", propertyType, propertyId, location, squareFeet);
     filterFunctions?.handlepropertyType(propertyType);
     filterFunctions?.handlePropertyId(propertyId);
     filterFunctions?.handlelocation(location);
     filterFunctions?.handlesquirefeet(squareFeet);
     filterFunctions?.handlebedrooms(bedroomCount);
     filterFunctions?.handlecategories(amenities);
+    filterFunctions?.handlepriceRange(priceRange);
+    if (setPageNumber) setPageNumber(1);
     searchTerm
       ? navigate("/search-properties/" + searchTerm)
       : navigate("/search-properties/");
@@ -81,7 +93,11 @@ const AdvanceFilterModal = ({
               <div className="widget-wrapper">
                 <h6 className="list-title mb20">Price Range</h6>
                 <div className="range-slider-style modal-version">
-                  <PriceRange filterFunctions={filterFunctions} />
+                  <PriceRange
+                    setPriceRange={setPriceRange}
+                    priceRange={priceRange}
+                    filterFunctions={filterFunctions}
+                  />
                 </div>
               </div>
             </div>
@@ -168,7 +184,9 @@ const AdvanceFilterModal = ({
                     className="select-custom filterSelect"
                     value={{
                       value: location,
-                      label: location,
+                      label: locationOptions.find(
+                        (option) => option.value === location
+                      )?.label,
                     }}
                     classNamePrefix="select"
                     onChange={(e) => setLocation(e.value)}
@@ -189,10 +207,7 @@ const AdvanceFilterModal = ({
                         type="number"
                         className="form-control filterInput"
                         onChange={(e) =>
-                          setSquareFeet([
-                            parseInt(e.target.value, 10),
-                            squareFeet[0],
-                          ])
+                          setSquareFeet([Number(e.target.value), squareFeet[1]])
                         }
                         placeholder="Min."
                         id="minFeet3"
@@ -206,10 +221,7 @@ const AdvanceFilterModal = ({
                         placeholder="Max"
                         id="maxFeet3"
                         onChange={(e) =>
-                          setSquareFeet([
-                            squareFeet[1],
-                            parseInt(e.target.value, 10),
-                          ])
+                          setSquareFeet([squareFeet[0], Number(e.target.value)])
                         }
                       />
                     </div>
@@ -221,7 +233,7 @@ const AdvanceFilterModal = ({
           </div>
           {/* End .row */}
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
               <div className="widget-wrapper mb0">
                 <h6 className="list-title mb10">Amenities</h6>
@@ -251,13 +263,14 @@ const AdvanceFilterModal = ({
                 setAmenities={setAmenities}
               />
             )}
-          </div>
+          </div> */}
         </div>
         {/* End modal body */}
 
         <div className="modal-footer justify-content-between">
           <button
             className="reset-button"
+            data-bs-dismiss="modal"
             onClick={() => {
               filterFunctions?.resetFilter();
               setBedroomCount(0);
@@ -266,6 +279,10 @@ const AdvanceFilterModal = ({
               setLocation("All Locations");
               setPropertyId("");
               setPropertyType("All Property Types");
+              setDataFetched(false);
+              setPageNumber(1);
+              setPriceRange([0, 10000000]);
+              setSquareFeet([0, 0]);
             }}
           >
             <span className="flaticon-turn-back" />

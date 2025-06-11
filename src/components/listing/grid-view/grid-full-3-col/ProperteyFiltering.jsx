@@ -7,8 +7,11 @@ import PaginationTwo from "../../PaginationTwo";
 import api from "@/api/axios";
 import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import usePropertyStore from "@/store/propertyStore"; // Import the store
+import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 
 const isDev = import.meta.env.DEV;
+
+const hardcoded_facilities = ["Swimming Pool"];
 
 export default function ProperteyFiltering({ region, search }) {
   // Get all data and actions from store
@@ -52,29 +55,100 @@ export default function ProperteyFiltering({ region, search }) {
     handleListingStatus,
     resetAllFilters,
     shouldFetchData,
-    setDetailedListings,
   } = usePropertyStore();
 
-  // Local component states (only UI-related states that don't need global access)
+  // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [pageNumber, setPageNumber] = useState(1);
   const [colstyle, setColstyle] = useState(false);
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
 
+  // Pagination states
+  const [paginationInfo, setPaginationInfo] = useState({
+    has_next: false,
+    has_prev: false,
+    page: 1,
+    pages: 1,
+    per_page: 9,
+    total: 0,
+  });
+
+  const [fetchedPages, setFetchedPages] = useState(new Set([1])); // Track which pages have been fetched
+
+  // Update page items based on current page and available data
   useEffect(() => {
-    setPageItems(
-      sortedFilteredData.slice((pageNumber - 1) * 9, pageNumber * 9)
-    );
+    const startIndex = (pageNumber - 1) * 9;
+    const endIndex = pageNumber * 9;
+    const currentPageItems = listings.slice(startIndex, startIndex + 9);
+    setPageItems(currentPageItems);
     setPageContentTrac([
-      (pageNumber - 1) * 9 + 1,
-      pageNumber * 9,
-      sortedFilteredData.length,
+      startIndex + 1,
+      Math.min(endIndex, listings.length),
+      paginationInfo.total,
     ]);
-  }, [pageNumber, sortedFilteredData]);
+  }, [pageNumber, listings, paginationInfo.total]);
+
+  // Handle page change - fetch new data if needed
+  const handlePageChange = async (newPageNumber) => {
+    setPageNumber(newPageNumber);
+    // If we haven't fetched this page yet and we're going forward
+    if (
+      !fetchedPages.has(newPageNumber) &&
+      newPageNumber > Math.max(...fetchedPages)
+    ) {
+      await fetchPageData(newPageNumber);
+    }
+  };
+
+  // Fetch data for a specific page
+  const fetchPageData = async (page) => {
+    setLoading(true);
+    try {
+      const params = {
+        page,
+        per_page: 9,
+        ...(region && { region }),
+        ...(search && { search_query: search }),
+      };
+
+      const { data } = await api.get("/properties", { params });
+
+      // Get detailed data for new items
+      // const newDetailedListings = await Promise.all(
+      //   data.items.map(async (listing) => {
+      //     const id = listing.id;
+      //     const { data: detailedData } = isDev
+      //       ? await api.get(`/properties/${id}`)
+      //       : await api.get("/property", { params: { id } });
+      //     return detailedData;
+      //   })
+      // );
+
+      // Map new listings
+      const mappedNewListings = data.items.map((item) =>
+        mapApiDataToTemplateSingle(item)
+      );
+
+      // Update store with merged data
+      // setDetailedListings([...detailedListings, ...newDetailedListings]);
+      setListings([...listings, ...mappedNewListings]);
+
+      // Update pagination info
+      setPaginationInfo(data.pagination);
+
+      // Mark this page as fetched
+      setFetchedPages((prev) => new Set([...prev, page]));
+    } catch (error) {
+      console.error("Failed to fetch page data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
+    setPageNumber(1);
 
     // Reset all store filters
     resetAllFilters();
@@ -117,77 +191,112 @@ export default function ProperteyFiltering({ region, search }) {
     selectedPropertyType,
   };
 
+  // Initial data fetch
   useEffect(() => {
-    async function fetchListings() {
-      // Only fetch if data hasn't been fetched or if data is empty
-      if (!shouldFetchData(region, search)) {
+    async function fetchInitialData() {
+      if (!shouldFetchData()) {
+        console.log("blocked by shouldFetchData");
         return;
       }
+      // if (detailedListings.length > 0 || listings.length > 0) return;
 
       setLoading(true);
 
       try {
-        const { data } = region
-          ? await api.get("/properties", { params: { region } })
-          : search
-          ? await api.get("/properties", { params: { search_query: search } })
-          : await api.get("/properties");
+        const params = {
+          page: 1,
+          per_page: 9,
+          ...(selectedPropertyType != "All Property Types" && {
+            unit_types: selectedPropertyType,
+          }),
+          ...(priceRange[0] != 0 && {
+            unit_price_from: priceRange[0],
+          }),
+          ...(priceRange[1] != 10000000 && {
+            unit_price_to: priceRange[1],
+          }),
+          ...(propertyId != "" && { project_ids: propertyId }),
+          ...(location != "All Locations" && { areas: location }),
+          ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
 
-        const detailedListings = await Promise.all(
-          data.items.map(async (listing) => {
-            const id = listing.id;
-            const { data: detailedData } = isDev
-              ? await api.get(`/properties/${id}`)
-              : await api.get("/property", { params: { id } });
+          ...(squirefeet.length !== 0 &&
+            squirefeet[0] !== 0 && {
+              unit_area_from: squirefeet[0],
+            }),
+          ...(squirefeet.length !== 0 &&
+            squirefeet[1] !== 0 && {
+              unit_area_to: squirefeet[1],
+            }),
+          ...(listingStatus != "All" && { sale_status: listingStatus }),
+          ...(region && { region }),
+          ...(search && { search_query: search }),
+        };
+        // Logging all variables used in `params`
 
-            return detailedData;
-          })
-        );
-        setDetailedListings(detailedListings);
+        console.log("Constructed params:", params);
+        const { data } = await api.get("/properties", { params });
+
+        // const detailedListings = await Promise.all(
+        //   data.items.map(async (listing) => {
+        //     const id = listing.id;
+        //     const { data: detailedData } = isDev
+        //       ? await api.get(`/properties/${id}`)
+        //       : await api.get("/property", { params: { id } });
+        //     return detailedData;
+        //   })
+        // );
+        // setDetailedListings(detailedListings);
+
         // Set listings in store
-        const mappedListings = detailedListings.map((detailedData, index) =>
-          mapApiDataToTemplate(data.items[index], detailedData)
+        const mappedNewListings = data.items.map((item) =>
+          mapApiDataToTemplateSingle(item)
         );
-        setListings(mappedListings);
+        setListings(mappedNewListings);
 
-        // 1️⃣ Extract unique sale_status values
-        const rawStatuses = [
-          ...new Set(
-            data.items.map((item) => item.sale_status).filter(Boolean)
-          ),
-        ];
-        const formattedStatuses = [
-          { id: "flexRadioDefault0", label: "All", defaultChecked: true },
-          ...rawStatuses.map((status, index) => ({
-            id: `flexRadioDefault${index + 1}`,
-            label: status,
-          })),
-        ];
-        setSaleStatuses(formattedStatuses);
+        // Set pagination info
+        setPaginationInfo(data.pagination);
+        setFetchedPages(new Set([1]));
 
-        // 2️⃣ Extract unique facility (amenity) names
-        const allFacilities = detailedListings.flatMap(
-          (d) => d.facilities?.map((f) => f.name.trim()) || []
-        );
-        const uniqueFacilities = [...new Set(allFacilities)];
+        // Fetch other options if needed
+        if (saleStatuses?.length === 0) {
+          const newSaleStatuses = await api.get("/sale-statuses");
+          const formattedStatuses = [
+            { id: "flexRadioDefault0", label: "All", defaultChecked: true },
+            ...newSaleStatuses.data.map((status, index) => ({
+              id: `flexRadioDefault${index + 1}`,
+              label: status,
+            })),
+          ];
+          setSaleStatuses(formattedStatuses);
+        }
 
-        setFacilityOptions(uniqueFacilities);
+        setFacilityOptions(hardcoded_facilities);
 
-        // 3️⃣ Extract unique unit types from unit_blocks
-        const allPropertyTypes = detailedListings.flatMap(
-          (d) => d.unit_blocks?.map((u) => u.unit_type) || []
-        );
-        const uniquePropertyTypes = [...new Set(allPropertyTypes)];
-        const options = [
-          { value: "All Property Types", label: "All Property Types" },
-          ...uniquePropertyTypes.map((type) => ({
-            value: type,
-            label: type,
-          })),
-        ];
-        setPropertyTypes(options);
+        if (propertyTypes?.length === 0) {
+          const newPropertyTypes = await api.get("/unit-types");
+          const options = [
+            { value: "All Property Types", label: "All Property Types" },
+            ...newPropertyTypes.data.map((type) => ({
+              value: type,
+              label: type,
+            })),
+          ];
+          setPropertyTypes(options);
+        }
 
-        // Mark data as fetched
+        if (locationOptions?.length === 0) {
+          const newLocationOptions = await api.get("/areas");
+          const options = [
+            { value: "All Locations", label: "All Locations" },
+            ...newLocationOptions.data.map((area) => ({
+              value: area.id,
+              label: area.name,
+            })),
+          ];
+          console.log(options);
+          setLocationOptions(options);
+        }
+        setPageNumber(1);
         setDataFetched(true);
       } catch (error) {
         console.error("Failed to fetch listings", error);
@@ -196,142 +305,171 @@ export default function ProperteyFiltering({ region, search }) {
       }
     }
 
-    fetchListings();
+    fetchInitialData();
   }, [
     region,
     search,
-    shouldFetchData,
-    setListings,
-    setFacilityOptions,
-    setPropertyTypes,
-    setSaleStatuses,
-    setLoading,
-    setDataFetched,
+    listingStatus,
+    selectedPropertyType,
+    bedrooms,
+    location,
+    squirefeet,
+    yearBuild,
+    categories,
+    priceRange,
+    propertyId,
   ]);
 
+  // Client-side filtering logic (now works on paginated data)
+  // useEffect(() => {
+  //   if (listings.length === 0) return;
+
+  //   const refItems = listings.filter((elm) => {
+  //     if (listingStatus === "All") {
+  //       return true;
+  //     }
+  //     return elm.sale_status === listingStatus;
+  //   });
+
+  //   let filteredArrays = [];
+
+  //   // Property type filter
+  //   if (selectedPropertyType !== "All Property Types") {
+  //     const filtered = refItems.filter((elm) =>
+  //       elm.propertyTypes.includes(selectedPropertyType)
+  //     );
+  //     filteredArrays = [...filteredArrays, filtered];
+  //   } else {
+  //     filteredArrays = [...filteredArrays, refItems];
+  //   }
+
+  //   // Beds filter
+  //   filteredArrays = [
+  //     ...filteredArrays,
+  //     refItems.filter((el) => {
+  //       return el.bed >= bedrooms;
+  //     }),
+  //   ];
+
+  //   // Bathrooms filter
+  //   filteredArrays = [
+  //     ...filteredArrays,
+  //     refItems.filter((el) => {
+  //       return el.bath >= bathroms;
+  //     }),
+  //   ];
+
+  //   // Categories filter
+  //   filteredArrays = [
+  //     ...filteredArrays,
+  //     !categories.length
+  //       ? [...refItems]
+  //       : refItems.filter((elm) =>
+  //           categories.every((elem) =>
+  //             elm.features.some((feature) => feature.trim() === elem.trim())
+  //           )
+  //         ),
+  //   ];
+
+  //   // Location filter
+  //   if (location !== "All Locations") {
+  //     filteredArrays = [
+  //       ...filteredArrays,
+  //       refItems.filter((el) => el.city === location),
+  //     ];
+  //   }
+
+  //   // Price range filter
+  //   if (priceRange.length > 0) {
+  //     const filtered = refItems.filter(
+  //       (elm) =>
+  //         Number(elm.price.split("$")[1].split(",").join("")) >=
+  //           priceRange[0] &&
+  //         Number(elm.price.split("$")[1].split(",").join("")) <= priceRange[1]
+  //     );
+  //     filteredArrays = [...filteredArrays, filtered];
+  //   }
+
+  //   // Square feet filter
+  //   if (
+  //     squirefeet.length > 0 &&
+  //     squirefeet[1] &&
+  //     squirefeet[0] <= squirefeet[1] &&
+  //     squirefeet[0] !== 0 &&
+  //     squirefeet[1] !== 0
+  //   ) {
+  //     const filtered = refItems.filter((elm) => {
+  //       const [rangeMin, rangeMax] = squirefeet;
+
+  //       const minInRange =
+  //         elm.min_sqft >= Number(rangeMin) && elm.min_sqft <= Number(rangeMax);
+  //       const maxInRange =
+  //         elm.max_sqft >= Number(rangeMin) && elm.max_sqft <= Number(rangeMax);
+  //       const rangeWithinElm =
+  //         Number(rangeMin) >= elm.min_sqft && Number(rangeMax) <= elm.max_sqft;
+
+  //       return minInRange || maxInRange || rangeWithinElm;
+  //     });
+  //     filteredArrays = [...filteredArrays, filtered];
+  //   }
+
+  //   // Year built filter
+  //   if (yearBuild.length > 0) {
+  //     const filtered = refItems.filter(
+  //       (elm) =>
+  //         elm.yearBuilding >= yearBuild[0] && elm.yearBuilding <= yearBuild[1]
+  //     );
+  //     filteredArrays = [...filteredArrays, filtered];
+  //   }
+
+  //   const commonItems = refItems
+  //     .filter((item) => filteredArrays.every((array) => array.includes(item)))
+  //     .filter((item) => (propertyId !== "" ? item.id == propertyId : true));
+
+  //   setFilteredData(commonItems);
+  // }, [
+  //   listingStatus,
+  //   selectedPropertyType,
+  //   priceRange,
+  //   bedrooms,
+  //   bathroms,
+  //   location,
+  //   squirefeet,
+  //   categories,
+  //   listings,
+  //   propertyId,
+  //   setFilteredData,
+  // ]);
+
+  // Sorting logic
   useEffect(() => {
-    if (listings.length > 0) {
-      const uniqueAreas = Array.from(
-        new Set(listings.map((item) => item.location).filter(Boolean))
+    if (currentSortingOption === "Newest") {
+      const sorted = [...listings].sort(
+        (a, b) => a.yearBuilding - b.yearBuilding
       );
-      const options = [
-        { value: "All Locations", label: "All Locations" },
-        ...uniqueAreas.map((area) => ({
-          value: area,
-          label: area,
-        })),
-      ];
-      setLocationOptions(options);
-    }
-  }, [listings, setLocationOptions]);
-
-  // Filtering logic using all store values
-  useEffect(() => {
-    if (listings.length === 0) return;
-
-    const refItems = listings.filter((elm) => {
-      if (listingStatus === "All") {
-        return true;
-      }
-      return elm.sale_status === listingStatus;
-    });
-
-    let filteredArrays = [];
-
-    // Property type filter
-    if (selectedPropertyType !== "All Property Types") {
-      const filtered = refItems.filter((elm) =>
-        elm.propertyTypes.includes(selectedPropertyType)
+      setListings(sorted);
+    } else if (currentSortingOption.trim() === "Price Low") {
+      const sorted = [...listings].sort(
+        (a, b) =>
+          a.price.split("$")[1].split(",").join("") -
+          b.price.split("$")[1].split(",").join("")
       );
-      filteredArrays = [...filteredArrays, filtered];
+      setListings(sorted);
+    } else if (currentSortingOption.trim() === "Price High") {
+      const sorted = [...listings].sort(
+        (a, b) =>
+          b.price.split("$")[1].split(",").join("") -
+          a.price.split("$")[1].split(",").join("")
+      );
+      setListings(sorted);
     } else {
-      filteredArrays = [...filteredArrays, refItems];
+      setListings(listings);
     }
+  }, [currentSortingOption]);
 
-    // Beds filter
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => {
-        return el.bed >= bedrooms;
-      }),
-    ];
-
-    // Bathrooms filter
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => {
-        return el.bath >= bathroms;
-      }),
-    ];
-
-    // Categories filter
-    filteredArrays = [
-      ...filteredArrays,
-      !categories.length
-        ? [...refItems]
-        : refItems.filter((elm) =>
-            categories.every((elem) =>
-              elm.features.some((feature) => feature.trim() === elem.trim())
-            )
-          ),
-    ];
-
-    // Location filter
-    if (location !== "All Locations") {
-      filteredArrays = [
-        ...filteredArrays,
-        refItems.filter((el) => el.city === location),
-      ];
-    }
-
-    // Price range filter
-    if (priceRange.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          Number(elm.price.split("$")[1].split(",").join("")) >=
-            priceRange[0] &&
-          Number(elm.price.split("$")[1].split(",").join("")) <= priceRange[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    // Square feet filter
-    if (
-      squirefeet.length > 0 &&
-      squirefeet[1] &&
-      squirefeet[0] <= squirefeet[1] &&
-      squirefeet[0] !== 0 &&
-      squirefeet[1] !== 0
-    ) {
-      const filtered = refItems.filter((elm) => {
-        const [rangeMin, rangeMax] = squirefeet;
-
-        const minInRange =
-          elm.min_sqft >= Number(rangeMin) && elm.min_sqft <= Number(rangeMax);
-        const maxInRange =
-          elm.max_sqft >= Number(rangeMin) && elm.max_sqft <= Number(rangeMax);
-        const rangeWithinElm =
-          Number(rangeMin) >= elm.min_sqft && Number(rangeMax) <= elm.max_sqft;
-
-        return minInRange || maxInRange || rangeWithinElm;
-      });
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    // Year built filter
-    if (yearBuild.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.yearBuilding >= yearBuild[0] && elm.yearBuilding <= yearBuild[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    const commonItems = refItems
-      .filter((item) => filteredArrays.every((array) => array.includes(item)))
-      .filter((item) => (propertyId !== "" ? item.id == propertyId : true));
-
-    setFilteredData(commonItems);
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setPageNumber(1);
   }, [
     listingStatus,
     selectedPropertyType,
@@ -342,36 +480,8 @@ export default function ProperteyFiltering({ region, search }) {
     squirefeet,
     yearBuild,
     categories,
-    listings,
     propertyId,
-    setFilteredData,
   ]);
-
-  useEffect(() => {
-    setPageNumber(1);
-    if (currentSortingOption === "Newest") {
-      const sorted = [...filteredData].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() === "Price Low") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() === "Price High") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
-    } else {
-      setSortedFilteredData(filteredData);
-    }
-  }, [filteredData, currentSortingOption, setSortedFilteredData]);
 
   return (
     <section className="pt0 pb90 bgc-f7">
@@ -410,10 +520,12 @@ export default function ProperteyFiltering({ region, search }) {
             aria-hidden="true"
           >
             <AdvanceFilterModal
+              setDataFetched={setDataFetched}
               locationOptions={locationOptions}
               propertyTypes={propertyTypes}
               facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
+              setPageNumber={setPageNumber}
             />
           </div>
         </div>
@@ -421,6 +533,7 @@ export default function ProperteyFiltering({ region, search }) {
 
         <div className="row">
           <TopFilterBar
+            setDataFetched={setDataFetched}
             pageContentTrac={pageContentTrac}
             colstyle={colstyle}
             setColstyle={setColstyle}
@@ -431,6 +544,7 @@ export default function ProperteyFiltering({ region, search }) {
           />
         </div>
         {/* End TopFilterBar */}
+
         {loading ? (
           <div className="row">
             <div
@@ -440,7 +554,7 @@ export default function ProperteyFiltering({ region, search }) {
               className="spinner-border mx-auto "
               role="status"
             >
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{"Loading..."}</span>
             </div>
           </div>
         ) : pageItems.length === 0 ? (
@@ -463,9 +577,10 @@ export default function ProperteyFiltering({ region, search }) {
         <div className="row">
           <PaginationTwo
             pageCapacity={9}
-            data={sortedFilteredData}
             pageNumber={pageNumber}
-            setPageNumber={setPageNumber}
+            setPageNumber={handlePageChange}
+            paginationInfo={paginationInfo}
+            isLoading={loading}
           />
         </div>
         {/* End .row */}
