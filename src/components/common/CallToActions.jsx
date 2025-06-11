@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 const CallToActions = () => {
@@ -7,7 +6,6 @@ const CallToActions = () => {
       <div className="cta-banner bgc-f7 mx-auto maxw1600 pt120 pt60-md pb120 pb60-md bdrs12 position-relative mx20-lg">
         <div className="img-box-5">
           <img
-           
             className="img-1 spin-right"
             src="/images/about/element-1.png"
             alt="spinner"
@@ -15,7 +13,6 @@ const CallToActions = () => {
         </div>
         <div className="img-box-6">
           <img
-           
             className="img-1 spin-left"
             src="/images/about/element-1.png"
             alt="spinner"
@@ -44,9 +41,11 @@ const CallToActions = () => {
                   Contact Us
                   <i className="fal fa-arrow-right-long" />
                 </Link>
-                <Link to="/contact" className="ud-btn btn-dark">
+
+              
+                <Link to="tel:+9710564065672" className="ud-btn btn-dark">
                   <span className="flaticon-call vam pe-2" />
-                  920 851 9087
+                  +971 (56) 406 5672
                 </Link>
               </div>
             </div>

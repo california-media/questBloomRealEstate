@@ -1,27 +1,16 @@
-
 import Select from "react-select";
 
-const SelectDropdown = () => {
-  const catOptions = [
-    { value: "Apartments", label: "Apartments" },
-    { value: "Bungalow", label: "Bungalow" },
-    { value: "Houses", label: "Houses" },
-    { value: "Loft", label: "Loft" },
-    { value: "Office", label: "Office" },
-    { value: "Townhome", label: "Townhome" },
-    { value: "Villa", label: "Villa" },
-  ];
-
+const SelectDropdown = ({ propertyTypes, filterFunctions }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#DDE5C2"
           : isFocused
-          ? "#eb675312"
+          ? "#DDE5C2"
           : undefined,
       };
     },
@@ -30,15 +19,16 @@ const SelectDropdown = () => {
   return (
     <>
       <Select
-        defaultValue={[catOptions[0]]}
+        defaultValue={propertyTypes[0] || null}
         name="colors"
-        options={catOptions}
+        options={propertyTypes}
         styles={customStyles}
         className="text-start select-borderless"
         classNamePrefix="select"
+        onChange={(e) => filterFunctions?.handlepropertyType(e.value)}
         required
-        isSearchable={false}
       />
+
     </>
   );
 };

@@ -14,12 +14,11 @@ import MetaData from "@/components/common/MetaData";
 import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFiltering";
 
 const metaInformation = {
-  title: "City Listings",
+  title: "Search Listings",
 };
 
-const HeaderMapStyle = () => {
-  const { region } = useParams();
-  console.log(region);
+const SearchProperties = () => {
+  const { search } = useParams();
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -36,7 +35,9 @@ const HeaderMapStyle = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title">{region || "UAE"} Homes for Sale</h2>
+                <h2 className="title">
+                  {search ? `Search Results for "${search}"` : 'Search Results'}
+                </h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Sale</a>
@@ -56,7 +57,7 @@ const HeaderMapStyle = () => {
         </div>
       </section>
       {/* End Breadcumb Sections */}
-      <ProperteyFiltering region={region} />
+      <ProperteyFiltering search={search} />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}
@@ -68,4 +69,4 @@ const HeaderMapStyle = () => {
   );
 };
 
-export default HeaderMapStyle;
+export default SearchProperties;

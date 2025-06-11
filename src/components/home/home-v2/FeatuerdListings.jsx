@@ -1,5 +1,4 @@
 import api from "@/api/axios";
-import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
@@ -13,6 +12,7 @@ import {
   Clock,
   ChartNoAxesCombined,
 } from "lucide-react";
+import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 
 const FeaturedListings = () => {
   const [listings, setListings] = useState([]);
@@ -23,7 +23,7 @@ const FeaturedListings = () => {
       setLoading(true);
       try {
         const { data } = await api.get("/properties");
-        const newListings = data.items.map(mapApiDataToTemplate);
+        const newListings = data.items.map(mapApiDataToTemplateSingle);
         setListings(newListings);
       } catch (error) {
         console.error("Failed to fetch listings", error);

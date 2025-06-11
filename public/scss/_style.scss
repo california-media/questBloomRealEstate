@@ -456,7 +456,7 @@ li {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background-image: url(/images/background/about-page-bg.jpg);
+    background-image: url(/images/background/aboutus-cover.jfif);
     background-size: cover;
     background-position: center;
     display: -webkit-box;
@@ -3298,6 +3298,9 @@ li {
 /*Home 2 Banner Content*/
 .home2-hero-banner {
     background-image: url(/images/background/hero-dubai.jpg);
+    margin: auto;
+    
+    background-color: "red";
     background-position: center center;
     background-repeat: no-repeat;
     height: 650px;
@@ -6543,11 +6546,11 @@ textarea:focus {
     color: #927238;
 }
 .message-alart-style1 .alart_style_three {
-    background-color: rgba(236, 200, 197, 0.5);
-    color: #ab3331;
+    background-color: #DDE5C2;
+    color: #797631;
 }
 .message-alart-style1 .alart_style_three .btn-close {
-    color: #ab3331;
+    color: #797631;
 }
 .message-alart-style1 .alart_style_four {
     background-color: rgba(222, 242, 215, 0.5);
@@ -6571,7 +6574,7 @@ textarea:focus {
     text-align: center;
     width: 40px;
     &:hover {
-        background-color: #f8d3cd;
+        background-color: #DDE5C2;
     }
 }
 .advance-feature-modal .btn-close:focus,
