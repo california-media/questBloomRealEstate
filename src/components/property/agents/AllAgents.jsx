@@ -11,12 +11,32 @@ const AllAgents = ({ data }) => {
           <div className="feature-style2 mb30">
             <div className="feature-img">
               <Link to={`/agent-single/${agent.id}`}>
-                <img
-                  style={{ aspectRatio: "1/1" }}
+                {/* <img
+                  style={{ aspectRatio: "1/1", objectPosition: "50% center" }} // shift image to the left
                   className="bdrs12 w-100 h-100 cover"
                   src={agent.image}
                   alt="agents"
-                />
+                /> */}
+                <div
+                  style={{
+                    aspectRatio: "1 / 1",
+                    overflow: "hidden",
+                    position: "relative",
+                  }}
+                  className="bdrs12 w-100 h-100 "
+                >
+                  <img
+                    src={agent.image}
+                    className="cover"
+                    alt="agents"
+                    style={{
+                      width: "110%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transform: "translateX(-3%)",
+                    }}
+                  />
+                </div>
               </Link>
             </div>
             <div className="feature-content pt20">

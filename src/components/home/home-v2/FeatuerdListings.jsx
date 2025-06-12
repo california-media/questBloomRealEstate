@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 
-const FeaturedListings = () => {
+const FeaturedListings = ({ params }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,9 @@ const FeaturedListings = () => {
     async function fetchListings() {
       setLoading(true);
       try {
-        const { data } = await api.get("/properties");
+        const { data } = params
+          ? await api.get("/properties", { params })
+          : await api.get("/properties");
         const newListings = data.items.map(mapApiDataToTemplateSingle);
         setListings(newListings);
       } catch (error) {
@@ -93,12 +95,14 @@ const FeaturedListings = () => {
                   </div>
 
                   <div className="list-content">
-                    <h6 className="list-title">
+                    <h6 className="list-title d-flex justify-content-start">
                       <Link to={`/off-plan/${listing.id}`}>
                         {listing.title}
                       </Link>
                     </h6>
-                    <p className="list-text">{listing.location}</p>
+                    <p className="list-text d-flex justify-content-start">
+                      {listing.location}
+                    </p>
 
                     <div className="list-meta d-flex align-items-center">
                       <a href="#">
@@ -142,7 +146,10 @@ const FeaturedListings = () => {
       </Swiper>
 
       <div className="rounded-arrow arrowY-center-position">
-        <button className="featured-prev__active swiper_button _prev">
+        <button
+          style={{ marginLeft: "-50px" }}
+          className="featured-prev__active  swiper_button _prev"
+        >
           <i className="far fa-chevron-left" />
         </button>
         <button className="featured-next__active swiper_button _next">

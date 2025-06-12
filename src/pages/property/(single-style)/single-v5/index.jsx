@@ -239,6 +239,59 @@ const SingleV5 = () => {
                   {/* <InfoWithForm /> */}
                   <SingleAgentInfo developer_data={property?.developer_data} />
                 </div>
+
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                  <h4 className="title fz17 mb30 d-flex align-items-center">
+                    <i className="fab fa-whatsapp text-success me-3 fs-4"></i>
+                    WhatsApp Support
+                  </h4>
+
+                  <div className="contact-method">
+                    <div className="d-flex align-items-center mb-3 p-3 bg-light rounded-3 hover-bg-success hover-text-white transition-300">
+                      <i className="fas fa-phone-alt text-success me-3 fs-5"></i>
+                      <a
+                        href="https://wa.me/yournumber"
+                        className="text-dark fs-6 hover-text-white text-decoration-none fw-medium"
+                      >
+                        +1 (234) 567-8900
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-top">
+                    <p className="text-muted mb-0 ">
+                      <i className="fas  fa-clock  me-2"></i>
+                      Instant response within minutes
+                    </p>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                  <h4 className="title fz17 mb30 d-flex align-items-center">
+                    <i className="fas fa-envelope text-primary me-3 fs-4"></i>
+                    Email Support
+                  </h4>
+
+                  <div className="contact-method">
+                    <div className="d-flex align-items-center mb-3 p-3 bg-light rounded-3 hover-bg-primary hover-text-white transition-300">
+                      <i className="fas fa-envelope-open-text text-primary me-3 fs-5"></i>
+                      <a
+                        href="mailto:contact@example.com"
+                        className="text-dark  fs-6 hover-text-white text-decoration-none fw-medium"
+                      >
+                        {property?.developer_data?.email}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-top">
+                    <p className="text-muted">
+                      <i className="fas fa-clock me-2"></i>
+                      Response within 24 hours
+                    </p>
+                  </div>
+                </div>
                 {/* End Get More Information */}
 
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -283,9 +336,9 @@ const SingleV5 = () => {
                   </div>
                 </div>
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Leave A Review</h4>
+                  <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
-                    <ReviewBoxForm />
+                    <ReviewBoxForm propertyName={property?.name} />
                   </div>
                 </div>
 

@@ -70,12 +70,57 @@ const About = () => {
       {/* End Breadcrumb Sections */}
 
       {/* Our About Area */}
-      <section className="our-about pb90">
+      <section style={{ marginTop: "-50px" }} className="our-about pb10 ">
         <div className="container">
-          <div className="row mx-6" data-aos="fade-up" data-aos-delay="300">
+          <div
+            className="row mx-6 gy-5 gx-5"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div className="col-lg-12 ">
+              <div style={{ width: "50%", margin: "auto" }}>
+                <h2 className="text-center">Who We Are</h2>
+                <p className="text-center">
+                  Step into a world of luxury living redefined by Questbloom
+                  Real Estate in the vibrant city of Dubai. Our passion for
+                  exquisite properties and dedication to unparalleled service
+                  sets us apart in the realm of real estate. From the glitz of
+                  Dubai Marina’s waterfront to the prestige of Downtown Dubai’s
+                  skyline, our portfolio showcases the epitome of
+                  sophistication. At Questbloom Real Estate, we’re more than
+                  just agents – we’re your partners in finding the perfect home
+                  tailored to your lifestyle. With a keen eye for detail and a
+                  commitment to excellence, we navigate the Dubai real estate
+                  landscape to bring you exclusive opportunities that resonate
+                  with your aspirations. Discover a new standard of luxury
+                  living with Questbloom Real Estate, where every home tells a
+                  story of opulence and elegance. Let us guide you on your
+                  journey to finding the home of your dreams in the dynamic city
+                  of Dubai.
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-12 ">
+               <section className="our-about pb40 pt-0">
+        <div className="container">
+          <div className="row" data-aos="fade-up" data-aos-delay="300">
+            <div className="col-lg-12">
+              <div className="about-page-img d-flex justify-content-center">
+                <img
+                  style={{ margin: "auto" }}
+                  className="w-60  h-100 cover "
+                  src="/images/background/team.webp"
+                  alt="about banner"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+            </div>
             <div className="col-lg-6">
-              <h2>Our Mission</h2>
-              <p>
+              <h2 className="text-center">Our Mission</h2>
+              <p className="text-center">
                 At Questbloom Real Estate, our mission is to guide you on your
                 journey to finding the perfect home in Dubai. We prioritize
                 unparalleled service, expertise, and personalized attention for
@@ -91,8 +136,8 @@ const About = () => {
               </p>
             </div>
             <div className="col-lg-6">
-              <h2>Our Vision</h2>
-              <p>
+              <h2 className="text-center">Our Vision</h2>
+              <p className="text-center">
                 At Questbloom Real Estate, our vision is to redefine the
                 standard of excellence in Dubai's real estate market. We aim to
                 be the premier choice for clients seeking unparalleled service,
@@ -113,7 +158,7 @@ const About = () => {
       {/* End Our About Area */}
 
       {/* About Banner */}
-      <section className="our-about pt-0">
+      {/* <section className="our-about pb40 pt-0">
         <div className="container">
           <div className="row" data-aos="fade-up" data-aos-delay="300">
             <div className="col-lg-12">
@@ -128,11 +173,11 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End About Banner */}
 
       {/* Funfact */}
-      <section className="pt-0">
+      {/* <section className="pt-0">
         <div className="container">
           <div
             className="row justify-content-center"
@@ -142,7 +187,7 @@ const About = () => {
             <FunFact />
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Funfact */}
 
       {/* Exclusive Agents */}
@@ -172,8 +217,8 @@ const About = () => {
               data-aos-delay="300"
             >
               <div className="property-city-slider ">
-                  {/* Add this wrapper to center content */}
-                  <Agents />
+                {/* Add this wrapper to center content */}
+                <Agents />
               </div>
             </div>
           </div>
@@ -212,7 +257,7 @@ const About = () => {
       {/* Abut intro */}
 
       {/* Our Partners */}
-      <section className="our-partners">
+      {/* <section className="our-partners">
         <div className="container">
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up">
@@ -231,7 +276,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Our Partners */}
 
       {/* Our CTA */}
