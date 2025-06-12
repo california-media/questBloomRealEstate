@@ -10,6 +10,7 @@ import FunFact from "@/components/pages/about/FunFact";
 import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
+import WealthManagementTabs from "@/components/pages/about/WealthManagementTabs";
 
 const metaInformation = {
   title: "About  || Homez - Real Estate ReactJS Template",
@@ -22,14 +23,11 @@ const About = () => {
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
-
       {/* Mobile Nav  */}
       <MobileMenu />
       {/* End Mobile Nav  */}
-
       {/* Breadcrumb Sections */}
-
-      <section className="breadcumb-section2 p-0">
+      <section className="breadcumb-section2  p-0">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -68,9 +66,8 @@ const About = () => {
         </div>
       </section>
       {/* End Breadcrumb Sections */}
-
       {/* Our About Area */}
-      <section style={{ marginTop: "-50px" }} className="our-about pb10 ">
+      {/* <section style={{ marginTop: "-50px" }} className="our-about pb10 ">
         <div className="container">
           <div
             className="row mx-6 gy-5 gx-5"
@@ -101,22 +98,22 @@ const About = () => {
               </div>
             </div>
             <div className="col-lg-12 ">
-               <section className="our-about pb40 pt-0">
-        <div className="container">
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
-            <div className="col-lg-12">
-              <div className="about-page-img d-flex justify-content-center">
-                <img
-                  style={{ margin: "auto" }}
-                  className="w-60  h-100 cover "
-                  src="/images/background/team.webp"
-                  alt="about banner"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <section className="our-about pb40 pt-0">
+                <div className="container">
+                  <div className="row" data-aos="fade-up" data-aos-delay="300">
+                    <div className="col-lg-12">
+                      <div className="about-page-img d-flex justify-content-center">
+                        <img
+                          style={{ margin: "auto" }}
+                          className="w-60  h-100 cover "
+                          src="/images/background/team.webp"
+                          alt="about banner"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
             <div className="col-lg-6">
               <h2 className="text-center">Our Mission</h2>
@@ -154,11 +151,12 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Our About Area */}
-
       {/* About Banner */}
-      {/* <section className="our-about pb40 pt-0">
+      <WealthManagementTabs />
+
+      <section className="our-about pb40 ">
         <div className="container">
           <div className="row" data-aos="fade-up" data-aos-delay="300">
             <div className="col-lg-12">
@@ -173,9 +171,8 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
       {/* End About Banner */}
-
       {/* Funfact */}
       {/* <section className="pt-0">
         <div className="container">
@@ -189,8 +186,8 @@ const About = () => {
         </div>
       </section> */}
       {/* End Funfact */}
-
       {/* Exclusive Agents */}
+
       <section className="pb90">
         <div className="container">
           <div className="row  justify-content-center">
@@ -225,9 +222,8 @@ const About = () => {
         </div>
       </section>
       {/* Exclusive Agents */}
-
       {/* Abut intro */}
-      <section className="pt30 pb-0">
+      <section className="pt30 pb30">
         <div className="cta-banner3 bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
           <div className="container">
             <div className="row">
@@ -238,14 +234,13 @@ const About = () => {
               >
                 <div className="mb30">
                   <h2 className="title text-capitalize">
-                    Let’s find the right <br className="d-none d-md-block" />{" "}
-                    selling option for you
+                    Let’s redefine your real estate experience in Dubai
                   </h2>
                 </div>
                 <div className="why-chose-list style2">
                   <Features />
                 </div>
-                <Link to="#" className="ud-btn btn-dark">
+                <Link to="/off-plan" className="ud-btn btn-dark">
                   Learn More
                   <i className="fal fa-arrow-right-long" />
                 </Link>
@@ -255,7 +250,6 @@ const About = () => {
         </div>
       </section>
       {/* Abut intro */}
-
       {/* Our Partners */}
       {/* <section className="our-partners">
         <div className="container">
@@ -278,11 +272,9 @@ const About = () => {
         </div>
       </section> */}
       {/* End Our Partners */}
-
       {/* Our CTA */}
       <CallToActions />
       {/* Our CTA */}
-
       {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
         <Footer />

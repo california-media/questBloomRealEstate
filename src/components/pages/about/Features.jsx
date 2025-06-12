@@ -3,21 +3,21 @@ const Features = () => {
   const features = [
     {
       icon: "flaticon-security",
-      title: "Property Management",
+      title: "Personalized Property Guidance",
       description:
-        "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+        "Tailored support to help you find a home that fits your lifestyle and aspirations",
     },
     {
       icon: "flaticon-keywording",
-      title: "Mortgage Services",
+      title: "Unmatched Market Expertise",
       description:
-        "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+        "In-depth knowledge of Dubai's real estate ensures smarter decisions and better opportunities",
     },
     {
       icon: "flaticon-investment",
-      title: "Currency Services",
+      title: "Trust, Integrity & Excellence",
       description:
-        "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+        "A service built on honesty, quality, and long-term relationships.",
     },
   ];
 

@@ -57,6 +57,8 @@ const FeaturedListings = ({ params }) => {
           1024: { slidesPerView: 2 },
           1200: { slidesPerView: 3 },
         }}
+        // Add this to make slides equal height
+        className="swiper-equal-height"
       >
         {loading ? (
           <div className="row">
@@ -66,9 +68,9 @@ const FeaturedListings = ({ params }) => {
           </div>
         ) : (
           listings.slice(5, 13).map((listing) => (
-            <SwiperSlide key={listing.id}>
-              <div className="">
-                <div className="listing-style1">
+            <SwiperSlide key={listing.id} style={{ height: "90%" }} >
+              <div className="h-100">
+                <div className="listing-style1  d-flex flex-column" style={{ height: "90%" }}>
                   <div className="list-thumb">
                     <img
                       className="w-100 cover"
@@ -94,7 +96,7 @@ const FeaturedListings = ({ params }) => {
                     </div>
                   </div>
 
-                  <div className="list-content">
+                  <div className="list-content flex-grow-1 d-flex justify-content-between gap-1 flex-column">
                     <h6 className="list-title d-flex justify-content-start">
                       <Link to={`/off-plan/${listing.id}`}>
                         {listing.title}
@@ -127,7 +129,7 @@ const FeaturedListings = ({ params }) => {
 
                     <hr className="mt-2 mb-2" />
 
-                    <div className="list-meta2 d-flex justify-content-between align-items-center">
+                    <div className="list-meta2 d-flex justify-content-between align-items-center ">
                       <div>
                         <ChartNoAxesCombined
                           className="mb-1"
@@ -156,6 +158,13 @@ const FeaturedListings = ({ params }) => {
           <i className="far fa-chevron-right" />
         </button>
       </div>
+
+      <style jsx>{`
+        .swiper-equal-height .swiper-slide {
+          height: auto !important;
+          display: flex;
+        }
+      `}</style>
     </>
   );
 };

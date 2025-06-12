@@ -5,27 +5,27 @@ const Cta = () => {
   return (
     <section className="our-cta2 p0 px20">
       <div className="cta-banner2 bgc-thm maxw1600 mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
-        <div className="img-box-5">
+        {/* <div className="img-box-5 border">
           <img
             className="img-1 spin-right"
             src="/images/about/element-1.png"
             alt="element"
           />
         </div>
-        <div className="img-box-6">
+        <div className="img-box-6 bg-danger">
           <img
             className="img-1 spin-left"
             src="/images/about/element-2.png"
             alt="element"
           />
-        </div>
+        </div> */}
         <div
-          className="cta-style2 d-none d-lg-block "
+          className="cta-style2  d-none d-lg-block "
           data-aos="fade-left"
           data-aos-delay="300"
         >
           <img
-            style={{ width: "35%" }}
+            style={{ width: "35%", borderRadius: "30px" }}
             src="/images/cta-image.jpg"
             alt="element"
           />

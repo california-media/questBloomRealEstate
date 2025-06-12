@@ -34,6 +34,16 @@ const MainMenu = () => {
       setTopMenu("agents");
     }
 
+    if ("buy" == pathname.split("/")[1]) {
+      setTopMenu("buy");
+    }
+    if ("listings" == pathname.split("/")[1]) {
+      setTopMenu("listings");
+    }
+    if ("rent" == pathname.split("/")[1]) {
+      setTopMenu("rent");
+    }
+
     // blogItems.forEach((elm) => {
     //   if (elm.href.split("/")[1] == pathname.split("/")[1]) {
     //     setTopMenu("blog");
@@ -122,7 +132,7 @@ const MainMenu = () => {
           <span>
             <Link
               className={topMenu == "buy" ? "title menuActive" : "title"}
-              to={"#"}
+              to={"/buy"}
             >
               Buy
             </Link>
@@ -134,8 +144,8 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <span>
             <Link
-              className={topMenu == "offplan" ? "title menuActive" : "title"}
-              to={"#"}
+              className={topMenu == "listings" ? "title menuActive" : "title"}
+              to={"/listings"}
             >
               Listings
             </Link>
@@ -148,8 +158,8 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <span>
             <Link
-              className={topMenu == "luxury" ? "title menuActive" : "title"}
-              to={"#"}
+              className={topMenu == "rent" ? "title menuActive" : "title"}
+              to={"/rent"}
             >
               Rent
             </Link>

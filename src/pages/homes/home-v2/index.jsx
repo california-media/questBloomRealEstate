@@ -53,18 +53,18 @@ const sobhaDeveloper = {
 };
 
 const Home_V2 = () => {
-  const [visibleSections, setVisibleSections] = useState(0);
-
+  const [showAllSections, setShowAllSections] = useState(false);
+  // const [visibleSections, setVisibleSections] = useState(0);
   const sections = [
     {
-      title: "Discover Our Villas",
+      title: "Discover Villas",
       paragraph: "Luxury villas with premium amenities and stunning views",
       params: {
         unit_types: "Villa,Villas",
       },
     },
     {
-      title: "Discover Our Apartments",
+      title: "Discover Apartments",
       paragraph:
         "Modern apartments in prime locations with excellent facilities",
       params: {
@@ -72,7 +72,7 @@ const Home_V2 = () => {
       },
     },
     {
-      title: "Discover Our Beachfront Properties",
+      title: "Discover Beachfront Properties",
       paragraph: "Premium Beachfront Properties",
       params: {
         areas: beachAreaProperties.map((item) => item.id).join(","),
@@ -103,28 +103,23 @@ const Home_V2 = () => {
       },
     },
   ];
-
   const handleViewMore = () => {
-    if (visibleSections < sections.length) {
-      setVisibleSections(visibleSections + 1);
-    } else {
-      setVisibleSections(0);
-    }
+    setShowAllSections(true);
   };
 
-  const getButtonText = () => {
-    if (visibleSections === sections.length) {
-      return "Collapse All";
-    }
-    return "View More Properties";
-  };
+  // const getButtonText = () => {
+  //   if (visibleSections === sections.length) {
+  //     return "Collapse All";
+  //   }
+  //   return "View More Properties";
+  // };
 
-  const getButtonIcon = () => {
-    if (visibleSections === sections.length) {
-      return "fa-arrow-up-long";
-    }
-    return "fa-arrow-down-long";
-  };
+  // const getButtonIcon = () => {
+  //   if (visibleSections === sections.length) {
+  //     return "fa-arrow-up-long";
+  //   }
+  //   return "fa-arrow-down-long";
+  // };
 
   return (
     <>
@@ -169,7 +164,7 @@ const Home_V2 = () => {
       {/* Featured Listings */}
       <>
         {/* Main Featured Listings Section */}
-        <section className="pt0 pb20 pb20-md  bgc-white">
+        <section className="pt0 pb0 pb0  bgc-white">
           <div className="container ">
             <div className="row align-items-center" data-aos="fade-up">
               <div className="col-lg-9">
@@ -205,52 +200,51 @@ const Home_V2 = () => {
               </div>
             </div>
 
-            {/* View More Button - Always visible */}
-            <div
-              style={{ marginTop: "-50px" }}
-              className={` row mb20  ${visibleSections > 0 ? "d-none" : ""}`}
-            >
-              <div className="col-lg-12">
-                <div className="text-end ">
-                  <button
-                    className="ud-btn2"
-                    onClick={handleViewMore}
-                    style={{
-                      border: "none",
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    {getButtonText()}
-                    <i className={`fal ${getButtonIcon()}`} />
-                  </button>
+            {/* View More Button - Only shows when sections are hidden */}
+            {!showAllSections && (
+              <div style={{ marginTop: "-30px" }} className="row mb20">
+                <div className="col-lg-12">
+                  <div className="text-end ">
+                    <button
+                      className="ud-btn2"
+                      onClick={handleViewMore}
+                      style={{
+                        border: "none",
+                        transition: "all 0.3s ease",
+                      }}
+                    >
+                      View More Properties
+                      <i className="fal fa-arrow-down-long" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 
-        {/* Additional Sections - Progressive Loading */}
+        {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
           <div
             key={index}
             style={{
-              maxHeight: visibleSections > index ? "900px" : "0",
+              maxHeight: showAllSections ? "900px" : "0",
               overflow: "hidden",
               transition:
                 "max-height 0.6s ease-in-out, opacity 0.6s ease-in-out",
-              opacity: visibleSections > index ? 1 : 0,
+              opacity: showAllSections ? 1 : 0,
             }}
           >
             <section
-              className="pt0  pb10 pb10-md bgc-white"
+              className="pt0  pb0 pb10-md bgc-white"
               style={{
-                transform:
-                  visibleSections > index
-                    ? "translateY(0)"
-                    : "translateY(30px)",
+                transform: showAllSections
+                  ? "translateY(0)"
+                  : "translateY(30px)",
                 transition: "transform 0.6s ease, opacity 0.6s ease",
-                transitionDelay:
-                  visibleSections > index ? `${0.1 + index * 0.1}s` : "0s",
+                transitionDelay: showAllSections
+                  ? `${0.1 + index * 0.1}s`
+                  : "0s",
               }}
               data-aos="fade-up"
             >
@@ -278,50 +272,6 @@ const Home_V2 = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* View More Button - Moves with each section */}
-                {index === visibleSections - 1 &&
-                  visibleSections < sections.length && (
-                    <div className="row mb20" style={{ marginTop: "-50px" }}>
-                      <div className="col-lg-12">
-                        <div className="text-end mt-4">
-                          <button
-                            className="ud-btn2"
-                            onClick={handleViewMore}
-                            style={{
-                              border: "none",
-                              transition: "all 0.3s ease",
-                            }}
-                          >
-                            {getButtonText()}
-                            <i className={`fal ${getButtonIcon()}`} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                {/* Collapse All Button - Shows after last section */}
-                {index === sections.length - 1 &&
-                  visibleSections === sections.length && (
-                    <div className="row mb20" style={{ marginTop: "-50px" }}>
-                      <div className="col-lg-12">
-                        <div className="text-end mt-4">
-                          <button
-                            className="ud-btn2"
-                            onClick={handleViewMore}
-                            style={{
-                              border: "none",
-                              transition: "all 0.3s ease",
-                            }}
-                          >
-                            {getButtonText()}
-                            <i className={`fal ${getButtonIcon()}`} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
               </div>
             </section>
           </div>
@@ -329,7 +279,7 @@ const Home_V2 = () => {
       </>
       {/* Explore Featured Listings */}
       {/* Property Cities */}
-      <section className="pt0 pb90 pt40 pb50-md">
+      <section className="pt0 pb70 pt40 pb50-md">
         <div className="container">
           <div className="row  justify-content-between align-items-center">
             <div className="col-auto">
@@ -417,7 +367,7 @@ const Home_V2 = () => {
       {/* End About Us */}
       {/* Our Testimonials */}
       <section className="our-testimonial p-0">
-        <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt110 pt60-md pb110 pb60-md bdrs12 position-relative">
+        <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt60 pt60-md pb110 pb60-md bdrs12 position-relative">
           <div className="container">
             <div className="row">
               <div
@@ -427,9 +377,7 @@ const Home_V2 = () => {
               >
                 <div className="main-title text-center">
                   <h2>Testimonials</h2>
-                  <p className="paragraph">
-                    10,000+ unique online course list designs
-                  </p>
+                  <p className="paragraph">What our customers saying</p>
                 </div>
               </div>
             </div>

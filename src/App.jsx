@@ -102,6 +102,9 @@ function App() {
 
               <Route path="grid-default" element={<GridDefault />} />
               <Route path="off-plan" element={<GridFull3Col />} />
+              <Route path="buy" element={<GridFull3Col />} />
+              <Route path="rent" element={<GridFull3Col />} />
+              <Route path="listings" element={<GridFull3Col />} />
               <Route path="grid-full-4-col" element={<GridFull4Col />} />
               <Route path="grid-full-2-col" element={<GridFull2Col />} />
               <Route path="grid-full-1-col-v1" element={<GridFull1ColV1 />} />
@@ -119,10 +122,7 @@ function App() {
                 path="search-properties/:search"
                 element={<SearchProperties />}
               />
-              <Route
-                path="search-properties"
-                element={<SearchProperties />}
-              />
+              <Route path="search-properties" element={<SearchProperties />} />
               <Route path="map-v1" element={<MapV1 />} />
               <Route path="map-v2" element={<MapV2 />} />
               <Route path="map-v3" element={<MapV3 />} />

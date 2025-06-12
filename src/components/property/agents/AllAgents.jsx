@@ -10,7 +10,7 @@ const AllAgents = ({ data }) => {
         <div className="col" key={agent.id}>
           <div className="feature-style2 mb30">
             <div className="feature-img">
-              <Link to={`/agent-single/${agent.id}`}>
+              <Link to={`#`}>
                 {/* <img
                   style={{ aspectRatio: "1/1", objectPosition: "50% center" }} // shift image to the left
                   className="bdrs12 w-100 h-100 cover"
