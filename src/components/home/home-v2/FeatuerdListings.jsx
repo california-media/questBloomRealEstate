@@ -17,7 +17,8 @@ import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 const FeaturedListings = ({ params }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  // Generate unique ID for this component instance
+  const uniqueId = useState(() => Math.random().toString(36).substr(2, 9))[0];
   useEffect(() => {
     async function fetchListings() {
       setLoading(true);
@@ -43,11 +44,11 @@ const FeaturedListings = ({ params }) => {
         spaceBetween={30}
         modules={[Navigation, Pagination]}
         navigation={{
-          nextEl: ".featured-next__active",
-          prevEl: ".featured-prev__active",
+          nextEl: `.featured-next__active-${uniqueId}`,
+          prevEl: `.featured-prev__active-${uniqueId}`,
         }}
         pagination={{
-          el: ".featured-pagination__active",
+          el: `.featured-pagination__active-${uniqueId}`,
           clickable: true,
         }}
         slidesPerView={1}
@@ -68,9 +69,12 @@ const FeaturedListings = ({ params }) => {
           </div>
         ) : (
           listings.slice(5, 13).map((listing) => (
-            <SwiperSlide key={listing.id} style={{ height: "90%" }} >
+            <SwiperSlide key={listing.id} style={{ height: "90%" }}>
               <div className="h-100">
-                <div className="listing-style1  d-flex flex-column" style={{ height: "90%" }}>
+                <div
+                  className="listing-style1  d-flex flex-column"
+                  style={{ height: "90%" }}
+                >
                   <div className="list-thumb">
                     <img
                       className="w-100 cover"
@@ -150,11 +154,13 @@ const FeaturedListings = ({ params }) => {
       <div className="rounded-arrow arrowY-center-position">
         <button
           style={{ marginLeft: "-50px" }}
-          className="featured-prev__active  swiper_button _prev"
+          className={`featured-prev__active-${uniqueId} swiper_button _prev`}
         >
           <i className="far fa-chevron-left" />
         </button>
-        <button className="featured-next__active swiper_button _next">
+        <button
+          className={`featured-next__active-${uniqueId} swiper_button _next`}
+        >
           <i className="far fa-chevron-right" />
         </button>
       </div>
