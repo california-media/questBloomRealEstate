@@ -7,9 +7,9 @@ const SingleAgentInfo = ({ developer_data }) => {
   const previewText = description.slice(0, 100);
 
   return (
-    <div className="agent-single bdrb1 mb30 pb25">
+    <div className="agent-single bdrb1 mb20 pb25">
       {/* Header Section with Logo and Title */}
-      <div className="d-sm-flex align-items-start mb20">
+      <div className="d-sm-flex align-items-start ">
         <div className="single-img mb30-sm">
           <img
             className="w90"
@@ -44,7 +44,7 @@ const SingleAgentInfo = ({ developer_data }) => {
       </div>
 
       {/* Contact Information Section */}
-      <div className="contact-section mb20">
+      {/* <div className="contact-section mb20">
         <h6 className="section-title mb15 fz16 fw-medium">
           Contact Information
         </h6>
@@ -76,10 +76,10 @@ const SingleAgentInfo = ({ developer_data }) => {
             </a>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Working Hours Section */}
-      {developer_data?.working_hours?.length > 0 && (
+      {/* {developer_data?.working_hours?.length > 0 && (
         <div className="working-hours-section mb20">
           <h6 className="section-title mb15 fz16 fw-medium">
             <i className="flaticon-clock pe-2 text-primary" />
@@ -97,10 +97,10 @@ const SingleAgentInfo = ({ developer_data }) => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Social Media Section */}
-      {developer_data?.socialMedia?.length > 0 && (
+      {/* {developer_data?.socialMedia?.length > 0 && (
         <div className="social-media-section">
           <h6 className="section-title mb15 fz16 fw-medium">Follow Us</h6>
           <div className="agent-social">
@@ -111,7 +111,7 @@ const SingleAgentInfo = ({ developer_data }) => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

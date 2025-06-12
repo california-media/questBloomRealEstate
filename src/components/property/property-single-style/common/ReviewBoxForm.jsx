@@ -1,14 +1,7 @@
-import Select from "react-select";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
-const ReviewBoxForm = () => {
-  const inqueryType = [
-    { value: "Five Star", label: "Five Star" },
-    { value: "Four Star", label: "Four Star" },
-    { value: "Three Sta", label: "Three Star" },
-    { value: "Two Sta", label: "Two Star" },
-    { value: "One Sta", label: "One Star" },
-  ];
-
+const ReviewBoxForm = ({ propertyName = "" }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -25,12 +18,25 @@ const ReviewBoxForm = () => {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submission behavior
-    // Additional logic or API calls can be added here
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const enquiryData = {
+      email: formData.get("email"),
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      enquiry: formData.get("enquiry"),
+    };
+
+    // You can now use enquiryData for your API call
+    console.log("Form data:", enquiryData);
+
+    // Add your API call here
+    // Example:
+    // submitEnquiry(enquiryData).then(...)
   };
 
   return (
-    <form className="comments_form mt30" onSubmit={handleSubmit}>
+    <form className="comments_form mt10" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-12">
           <div className="mb-4">
@@ -39,7 +45,6 @@ const ReviewBoxForm = () => {
               type="email"
               name="email"
               className="form-control"
-              placeholder="ibthemes21@gmail.com"
               required
             />
           </div>
@@ -63,12 +68,30 @@ const ReviewBoxForm = () => {
         <div className="col-md-6">
           <div className="mb-4">
             <label className="fw600 ff-heading mb-2">Phone</label>
-            <input
-              type="number"
-              name="phone"
-              className="form-control"
-              placeholder="Enter Name"
-              required
+            <PhoneInput
+              inputClass="form-control"
+              containerClass="react-tel-input"
+              country={"ae"}
+              inputStyle={{
+                width: "100%",
+                height: "calc(2.25em + 1rem + 2px)",
+                padding: "0.5rem 1rem 0.5rem 58px",
+                fontSize: "1rem",
+                lineHeight: "1.5",
+                borderRadius: "0.25rem",
+              }}
+              buttonStyle={{
+                height: "100%",
+                padding: "0 0 0 8px",
+                borderRadius: "0.25rem 0 0 0.25rem",
+              }}
+              dropdownStyle={{
+                borderRadius: "0.25rem",
+              }}
+              inputProps={{
+                name: "phone",
+                required: true,
+              }}
             />
           </div>
         </div>
@@ -76,17 +99,19 @@ const ReviewBoxForm = () => {
 
         <div className="col-md-12">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Review</label>
+            <label className="fw600 ff-heading mb-2">Enquiry</label>
             <textarea
-              className="pt15"
-              rows={6}
-              placeholder="Write a Review"
-              defaultValue={""}
+              className="pt15 form-control"
+              name="enquiry"
+              style={{ minHeight: "200px" }}
+              rows={8}
+              placeholder="Write your enquiry"
+              defaultValue={`I would like to submit an Enquiry about ${propertyName}`}
               required
             />
           </div>
           <button type="submit" className="ud-btn btn-white2">
-            Submit Review
+            Submit Enquiry
             <i className="fal fa-arrow-right-long" />
           </button>
         </div>

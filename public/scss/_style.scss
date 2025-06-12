@@ -3307,17 +3307,26 @@ li {
 
 /*Home 2 Banner Content*/
 .home2-hero-banner {
-    background-image: url(/images/background/hero-dubai.jpg);
+    // background-image: url(/images/background/hero-bg.avif);
     margin: auto;
-    
-    background-color: "red";
-    background-position: center center;
-    background-repeat: no-repeat;
     height: 650px;
     max-width: 1600px;
     position: absolute;
     top: 190px;
     width: 140%;
+    // border: 4px solid red;
+    text-align: center;
+}
+
+.home2-hero-banner-image {
+    background-image: url(/images/background/hero-bg.avif);
+      background-position: center center;
+      border-radius: 50px;
+    background-repeat: no-repeat;
+    width: 80%;
+      height: 100%;
+    //   border: 4px solid green;
+      margin: auto;
 }
 @media (max-width: 991.98px) {
     .home2-hero-banner {
