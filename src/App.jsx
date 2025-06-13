@@ -105,6 +105,7 @@ function App() {
 
               <Route path="grid-default" element={<GridDefault />} />
               <Route path="buy" element={<BuyFull3Col />} />
+              <Route path="off-plan" element={<GridFull3Col />} />
               <Route path="rent" element={<Rent3Col />} />
               <Route path="listings" element={<ListingsFull3Col />} />
               <Route path="grid-full-4-col" element={<GridFull4Col />} />
