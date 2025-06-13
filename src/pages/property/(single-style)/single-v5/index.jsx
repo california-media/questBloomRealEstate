@@ -65,6 +65,7 @@ const SingleV5 = () => {
       if (existingProperty) {
         // Use cached data from store
         console.log("Using cached property data from store");
+        console.log(existingProperty);
         setProperty({ ...existingProperty, id });
         setLoading(false);
         return;
@@ -98,7 +99,7 @@ const SingleV5 = () => {
   useEffect(() => {
     if (property) {
       setMetaInformation({
-        title: property.name,
+        title: property?.name ||"Property",
       });
     }
   }, [property]);
@@ -242,7 +243,8 @@ const SingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
-                    <ReviewBoxForm propertyName={property} />
+             
+                    <ReviewBoxForm property={property} />
                   </div>
                 </div>
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">

@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 const ReviewBoxForm = ({ property }) => {
+  const [enquiryText, setEnquiryText] = useState("");
+
+  useEffect(() => {
+    setEnquiryText(
+      `I would like to submit an Enquiry about ${
+        property?.name || "Property 1"
+      }`
+    );
+  }, [property]);
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -25,6 +35,7 @@ const ReviewBoxForm = ({ property }) => {
       name: formData.get("name"),
       phone: formData.get("phone"),
       enquiry: formData.get("enquiry"),
+      propertyId: property?.id,
     };
 
     // You can now use enquiryData for your API call
@@ -106,9 +117,8 @@ const ReviewBoxForm = ({ property }) => {
               style={{ minHeight: "200px" }}
               rows={8}
               placeholder="Write your enquiry"
-              defaultValue={`I would like to submit an Enquiry about ${
-                property?.name || "Property 1"
-              }`}
+              onChange={(e) => setEnquiryText(e.target.value)}
+              value={enquiryText}
               required
             />
           </div>
