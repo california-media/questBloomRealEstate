@@ -51,11 +51,12 @@ const ReviewBoxForm = ({ property }) => {
       <div className="row">
         <div className="col-md-12">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Email</label>
+            <label className="fw600 ff-heading mb-2">Name</label>
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="name"
               className="form-control"
+              placeholder="Enter Name"
               required
             />
           </div>
@@ -64,12 +65,12 @@ const ReviewBoxForm = ({ property }) => {
 
         <div className="col-md-6">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Name</label>
+            <label className="fw600 ff-heading mb-2">Email</label>
             <input
-              type="text"
-              name="name"
+              type="email"
+              name="email"
               className="form-control"
-              placeholder="Enter Name"
+              placeholder="Enter Email"
               required
             />
           </div>
