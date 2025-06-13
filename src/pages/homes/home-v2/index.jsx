@@ -53,7 +53,6 @@ const sobhaDeveloper = {
 };
 
 const Home_V2 = () => {
-  const [showAllSections, setShowAllSections] = useState(false);
   // const [visibleSections, setVisibleSections] = useState(0);
   const sections = [
     {
@@ -169,7 +168,7 @@ const Home_V2 = () => {
             <div className="row align-items-center" data-aos="fade-up">
               <div className="col-lg-9">
                 <div className="main-title2">
-                  <h2 className="title">Discover Our Featured Listings</h2>
+                  <h2 className="title">Discover Featured Listings</h2>
                   <p className="paragraph">
                     Aliquam lacinia diam quis lacus euismod
                   </p>
@@ -201,7 +200,7 @@ const Home_V2 = () => {
             </div>
 
             {/* View More Button - Only shows when sections are hidden */}
-            {!showAllSections && (
+            {/* {!showAllSections && (
               <div style={{ marginTop: "-30px" }} className="row mb20">
                 <div className="col-lg-12">
                   <div className="text-end ">
@@ -219,7 +218,7 @@ const Home_V2 = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </section>
 
@@ -228,26 +227,13 @@ const Home_V2 = () => {
           <div
             key={index}
             style={{
-              maxHeight: showAllSections ? "900px" : "0",
+              maxHeight: "900px",
               overflow: "hidden",
-              transition:
-                "max-height 0.6s ease-in-out, opacity 0.6s ease-in-out",
-              opacity: showAllSections ? 1 : 0,
+
+              opacity: 1,
             }}
           >
-            <section
-              className="pt0  pb0 pb10-md bgc-white"
-              style={{
-                transform: showAllSections
-                  ? "translateY(0)"
-                  : "translateY(30px)",
-                transition: "transform 0.6s ease, opacity 0.6s ease",
-                transitionDelay: showAllSections
-                  ? `${0.1 + index * 0.1}s`
-                  : "0s",
-              }}
-              data-aos="fade-up"
-            >
+            <section className="pt20  pb0 pb10-md bgc-white" data-aos="fade-up">
               <div className="container">
                 <div className="row align-items-center">
                   <div className="col-lg-12">

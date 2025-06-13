@@ -70,88 +70,91 @@ const FeaturedListings = ({ params }) => {
         ) : (
           listings.slice(5, 13).map((listing) => (
             <SwiperSlide key={listing.id} style={{ height: "90%" }}>
-              <div className="h-100">
-                <div
-                  className="listing-style1  d-flex flex-column"
-                  style={{ height: "90%" }}
-                >
-                  <div className="list-thumb">
-                    <img
-                      className="w-100 cover"
-                      style={{ height: "230px" }}
-                      src={listing.image}
-                      alt="listing"
-                    />
-                    {
-                      <div className="sale-sticker-wrap">
-                        <div className="list-tag fz12">
-                          <span className="flaticon-electricity me-2" />
-                          FEATURED
+              <Link to={`/off-plan/${listing.id}`}>
+                <div className="h-100">
+                  <div
+                    className="listing-style1  d-flex flex-column"
+                    style={{ height: "90%" }}
+                  >
+                    <div className="list-thumb">
+                      <img
+                        className="w-100 cover"
+                        style={{ height: "230px" }}
+                        src={listing.image}
+                        alt="listing"
+                      />
+                      {
+                        <div className="sale-sticker-wrap">
+                          <div className="list-tag fz12">
+                            <span className="flaticon-electricity me-2" />
+                            FEATURED
+                          </div>
                         </div>
+                      }
+                      <div className="list-price">
+                        {"AED " +
+                          (Number(listing.price.split("$")[1]) === 0
+                            ? "Ask for price"
+                            : Number(
+                                listing.price.split("$")[1]
+                              ).toLocaleString())}
                       </div>
-                    }
-                    <div className="list-price">
-                      {"AED " +
-                        (Number(listing.price.split("$")[1]) === 0
-                          ? "Ask for price"
-                          : Number(
-                              listing.price.split("$")[1]
-                            ).toLocaleString())}
-                    </div>
-                  </div>
-
-                  <div className="list-content flex-grow-1 d-flex justify-content-between gap-1 flex-column">
-                    <h6 className="list-title d-flex justify-content-start">
-                      <Link to={`/off-plan/${listing.id}`}>
-                        {listing.title}
-                      </Link>
-                    </h6>
-                    <p className="list-text d-flex justify-content-start">
-                      {listing.location}
-                    </p>
-
-                    <div className="list-meta d-flex align-items-center">
-                      <a href="#">
-                        <UserIcon size={16} color="gray" className="mb-1" />{" "}
-                        {listing.developer}
-                      </a>
-                      <a href="#">
-                        {listing.post_handover ? (
-                          <Check size={16} color="gray" className="m-1" />
-                        ) : (
-                          <CircleDot size={16} color="gray" className="m-1" />
-                        )}
-                        {listing.post_handover
-                          ? "Post Handover"
-                          : "Pre Handover"}
-                      </a>
-                      <a href="#">
-                        <Clock size={16} color="gray" className="mb-1" />{" "}
-                        {listing.yearBuilding}
-                      </a>
                     </div>
 
-                    <hr className="mt-2 mb-2" />
-
-                    <div className="list-meta2 d-flex justify-content-between align-items-center ">
+                    <div className="list-content flex-grow-1 d-flex justify-content-between  flex-column">
                       <div>
-                        <ChartNoAxesCombined
-                          className="mb-1"
-                          size={16}
-                          color="gray"
-                        />{" "}
-                        {listing.sale_status}
+                        <h6 className="list-title d-flex justify-content-start">
+                          {listing.title}
+                        </h6>
+                        <p className="list-text d-flex justify-content-start">
+                          {listing.location}
+                        </p>
+                      </div>
+
+                      <div className="list-meta d-flex gap-0 align-items-center">
+                        <a href="#" className="text-start ">
+                          <UserIcon size={16} color="gray" className="mb-1 " />{" "}
+                          {listing.developer}
+                        </a>
+                        <a href="#" className="text-start">
+                          {listing.post_handover ? (
+                            <Check size={16} color="gray" className="m-1" />
+                          ) : (
+                            <CircleDot size={16} color="gray" className="m-1" />
+                          )}
+                          {listing.post_handover
+                            ? "Post Handover"
+                            : "Pre Handover"}
+                        </a>
+                        <a href="#" className="text-start">
+                          <Clock size={16} color="gray" className="mb-1" />{" "}
+                          {listing.yearBuilding}
+                        </a>
+                      </div>
+
+                      <div className="list-meta2 d-flex justify-content-between align-items-center ">
+                        <div>
+                          <ChartNoAxesCombined
+                            className="mb-1"
+                            size={16}
+                            color="gray"
+                          />{" "}
+                          {listing.sale_status}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </SwiperSlide>
           ))
         )}
       </Swiper>
 
-      <div className="rounded-arrow arrowY-center-position">
+      <div
+        style={{ height: "10px" }}
+        className="rounded-arrow  arrowY-center-position"
+      >
         <button
           style={{ marginLeft: "-50px" }}
           className={`featured-prev__active-${uniqueId} swiper_button _prev`}
@@ -159,6 +162,7 @@ const FeaturedListings = ({ params }) => {
           <i className="far fa-chevron-left" />
         </button>
         <button
+          style={{ marginRight: "-50px" }}
           className={`featured-next__active-${uniqueId} swiper_button _next`}
         >
           <i className="far fa-chevron-right" />

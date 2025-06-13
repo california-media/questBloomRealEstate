@@ -1,7 +1,7 @@
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-const ReviewBoxForm = ({ propertyName = "" }) => {
+const ReviewBoxForm = ({ property }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -99,14 +99,16 @@ const ReviewBoxForm = ({ propertyName = "" }) => {
 
         <div className="col-md-12">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Enquiry</label>
+            <label className="fw600 ff-heading mb-2">Notes</label>
             <textarea
               className="pt15 form-control"
               name="enquiry"
               style={{ minHeight: "200px" }}
               rows={8}
               placeholder="Write your enquiry"
-              defaultValue={`I would like to submit an Enquiry about ${propertyName}`}
+              defaultValue={`I would like to submit an Enquiry about ${
+                property?.name || "Property 1"
+              }`}
               required
             />
           </div>

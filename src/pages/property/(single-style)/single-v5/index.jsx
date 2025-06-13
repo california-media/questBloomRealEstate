@@ -239,8 +239,13 @@ const SingleV5 = () => {
                   {/* <InfoWithForm /> */}
                   <SingleAgentInfo developer_data={property?.developer_data} />
                 </div>
-
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                  <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                  <div className="row">
+                    <ReviewBoxForm propertyName={property} />
+                  </div>
+                </div>
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30 d-flex align-items-center">
                     <i className="fab fa-whatsapp text-success me-3 fs-4"></i>
                     WhatsApp Support
@@ -264,10 +269,10 @@ const SingleV5 = () => {
                       Instant response within minutes
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Email */}
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30 d-flex align-items-center">
                     <i className="fas fa-envelope text-primary me-3 fs-4"></i>
                     Email Support
@@ -291,7 +296,7 @@ const SingleV5 = () => {
                       Response within 24 hours
                     </p>
                   </div>
-                </div>
+                </div> */}
                 {/* End Get More Information */}
 
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -321,24 +326,20 @@ const SingleV5 = () => {
                 </div>
                 {/* End Walkscore */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Lobby</h4>
-                  <div className="row">
-                    <Lobby lobby={property?.lobby} />
+                {property?.lobby?.[0]?.url && (
+                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                    <h4 className="title fz17 mb30">Lobby</h4>
+                    <div className="row">
+                      <Lobby lobby={property?.lobby} />
+                    </div>
                   </div>
-                </div>
+                )}
                 {/* End .360° Virtual Tour */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
                   <div className="row">
                     <h4 className="title fz17 mb30 pl20">Building Details</h4>
                     <BuildingDetails buildings={property?.buildings} />
-                  </div>
-                </div>
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Submit an Enquiry</h4>
-                  <div className="row">
-                    <ReviewBoxForm propertyName={property?.name} />
                   </div>
                 </div>
 
