@@ -6,7 +6,6 @@ import ExploreCities from "@/components/home/home-v2/ExploreCities";
 import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
 import Header from "@/components/home/home-v2/Header";
 import Testimonial from "@/components/home/home-v2/Testimonial";
-import Hero from "@/components/home/home-v2/hero";
 import React, { useState } from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
@@ -14,6 +13,7 @@ import Cta from "@/components/home/home-v2/Cta";
 import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
+import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 
 const metaInformation = {
   title: "Home",
@@ -131,26 +131,10 @@ const Home_V2 = () => {
       <MobileMenu />
       {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
-      <section className="home-banner-style2 p0">
-        <div className="home-style2">
-          <div style={{}} className="container maxw1600 ">
-            <div className="d-flex justify-content-center">
-              <div className="home2-hero-banner mbdrs12">
-                <div className="home2-hero-banner-image"></div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xl-10 mx-auto">
-                <Hero />
-              </div>
-            </div>
-          </div>
-          {/* End .container */}
-        </div>
-      </section>
+      <AutoCarouselHero />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
-      <section className="pb90 pb30-md">
+      <section className="pb90 pb30-md z-1">
         <div className="container">
           <div className="row justify-content-center" data-aos="fade">
             <div className="col-lg-12">
