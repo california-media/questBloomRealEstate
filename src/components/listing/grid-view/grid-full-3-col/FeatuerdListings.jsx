@@ -12,17 +12,15 @@ const FeaturedListings = ({ data, colstyle }) => {
     <>
       {data.map((listing) => (
         <div
-          className={` ${
+          className={`d-flex ${
             colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
-          }  `}
+          }`}
           key={listing.id}
         >
           <div
-            className={
-              colstyle
-                ? "listing-style1 listCustom listing-type"
-                : "listing-style1"
-            }
+            className={`listing-style1 ${
+              colstyle ? "listCustom listing-type" : ""
+            } w-100 d-flex flex-column `}
           >
             <div className="list-thumb">
               <img
@@ -47,12 +45,14 @@ const FeaturedListings = ({ data, colstyle }) => {
                     Number(listing.price.split("$")[1]).toLocaleString()}
               </div>
             </div>
-            <div className="list-content">
-              <h6 className="list-title">
-                <Link to={`/off-plan/${listing.id}`}>{listing.title}</Link>
-              </h6>
-              <p className="list-text">{listing.location}</p>
-              <div className="list-meta d-flex align-items-center">
+            <div className="list-content flex-grow-1  d-flex flex-column justify-content-between ">
+              <div>
+                <h6 className="list-title">
+                  <Link to={`/off-plan/${listing.id}`}>{listing.title}</Link>
+                </h6>
+                <p className="list-text">{listing.location}</p>
+              </div>
+              <div className="list-meta d-flex align-items-center r">
                 <a href="#">
                   <UserIcon size={16} color="gray" className="mb-1" />{" "}
                   {listing.developer}

@@ -104,6 +104,7 @@ export default function ProperteyFiltering({ region, search }) {
   // Fetch data for a specific page
   const fetchPageData = async (page) => {
     setLoading(true);
+
     try {
       const params = {
         page,
@@ -190,7 +191,6 @@ export default function ProperteyFiltering({ region, search }) {
     categories,
     selectedPropertyType,
   };
-
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {

@@ -20,13 +20,6 @@ const PaginationTwo = ({
       setPageNumber(pageNumber + 1);
     }
   };
-
-  const handlePageClick = (targetPage) => {
-    if (targetPage !== pageNumber && !isLoading) {
-      setPageNumber(targetPage);
-    }
-  };
-
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -69,7 +62,6 @@ const PaginationTwo = ({
   };
 
   const pageNumbers = getPageNumbers();
-
   return (
     <div className="mbp_pagination text-center">
       <ul className="page_navigation">
@@ -89,6 +81,8 @@ const PaginationTwo = ({
           </span>
         </li>
 
+        {/* Current Page (non-clickable) */}
+
         {/* Page Numbers */}
         {pageNumbers.map((num, index) => {
           if (num === "ellipsis") {
@@ -102,7 +96,6 @@ const PaginationTwo = ({
           return (
             <li
               key={num}
-              onClick={() => handlePageClick(num)}
               className={`${
                 pageNumber === num ? "active page-item" : "page-item"
               } ${isLoading ? "disabled" : ""}`}
@@ -115,9 +108,8 @@ const PaginationTwo = ({
             </li>
           );
         })}
-
         {/* Next Button */}
-        <li className="page-item pointer">
+        <li className="page-item">
           <span
             className={`page-link ${
               !has_next || isLoading ? "disabled" : "pointer"
@@ -134,12 +126,23 @@ const PaginationTwo = ({
       </ul>
 
       {/* Page Info */}
-      <p className="mt10 pagination_page_count text-center">
-        {(pageNumber - 1) * pageCapacity + 1}-
-        {Math.min(pageNumber * pageCapacity, total)} of {total}+ properties
-        available
-        {isLoading && <span> (Loading...)</span>}
-      </p>
+
+      {!isLoading ? (
+        <>
+          <p className="mt10 pagination_page_count text-center ">
+            Page {pageNumber} of {pages}
+          </p>
+
+          <p className="mt10 pagination_page_count text-center ">
+            {" "}
+            {(pageNumber - 1) * pageCapacity + 1}-
+            {Math.min(pageNumber * pageCapacity, total)} of {total}+ properties
+            available
+          </p>
+        </>
+      ) : (
+        <span> (Loading...)</span>
+      )}
     </div>
   );
 };

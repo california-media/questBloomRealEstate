@@ -49,13 +49,11 @@ const Form = () => {
 
         <div className="col-md-12">
           <div className="mb10">
-            <label className="heading-color ff-heading fw600 mb10">
-              Textarea
-            </label>
+            <label className="heading-color ff-heading fw600 mb10">Notes</label>
             <textarea
               cols={30}
               rows={4}
-              placeholder="There are many variations of passages."
+              placeholder="Your notes..."
               defaultValue={""}
               required
             />

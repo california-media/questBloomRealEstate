@@ -28,7 +28,7 @@ const Contact = () => {
         <iframe
           className="home8-map contact-page"
           loading="lazy"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6957.852267119998!2d55.25420309357912!3d25.184291000000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69d1f120e711%3A0xf19c0504f3cb24ec!2sBayswater%20Tower!5e1!3m2!1sen!2s!4v1749557024096!5m2!1sen!2s"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27827.558743958227!2d55.254044120755644!3d25.20114252330665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682d79f79769%3A0x775f469534962029!2sLake%20Central%20Tower!5e1!3m2!1sen!2s!4v1749813037589!5m2!1sen!2s"
           title="London Eye, London, United Kingdom"
           aria-label="London Eye, London, United Kingdom"
         />

@@ -1,42 +1,28 @@
-
 import React from "react";
 
 const testimonials = [
   {
     id: "1st",
-    imageSrc: "/images/testimonials/testi-1.png",
-    text: "What a great experience! I have visited one of the workshops and attended a masterclass, and both were super useful for designers.",
-    name: "Ali Tufan",
-    designation: "Product Manager, Apple Inc",
+    imageSrc: "/images/testimonials/testi-1.webp",
+    text: "Questbloom Real Estate exceeded expectations, finding us a dream home in Dubai’s iconic Downtown.",
+    name: "Ali Bin Saleh",
+    designation: "Customer",
   },
   {
     id: "2nd",
-    imageSrc: "/images/testimonials/testi-2.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
-    name: "Ella Johnson",
-    designation: "UX Designer, Google",
+    imageSrc: "/images/testimonials/testi-2.webp",
+    text: "Unmatched service and luxury properties – Questbloom made our Dubai home search effortless and enjoyable.",
+    name: "Nour Mohamed",
+    designation: "Customer",
   },
   {
     id: "third",
-    imageSrc: "/images/testimonials/testi-3.png",
-    text: "What a great experience! I have visited one of the workshops and attended a masterclass, and both were super useful for designers.",
-    name: "Ali Tufan",
-    designation: "Product Manager, Apple Inc",
+    imageSrc: "/images/testimonials/testi-3.webp",
+    text: "Questbloom Real Estate's expertise and dedication led us to the perfect home in Dubai Marina.",
+    name: "Lina Kamal-Eddin",
+    designation: "Customer",
   },
-  {
-    id: "4th",
-    imageSrc: "/images/testimonials/testi-4.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
-    name: "Ella Johnson",
-    designation: "UX Designer, Google",
-  },
-  {
-    id: "5th",
-    imageSrc: "/images/testimonials/testi-5.png",
-    text: "Another fantastic testimonial! This workshop has helped me improve my design skills significantly. I'm really grateful for the opportunity.",
-    name: "Ella Johnson",
-    designation: "UX Designer, Google",
-  },
+
   // Add more testimonial objects if needed
 ];
 
@@ -87,7 +73,7 @@ const Testimonial = () => {
                 aria-selected={testimonial.id === "2nd" ? "true" : "false"}
               >
                 <img
-                 
+                  style={{ width: "70px", height: "71px" }}
                   src={testimonial.imageSrc}
                   alt=""
                 />

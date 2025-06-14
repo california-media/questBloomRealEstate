@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-const ReviewBoxForm = ({ propertyName = "" }) => {
+const ReviewBoxForm = ({ property }) => {
+  const [enquiryText, setEnquiryText] = useState("");
+
+  useEffect(() => {
+    setEnquiryText(
+      `I would like to submit an Enquiry about ${
+        property?.name || "Property 1"
+      }`
+    );
+  }, [property]);
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -25,6 +35,7 @@ const ReviewBoxForm = ({ propertyName = "" }) => {
       name: formData.get("name"),
       phone: formData.get("phone"),
       enquiry: formData.get("enquiry"),
+      propertyId: property?.id,
     };
 
     // You can now use enquiryData for your API call
@@ -40,11 +51,12 @@ const ReviewBoxForm = ({ propertyName = "" }) => {
       <div className="row">
         <div className="col-md-12">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Email</label>
+            <label className="fw600 ff-heading mb-2">Name</label>
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="name"
               className="form-control"
+              placeholder="Enter Name"
               required
             />
           </div>
@@ -53,12 +65,12 @@ const ReviewBoxForm = ({ propertyName = "" }) => {
 
         <div className="col-md-6">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Name</label>
+            <label className="fw600 ff-heading mb-2">Email</label>
             <input
-              type="text"
-              name="name"
+              type="email"
+              name="email"
               className="form-control"
-              placeholder="Enter Name"
+              placeholder="Enter Email"
               required
             />
           </div>
@@ -99,14 +111,15 @@ const ReviewBoxForm = ({ propertyName = "" }) => {
 
         <div className="col-md-12">
           <div className="mb-4">
-            <label className="fw600 ff-heading mb-2">Enquiry</label>
+            <label className="fw600 ff-heading mb-2">Notes</label>
             <textarea
               className="pt15 form-control"
               name="enquiry"
               style={{ minHeight: "200px" }}
               rows={8}
               placeholder="Write your enquiry"
-              defaultValue={`I would like to submit an Enquiry about ${propertyName}`}
+              onChange={(e) => setEnquiryText(e.target.value)}
+              value={enquiryText}
               required
             />
           </div>

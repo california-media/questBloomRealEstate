@@ -68,6 +68,9 @@ import AgencySingle from "./pages/property/(agents)/agency-single";
 import ListV1 from "./pages/listings/(list-view)/list-v1";
 import ScrollTopBehaviour from "./components/common/ScrollTopBehaviour";
 import SearchProperties from "./pages/listings/(map-style)/search-properties";
+import BuyFull3Col from "./pages/listings/(grid-view)/buy";
+import Rent3Col from "./pages/listings/(grid-view)/rent";
+import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -101,7 +104,10 @@ function App() {
               <Route path="home-v10" element={<Home_V10 />} />
 
               <Route path="grid-default" element={<GridDefault />} />
+              <Route path="buy" element={<BuyFull3Col />} />
               <Route path="off-plan" element={<GridFull3Col />} />
+              <Route path="rent" element={<Rent3Col />} />
+              <Route path="listings" element={<ListingsFull3Col />} />
               <Route path="grid-full-4-col" element={<GridFull4Col />} />
               <Route path="grid-full-2-col" element={<GridFull2Col />} />
               <Route path="grid-full-1-col-v1" element={<GridFull1ColV1 />} />
@@ -119,10 +125,7 @@ function App() {
                 path="search-properties/:search"
                 element={<SearchProperties />}
               />
-              <Route
-                path="search-properties"
-                element={<SearchProperties />}
-              />
+              <Route path="search-properties" element={<SearchProperties />} />
               <Route path="map-v1" element={<MapV1 />} />
               <Route path="map-v2" element={<MapV2 />} />
               <Route path="map-v3" element={<MapV3 />} />
