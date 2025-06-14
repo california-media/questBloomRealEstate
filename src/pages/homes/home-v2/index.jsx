@@ -16,7 +16,7 @@ import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 
 const metaInformation = {
-  title: "Home",
+  title: "Rent, Buy or Sell, Off-plan Residential & Commercial Properties in Dubai. Quest Bloom Realestate also offers Property Consulting Services",
 };
 
 const beachAreaProperties = [
