@@ -12,7 +12,6 @@ const AdvanceFilterModal = ({
   locationOptions,
   facilityOptions,
   searchTerm,
-  setPageNumber,
   loading,
   setDataFetched,
 }) => {
@@ -65,7 +64,6 @@ const AdvanceFilterModal = ({
     filterFunctions?.handlebedrooms(bedroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
-    if (setPageNumber) setPageNumber(1);
     searchTerm
       ? navigate("/search-properties/" + searchTerm)
       : navigate("/search-properties/");
@@ -280,7 +278,6 @@ const AdvanceFilterModal = ({
               setPropertyId("");
               setPropertyType("All Property Types");
               setDataFetched(false);
-              setPageNumber(1);
               setPriceRange([0, 10000000]);
               setSquareFeet([0, 0]);
             }}
