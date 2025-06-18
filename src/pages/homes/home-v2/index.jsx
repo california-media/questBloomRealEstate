@@ -228,7 +228,7 @@ const Home_V2 = () => {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="">
                   <div
                     className="col-lg-12"
                     data-aos="fade-up"

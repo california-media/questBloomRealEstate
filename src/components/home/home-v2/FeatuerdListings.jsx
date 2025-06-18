@@ -41,7 +41,7 @@ const FeaturedListings = ({ params }) => {
   return (
     <>
       <Swiper
-        spaceBetween={30}
+        spaceBetween={10}
         modules={[Navigation, Pagination]}
         navigation={{
           nextEl: `.featured-next__active-${uniqueId}`,
@@ -70,10 +70,10 @@ const FeaturedListings = ({ params }) => {
         ) : (
           listings.slice(5, 13).map((listing) => (
             <SwiperSlide key={listing.id} style={{ height: "90%" }}>
-              <Link to={`/off-plan/${listing.id}`}>
-                <div className="h-100">
+              <Link to={`/off-plan/${listing.id}`} className="w-100">
+                <div className="h-100 w-100  ">
                   <div
-                    className="listing-style1  d-flex flex-column"
+                    className="listing-style1  w-100  d-flex flex-column"
                     style={{ height: "90%" }}
                   >
                     <div className="list-thumb">

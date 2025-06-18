@@ -45,6 +45,30 @@ const PropertyHeader = ({ property }) => {
     return "Ask for price";
   };
 
+  // Helper function to get price per sqft display
+  const getPricePerSqftDisplay = () => {
+    if (!property?.unit_blocks || property.unit_blocks.length === 0)
+      return null;
+
+    const validBlocks = property.unit_blocks.filter(
+      (block) =>
+        block.units_price_from_aed &&
+        block.units_area_from_m2 &&
+        parseFloat(block.units_area_from_m2) > 0
+    );
+    if (validBlocks.length === 0) return null;
+
+    const minPricePerSqft = Math.min(
+      ...validBlocks.map((block) => {
+        const priceAed = block.units_price_from_aed;
+        const areaM2 = parseFloat(block.units_area_from_m2);
+        const areaSqft = areaM2 * 10.764; // Convert m2 to sqft
+        return priceAed / areaSqft;
+      })
+    );
+
+    return isFinite(minPricePerSqft) ? Math.floor(minPricePerSqft) : null;
+  };
   // Get area range for price per sqft calculation
   const getAreaDisplay = () => {
     if (property?.unit_blocks && property?.unit_blocks.length > 0) {
@@ -177,30 +201,19 @@ const PropertyHeader = ({ property }) => {
                 ? "Ask for price"
                 : "AED " + getPriceDisplay()}
             </h3>
-            {property?.unit_blocks && property?.unit_blocks.length > 0 && (
-              <p
-                className="text space fz15"
-                style={{
-                  textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
-                }}
-              >
-                {Math.min(
-                  ...property?.unit_blocks
-                    .filter((block) => block.units_price_from_aed)
-                    .map((block) => block.units_price_from_aed)
-                ) !== Infinity
-                  ? "Starting from AED " +
-                    Math.floor(
-                      Math.min(
-                        ...property?.unit_blocks
-                          .filter((block) => block.units_price_from_aed)
-                          .map((block) => block.units_price_from_aed)
-                      ) / getAreaDisplay()
-                    ) +
-                    " per sqft"
-                  : ""}
-              </p>
-            )}
+            {(() => {
+              const pricePerSqft = getPricePerSqftDisplay();
+              return pricePerSqft ? (
+                <p
+                  className="text space fz15"
+                  style={{
+                    textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+                  }}
+                >
+                  Starting from AED {pricePerSqft} per sqft
+                </p>
+              ) : null;
+            })()}
           </div>
         </div>
       </div>
