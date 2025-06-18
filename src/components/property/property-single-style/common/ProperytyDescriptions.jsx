@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
+
 const PropertyDescriptions = ({ property }) => {
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const extractOverview = (overview) => {

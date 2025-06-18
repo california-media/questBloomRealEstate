@@ -15,10 +15,7 @@ export default function mapApiDataToTemplateSingle(apiData) {
     id: apiData.id,
     image: imageUrl || "/images/fallback.jpg", // fallback image
     title: apiData.name || "Untitled Property",
-    developer:
-      apiData.developer && apiData.developer != "Object 1"
-        ? apiData.developer
-        : "Unknown",
+    developer: apiData.developer ? apiData.developer : "Unknown",
     post_handover: apiData.post_handover || false,
     city: apiData.area || "Unknown",
     location: apiData.area || "Unknown", // you can enhance this with more context if needed
