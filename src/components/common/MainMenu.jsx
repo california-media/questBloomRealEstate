@@ -95,17 +95,24 @@ const MainMenu = () => {
       {/* End homeItems */}
 
       <li className="">
-        <a className="list-item" href="#">
+        <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
-              className={topMenu == "listing" ? "title menuActive" : "title"}
+              className={topMenu === "listing" ? "title menuActive" : "title"}
               to={"/off-plan"}
             >
               Off-Plan
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
+
         {/* <ul className="row dropdown-megamenu sub-menu">
           {listingItems.map((item, index) => (
             <li className="col mega_menu_list" key={index}>
@@ -128,7 +135,13 @@ const MainMenu = () => {
       </li>
 
       <li className="">
-        <a className="list-item" href="#">
+        <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "buy" ? "title menuActive" : "title"}
@@ -138,10 +151,16 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
       <li className="">
-        <a className="list-item" href="#">
+        <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "listings" ? "title menuActive" : "title"}
@@ -151,11 +170,17 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
 
       <li className="">
-        <a className="list-item" href="#">
+     <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "rent" ? "title menuActive" : "title"}
@@ -165,10 +190,16 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
       <li className="">
-        <a className="list-item" href="#">
+    <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "agents" ? "title menuActive" : "title"}
@@ -178,11 +209,17 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
 
       <li className="">
-        <a className="list-item" href="#">
+   <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "whoweare" ? "title menuActive" : "title"}
@@ -192,10 +229,16 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
       <li className="">
-        <a className="list-item" href="#">
+        <div
+          style={{
+            borderRadius: "60px",
+            textAlign: "center",
+            padding: "18px 20px 18px 5px",
+          }}
+        >
           <span>
             <Link
               className={topMenu == "contactus" ? "title menuActive" : "title"}
@@ -205,7 +248,7 @@ const MainMenu = () => {
             </Link>
           </span>
           {/* <span className="arrow"></span> */}
-        </a>
+        </div>
       </li>
 
       {/* <li className="visible_list dropitem">

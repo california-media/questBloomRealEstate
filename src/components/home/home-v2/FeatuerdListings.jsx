@@ -169,7 +169,7 @@ const FeaturedListings = ({ params }) => {
         </button>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .swiper-equal-height .swiper-slide {
           height: auto !important;
           display: flex;
