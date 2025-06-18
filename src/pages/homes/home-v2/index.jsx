@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
+import Hero from "@/components/home/home-v3/hero";
 
 const metaInformation = {
   title: "Home",
@@ -56,14 +57,14 @@ const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
   const sections = [
     {
-      title: "Discover Villas",
+      title: "Villas",
       paragraph: "Luxury villas with premium amenities and stunning views",
       params: {
         unit_types: "Villa,Villas",
       },
     },
     {
-      title: "Discover Apartments",
+      title: "Apartments",
       paragraph:
         "Modern apartments in prime locations with excellent facilities",
       params: {
@@ -71,21 +72,21 @@ const Home_V2 = () => {
       },
     },
     {
-      title: "Discover Beachfront Properties",
+      title: "Beachfront Properties",
       paragraph: "Premium Beachfront Properties",
       params: {
         areas: beachAreaProperties.map((item) => item.id).join(","),
       },
     },
     {
-      title: "Discover Properties by Sobha",
+      title: "Properties by Sobha",
       paragraph: "Premium Properties by Sobha with excellent facilities",
       params: {
         developer: String(sobhaDeveloper.id),
       },
     },
     {
-      title: "Discover Properties under 1 Million",
+      title: "Properties under 1 Million",
       paragraph:
         "Explore handpicked premium homes that offer great value for less than AED 1 Million",
       params: {
@@ -93,7 +94,7 @@ const Home_V2 = () => {
       },
     },
     {
-      title: "Discover Properties between 1 Million to 2 Million",
+      title: "Properties between 1 Million to 2 Million",
       paragraph:
         "Step into luxury with a curated selection of upscale properties priced between AED 1 Million and 2 Million",
       params: {
@@ -102,9 +103,9 @@ const Home_V2 = () => {
       },
     },
   ];
-  const handleViewMore = () => {
-    setShowAllSections(true);
-  };
+  // const handleViewMore = () => {
+  //   setShowAllSections(true);
+  // };
 
   // const getButtonText = () => {
   //   if (visibleSections === sections.length) {
@@ -146,15 +147,54 @@ const Home_V2 = () => {
       {/* End Explore Apartment */}
       {/* Featured Listings */}
       <>
+        {/* Additional Sections - Show all at once with fade animation */}
+        {sections.map((section, index) => (
+          <div
+            key={index}
+            style={{
+              maxHeight: "900px",
+
+              opacity: 1,
+            }}
+          >
+            <section className="pt20  pb0 pb10-md bgc-white" data-aos="fade-up">
+              <div className="container">
+                <div className="row align-items-center">
+                  <div className="col-lg-12">
+                    <div className="main-title2 text-left">
+                      <h2 className="title">{section.title}</h2>
+                      <p className="paragraph">{section.paragraph}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="">
+                  <div
+                    className="col-lg-12"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                  >
+                    <div className="feature-listing-slider">
+                      {/* Component would go here */}
+                      <div className="text-center ">
+                        <FeaturedListings params={section.params} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        ))}
         {/* Main Featured Listings Section */}
         <section className="pt0 pb0 pb0  bgc-white">
           <div className="container ">
             <div className="row align-items-center" data-aos="fade-up">
               <div className="col-lg-9">
                 <div className="main-title2">
-                  <h2 className="title">Discover Featured Listings</h2>
+                  <h2 className="title">Featured Listings</h2>
                   <p className="paragraph">
-                    Aliquam lacinia diam quis lacus euismod
+                    Premium homes designed to match your lifestyle.
                   </p>
                 </div>
               </div>
@@ -205,47 +245,6 @@ const Home_V2 = () => {
             )} */}
           </div>
         </section>
-
-        {/* Additional Sections - Show all at once with fade animation */}
-        {sections.map((section, index) => (
-          <div
-            key={index}
-            style={{
-              maxHeight: "900px",
-              overflow: "hidden",
-
-              opacity: 1,
-            }}
-          >
-            <section className="pt20  pb0 pb10-md bgc-white" data-aos="fade-up">
-              <div className="container">
-                <div className="row align-items-center">
-                  <div className="col-lg-12">
-                    <div className="main-title2 text-left">
-                      <h2 className="title">{section.title}</h2>
-                      <p className="paragraph">{section.paragraph}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="">
-                  <div
-                    className="col-lg-12"
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                  >
-                    <div className="feature-listing-slider">
-                      {/* Component would go here */}
-                      <div className="text-center ">
-                        <FeaturedListings params={section.params} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        ))}
       </>
       {/* Explore Featured Listings */}
       {/* Property Cities */}

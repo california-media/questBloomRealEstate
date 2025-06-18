@@ -29,6 +29,9 @@ const Header = () => {
         className={`header-nav nav-homepage-style at-home2  main-menu ${
           navbar ? "sticky slideInDown animated" : ""
         }`}
+        style={{
+          zIndex: 20,
+        }}
       >
         <nav className="posr">
           <div className="container maxw1600 posr">

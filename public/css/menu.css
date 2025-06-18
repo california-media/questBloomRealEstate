@@ -448,12 +448,14 @@
 }
 .mm-navbar__title[href="#"] {
 	pointer-events: none;
+
 }
 .mm-navbar__title > span {
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+
 }
 .mm-btn.mm-hidden + .mm-navbar__title:not(:last-child) {
 	-webkit-padding-start: 60px;
@@ -1363,3 +1365,6 @@
 	z-index: -9;
 }
 /*Down Arrow Icon*/
+#menu-title-hover:hover {
+  color: #c2bf9f; /* Adjusted lighter shade of #797631 */
+}

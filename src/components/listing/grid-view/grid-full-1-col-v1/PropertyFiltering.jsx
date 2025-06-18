@@ -1,5 +1,3 @@
-
-
 import listings from "@/data/listings";
 import React, { useState, useEffect } from "react";
 import ListingSidebar from "../../sidebar";
@@ -34,7 +32,7 @@ export default function PropertyFiltering() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [bedrooms, setBedrooms] = useState(0);
-  const [bathroms, setBathroms] = useState(0);
+  const [bathrooms, setBathroms] = useState(0);
   const [location, setLocation] = useState("All Cities");
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
@@ -118,7 +116,7 @@ export default function PropertyFiltering() {
     resetFilter,
 
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
@@ -152,7 +150,7 @@ export default function PropertyFiltering() {
     ];
     filteredArrays = [
       ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
+      refItems.filter((el) => el.bath >= bathrooms),
     ];
 
     filteredArrays = [
@@ -224,7 +222,7 @@ export default function PropertyFiltering() {
     propertyTypes,
     priceRange,
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,

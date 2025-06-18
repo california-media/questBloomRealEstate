@@ -16,9 +16,11 @@ const usePropertyStore = create((set, get) => ({
   location: "All Locations",
   categories: [],
   bedrooms: 0,
-  bathroms: 0,
+  bathrooms: 0,
+  percentagePreHandover: 0,
+  rentDuration: "Yearly",
   squirefeet: [],
-  yearBuild: [0, 2050],
+  yearBuild: 2050,
   propertyId: "",
   listingStatus: "All",
   detailedListings: [],
@@ -46,19 +48,20 @@ const usePropertyStore = create((set, get) => ({
   // Filter actions for AdvanceFilterModal
   handlePropertyType: (propertyType) => {
     set({ selectedPropertyType: propertyType });
-    console.log("type set");
   },
-
+  handleRentDuration: (rentDuration) => set({ rentDuration }),
   handlePriceRange: (range) => set({ priceRange: range }),
 
   handleLocation: (locationValue) => set({ location: locationValue }),
+  handlePercentagePreHandover: (percentage) =>
+    set({ percentagePreHandover: percentage }),
 
   handleCategories: (categories) => set({ categories }),
 
   // New filter actions for previously local states
   handleBedrooms: (bedrooms) => set({ bedrooms }),
 
-  handleBathroms: (bathroms) => set({ bathroms }),
+  handleBathrooms: (bathrooms) => set({ bathrooms }),
 
   handleSquirefeet: (squirefeet) => set({ squirefeet }),
 
@@ -79,9 +82,9 @@ const usePropertyStore = create((set, get) => ({
       location: "All Locations",
       categories: [],
       bedrooms: 0,
-      bathroms: 0,
+      bathrooms: 0,
       squirefeet: [],
-      yearBuild: [0, 2050],
+      yearBuild: 2050,
       propertyId: "",
       listingStatus: "All",
     }),
@@ -95,7 +98,7 @@ const usePropertyStore = create((set, get) => ({
       location: state.location,
       categories: state.categories,
       bedrooms: state.bedrooms,
-      bathroms: state.bathroms,
+      bathrooms: state.bathrooms,
       squirefeet: state.squirefeet,
       yearBuild: state.yearBuild,
       propertyId: state.propertyId,

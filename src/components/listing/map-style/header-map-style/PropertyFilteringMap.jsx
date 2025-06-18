@@ -34,7 +34,7 @@ export default function PropertyFilteringMap() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [bedrooms, setBedrooms] = useState(0);
-  const [bathroms, setBathroms] = useState(0);
+  const [bathrooms, setBathroms] = useState(0);
   const [location, setLocation] = useState("All Cities");
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
@@ -118,7 +118,7 @@ export default function PropertyFilteringMap() {
     resetFilter,
 
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
@@ -152,7 +152,7 @@ export default function PropertyFilteringMap() {
     ];
     filteredArrays = [
       ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
+      refItems.filter((el) => el.bath >= bathrooms),
     ];
     filteredArrays = [
       ...filteredArrays,
@@ -223,7 +223,7 @@ export default function PropertyFilteringMap() {
     propertyTypes,
     priceRange,
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
