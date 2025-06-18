@@ -222,7 +222,6 @@ export default function ProperteyFiltering({ region, search }) {
 
         // Must refetch since the format in whcih they are fetched on home page is different
         const newSaleStatuses = await api.get("/sale-statuses");
-        console.log("newSaleStatuses", newSaleStatuses.data);
         setSaleStatuses(newSaleStatuses.data);
 
         setFacilityOptions(hardcoded_facilities);

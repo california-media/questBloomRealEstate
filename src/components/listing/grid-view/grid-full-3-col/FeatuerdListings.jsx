@@ -19,7 +19,6 @@ const FeaturedListings = ({ data, colstyle }) => {
   return (
     <>
       {data.map((listing) => {
-        console.log(listing.developer);
         return (
           <div
             className={`d-flex ${

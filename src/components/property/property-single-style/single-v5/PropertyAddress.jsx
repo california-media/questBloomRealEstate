@@ -22,13 +22,9 @@ const PropertyAddress = ({ property, coordinates }) => {
       {/* End col */}
 
       <div className="col-md-12 " style={{ marginTop: "30px" }}>
-        <GoogleMapEmbed
-          location={
-            coords
-              ? { lat: coords[0], lng: coords[1] }
-              : { lat: 25.0657, lng: 55.1713 }
-          }
-        />
+        {coords && (
+          <GoogleMapEmbed location={{ lat: coords[0], lng: coords[1] }} />
+        )}
       </div>
       {/* End col */}
     </>
