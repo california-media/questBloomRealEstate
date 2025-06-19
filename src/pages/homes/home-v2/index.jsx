@@ -3,7 +3,7 @@ import Partner from "@/components/common/Partner";
 import Agents from "@/components/home/home-v2/Agents";
 import ApartmentType from "@/components/home/home-v2/ApartmentType";
 import ExploreCities from "@/components/home/home-v2/ExploreCities";
-import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
+import FeaturedListingsHome from "@/components/home/home-v2/FeatuerdListingsHome";
 import Header from "@/components/home/home-v2/Header";
 import Testimonial from "@/components/home/home-v2/Testimonial";
 import React, { useState } from "react";
@@ -138,11 +138,11 @@ const Home_V2 = () => {
       <>
         {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
-          <FeaturedListings section={section} index={index} />
+          <FeaturedListingsHome section={section} index={index} />
         ))}
         {/* Main Featured Listings Section */}
 
-        <FeaturedListings
+        <FeaturedListingsHome
           section={{
             title: "Featured Listings",
             paragraph: " Premium homes designed to match your lifestyle",
