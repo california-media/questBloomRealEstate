@@ -11,7 +11,6 @@ const AutoCarouselHero = () => {
     "/images/background/carousel3.jpg",
     "/images/background/carousel4.jpg",
   ];
-  console.log(currentIndex);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);

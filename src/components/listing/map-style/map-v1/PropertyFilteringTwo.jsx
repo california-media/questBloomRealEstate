@@ -80,7 +80,7 @@ export default function PropertyFilteringTwo() {
   const handlebedrooms = (elm) => {
     setBedrooms(elm);
   };
-  const handlebathroms = (elm) => {
+  const handleBathrooms = (elm) => {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
@@ -107,7 +107,7 @@ export default function PropertyFilteringTwo() {
     handlepropertyTypes,
     handlepriceRange,
     handlebedrooms,
-    handlebathroms,
+    handleBathrooms,
     handlelocation,
     handlesquirefeet,
     handleyearBuild,

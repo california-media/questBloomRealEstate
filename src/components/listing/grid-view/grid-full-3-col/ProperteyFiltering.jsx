@@ -100,7 +100,7 @@ export default function ProperteyFiltering({ region, search }) {
     handlepropertyType: handlePropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
-    handlebathroms: handleBathrooms,
+    handleBathrooms: handleBathrooms,
     handlelocation: handleLocation,
     handlesquirefeet: handleSquirefeet,
     handleyearBuild: handleYearBuild,
@@ -199,7 +199,6 @@ export default function ProperteyFiltering({ region, search }) {
   ]);
   // Initial data fetch
   useEffect(() => {
-    console.log("useeffect called");
 
     async function fetchInitialData() {
       setLoading(true);

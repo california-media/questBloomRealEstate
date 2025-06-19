@@ -62,7 +62,7 @@ const Hero = () => {
     handlepropertyType: handlePropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
-    handlebathroms: handleBathrooms,
+    handleBathrooms: handleBathrooms,
     handlelocation: handleLocation,
     handlesquirefeet: handleSquirefeet,
     handleyearBuild: handleYearBuild,
