@@ -242,7 +242,7 @@ const HeroContent = ({
                     <div className="col-md-3 col-lg-3  ">
                       <button
                         type="button"
-                        className=" d-flex justify-content-between border-none w-100 fw-light"
+                        className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
                         style={{
                           padding: "15px 13px",
                           borderRadius: "12px",
