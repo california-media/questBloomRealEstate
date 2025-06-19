@@ -53,9 +53,9 @@ const HeroContent = ({
               <div className="row gy-3 gx-1">
                 {/* Buy/Rent Toggle */}
 
-                <div className="col-md-1 col-lg-2 ">
+                <div className="col-md-1 col-4 col-lg-2 ">
                   <div
-                    className="mt-md-0 d-flex "
+                    className="mt-md-0 d-flex justify-content-center"
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
                   >
                     {buyRentTabs.map((tab) => (
@@ -87,7 +87,7 @@ const HeroContent = ({
                 </div>
 
                 {/* Status Dropdown */}
-                <div className="col-md-1 col-lg-2">
+                <div className="col-md-1 col-lg-auto">
                   <div className="mt-3 mt-md-0">
                     <div className="bootselect-multiselect">
                       <SelectDropdown
@@ -99,50 +99,47 @@ const HeroContent = ({
                 </div>
 
                 {/* Advanced Search Buttons */}
-                <div className="col-md-4 pe-0 d-none d-md-block">
-                  <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-2 mt-md-0">
-                    <button
-                      className="advance-search-btn"
-                      style={{
-                        padding: "15px 13px",
-                        borderRadius: "12px",
-                        backgroundColor: "#f7f7f7",
-                      }}
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#advanceSeachModal"
-                    >
-                      <span className="flaticon-settings" /> Advanced
-                    </button>
-                    <button
-                      style={{ paddingTop: "2px" }}
-                      className="advance-search-icon ud-btn btn-thm ms-4"
-                      type="button"
-                      onClick={() => {
-                        let path = "";
 
-                        if (buyRent === "rent") {
-                          path = "/rent";
-                        } else if (buyRent === "buy") {
-                          if (allReadyOff === "ready") {
-                            path = "/buy";
-                          } else if (allReadyOff === "off") {
-                            path = "/off-plan";
-                          } else {
-                            path = "/listings";
-                          }
-                        }
+                <button
+                  className="advance-search-btn col-2 ms-1 me-1 mt-3  d-none d-md-block"
+                  style={{
+                    padding: "15px 13px",
+                    borderRadius: "12px",
+                    backgroundColor: "#f7f7f7",
+                  }}
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#advanceSeachModal"
+                >
+                  <span className="flaticon-settings" /> Advanced
+                </button>
+                <button
+                  style={{ paddingTop: "2px" }}
+                  className="advance-search-icon ud-btn btn-thm  col-1 ms-2 me-2  d-none d-md-block"
+                  type="button"
+                  onClick={() => {
+                    let path = "";
 
-                        navigate(path);
-                      }}
-                    >
-                      <span className="flaticon-search " />
-                    </button>
-                  </div>
-                </div>
+                    if (buyRent === "rent") {
+                      path = "/rent";
+                    } else if (buyRent === "buy") {
+                      if (allReadyOff === "ready") {
+                        path = "/buy";
+                      } else if (allReadyOff === "off") {
+                        path = "/off-plan";
+                      } else {
+                        path = "/listings";
+                      }
+                    }
+
+                    navigate(path);
+                  }}
+                >
+                  <span className="flaticon-search " />
+                </button>
 
                 {/* Conditional Toggles/Dropdowns */}
-                <div className="col-md-3 col-lg-4">
+                <div className="col-md-3 col-7 col-lg-4">
                   {buyRent === "buy" ? (
                     <div
                       className="mt-md-0 d-flex  justify-content-center"
@@ -191,7 +188,7 @@ const HeroContent = ({
 
                 {/* Bedrooms Dropdown */}
                 {allReadyOff !== "off" && (
-                  <div className="col-md-3 col-lg-2">
+                  <div className="col-md-3 col-lg-auto">
                     <div className="mt-3 mt-md-0 bootselect-multiselect">
                       <DropdownSelect
                         options={["0", "1", "2", "3", "4", "5+"]}

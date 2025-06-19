@@ -52,12 +52,14 @@ const DropdownSelect = ({
       ...provided,
       paddingLeft: placeholder === "Enter Location" ? "35px" : "10px",
       padding: "0px",
+      paddingLeft: "5px",
     }),
     // Style the single value (selected value) to have proper spacing
     singleValue: (provided) => ({
       ...provided,
       paddingLeft: placeholder === "Enter Location" ? "35px" : "10px",
       padding: "0px",
+      paddingLeft: "5px",
     }),
   };
 
