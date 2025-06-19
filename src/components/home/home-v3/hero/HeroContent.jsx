@@ -1,4 +1,5 @@
-import DropdownSelect from "@/components/common/DropdownSelect ";
+import DropdownSelect from "@/components/common/DropdownSelect";
+import DropdownSelectLocation from "@/components/common/DropdownSelectLocation";
 import React, { useState } from "react";
 import "react-input-range/lib/css/index.css";
 import { useNavigate } from "react-router-dom";
@@ -76,7 +77,7 @@ const HeroContent = ({
                 {/* Location Input */}
                 <div className="col-md-5 col-lg-4">
                   <div className="mt-3 mt-md-0  bootselect-multiselect">
-                    <DropdownSelect
+                    <DropdownSelectLocation
                       options={locationOptionsStrings}
                       value={filterFunctions?.location}
                       onChange={filterFunctions?.handlelocation}
@@ -177,7 +178,7 @@ const HeroContent = ({
                 </div>
 
                 {/* Property Type Dropdown */}
-                <div className="col-md-3 col-lg-4">
+                <div className="col-md-2 col-lg-3">
                   <div className="mt-3 mt-md-0 bootselect-multiselect">
                     <DropdownSelect
                       options={propertyTypesStrings}
@@ -206,7 +207,7 @@ const HeroContent = ({
 
                 {/* Bathrooms Dropdown */}
                 {allReadyOff !== "off" && (
-                  <div className="col-md-3 col-lg-2">
+                  <div className="col-md-3 col-lg-auto">
                     <div className="mt-3 mt-md-0 bootselect-multiselect">
                       <DropdownSelect
                         options={["0", "1", "2", "3", "4", "5+"]}
