@@ -26,7 +26,7 @@ const SelectDropdown = ({ saleStatuses = [], filterFunctions }) => {
   return (
     <>
       <Select
-        defaultValue={statuses[0] || null}
+        defaultValue={statuses[1] || null}
         name="colors"
         options={statuses}
         styles={customStyles}

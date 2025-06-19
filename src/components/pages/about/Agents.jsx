@@ -35,7 +35,7 @@ const Agents = () => {
             slidesPerView: 4,
           },
         }}
-        autoplay={{ delay: 3000 }} // Set the desired delay for autoplay
+        autoplay={{ delay: 50000 }} // Set the desired delay for autoplay
       >
         {agents.slice(0, 7).map((agent, index) => (
           <SwiperSlide key={index}>

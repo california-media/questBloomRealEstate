@@ -50,7 +50,7 @@ const Agents = () => {
             slidesPerView: 5,
           },
         }}
-        autoplay={{ delay: 3000 }} // Set the desired delay for autoplay
+        autoplay={{ delay: 50000 }} // Set the desired delay for autoplay
       >
         {loading ? (
           <div className="row">

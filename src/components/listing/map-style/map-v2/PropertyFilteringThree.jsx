@@ -49,7 +49,7 @@ export default function PropertyFilteringThree() {
     setBathroms(0);
     setLocation("All Cities");
     setSquirefeet([]);
-    setyearBuild([0, 2050]);
+    setyearBuild([0, 50000]);
     setCategories([]);
     setCurrentSortingOption("Newest");
     document.querySelectorAll(".filterInput").forEach(function (element) {

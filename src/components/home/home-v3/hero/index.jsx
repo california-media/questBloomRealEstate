@@ -1,4 +1,4 @@
-import AdvanceFilterModal from "@/components/common/advance-filter-two";
+import AdvanceFilterModal from "@/components/common/advance-filter-home";
 import HeroContent from "./HeroContent";
 import usePropertyStore from "@/store/propertyStore";
 import { useEffect, useState } from "react";
@@ -46,7 +46,15 @@ const Hero = () => {
     rentDuration,
     yearBuild,
   } = usePropertyStore();
+  const [buyRent, setBuyRent] = useState("buy");
+  const [allReadyOff, setAllReadyOff] = useState("all");
+  const handleAllReadyOff = (tab) => {
+    setAllReadyOff(tab);
+  };
 
+  const handleBuyRent = (tab) => {
+    setBuyRent(tab);
+  };
   const resetFilter = () => {
     // Reset all store filters
     resetAllFilters();
@@ -160,7 +168,12 @@ const Hero = () => {
           Find The Perfect Place to Live With your Family
         </h2>
         <HeroContent
+          buyRent={buyRent}
+          allReadyOff={allReadyOff}
+          handleAllReadyOff={handleAllReadyOff}
+          handleBuyRent={handleBuyRent}
           saleStatuses={saleStatuses}
+          locationOptions={locationOptions}
           propertyTypes={propertyTypes}
           filterFunctions={filterFunctions}
           searchTerm={searchTerm}
@@ -179,6 +192,10 @@ const Hero = () => {
           aria-hidden="true"
         >
           <AdvanceFilterModal
+            buyRent={buyRent}
+            allReadyOff={allReadyOff}
+            handleAllReadyOff={handleAllReadyOff}
+            handleBuyRent={handleBuyRent}
             locationOptions={locationOptions}
             propertyTypes={propertyTypes}
             facilityOptions={facilityOptions}

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const MainMenu = () => {
   const { pathname } = useLocation();
 
-  const [topMenu, setTopMenu] = useState("");
+  const [topMenu, setTopMenu] = useState("home");
 
   useEffect(() => {
     if ("home" == pathname.split("/")[1]) {

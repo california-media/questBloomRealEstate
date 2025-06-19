@@ -139,7 +139,9 @@ span[class*=" flaticon-"]:before {
   content: "\f127";
 }
 .flaticon-location:before {
-  content: "\f128";
+  content: "\f3c5";
+    font-family: "Font Awesome 6 Free";
+  font-weight: 900;
 }
 .flaticon-security:before {
   content: "\f129";

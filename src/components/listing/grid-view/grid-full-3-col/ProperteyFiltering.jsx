@@ -7,18 +7,28 @@ import api from "@/api/axios";
 import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import usePropertyStore from "@/store/propertyStore";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
+import { useLocation } from "react-router-dom";
 
 const isDev = import.meta.env.DEV;
+
+// Function to create completion_date_ranges for a single year
+const createCompletionDateRangesForYear = (year) => {
+  const fromDate = new Date(`${year}-01-01T00:00:00`); // January 1st 00:00:00
+  const toDate = new Date(`${year}-12-31T23:59:59`); // December 31st 23:59:59
+
+  const fromTimestamp = Math.floor(new Date(fromDate).getTime());
+  const toTimestamp = Math.floor(new Date(toDate).getTime());
+
+  return `${fromTimestamp}-${toTimestamp}`;
+};
 
 const hardcoded_facilities = ["Swimming Pool"];
 
 export default function ProperteyFiltering({ region, search }) {
   // Get all data and actions from store
   const {
-    listings,
     filteredData,
     sortedFilteredData,
-    loading,
     selectedPropertyType,
     priceRange,
     location,
@@ -33,10 +43,8 @@ export default function ProperteyFiltering({ region, search }) {
     propertyTypes,
     facilityOptions,
     saleStatuses,
-    setListings,
     setFilteredData,
     setSortedFilteredData,
-    setLoading,
     setDataFetched,
     setLocationOptions,
     setPropertyTypes,
@@ -53,6 +61,8 @@ export default function ProperteyFiltering({ region, search }) {
     handlePropertyId,
     handleListingStatus,
     resetAllFilters,
+    percentagePreHandover,
+    handlePercentagePreHandover,
     shouldFetchData,
   } = usePropertyStore();
 
@@ -60,6 +70,10 @@ export default function ProperteyFiltering({ region, search }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const routelocation = useLocation();
+  const isOffPlan = routelocation.pathname.startsWith("/off-plan");
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
@@ -103,6 +117,8 @@ export default function ProperteyFiltering({ region, search }) {
     yearBuild,
     categories,
     selectedPropertyType,
+    percentagePreHandover,
+    handlePercentagePreHandover,
   };
 
   // Fetch more data when reaching bottom
@@ -126,8 +142,14 @@ export default function ProperteyFiltering({ region, search }) {
           unit_price_to: priceRange[1],
         }),
         ...(propertyId != "" && { project_ids: propertyId }),
+        ...(yearBuild != 50000 &&
+          isOffPlan && {
+            completion_date_ranges:
+              createCompletionDateRangesForYear(yearBuild),
+          }),
         ...(location != "All Locations" && { areas: location }),
         ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
+        ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
         ...(squirefeet.length !== 0 &&
           squirefeet[0] !== 0 && {
             unit_area_from: squirefeet[0],
@@ -140,6 +162,7 @@ export default function ProperteyFiltering({ region, search }) {
         ...(region && { region }),
         ...(search && { search_query: search }),
       };
+      console.log("more params", params);
 
       const { data } = await api.get("/properties", { params });
 
@@ -174,14 +197,14 @@ export default function ProperteyFiltering({ region, search }) {
     setListings,
     setLoading,
   ]);
-
   // Initial data fetch
   useEffect(() => {
+    console.log("useeffect called");
+
     async function fetchInitialData() {
       setLoading(true);
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
-
       try {
         const params = {
           page: 1,
@@ -196,8 +219,15 @@ export default function ProperteyFiltering({ region, search }) {
             unit_price_to: priceRange[1],
           }),
           ...(propertyId != "" && { project_ids: propertyId }),
+          ...(yearBuild &&
+            yearBuild != 50000 &&
+            isOffPlan && {
+              completion_date_ranges:
+                createCompletionDateRangesForYear(yearBuild),
+            }),
           ...(location != "All Locations" && { areas: location }),
           ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
+          ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
           ...(squirefeet.length !== 0 &&
             squirefeet[0] !== 0 && {
               unit_area_from: squirefeet[0],
@@ -210,7 +240,7 @@ export default function ProperteyFiltering({ region, search }) {
           ...(region && { region }),
           ...(search && { search_query: search }),
         };
-
+        console.log("initial params", params);
         const { data } = await api.get("/properties", { params });
 
         // Set listings in store

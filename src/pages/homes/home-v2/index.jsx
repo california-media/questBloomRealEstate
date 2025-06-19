@@ -168,7 +168,7 @@ const Home_V2 = () => {
                   </div>
                 </div>
 
-                <div className="">
+                <div className="" style={{ marginTop: "-30px" }}>
                   <div
                     className="col-lg-12"
                     data-aos="fade-up"
@@ -187,7 +187,7 @@ const Home_V2 = () => {
           </div>
         ))}
         {/* Main Featured Listings Section */}
-        <section className="pt0 pb0 pb0  bgc-white">
+        <section className="pt20 pb0 pb0  bgc-white">
           <div className="container ">
             <div className="row align-items-center" data-aos="fade-up">
               <div className="col-lg-9">
@@ -208,7 +208,7 @@ const Home_V2 = () => {
               </div>
             </div>
 
-            <div className="">
+            <div className="" style={{ marginTop: "-30px" }}>
               <div
                 className="col-lg-12"
                 data-aos="fade-up"

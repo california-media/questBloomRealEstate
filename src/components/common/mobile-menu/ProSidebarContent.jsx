@@ -17,6 +17,27 @@ const ProSidebarContent = () => {
     if ("off-plan" == pathname.split("/")[1]) {
       setTopMenu("listing");
     }
+    if ("contact" == pathname.split("/")[1]) {
+      setTopMenu("contactus");
+    }
+
+    if ("about" == pathname.split("/")[1]) {
+      setTopMenu("whoweare");
+    }
+
+    if ("agents" == pathname.split("/")[1]) {
+      setTopMenu("agents");
+    }
+
+    if ("buy" == pathname.split("/")[1]) {
+      setTopMenu("buy");
+    }
+    if ("listings" == pathname.split("/")[1]) {
+      setTopMenu("listings");
+    }
+    if ("rent" == pathname.split("/")[1]) {
+      setTopMenu("rent");
+    }
 
     // blogItems.forEach((elm) => {
     //   if (elm.href.split("/")[1] == pathname.split("/")[1]) {
@@ -72,7 +93,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "buy" ? "title menuActive" : "title"}
-                to={"#"}
+                to={"/buy"}
               >
                 Buy
               </Link>
@@ -85,7 +106,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "offplan" ? "title menuActive" : "title"}
-                to={"#"}
+                to={"/listings"}
               >
                 Listings
               </Link>
@@ -99,7 +120,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "luxury" ? "title menuActive" : "title"}
-                to={"#"}
+                to={"/rent"}
               >
                 Rent
               </Link>
@@ -112,7 +133,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "agents" ? "title menuActive" : "title"}
-                to={"#"}
+                to={"/agents"}
               >
                 Agents
               </Link>
@@ -126,7 +147,7 @@ const ProSidebarContent = () => {
             <span>
               <Link
                 className={topMenu == "whoweare" ? "title menuActive" : "title"}
-                to={"#"}
+                to={"/about"}
               >
                 Who We Are
               </Link>
@@ -141,7 +162,7 @@ const ProSidebarContent = () => {
                 className={
                   topMenu == "contactus" ? "title menuActive" : "title"
                 }
-                to={"#"}
+                to={"/contact"}
               >
                 Contact Us
               </Link>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
-const PriceRange = ({ setPriceRange, priceRange = [] }) => {
+const PriceRange = ({ setPriceRange, priceRange=[] }) => {
   const [price, setPrice] = useState({ value: { min: 0, max: 10000000 } });
 
   // price range handler
@@ -13,7 +13,7 @@ const PriceRange = ({ setPriceRange, priceRange = [] }) => {
 
   return (
     <>
-      <div className="range-wrapper pr20">
+      <div className="range-wrapper">
         <InputRange
           formatLabel={() => ``}
           maxValue={10000000}
