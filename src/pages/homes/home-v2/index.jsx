@@ -25,10 +25,7 @@ const beachAreaProperties = [
     id: 139,
     name: "Al Raha Beach, Abu Dhabi",
   },
-  {
-    id: 242,
-    name: "Dreamland Beach, Bali",
-  },
+
   {
     id: 119,
     name: "Emaar Beachfront",
@@ -36,14 +33,6 @@ const beachAreaProperties = [
   {
     id: 63,
     name: "Jumeirah Beach Residence (JBR)",
-  },
-  {
-    id: 162,
-    name: "Nai Yang Beach, Phuket",
-  },
-  {
-    id: 175,
-    name: "Surin Beach, Phuket",
   },
 ];
 
@@ -149,102 +138,16 @@ const Home_V2 = () => {
       <>
         {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
-          <div
-            key={index}
-            style={{
-              maxHeight: "900px",
-
-              opacity: 1,
-            }}
-          >
-            <section className="pt20  pb0 pb10-md bgc-white" data-aos="fade-up">
-              <div className="container">
-                <div className="row align-items-center">
-                  <div className="col-lg-12">
-                    <div className="main-title2 text-left">
-                      <h2 className="title">{section.title}</h2>
-                      <p className="paragraph">{section.paragraph}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="" style={{ marginTop: "-30px" }}>
-                  <div
-                    className="col-lg-12"
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                  >
-                    <div className="feature-listing-slider">
-                      {/* Component would go here */}
-                      <div className="text-center ">
-                        <FeaturedListings params={section.params} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
+          <FeaturedListings section={section} index={index} />
         ))}
         {/* Main Featured Listings Section */}
-        <section className="pt20 pb0 pb0  bgc-white">
-          <div className="container ">
-            <div className="row align-items-center" data-aos="fade-up">
-              <div className="col-lg-9">
-                <div className="main-title2">
-                  <h2 className="title">Featured Listings</h2>
-                  <p className="paragraph">
-                    Premium homes designed to match your lifestyle.
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="text-start text-lg-end mb-3">
-                  <a className="ud-btn2" href="/off-plan">
-                    See All Properties
-                    <i className="fal fa-arrow-right-long" />
-                  </a>
-                </div>
-              </div>
-            </div>
 
-            <div className="" style={{ marginTop: "-30px" }}>
-              <div
-                className="col-lg-12"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <div className="feature-listing-slider ">
-                  {/* FeaturedListings component would go here */}
-                  <div className="text-center  ">
-                    <FeaturedListings />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* View More Button - Only shows when sections are hidden */}
-            {/* {!showAllSections && (
-              <div style={{ marginTop: "-30px" }} className="row mb20">
-                <div className="col-lg-12">
-                  <div className="text-end ">
-                    <button
-                      className="ud-btn2"
-                      onClick={handleViewMore}
-                      style={{
-                        border: "none",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      View More Properties
-                      <i className="fal fa-arrow-down-long" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )} */}
-          </div>
-        </section>
+        <FeaturedListings
+          section={{
+            title: "Featured Listings",
+            paragraph: " Premium homes designed to match your lifestyle",
+          }}
+        />
       </>
       {/* Explore Featured Listings */}
       {/* Property Cities */}

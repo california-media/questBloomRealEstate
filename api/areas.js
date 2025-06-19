@@ -1,12 +1,18 @@
 export default async function handler(req, res) {
-  // Base URL
   const baseUrl = "https://search-listings-production.up.railway.app/v1/areas";
 
-  // Build the query string from any query params in the request
-  const queryString = new URLSearchParams(req.query).toString();
-  const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
-
   try {
+    // Create a mutable URLSearchParams object
+    const queryParams = new URLSearchParams(req.query);
+
+    // Add default country if not provided
+    if (!queryParams.has("country")) {
+      queryParams.set("country", "United Arab Emirates");
+    }
+
+    // Construct final URL
+    const url = `${baseUrl}?${queryParams.toString()}`;
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
