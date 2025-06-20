@@ -1,4 +1,3 @@
-
 import Select from "react-select";
 import SingleAgentInfo from "./SingleAgentInfo";
 
@@ -16,11 +15,11 @@ const InfoWithForm = () => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#79763112"
           : isFocused
-          ? "#eb675312"
+          ? "#79763112"
           : undefined,
       };
     },

@@ -208,7 +208,7 @@ const TopFilterBar = ({
       </div>
       {/* End .col-9 */}
 
-      <div className="col-xl-3">
+      <div className="col-xl-3 mb-md-0 mb-4">
         <div className="page_control_shorting d-flex align-items-center justify-content-center justify-content-sm-end">
           <div className="pcs_dropdown pr10 d-flex align-items-center">
             <span style={{ minWidth: "60px" }}>Sort by</span>

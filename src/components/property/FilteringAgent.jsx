@@ -102,7 +102,7 @@ export default function FilteringAgent() {
     
     
   return (
-    <section className="our-agents pt-0">
+    <section className="our-agents pt-0" style={{minHeight:'70vh'}}>
         <div className="container">
           {/* <div className="row align-items-center mb20">
             <TopFilter  filterFunctions={filterFunctions} />

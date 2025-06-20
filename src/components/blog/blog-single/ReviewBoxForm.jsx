@@ -1,4 +1,3 @@
-
 import Select from "react-select";
 
 const ReviewBoxForm = () => {
@@ -15,11 +14,11 @@ const ReviewBoxForm = () => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#79763112"
           : isFocused
-          ? "#eb675312"
+          ? "#79763112"
           : undefined,
       };
     },

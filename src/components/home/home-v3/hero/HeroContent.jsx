@@ -42,15 +42,15 @@ const HeroContent = ({
   const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
 
   return (
-    <div className="advance-style3 mb30 mx-auto animate-up-2">
-      <div className="tab-content ">
+    <div className="advance-style3 mb30 mx-auto animate-up-2 ">
+      <div className="tab-content s">
         {buyRentTabs.map((tab) => (
           <div
             className={`${buyRent === tab.id ? "active" : ""} tab-pane `}
             key={tab.id}
           >
             <div className="advance-content-style3 ">
-              <div className="row gy-3 gx-1">
+              <div className="row gy-3 gx-1 align-items-stretch">
                 {/* Buy/Rent Toggle */}
 
                 <div className="col-md-1 col-4 col-lg-2 ">
@@ -138,40 +138,41 @@ const HeroContent = ({
                   <span className="flaticon-search " />
                 </button>
 
-                {/* Conditional Toggles/Dropdowns */}
-                <div className="col-md-3 col-7 col-lg-4">
-                  {buyRent === "buy" ? (
-                    <div
-                      className="mt-md-0 d-flex  justify-content-center"
-                      style={{
-                        backgroundColor: "#f7f7f7",
-                        borderRadius: "12px",
-                      }}
-                    >
-                      {allReadyOffTabs.map((tab) => (
-                        <li className="nav-item" key={tab.id}>
-                          <button
-                            className={`nav-link flex-1 ${
-                              allReadyOff === tab.id ? "active" : ""
-                            }`}
-                            id="tab-element"
-                            onClick={() => handleAllReadyOff(tab.id)}
-                          >
-                            {tab.label}
-                          </button>
-                        </li>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="mt-md-0  bootselect-multiselect">
-                      <DropdownSelect
-                        options={rentDurationOptions}
-                        value={filterFunctions?.rentDuration}
-                        onChange={filterFunctions?.handleRentDuration}
-                        placeholder="Rent Duration"
-                      />
-                    </div>
-                  )}
+                <div className="col-md-3 col-7 col-lg-4 ">
+                  <div className="mt-3 mt-md-0 h-100 bootselect-multiselect">
+                    {buyRent === "buy" ? (
+                      <div
+                        className="mt-md-0  bootselect-multiselect h-100 justify-content-center d-flex"
+                        style={{
+                          backgroundColor: "#f7f7f7",
+                          borderRadius: "12px",
+                        }}
+                      >
+                        {allReadyOffTabs.map((tab) => (
+                          <li className="nav-item " key={tab.id}>
+                            <button
+                              className={`nav-link  h-100 flex-1 ${
+                                allReadyOff === tab.id ? "active" : ""
+                              }`}
+                              id="tab-element"
+                              onClick={() => handleAllReadyOff(tab.id)}
+                            >
+                              {tab.label}
+                            </button>
+                          </li>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="mt-md-0  bootselect-multiselect">
+                        <DropdownSelect
+                          options={rentDurationOptions}
+                          value={filterFunctions?.rentDuration}
+                          onChange={filterFunctions?.handleRentDuration}
+                          placeholder="Rent Duration"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Property Type Dropdown */}
@@ -187,7 +188,7 @@ const HeroContent = ({
                 </div>
 
                 {/* Bedrooms Dropdown */}
-                {allReadyOff !== "off" && (
+                {(allReadyOff !== "off" || buyRent === "rent") && (
                   <div className="col-md-3 col-lg-auto">
                     <div className="mt-3 mt-md-0 bootselect-multiselect">
                       <DropdownSelect
@@ -203,7 +204,7 @@ const HeroContent = ({
                 )}
 
                 {/* Bathrooms Dropdown */}
-                {allReadyOff !== "off" && (
+                {(allReadyOff !== "off" || buyRent === "rent") && (
                   <div className="col-md-3 col-lg-auto">
                     <div className="mt-3 mt-md-0 bootselect-multiselect">
                       <DropdownSelect

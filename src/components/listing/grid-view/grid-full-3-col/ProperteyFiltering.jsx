@@ -199,7 +199,6 @@ export default function ProperteyFiltering({ region, search }) {
   ]);
   // Initial data fetch
   useEffect(() => {
-
     async function fetchInitialData() {
       setLoading(true);
       setListings([]); // Clear existing listings
@@ -365,7 +364,14 @@ export default function ProperteyFiltering({ region, search }) {
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            <ListingSidebar filterFunctions={filterFunctions} />
+            <ListingSidebar
+              setDataFetched={setDataFetched}
+              locationOptions={locationOptions}
+              propertyTypes={propertyTypes}
+              facilityOptions={facilityOptions}
+              filterFunctions={filterFunctions}
+              saleStatuses={saleStatuses}
+            />
           </div>
         </div>
         {/* End mobile filter sidebar */}
@@ -418,7 +424,8 @@ export default function ProperteyFiltering({ region, search }) {
         ) : listings.length === 0 ? (
           <h5
             style={{
-              margin: "300px",
+              marginTop: "300px",
+              marginBottom: "300px",
             }}
             className=" text-center"
           >

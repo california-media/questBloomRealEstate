@@ -4,7 +4,6 @@ import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -15,7 +14,6 @@ const AdvanceFilterModal = ({
   loading,
   setDataFetched,
 }) => {
-  const navigate = useNavigate();
   // console.log(filterFunctions?.location, locationOptions)
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {

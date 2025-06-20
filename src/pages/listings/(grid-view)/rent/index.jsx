@@ -37,7 +37,7 @@ const Rent3Col = () => {
                   {" "}
                   {search
                     ? `Search Results for "${search}"`
-                    : "UAE Homes for Sale"}
+                    : "UAE Homes for Rent"}
                 </h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>

@@ -1,10 +1,9 @@
-
 import Select from "react-select";
 import PriceRange from "./PriceRange";
 import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 import Amenities from "./Amenities";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AdvanceFilterModal = () => {
   const navigate = useNavigate();
@@ -33,11 +32,11 @@ const AdvanceFilterModal = () => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#79763112"
           : isFocused
-          ? "#eb675312"
+          ? "#79763112"
           : undefined,
       };
     },
@@ -194,7 +193,12 @@ const AdvanceFilterModal = () => {
             <u>Reset all filters</u>
           </button>
           <div className="btn-area">
-            <button data-bs-dismiss="modal" type="submit" className="ud-btn btn-thm" onClick={() => navigate("/map-v1")} >
+            <button
+              data-bs-dismiss="modal"
+              type="submit"
+              className="ud-btn btn-thm"
+              onClick={() => navigate("/map-v1")}
+            >
               <span className="flaticon-search align-text-top pr10" />
               Search
             </button>
