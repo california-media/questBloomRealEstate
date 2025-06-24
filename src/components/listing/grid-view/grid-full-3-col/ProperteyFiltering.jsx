@@ -8,6 +8,8 @@ import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import usePropertyStore from "@/store/propertyStore";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useLocation } from "react-router-dom";
+import adminApi from "@/api/adminApi";
+import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateSingle";
 
 const isDev = import.meta.env.DEV;
 
@@ -132,47 +134,49 @@ export default function ProperteyFiltering({ region, search }) {
       const params = {
         page: nextPage,
         per_page: 9,
-        ...(selectedPropertyType != "All Property Types" && {
-          unit_types: selectedPropertyType,
-        }),
-        ...(priceRange[0] != 0 && {
-          unit_price_from: priceRange[0],
-        }),
-        ...(priceRange[1] != 10000000 && {
-          unit_price_to: priceRange[1],
-        }),
-        ...(propertyId != "" && { project_ids: propertyId }),
-        ...(yearBuild != 50000 &&
-          isOffPlan && {
-            completion_date_ranges:
-              createCompletionDateRangesForYear(yearBuild),
-          }),
-        ...(location != "All Locations" && { areas: location }),
-        ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
-        ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
-        ...(squirefeet.length !== 0 &&
-          squirefeet[0] !== 0 && {
-            unit_area_from: squirefeet[0],
-          }),
-        ...(squirefeet.length !== 0 &&
-          squirefeet[1] !== 0 && {
-            unit_area_to: squirefeet[1],
-          }),
-        ...(listingStatus != "All" && { sale_status: listingStatus }),
-        ...(region && { region }),
-        ...(search && { search_query: search }),
+        // ...(selectedPropertyType != "All Property Types" && {
+        //   unit_types: selectedPropertyType,
+        // }),
+        // ...(priceRange[0] != 0 && {
+        //   unit_price_from: priceRange[0],
+        // }),
+        // ...(priceRange[1] != 10000000 && {
+        //   unit_price_to: priceRange[1],
+        // }),
+        // ...(propertyId != "" && { project_ids: propertyId }),
+        // ...(yearBuild != 50000 &&
+        //   isOffPlan && {
+        //     completion_date_ranges:
+        //       createCompletionDateRangesForYear(yearBuild),
+        //   }),
+        // ...(location != "All Locations" && { areas: location }),
+        // ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
+        // ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
+        // ...(squirefeet.length !== 0 &&
+        //   squirefeet[0] !== 0 && {
+        //     unit_area_from: squirefeet[0],
+        //   }),
+        // ...(squirefeet.length !== 0 &&
+        //   squirefeet[1] !== 0 && {
+        //     unit_area_to: squirefeet[1],
+        //   }),
+        // ...(listingStatus != "All" && { sale_status: listingStatus }),
+        // ...(region && { region }),
+        // ...(search && { search_query: search }),
       };
       console.log("more params", params);
 
-      const { data } = await api.get("/properties", { params });
+      const { data: adminListings } = await adminApi.get("/rental-properties", {
+        params,
+      });
 
-      if (data.items.length === 0) {
+      if (adminListings.data.length === 0) {
         setHasMore(false);
         return;
       }
 
-      const mappedNewListings = data.items.map((item) =>
-        mapApiDataToTemplateSingle(item)
+      const mappedNewListings = adminListings.data.map((item) =>
+        mapAdminApiDataToTemplateSingle(item)
       );
 
       setListings([...listings, ...mappedNewListings]);
@@ -207,46 +211,51 @@ export default function ProperteyFiltering({ region, search }) {
         const params = {
           page: 1,
           per_page: 9,
-          ...(selectedPropertyType != "All Property Types" && {
-            unit_types: selectedPropertyType,
-          }),
-          ...(priceRange[0] != 0 && {
-            unit_price_from: priceRange[0],
-          }),
-          ...(priceRange[1] != 10000000 && {
-            unit_price_to: priceRange[1],
-          }),
-          ...(propertyId != "" && { project_ids: propertyId }),
-          ...(yearBuild &&
-            yearBuild != 50000 &&
-            isOffPlan && {
-              completion_date_ranges:
-                createCompletionDateRangesForYear(yearBuild),
-            }),
-          ...(location != "All Locations" && { areas: location }),
-          ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
-          ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
-          ...(squirefeet.length !== 0 &&
-            squirefeet[0] !== 0 && {
-              unit_area_from: squirefeet[0],
-            }),
-          ...(squirefeet.length !== 0 &&
-            squirefeet[1] !== 0 && {
-              unit_area_to: squirefeet[1],
-            }),
-          ...(listingStatus != "All" && { sale_status: listingStatus }),
-          ...(region && { region }),
-          ...(search && { search_query: search }),
+          // ...(selectedPropertyType != "All Property Types" && {
+          //   unit_types: selectedPropertyType,
+          // }),
+          // ...(priceRange[0] != 0 && {
+          //   unit_price_from: priceRange[0],
+          // }),
+          // ...(priceRange[1] != 10000000 && {
+          //   unit_price_to: priceRange[1],
+          // }),
+          // ...(propertyId != "" && { project_ids: propertyId }),
+          // ...(yearBuild &&
+          //   yearBuild != 50000 &&
+          //   isOffPlan && {
+          //     completion_date_ranges:
+          //       createCompletionDateRangesForYear(yearBuild),
+          //   }),
+          // ...(location != "All Locations" && { areas: location }),
+          // ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
+          // ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
+          // ...(squirefeet.length !== 0 &&
+          //   squirefeet[0] !== 0 && {
+          //     unit_area_from: squirefeet[0],
+          //   }),
+          // ...(squirefeet.length !== 0 &&
+          //   squirefeet[1] !== 0 && {
+          //     unit_area_to: squirefeet[1],
+          //   }),
+          // ...(listingStatus != "All" && { sale_status: listingStatus }),
+          // ...(region && { region }),
+          // ...(search && { search_query: search }),
         };
         console.log("initial params", params);
-        const { data } = await api.get("/properties", { params });
+        const { data: adminListings } = await adminApi.get(
+          "/rental-properties",
+          {
+            params,
+          }
+        );
 
         // Set listings in store
-        const mappedNewListings = data.items.map((item) =>
-          mapApiDataToTemplateSingle(item)
+        const mappedNewListings = adminListings.data.map((item) =>
+          mapAdminApiDataToTemplateSingle(item)
         );
         setListings(mappedNewListings);
-        setHasMore(data.items.length === 9); // If we got 9 items, there might be more
+        setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
 
         // Must refetch since the format in whcih they are fetched on home page is different
         const newSaleStatuses = await api.get("/sale-statuses");

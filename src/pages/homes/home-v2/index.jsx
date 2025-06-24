@@ -6,7 +6,7 @@ import ExploreCities from "@/components/home/home-v2/ExploreCities";
 import FeaturedListingsHome from "@/components/home/home-v2/FeatuerdListingsHome";
 import Header from "@/components/home/home-v2/Header";
 import Testimonial from "@/components/home/home-v2/Testimonial";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
 
@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 import Hero from "@/components/home/home-v3/hero";
+import adminApi from "@/api/adminApi";
 
 const metaInformation = {
   title: "Home",
@@ -92,24 +93,7 @@ const Home_V2 = () => {
       },
     },
   ];
-  // const handleViewMore = () => {
-  //   setShowAllSections(true);
-  // };
-
-  // const getButtonText = () => {
-  //   if (visibleSections === sections.length) {
-  //     return "Collapse All";
-  //   }
-  //   return "View More Properties";
-  // };
-
-  // const getButtonIcon = () => {
-  //   if (visibleSections === sections.length) {
-  //     return "fa-arrow-up-long";
-  //   }
-  //   return "fa-arrow-down-long";
-  // };
-
+ 
   return (
     <>
       {" "}

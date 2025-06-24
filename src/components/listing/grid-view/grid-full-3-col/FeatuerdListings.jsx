@@ -3,6 +3,7 @@ import {
   Check,
   CircleDot,
   Clock,
+  Scale3D,
   UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -35,7 +36,7 @@ const FeaturedListings = ({ data, colstyle }) => {
                 <img
                   className="w-100  cover"
                   style={{ height: "230px" }}
-                  src={listing.image}
+                  src={"https://admin.questrealestate.ae/" + listing.image}
                   alt="listings"
                 />
                 <div className="sale-sticker-wrap">
@@ -65,8 +66,8 @@ const FeaturedListings = ({ data, colstyle }) => {
                 </div>
                 <div className="list-meta d-flex align-items-center r">
                   <a href="#">
-                    <UserIcon size={16} color="gray" className="mb-1" />{" "}
-                    {listing.developer}
+                    <Scale3D size={16} color="gray" className="mb-1" />{" "}
+                    {listing.sqft + " sqft."}
                   </a>
                   <a href="#">
                     {listing.post_handover ? (
