@@ -1,5 +1,3 @@
-import { IncomingForm } from "formidable";
-
 export default async function handler(request, response) {
   // Only allow POST requests
   if (request.method !== "POST") {
@@ -10,32 +8,16 @@ export default async function handler(request, response) {
   }
 
   try {
-    // Parse the incoming form data
-    const form = new IncomingForm();
-
-    const { fields, files } = await new Promise((resolve, reject) => {
-      form.parse(request, (err, fields, files) => {
-        if (err) reject(err);
-        else resolve({ fields, files });
-      });
-    });
-
-    // Extract and validate required fields
-    const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
-    const email = Array.isArray(fields.email) ? fields.email[0] : fields.email;
-    const phone = Array.isArray(fields.phone) ? fields.phone[0] : fields.phone;
-    const enquiry = Array.isArray(fields.enquiry)
-      ? fields.enquiry[0]
-      : fields.enquiry;
-    const status = Array.isArray(fields.status)
-      ? fields.status[0]
-      : fields.status;
-    const source = Array.isArray(fields.source)
-      ? fields.source[0]
-      : fields.source;
-    const assigned = Array.isArray(fields.assigned)
-      ? fields.assigned[0]
-      : fields.assigned;
+    // Parse JSON body
+    const {
+      name,
+      email,
+      phone,
+      enquiry,
+      status = "14",
+      source = "9",
+      assigned = "129",
+    } = request.body;
 
     // Validate required fields
     if (!name?.trim()) {
@@ -54,7 +36,7 @@ export default async function handler(request, response) {
 
     // Validate email format
     const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email.trim())) {
       return response.status(400).json({
         status: false,
         message: "Please enter a valid email address",
@@ -81,9 +63,9 @@ export default async function handler(request, response) {
     leadData.append("email", email.trim());
     leadData.append("phone", phone.trim());
     leadData.append("enquiry", enquiry.trim());
-    leadData.append("status", status || "14");
-    leadData.append("source", source || "9");
-    leadData.append("assigned", assigned || "129");
+    leadData.append("status", status);
+    leadData.append("source", source);
+    leadData.append("assigned", assigned);
 
     // Send to CRM API
     const crmResponse = await fetch(

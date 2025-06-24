@@ -65,10 +65,16 @@ const ReviewBoxForm = ({ property }) => {
       return;
     }
 
-    // Add the required fields to the FormData
-    formData.append("status", "14");
-    formData.append("source", "9");
-    formData.append("assigned", "129");
+    const enquiryData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phonenumber: formData.get("phone"),
+      description: formData.get("enquiry"),
+      status: "14",
+      source: "9",
+      assigned: "129",
+      propertyId: property?.id,
+    };
 
     setIsSubmitting(true);
     setSubmitStatus({ success: null, message: "" });
@@ -77,10 +83,11 @@ const ReviewBoxForm = ({ property }) => {
       const response = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
         },
-        body: formData, // Send FormData directly without JSON.stringify
+        body: enquiryData, // Send FormData directly without JSON.stringify
       });
 
       const data = await response.json();
