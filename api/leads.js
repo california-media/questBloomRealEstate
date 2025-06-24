@@ -8,31 +8,16 @@ export default async function handler(request, response) {
   }
 
   try {
-    // Read and parse the request body
-    let body;
-    if (typeof request.body === "string") {
-      body = JSON.parse(request.body);
-    } else if (request.body) {
-      body = request.body;
-    } else {
-      // If body is not available, read from the stream
-      const chunks = [];
-      for await (const chunk of request) {
-        chunks.push(chunk);
-      }
-      const rawBody = Buffer.concat(chunks).toString();
-      body = JSON.parse(rawBody);
-    }
-
+    // Parse JSON body
     const {
       name,
       email,
-      phone,
-      enquiry,
+      phonenumber,
+      description,
       status = "14",
       source = "9",
       assigned = "129",
-    } = body;
+    } = request.body;
 
     // Validate required fields
     if (!name?.trim()) {

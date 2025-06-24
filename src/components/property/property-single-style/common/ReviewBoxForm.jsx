@@ -73,7 +73,6 @@ const ReviewBoxForm = ({ property }) => {
       status: "14",
       source: "9",
       assigned: "129",
-      propertyId: property?.id,
     };
 
     setIsSubmitting(true);
@@ -87,7 +86,7 @@ const ReviewBoxForm = ({ property }) => {
           Authorization:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
         },
-        body: enquiryData, // Send FormData directly without JSON.stringify
+        body: JSON.stringify(enquiryData),
       });
 
       const data = await response.json();
