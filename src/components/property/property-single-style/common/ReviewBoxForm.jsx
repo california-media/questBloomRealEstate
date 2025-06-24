@@ -2,8 +2,21 @@ import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+const isDev = import.meta.env.DEV;
+
 const ReviewBoxForm = ({ property }) => {
   const [enquiryText, setEnquiryText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    success: null,
+    message: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    enquiry: "",
+  });
 
   useEffect(() => {
     setEnquiryText(
@@ -12,38 +25,95 @@ const ReviewBoxForm = ({ property }) => {
       }`
     );
   }, [property]);
-  const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#797631"
-          : isHovered
-          ? "#DDE5C2"
-          : isFocused
-          ? "#DDE5C2"
-          : undefined,
-      };
-    },
+
+  const validateForm = (formData) => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.get("name")?.trim()) {
+      newErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    if (!formData.get("email")?.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.get("email"))) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (!formData.get("phone")?.trim()) {
+      newErrors.phone = "Phone number is required";
+      isValid = false;
+    }
+
+    if (!formData.get("enquiry")?.trim()) {
+      newErrors.enquiry = "Enquiry text is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const enquiryData = {
-      email: formData.get("email"),
-      name: formData.get("name"),
-      phone: formData.get("phone"),
-      enquiry: formData.get("enquiry"),
-      propertyId: property?.id,
-    };
 
-    // You can now use enquiryData for your API call
-    console.log("Form data:", enquiryData);
+    if (!validateForm(formData)) {
+      return;
+    }
 
-    // Add your API call here
-    // Example:
-    // submitEnquiry(enquiryData).then(...)
+    // Add the required fields to the FormData
+    formData.append("status", "14");
+    formData.append("source", "9");
+    formData.append("assigned", "129");
+
+    setIsSubmitting(true);
+    setSubmitStatus({ success: null, message: "" });
+
+    try {
+      const response = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
+        method: "POST",
+        headers: {
+          Authorization:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+        },
+        body: formData, // Send FormData directly without JSON.stringify
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status) {
+        setSubmitStatus({
+          success: true,
+          message: "Enquiry submitted successfully!",
+        });
+        // Reset form on successful submission
+        event.target.reset();
+        setEnquiryText(
+          `I would like to submit an Enquiry about ${
+            property?.name || "Property 1"
+          }`
+        );
+      } else {
+        setSubmitStatus({
+          success: false,
+          message:
+            data.message || "Failed to submit enquiry. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting enquiry:", error);
+      setSubmitStatus({
+        success: false,
+        message:
+          "An error occurred while submitting your enquiry. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -55,13 +125,19 @@ const ReviewBoxForm = ({ property }) => {
             <input
               type="text"
               name="name"
-              className="form-control"
+              className={`form-control ${errors.name ? "is-invalid" : ""}`}
               placeholder="Enter Name"
               required
             />
+            {/* Name Error - Add right after the input */}
+            {errors.name && (
+              <div
+                className="invalid-feedback"
+                dangerouslySetInnerHTML={{ __html: errors.name }}
+              />
+            )}
           </div>
         </div>
-        {/* End .col-12 */}
 
         <div className="col-md-6">
           <div className="mb-4">
@@ -69,19 +145,25 @@ const ReviewBoxForm = ({ property }) => {
             <input
               type="email"
               name="email"
-              className="form-control"
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
               placeholder="Enter Email"
               required
             />
+            {/* Email Error - Add right after the input */}
+            {errors.email && (
+              <div
+                className="invalid-feedback"
+                dangerouslySetInnerHTML={{ __html: errors.email }}
+              />
+            )}
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-md-6">
           <div className="mb-4">
             <label className="fw600 ff-heading mb-2">Phone</label>
             <PhoneInput
-              inputClass="form-control"
+              inputClass={`form-control ${errors.phone ? "is-invalid" : ""}`}
               containerClass="react-tel-input"
               country={"ae"}
               inputStyle={{
@@ -105,15 +187,23 @@ const ReviewBoxForm = ({ property }) => {
                 required: true,
               }}
             />
+            {/* Phone Error - Add right after the PhoneInput */}
+            {errors.phone && (
+              <div
+                className="invalid-feedback"
+                dangerouslySetInnerHTML={{ __html: errors.phone }}
+              />
+            )}
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-md-12">
           <div className="mb-4">
             <label className="fw600 ff-heading mb-2">Notes</label>
             <textarea
-              className="pt15 form-control"
+              className={`pt15 form-control ${
+                errors.enquiry ? "is-invalid" : ""
+              }`}
               name="enquiry"
               style={{ minHeight: "200px" }}
               rows={8}
@@ -122,13 +212,47 @@ const ReviewBoxForm = ({ property }) => {
               value={enquiryText}
               required
             />
+            {/* Enquiry Error - Add right after the textarea */}
+            {errors.enquiry && (
+              <div
+                className="invalid-feedback"
+                dangerouslySetInnerHTML={{ __html: errors.enquiry }}
+              />
+            )}
           </div>
-          <button type="submit" className="ud-btn btn-white2">
-            Submit Enquiry
-            <i className="fal fa-arrow-right-long" />
+
+          {/* Submission Status Message - Add before the submit button */}
+          {submitStatus.message && (
+            <div
+              className={`alert ${
+                submitStatus.success ? "alert-success" : "alert-danger"
+              }`}
+              dangerouslySetInnerHTML={{ __html: submitStatus.message }}
+            />
+          )}
+
+          <button
+            type="submit"
+            className="ud-btn btn-white2"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Loading...</span>
+              </>
+            ) : (
+              <>
+                Submit Enquiry
+                <i className="fal fa-arrow-right-long" />
+              </>
+            )}
           </button>
         </div>
-        {/* End .col-6 */}
       </div>
     </form>
   );
