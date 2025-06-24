@@ -43,14 +43,14 @@ export default async function handler(request, response) {
       });
     }
 
-    if (!phone?.trim()) {
+    if (!phonenumber?.trim()) {
       return response.status(400).json({
         status: false,
         message: "Phone number is required",
       });
     }
 
-    if (!enquiry?.trim()) {
+    if (!description?.trim()) {
       return response.status(400).json({
         status: false,
         message: "Enquiry text is required",
@@ -61,8 +61,8 @@ export default async function handler(request, response) {
     const leadData = new FormData();
     leadData.append("name", name.trim());
     leadData.append("email", email.trim());
-    leadData.append("phone", phone.trim());
-    leadData.append("enquiry", enquiry.trim());
+    leadData.append("phonenumber", phonenumber.trim());
+    leadData.append("description", description.trim());
     leadData.append("status", status);
     leadData.append("source", source);
     leadData.append("assigned", assigned);
