@@ -183,10 +183,14 @@ function App() {
               <Route path="single-v2/:id" element={<SingleV2 />} />
               <Route path="single-v3/:id" element={<SingleV3 />} />
               <Route path="single-v4/:id" element={<SingleV4 />} />
+
+              {/* relevant */}
               <Route path="off-plan/:id" element={<SingleV5 />} />
               <Route path="buy/:id" element={<SingleV5 />} />
               <Route path="rent/:id" element={<SingleV5 />} />
               <Route path="listings/:id" element={<SingleV5 />} />
+
+              {/* /relevant */}
               <Route path="single-v6/:id" element={<SingleV6 />} />
               <Route path="single-v7/:id" element={<SingleV7 />} />
               <Route path="single-v8/:id" element={<SingleV8 />} />

@@ -13,6 +13,7 @@ import {
   ChartNoAxesCombined,
 } from "lucide-react";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
+import AnimatedText from "./hero/AnimatedText ";
 
 const FeaturedListingsHome = ({ index, section }) => {
   const [listings, setListings] = useState([]);
@@ -54,7 +55,9 @@ const FeaturedListingsHome = ({ index, section }) => {
             <div className="row align-items-center" data-aos="fade-up">
               <div className="col-lg-9">
                 <div className="main-title2">
-                  <h2 className="title">{section.title}</h2>
+                  <AnimatedText key={index} color={"black"}>
+                    {section.title}
+                  </AnimatedText>
                   <p className="paragraph">{section.description}</p>
                 </div>
               </div>

@@ -23,7 +23,7 @@ import WalkScore from "@/components/property/property-single-style/common/WalkSc
 
 const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "@/api/axios";
 import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
@@ -42,7 +42,30 @@ const metaInformation = {
 
 const SingleV5 = () => {
   const params = useParams();
-  const { id } = params;
+  const { id: prefixedId } = params;
+
+  // Function to extract the numeric ID
+  const extractId = (prefixedId, pathPrefix) => {
+    switch (pathPrefix) {
+      case "rent":
+        return prefixedId.replace("qr-", "");
+      case "off-plan":
+        return prefixedId.replace("op-", "");
+      case "buy":
+        return prefixedId.replace("qb-", "");
+      case "listings":
+        return prefixedId; // no prefix to remove
+      default:
+        return prefixedId.replace("op-", ""); // default to off-plan
+    }
+  };
+   const location = useLocation();
+  // Get the current path prefix
+  const currentPathPrefix = location.pathname.split("/")[1];
+
+  // Get the actual ID
+  const id = extractId(prefixedId, currentPathPrefix);
+
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
@@ -136,7 +159,7 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
-                  <OverView property={property} />
+                  <OverView property={property}  prefixedId={prefixedId}/>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -411,9 +434,7 @@ const SingleV5 = () => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
               <div className="feature-listing-slider">
-                <FeaturedListings
-             
-                />
+                <FeaturedListings />
               </div>
             </div>
           </div>

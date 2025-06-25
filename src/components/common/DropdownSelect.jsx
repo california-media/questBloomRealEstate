@@ -26,6 +26,8 @@ const DropdownSelect = ({
       padding: "0px",
       paddingRight: "10px",
       paddingLeft: "5px",
+      backgroundColor: "buttonface",
+      borderRadius: "12px",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,

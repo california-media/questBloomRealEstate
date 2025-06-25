@@ -16,6 +16,7 @@ import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 import Hero from "@/components/home/home-v3/hero";
 import adminApi from "@/api/adminApi";
+import AnimatedText from "@/components/home/home-v2/hero/AnimatedText ";
 
 const metaInformation = {
   title: "Home",
@@ -93,7 +94,7 @@ const Home_V2 = () => {
       },
     },
   ];
- 
+
   return (
     <>
       {" "}
@@ -144,9 +145,13 @@ const Home_V2 = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">Explore Cities</h2>
+                <h2 className="title">
+                  {" "}
+                  <AnimatedText color={"black"}>Explore Cities</AnimatedText>
+                </h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Browse prime real estate opportunities in the most
+                  sought-after cities.
                 </p>
               </div>
             </div>
@@ -232,7 +237,7 @@ const Home_V2 = () => {
                 data-aos-delay="100"
               >
                 <div className="main-title text-center">
-                  <h2>Testimonials</h2>
+                  <AnimatedText color={"black"}>Testimonials</AnimatedText>
                   <p className="paragraph">What our customers saying</p>
                 </div>
               </div>

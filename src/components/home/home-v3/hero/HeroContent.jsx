@@ -16,8 +16,6 @@ const HeroContent = ({
   allReadyOff,
   handleAllReadyOff,
   handleBuyRent,
-  searchTerm,
-  setSearchTerm,
 }) => {
   let propertyTypesStrings = propertyTypes.map((item) => item.value);
   let locationOptionsStrings = locationOptions.map((item) => item.label);
@@ -55,11 +53,11 @@ const HeroContent = ({
 
                 <div className="col-md-1 col-4 col-lg-2 ">
                   <div
-                    className="mt-md-0 d-flex justify-content-center"
+                    className="mt-1  d-flex justify-content-center h-90 "
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
                   >
                     {buyRentTabs.map((tab) => (
-                      <li className="nav-item" key={tab.id}>
+                      <li className="nav-item " key={tab.id}>
                         <button
                           className={`nav-link flex-1 ${
                             buyRent === tab.id ? "active" : ""
@@ -75,8 +73,8 @@ const HeroContent = ({
                 </div>
 
                 {/* Location Input */}
-                <div className="col-md-5 col-lg-4">
-                  <div className="mt-3 mt-md-0  bootselect-multiselect">
+                <div className="col-md-5 col-lg-4 ">
+                  <div className="mt-3 mt-md-0 bootselect-multiselect">
                     <DropdownSelectLocation
                       options={locationOptionsStrings}
                       value={filterFunctions?.location}
@@ -87,7 +85,7 @@ const HeroContent = ({
                 </div>
 
                 {/* Status Dropdown */}
-                <div className="col-md-1 col-lg-auto">
+                <div className="col-3">
                   <div className="mt-3 mt-md-0">
                     <div className="bootselect-multiselect">
                       <SelectDropdown
@@ -113,32 +111,34 @@ const HeroContent = ({
                 >
                   <span className="flaticon-settings" /> Advanced
                 </button>
-                <button
-                  style={{ paddingTop: "2px" }}
-                  className="advance-search-icon ud-btn btn-thm  col-1 ms-2 me-2  d-none d-md-block"
-                  type="button"
-                  onClick={() => {
-                    let path = "";
+                <div className=" col-lg-auto ms-2 me  d-none d-md-block">
+                  <button
+                    style={{ paddingTop: "2px" }}
+                    className="advance-search-icon ud-btn btn-thm "
+                    type="button"
+                    onClick={() => {
+                      let path = "";
 
-                    if (buyRent === "rent") {
-                      path = "/rent";
-                    } else if (buyRent === "buy") {
-                      if (allReadyOff === "ready") {
-                        path = "/buy";
-                      } else if (allReadyOff === "off") {
-                        path = "/off-plan";
-                      } else {
-                        path = "/listings";
+                      if (buyRent === "rent") {
+                        path = "/rent";
+                      } else if (buyRent === "buy") {
+                        if (allReadyOff === "ready") {
+                          path = "/buy";
+                        } else if (allReadyOff === "off") {
+                          path = "/off-plan";
+                        } else {
+                          path = "/listings";
+                        }
                       }
-                    }
 
-                    navigate(path);
-                  }}
-                >
-                  <span className="flaticon-search " />
-                </button>
+                      navigate(path);
+                    }}
+                  >
+                    <span className="flaticon-search " />
+                  </button>
+                </div>
 
-                <div className="col-md-3 col-7 col-lg-4 ">
+                <div className="col-md-3 col-7 col-lg-3 ">
                   <div className="mt-3 mt-md-0 h-100 bootselect-multiselect">
                     {buyRent === "buy" ? (
                       <div
@@ -188,127 +188,66 @@ const HeroContent = ({
                 </div>
 
                 {/* Bedrooms Dropdown */}
-                {(allReadyOff !== "off" || buyRent === "rent") && (
-                  <div className="col-md-3 col-lg-auto">
-                    <div className="mt-3 mt-md-0 bootselect-multiselect">
-                      <DropdownSelect
-                        options={["0", "1", "2", "3", "4", "5+"]}
-                        value={filterFunctions?.bedrooms?.toString()}
-                        onChange={(val) =>
-                          filterFunctions?.handlebedrooms(parseInt(val || 0))
-                        }
-                        placeholder="Bedrooms"
-                      />
-                    </div>
+
+                <div className="col">
+                  <div className="mt-3 mt-md-0 bootselect-multiselect">
+                    <DropdownSelect
+                      options={["0", "1", "2", "3", "4", "5+"]}
+                      value={filterFunctions?.bedrooms?.toString()}
+                      onChange={(val) =>
+                        filterFunctions?.handlebedrooms(parseInt(val || 0))
+                      }
+                      placeholder="Bedrooms"
+                    />
                   </div>
-                )}
+                </div>
 
                 {/* Bathrooms Dropdown */}
-                {(allReadyOff !== "off" || buyRent === "rent") && (
-                  <div className="col-md-3 col-lg-auto">
-                    <div className="mt-3 mt-md-0 bootselect-multiselect">
-                      <DropdownSelect
-                        options={["0", "1", "2", "3", "4", "5+"]}
-                        value={filterFunctions?.bathrooms?.toString()}
-                        onChange={(val) =>
-                          filterFunctions?.handleBathrooms(parseInt(val || 0))
-                        }
-                        placeholder="Bathrooms"
-                      />
-                    </div>
+
+                <div className="col">
+                  <div className="mt-3 mt-md-0 bootselect-multiselect">
+                    <DropdownSelect
+                      options={["0", "1", "2", "3", "4", "5+"]}
+                      value={filterFunctions?.bathrooms?.toString()}
+                      onChange={(val) =>
+                        filterFunctions?.handleBathrooms(parseInt(val || 0))
+                      }
+                      placeholder="Bathrooms"
+                    />
                   </div>
-                )}
+                </div>
 
                 {/* Conditional Fields for Buy/Off-Plan */}
-                {buyRent === "buy" && allReadyOff === "off" && (
-                  <>
-                    <div className="col-md-3 col-lg-3">
-                      <div className="mt-3 mt-md-0 bootselect-multiselect">
-                        <DropdownSelect
-                          options={Array.from({ length: 11 }, (_, i) =>
-                            (2023 + i).toString()
-                          )}
-                          value={
-                            filterFunctions?.yearBuild?.toString() !== "50000"
-                              ? filterFunctions?.yearBuild?.toString()
-                              : ""
-                          }
-                          onChange={(val) =>
-                            filterFunctions?.handleyearBuild(parseInt(val || 0))
-                          }
-                          placeholder="Handover"
+
+                {/* Price Range Dropdown */}
+                <div className="col-md-3 col-lg-2  ">
+                  <button
+                    type="button"
+                    className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
+                    style={{
+                      padding: "14px 13px",
+                      borderRadius: "12px",
+                      backgroundColor: "#f7f7f7",
+                    }}
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                  >
+                    Price <i className="fa fa-angle-down ms-2 text-gray" />
+                  </button>
+
+                  <div className="dropdown-menu dd3">
+                    <div className="widget-wrapper pb25 mb0 pl20 pr20">
+                      <h6 className="list-title">Price Range</h6>
+                      {/* Range Slider Desktop Version */}
+                      <div className="range-slider-style1 mb10 mt30">
+                        <PriceRange
+                          priceRange={filterFunctions?.priceRange}
+                          setPriceRange={filterFunctions?.handlePriceRange}
                         />
                       </div>
                     </div>
-                    <div className="col-md-3 col-lg-3  ">
-                      <button
-                        type="button"
-                        className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
-                        style={{
-                          padding: "15px 13px",
-                          borderRadius: "12px",
-                          backgroundColor: "#f7f7f7",
-                        }}
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                      >
-                        Payment Plan{" "}
-                        <i className="fa fa-angle-down ms-2 text-gray" />
-                      </button>
-
-                      <div className="dropdown-menu dd3">
-                        <div className="widget-wrapper  pb25 mb0 pl20 pr20">
-                          <h5 className="mb30">
-                            Payment Plan (% pre-handover)
-                          </h5>
-                          {/* Range Slider Desktop Version */}
-                          <div className="range-slider-style1 mb10 mt20">
-                            <PercentagePreHandover
-                              percentagePreHandover={
-                                filterFunctions?.percentagePreHandover
-                              }
-                              setPercentagePreHandover={
-                                filterFunctions?.handlePercentagePreHandover
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {/* Price Range Dropdown */}
-                {(buyRent === "rent" || allReadyOff !== "off") && (
-                  <div className="col-md-3 col-lg-3  ">
-                    <button
-                      type="button"
-                      className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
-                      style={{
-                        padding: "15px 13px",
-                        borderRadius: "12px",
-                        backgroundColor: "#f7f7f7",
-                      }}
-                      data-bs-toggle="dropdown"
-                      data-bs-auto-close="outside"
-                    >
-                      Price <i className="fa fa-angle-down ms-2 text-gray" />
-                    </button>
-
-                    <div className="dropdown-menu dd3">
-                      <div className="widget-wrapper pb25 mb0 pl20 pr20">
-                        <h6 className="list-title">Price Range</h6>
-                        {/* Range Slider Desktop Version */}
-                        <div className="range-slider-style1 mb10 mt30">
-                          <PriceRange
-                            priceRange={filterFunctions?.priceRange}
-                            setPriceRange={filterFunctions?.handlePriceRange}
-                          />
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                )}
+                </div>
                 <div className="  row pe-0 d-block d-md-none">
                   <div className="col-12 d-flex align-items-center  justify-content-center justify-content-md-center mt-2 mt-md-0">
                     <button

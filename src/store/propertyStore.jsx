@@ -14,6 +14,8 @@ const usePropertyStore = create((set, get) => ({
   selectedPropertyType: "All Property Types",
   priceRange: [0, 10000000],
   location: "All Locations",
+  rentalLocation: "All Locations",
+  buyLocation: "All Locations",
   categories: [],
   bedrooms: 0,
   bathrooms: 0,
@@ -22,6 +24,7 @@ const usePropertyStore = create((set, get) => ({
   squirefeet: [],
   yearBuild: 50000,
   propertyId: "",
+  searchTerm: "",
   listingStatus: "All",
   detailedListings: [],
 
@@ -30,6 +33,8 @@ const usePropertyStore = create((set, get) => ({
   propertyTypes: [],
   facilityOptions: [],
   saleStatuses: [],
+  rentalLocationOptions: [],
+  buyLocationOptions: [],
 
   // Actions for setting original data
   setListings: (listings) => set({ listings }),
@@ -44,6 +49,9 @@ const usePropertyStore = create((set, get) => ({
   setFacilityOptions: (facilityOptions) => set({ facilityOptions }),
   setSaleStatuses: (saleStatuses) => set({ saleStatuses }),
   setDetailedListings: (detailedListings) => set({ detailedListings }),
+  setRentalLocationOptions: (rentalLocationOptions) =>
+    set({ rentalLocationOptions }),
+  setBuyLocationOptions: (buyLocationOptions) => set({ buyLocationOptions }),
 
   // Filter actions for AdvanceFilterModal
   handlePropertyType: (propertyType) => {
@@ -53,6 +61,9 @@ const usePropertyStore = create((set, get) => ({
   handlePriceRange: (range) => set({ priceRange: range }),
 
   handleLocation: (locationValue) => set({ location: locationValue }),
+  handleRentalLocation: (rentalLocation) => set({ rentalLocation }),
+  handleBuyLocation: (buyLocation) => set({ buyLocation }),
+  handleSearchTerm: (searchTerm) => set({ searchTerm }),
   handlePercentagePreHandover: (percentage) =>
     set({ percentagePreHandover: percentage }),
 
@@ -80,31 +91,22 @@ const usePropertyStore = create((set, get) => ({
       selectedPropertyType: "All Property Types",
       priceRange: [0, 10000000],
       location: "All Locations",
+      rentalLocation: "All Locations",
+      buyLocation: "All Locations",
       categories: [],
       bedrooms: 0,
       bathrooms: 0,
+      percentagePreHandover: 0,
+      rentDuration: "Yearly",
       squirefeet: [],
       yearBuild: 50000,
       propertyId: "",
       listingStatus: "All",
+      detailedListings: [],
+      searchTerm: "",
     }),
 
-  // Get current filter state
-  getFilterState: () => {
-    const state = get();
-    return {
-      selectedPropertyType: state.selectedPropertyType,
-      priceRange: state.priceRange,
-      location: state.location,
-      categories: state.categories,
-      bedrooms: state.bedrooms,
-      bathrooms: state.bathrooms,
-      squirefeet: state.squirefeet,
-      yearBuild: state.yearBuild,
-      propertyId: state.propertyId,
-      listingStatus: state.listingStatus,
-    };
-  },
+
 
   // Check if data needs to be fetched
   shouldFetchData: () => {

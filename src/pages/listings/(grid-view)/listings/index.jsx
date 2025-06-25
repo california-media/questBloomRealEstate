@@ -15,7 +15,6 @@ const metaInformation = {
 };
 
 const ListingsFull3Col = () => {
-  const { search } = useParams();
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -33,12 +32,7 @@ const ListingsFull3Col = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title">
-                  {" "}
-                  {search
-                    ? `Search Results for "${search}"`
-                    : "UAE Homes for Sale"}
-                </h2>
+                <h2 className="title"> UAE Homes for Sale</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Buying and Renting</a>
@@ -60,7 +54,7 @@ const ListingsFull3Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <ProperteyFiltering search={search} />
+      <ProperteyFiltering />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

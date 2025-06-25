@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-const OverView = ({ property }) => {
+const OverView = ({ property, prefixedId }) => {
   const location = useLocation();
   const isOffPlan = location.pathname.startsWith("/off-plan");
   // Helper function to get comma-separated bedroom list
@@ -113,6 +113,11 @@ const OverView = ({ property }) => {
       icon: "flaticon-home-1",
       label: "Property Type",
       value: getPropertyType(),
+    },
+    {
+      icon: "flaticon-home-2",
+      label: "Property ID",
+      value: property && prefixedId,
     },
   ];
 

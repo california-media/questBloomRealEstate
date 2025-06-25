@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Hero from "@/components/home/home-v3/hero";
-import { useLocation } from "react-router-dom";
 
 const AutoCarouselHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,9 +35,9 @@ const AutoCarouselHero = () => {
         </div>
 
         {/* Content - Maintained exactly as original */}
-        <div className="container">
-          <div className="row">
-            <div className="col-xl-8">
+        <div className="container ">
+          <div className="row justify-content-center">
+            <div className="col-xl-10 ">
               <Hero />
             </div>
           </div>

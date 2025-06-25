@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const adminBaseUrl = "https://admin.questrealestate.ae";
+
 const adminApi = axios.create({
-  baseURL: "/adminApi",
+  baseURL: adminBaseUrl + "/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -9,4 +11,5 @@ const adminApi = axios.create({
   },
   withCredentials: true,
 });
+export { adminBaseUrl };
 export default adminApi;

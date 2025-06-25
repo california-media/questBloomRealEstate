@@ -1,26 +1,19 @@
 import Select from "react-select";
 import PriceRange from "./PriceRange";
 import Bedroom from "./Bedroom";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Bathroom from "./Bathroom";
-import DropdownSelect from "../DropdownSelect";
-import PercentagePreHandover from "../PercentagePreHandover";
+
+import { useEffect, useState } from "react";
 
 const AdvanceFilterModal = ({
   filterFunctions,
   propertyTypes,
   locationOptions,
   facilityOptions,
+  searchTerm,
   loading,
   setDataFetched,
-  buyRent,
-  allReadyOff,
-  handleAllReadyOff,
-  handleBuyRent,
 }) => {
-  const navigate = useNavigate();
-  // console.log(filterFunctions?.location, locationOptions)
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -44,7 +37,6 @@ const AdvanceFilterModal = ({
   const [squareFeet, setSquareFeet] = useState([0, 0]);
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
   const [amenities, setAmenities] = useState([]);
 
   useEffect(() => {
@@ -69,8 +61,6 @@ const AdvanceFilterModal = ({
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
-    if (filterFunctions.searchTerm !== undefined)
-      setSearchTerm(filterFunctions.searchTerm);
 
     if (filterFunctions.bathrooms !== undefined)
       setBathroomCount(filterFunctions.bathrooms);
@@ -86,11 +76,10 @@ const AdvanceFilterModal = ({
     filterFunctions?.bedrooms,
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
-    filterFunctions?.searchTerm,
   ]);
 
   const handleSearch = () => {
-    console.log("requesting", propertyType, propertyId, location, squareFeet);
+    setDataFetched(false); ////
     filterFunctions?.handlepropertyType(propertyType);
     filterFunctions?.handlePropertyId(propertyId);
     filterFunctions?.handlelocation(location);
@@ -99,22 +88,6 @@ const AdvanceFilterModal = ({
     filterFunctions?.handleBathrooms(bathroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
-    filterFunctions?.handleSearchTerm(searchTerm);
-    let path = "";
-
-    if (buyRent === "rent") {
-      path = "/rent";
-    } else if (buyRent === "buy") {
-      if (allReadyOff === "ready") {
-        path = "/buy";
-      } else if (allReadyOff === "off") {
-        path = "/off-plan";
-      } else {
-        path = "/listings";
-      }
-    }
-
-    navigate(path);
   };
 
   return (
@@ -135,39 +108,43 @@ const AdvanceFilterModal = ({
 
         <div className="modal-body pb-0">
           <div className="row">
-            <div className="col-sm-12">
+            <div className="col-lg-12">
               <div className="widget-wrapper">
-                <h6 className="list-title">Search Property</h6>
-                <div className="form-style2">
-                  <input
-                    type="text"
-                    className="form-control border-none"
-                    placeholder="Search"
-                    value={searchTerm}
-                    onInput={(e) => setSearchTerm(e.target.value)}
-                    style={{
-                      padding: "13px 15px",
-                      backgroundColor: "ButtonFace",
-                    }}
+                <h6 className="list-title mb20">Price Range</h6>
+                <div className="range-slider-style modal-version">
+                  <PriceRange
+                    setPriceRange={setPriceRange}
+                    priceRange={priceRange}
+                    filterFunctions={filterFunctions}
                   />
                 </div>
               </div>
             </div>
           </div>
+          {/* End .row */}
+
           <div className="row">
             <div className="col-sm-6">
               <div className="widget-wrapper">
-                <h6 className="list-title">Property ID</h6>
-                <div className="form-style2">
-                  <input
-                    type="text"
-                    className="form-control property-id-reset"
-                    placeholder="RT04949213"
-                    onChange={(e) => setPropertyId(e.target.value)}
+                <h6 className="list-title">Type</h6>
+                <div className="form-style2 input-group">
+                  <Select
+                    name="colors"
+                    options={propertyTypes}
+                    styles={customStyles}
+                    value={{
+                      value: propertyType,
+                      label: propertyType,
+                    }}
+                    onChange={(e) => setPropertyType(e.value)}
+                    className="select-custom"
+                    classNamePrefix="select"
+                    required
                   />
                 </div>
               </div>
             </div>
+            {/* End .col-6 */}
             <div className="col-sm-6">
               <div className="widget-wrapper">
                 <h6 className="list-title">Square Feet</h6>
@@ -200,87 +177,22 @@ const AdvanceFilterModal = ({
                 </div>
               </div>
             </div>
+            {/* <div className="col-sm-6">
+              <div className="widget-wrapper">
+                <h6 className="list-title">Property ID</h6>
+                <div className="form-style2">
+                  <input
+                    type="text"
+                    className="form-control property-id-reset"
+                    placeholder="RT04949213"
+                    onChange={(e) => setPropertyId(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div> */}
             {/* End .col-6 */}
           </div>
           {/* End .row */}
-
-          <div className="row ">
-            {buyRent === "buy" && allReadyOff === "off" && (
-              <>
-                <div className="col-sm-6">
-                  <div className="widget-wrapper  ">
-                    <h6 className="list-title">Handover Date</h6>
-                    <div className="form-style2  ">
-                      <button
-                        type="button"
-                        className=" border-none w-100  fw-light"
-                        style={{
-                          padding: "9px 0px",
-                          borderRadius: "12px",
-                          backgroundColor: "buttonface",
-                        }}
-                      >
-                        <DropdownSelect
-                          options={Array.from({ length: 11 }, (_, i) =>
-                            (2023 + i).toString()
-                          )}
-                          value={
-                            filterFunctions?.yearBuild?.toString() !== "50000"
-                              ? filterFunctions?.yearBuild?.toString()
-                              : ""
-                          }
-                          onChange={(val) =>
-                            filterFunctions?.handleyearBuild(parseInt(val || 0))
-                          }
-                          placeholder="Handover"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-sm-6">
-                  <div className="widget-wrapper">
-                    <h6 className="list-title">Payment Plan</h6>
-                    <div className="form-style2">
-                      <button
-                        type="button"
-                        className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
-                        style={{
-                          padding: "15px 13px",
-                          borderRadius: "12px",
-                        }}
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                      >
-                        Payment Plan{" "}
-                        <i className="fa fa-angle-down ms-2 text-gray" />
-                      </button>
-
-                      <div className="dropdown-menu dd3">
-                        <div className="widget-wrapper  pb25 mb0 pl20 pr20">
-                          <h5 className="mb30 mt20 fw-medium">
-                            Percentage pre-handover
-                          </h5>
-                          {/* Range Slider Desktop Version */}
-                          <div className="range-slider-style1 mb10 mt20">
-                            <PercentagePreHandover
-                              percentagePreHandover={
-                                filterFunctions?.percentagePreHandover
-                              }
-                              setPercentagePreHandover={
-                                filterFunctions?.handlePercentagePreHandover
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
 
           <div className="row">
             <div className="col-sm-6">
@@ -294,6 +206,7 @@ const AdvanceFilterModal = ({
                 </div>
               </div>
             </div>
+            {/* End .col-md-6 */}
             <div className="col-sm-6">
               <div className="widget-wrapper">
                 <h6 className="list-title">Bathrooms</h6>
@@ -307,6 +220,66 @@ const AdvanceFilterModal = ({
             </div>
             {/* End .col-md-6 */}
           </div>
+          {/* End .row */}
+
+          {/* <div className="row">
+            <div className="col-sm-6">
+              <div className="widget-wrapper">
+                <h6 className="list-title">Location</h6>
+                <div className="form-style2 input-group">
+                  <Select
+                    name="colors"
+                    styles={customStyles}
+                    options={locationOptions}
+                    className="select-custom filterSelect"
+                    value={{
+                      value: location,
+                      label: locationOptions.find(
+                        (option) => option.value === location
+                      )?.label,
+                    }}
+                    classNamePrefix="select"
+                    onChange={(e) => setLocation(e.value)}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+        
+          </div> */}
+          {/* End .row */}
+
+          {/* <div className="row">
+            <div className="col-lg-12">
+              <div className="widget-wrapper mb0">
+                <h6 className="list-title mb10">Amenities</h6>
+              </div>
+            </div>
+
+            {loading ? (
+              <div
+                className="row"
+                style={{ marginTop: "100px", marginBottom: "100px" }}
+              >
+                <div className="spinner-border mx-auto " role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : facilityOptions.length === 0 ? (
+              <h5
+                style={{ marginTop: "100px", marginBottom: "100px" }}
+                className=" text-center "
+              >
+                No Amenities found.
+              </h5>
+            ) : (
+              <Amenities
+                facilityOptions={facilityOptions}
+                amenities={amenities}
+                setAmenities={setAmenities}
+              />
+            )}
+          </div> */}
         </div>
         {/* End modal body */}
 
@@ -326,7 +299,6 @@ const AdvanceFilterModal = ({
               setDataFetched(false);
               setPriceRange([0, 10000000]);
               setSquareFeet([0, 0]);
-              setSearchTerm("");
             }}
           >
             <span className="flaticon-turn-back" />

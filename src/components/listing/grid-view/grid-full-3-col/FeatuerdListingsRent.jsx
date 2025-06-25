@@ -3,6 +3,8 @@ import {
   Check,
   CircleDot,
   Clock,
+  ImageOff,
+  Scale3D,
   UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -44,12 +46,22 @@ const FeaturedListings = ({ data, colstyle }) => {
               } w-100 d-flex flex-column `}
             >
               <div className="list-thumb">
-                <img
-                  className="w-100  cover"
-                  style={{ height: "230px" }}
-                  src={listing.image}
-                  alt="listings"
-                />
+                {listing.image ? (
+                  <img
+                    className="w-100 cover"
+                    style={{ height: "230px" }}
+                    src={listing.image}
+                    alt="listings"
+                  />
+                ) : (
+                  <div
+                    className="d-flex flex-column align-items-center justify-content-center bg-light"
+                    style={{ height: "230px" }}
+                  >
+                    <ImageOff size={48} className="text-muted mb-2" />
+                    <span className="text-muted">No Image Available</span>
+                  </div>
+                )}
                 <div className="sale-sticker-wrap">
                   {listing.featured && (
                     <div className="list-tag fz12">
@@ -77,8 +89,8 @@ const FeaturedListings = ({ data, colstyle }) => {
                 </div>
                 <div className="list-meta d-flex align-items-center r">
                   <a href="#">
-                    <UserIcon size={16} color="gray" className="mb-1" />{" "}
-                    {listing.developer}
+                    <Scale3D size={16} color="gray" className="mb-1" />{" "}
+                    {listing.sqft + " sqft."}
                   </a>
                   <a href="#">
                     {listing.post_handover ? (

@@ -3,7 +3,7 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 
-import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFiltering";
+import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFilteringBuy";
 
 import React from "react";
 
@@ -15,7 +15,6 @@ const metaInformation = {
 };
 
 const BuyFull3Col = () => {
-  const { search } = useParams();
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -33,12 +32,7 @@ const BuyFull3Col = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title">
-                  {" "}
-                  {search
-                    ? `Search Results for "${search}"`
-                    : "UAE Homes for Sale"}
-                </h2>
+                <h2 className="title">UAE Homes for Sale</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Buying and Renting</a>
@@ -60,7 +54,7 @@ const BuyFull3Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <ProperteyFiltering search={search} />
+      <ProperteyFiltering />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

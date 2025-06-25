@@ -1,37 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ListingSidebar from "../../sidebar";
-import AdvanceFilterModal from "@/components/common/advance-filter-two";
-import TopFilterBar from "./TopFilterBar";
-import FeaturedListings from "./FeatuerdListings";
-import api from "@/api/axios";
-import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
+import AdvanceFilterModal from "@/components/common/advance-filter-two-rent";
+import TopFilterBar from "./TopFilterBarRent";
+import FeaturedListingsRent from "./FeatuerdListingsRent";
 import usePropertyStore from "@/store/propertyStore";
-import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useLocation } from "react-router-dom";
-
-const isDev = import.meta.env.DEV;
-
-// Function to create completion_date_ranges for a single year
-const createCompletionDateRangesForYear = (year) => {
-  const fromDate = new Date(`${year}-01-01T00:00:00`); // January 1st 00:00:00
-  const toDate = new Date(`${year}-12-31T23:59:59`); // December 31st 23:59:59
-
-  const fromTimestamp = Math.floor(new Date(fromDate).getTime());
-  const toTimestamp = Math.floor(new Date(toDate).getTime());
-
-  return `${fromTimestamp}-${toTimestamp}`;
-};
-
-const hardcoded_facilities = ["Swimming Pool"];
+import adminApi from "@/api/adminApi";
+import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateSingle";
 
 export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
   const {
-    filteredData,
-    sortedFilteredData,
     selectedPropertyType,
     priceRange,
-    location,
     categories,
     bedrooms,
     bathrooms,
@@ -39,20 +20,16 @@ export default function ProperteyFiltering({ region }) {
     yearBuild,
     propertyId,
     listingStatus,
-    locationOptions,
     propertyTypes,
     facilityOptions,
-    saleStatuses,
-    setFilteredData,
-    setSortedFilteredData,
     setDataFetched,
-    setLocationOptions,
+    rentalLocationOptions,
+    setRentalLocationOptions,
+    rentalLocation,
     setPropertyTypes,
-    setFacilityOptions,
-    setSaleStatuses,
     handlePropertyType,
     handlePriceRange,
-    handleLocation,
+    handleRentalLocation,
     handleCategories,
     handleBedrooms,
     handleBathrooms,
@@ -64,7 +41,6 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
     searchTerm,
-    handleSearchTerm,
   } = usePropertyStore();
 
   // Local component states
@@ -102,28 +78,28 @@ export default function ProperteyFiltering({ region }) {
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
-    handlelocation: handleLocation,
+    handlelocation: handleRentalLocation,
     handlesquirefeet: handleSquirefeet,
     handleyearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
-    handleSearchTerm: handleSearchTerm,
-    handlePercentagePreHandover: handlePercentagePreHandover,
     priceRange,
     listingStatus,
     propertyTypes,
     resetFilter,
     bedrooms,
     bathrooms,
-    location,
+    location: rentalLocation,
     squirefeet,
     yearBuild,
     categories,
     selectedPropertyType,
     percentagePreHandover,
+    handlePercentagePreHandover,
   };
+
   function getRequestParams(nextPage = 1) {
-    return {
+    const params = {
       page: nextPage,
       per_page: 9,
       ...(selectedPropertyType != "All Property Types" && {
@@ -135,12 +111,9 @@ export default function ProperteyFiltering({ region }) {
       ...(priceRange[1] != 10000000 && {
         unit_price_to: priceRange[1],
       }),
-      ...(propertyId != "" && { project_ids: propertyId }),
-      ...(yearBuild != 50000 &&
-        isOffPlan && {
-          completion_date_ranges: createCompletionDateRangesForYear(yearBuild),
-        }),
-      ...(location != "All Locations" && { areas: location }),
+
+      ...(rentalLocation != "All Locations" && { areas: rentalLocation }),
+      ...(searchTerm != "" && { search_query: searchTerm }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
@@ -151,10 +124,9 @@ export default function ProperteyFiltering({ region }) {
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
         }),
-      ...(listingStatus != "All" && { sale_status: listingStatus }),
-      ...(region && { region }),
-      ...(searchTerm != "" && { search_query: searchTerm }),
     };
+    console.log(params);
+    return params;
   }
 
   // Fetch more data when reaching bottom
@@ -165,17 +137,17 @@ export default function ProperteyFiltering({ region }) {
     try {
       const nextPage = Math.floor(listings.length / 9) + 1;
 
-      const { data } = await api.get("/properties", {
+      const { data: adminListings } = await adminApi.get("/rental-properties", {
         params: getRequestParams(nextPage),
       });
 
-      if (data.items.length === 0) {
+      if (adminListings.data.length === 0) {
         setHasMore(false);
         return;
       }
 
-      const mappedNewListings = data.items.map((item) =>
-        mapApiDataToTemplateSingle(item)
+      const mappedNewListings = adminListings.data.map((item) =>
+        mapAdminApiDataToTemplateSingle(item)
       );
 
       setListings([...listings, ...mappedNewListings]);
@@ -191,7 +163,7 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType,
     priceRange,
     propertyId,
-    location,
+    rentalLocation,
     bedrooms,
     bathrooms,
     squirefeet,
@@ -204,27 +176,26 @@ export default function ProperteyFiltering({ region }) {
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
+      console.log("Fetching initial data");
       setLoading(true);
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
       try {
-        const { data } = await api.get("/properties", {
-          params: getRequestParams(),
-        });
+        const { data: adminListings } = await adminApi.get(
+          "/rental-properties",
+          {
+            params: getRequestParams(),
+          }
+        );
 
         // Set listings in store
-        const mappedNewListings = data.items.map((item) =>
-          mapApiDataToTemplateSingle(item)
+        const mappedNewListings = adminListings.data.map((item) =>
+          mapAdminApiDataToTemplateSingle(item)
         );
         setListings(mappedNewListings);
-        setHasMore(data.items.length === 9); // If we got 9 items, there might be more
+        setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
 
-        const newSaleStatuses = await api.get("/sale-statuses");
-        setSaleStatuses(newSaleStatuses.data);
-
-        setFacilityOptions(hardcoded_facilities);
-
-        const newPropertyTypes = await api.get("/unit-types");
+        const newPropertyTypes = await adminApi.get("/rental-property-types");
         const propertyTypeArray = [
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
@@ -234,15 +205,15 @@ export default function ProperteyFiltering({ region }) {
         ];
         setPropertyTypes(propertyTypeArray);
 
-        const newLocationOptions = await api.get("/areas");
+        const newLocationOptions = await adminApi.get("/rental-locations");
         const locationArray = [
           { value: "All Locations", label: "All Locations" },
           ...newLocationOptions.data.map((area) => ({
-            value: area.id,
-            label: area.name,
+            value: area,
+            label: area,
           })),
         ];
-        setLocationOptions(locationArray);
+        setRentalLocationOptions(locationArray);
 
         setDataFetched(true);
       } catch (error) {
@@ -258,9 +229,9 @@ export default function ProperteyFiltering({ region }) {
     searchTerm,
     listingStatus,
     selectedPropertyType,
-    bedrooms,
     bathrooms,
-    location,
+    bedrooms,
+    rentalLocation,
     squirefeet,
     yearBuild,
     categories,
@@ -331,14 +302,14 @@ export default function ProperteyFiltering({ region }) {
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            <ListingSidebar
+            {/* <ListingSidebar
               setDataFetched={setDataFetched}
-              locationOptions={locationOptions}
+              rentalLocationOptions={rentalLocationOptions}
               propertyTypes={propertyTypes}
               facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
               saleStatuses={saleStatuses}
-            />
+            /> */}
           </div>
         </div>
         {/* End mobile filter sidebar */}
@@ -354,7 +325,7 @@ export default function ProperteyFiltering({ region }) {
           >
             <AdvanceFilterModal
               setDataFetched={setDataFetched}
-              locationOptions={locationOptions}
+              locationOptions={rentalLocationOptions}
               propertyTypes={propertyTypes}
               facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
@@ -370,8 +341,7 @@ export default function ProperteyFiltering({ region }) {
             setColstyle={setColstyle}
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={locationOptions}
-            saleStatuses={saleStatuses}
+            locationOptions={rentalLocationOptions}
           />
         </div>
         {/* End TopFilterBar */}
@@ -400,7 +370,7 @@ export default function ProperteyFiltering({ region }) {
           </h5>
         ) : (
           <div className="row">
-            <FeaturedListings colstyle={colstyle} data={listings} />
+            <FeaturedListingsRent colstyle={colstyle} data={listings} />
             {loading && (
               <div className="text-center my-3">
                 <div className="spinner-border" role="status">

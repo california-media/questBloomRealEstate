@@ -1368,3 +1368,6 @@
 #menu-title-hover:hover {
   color: #c2bf9f; /* Adjusted lighter shade of #797631 */
 }
+#animated_text_hover-underline:hover {
+    color: #93914F !important;
+}

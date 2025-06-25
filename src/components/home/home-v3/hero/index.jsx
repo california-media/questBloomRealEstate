@@ -3,6 +3,8 @@ import HeroContent from "./HeroContent";
 import usePropertyStore from "@/store/propertyStore";
 import { useEffect, useState } from "react";
 import api from "@/api/axios";
+import adminApi from "@/api/adminApi";
+import AnimatedText from "../../home-v2/hero/AnimatedText ";
 const hardcoded_facilities = ["Swimming Pool"];
 
 const Hero = () => {
@@ -45,6 +47,16 @@ const Hero = () => {
     handleRentDuration,
     rentDuration,
     yearBuild,
+    rentalLocationOptions,
+    setRentalLocationOptions,
+    rentalLocation,
+    handleRentalLocation,
+    searchTerm,
+    handleSearchTerm,
+    buyLocationOptions,
+    setBuyLocationOptions,
+    buyLocation,
+    handleBuyLocation,
   } = usePropertyStore();
   const [buyRent, setBuyRent] = useState("buy");
   const [allReadyOff, setAllReadyOff] = useState("all");
@@ -78,7 +90,12 @@ const Hero = () => {
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
-    handlelocation: handleLocation,
+    handlelocation:
+      buyRent === "rent"
+        ? handleRentalLocation
+        : buyRent === "buy" && allReadyOff !== "off"
+        ? handleBuyLocation
+        : handleLocation,
     handlesquirefeet: handleSquirefeet,
     handleyearBuild: handleYearBuild,
     handlecategories: handleCategories,
@@ -86,6 +103,7 @@ const Hero = () => {
     handlePercentagePreHandover: handlePercentagePreHandover,
     handleRentDuration: handleRentDuration,
     handlePriceRange: handlePriceRange,
+    handleSearchTerm: handleSearchTerm,
     rentDuration,
     priceRange,
     propertyTypes,
@@ -93,17 +111,22 @@ const Hero = () => {
     resetFilter,
     bedrooms,
     bathrooms,
-    location,
+    location:
+      buyRent === "rent"
+        ? rentalLocation
+        : buyRent === "buy" && allReadyOff !== "off"
+        ? buyLocation
+        : location,
     yearBuild,
     propertyId,
     squirefeet,
     listingStatus,
+    searchTerm,
     categories,
     selectedPropertyType,
     setDataFetched,
     setSaleStatuses,
   };
-  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     async function fetchOptions() {
       // Must refetch this since the format in whcih they are fetched on home page is different
@@ -115,14 +138,20 @@ const Hero = () => {
         setFacilityOptions(hardcoded_facilities);
 
         if (propertyTypes?.length === 0) {
-          const newPropertyTypes = await api.get("/unit-types");
+          // Fetch all data in parallel
+          const [unitTypes, rentalTypes] = await Promise.all([
+            api.get("/unit-types"),
+            adminApi.get("/rental-property-types"), ///same as resale
+          ]);
+
+          // Create options array with all types
           const options = [
             { value: "All Property Types", label: "All Property Types" },
-            ...newPropertyTypes.data.map((type) => ({
-              value: type,
-              label: type,
-            })),
+            ...unitTypes.data.map((type) => ({ value: type, label: type })),
+            ...rentalTypes.data.map((type) => ({ value: type, label: type })),
           ];
+
+          // Set property types once
           setPropertyTypes(options);
         }
 
@@ -137,6 +166,29 @@ const Hero = () => {
           ];
 
           setLocationOptions(options);
+        }
+        if (rentalLocationOptions?.length === 0) {
+          const newLocationOptions = await adminApi.get("/rental-locations");
+          const options = [
+            { value: "All Locations", label: "All Locations" },
+            ...newLocationOptions.data.map((area) => ({
+              value: area,
+              label: area,
+            })),
+          ];
+          setRentalLocationOptions(options);
+        }
+
+        if (buyLocationOptions?.length === 0) {
+          const newLocationOptions = await adminApi.get("/rental-locations");
+          const options = [
+            { value: "All Locations", label: "All Locations" },
+            ...newLocationOptions.data.map((area) => ({
+              value: area,
+              label: area,
+            })),
+          ];
+          setBuyLocationOptions(options);
         }
       } catch (error) {
         console.error("Failed to fetch listings", error);
@@ -157,27 +209,26 @@ const Hero = () => {
   ]);
   return (
     <>
-      <div className="inner-banner-style3">
-        <h2
-          className="hero-title mb30 animate-up-1"
-          style={{
-            textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
-            color: "#ffffff",
-          }}
-        >
-          Find The Perfect Place to Live With your Family
-        </h2>
+      <div className="inner-banner-style3 ">
+        <div className=" d-flex justify-content-center">
+          <AnimatedText>Find Your Property</AnimatedText>
+        </div>
+
         <HeroContent
           buyRent={buyRent}
           allReadyOff={allReadyOff}
           handleAllReadyOff={handleAllReadyOff}
           handleBuyRent={handleBuyRent}
           saleStatuses={saleStatuses}
-          locationOptions={locationOptions}
+          locationOptions={
+            buyRent === "rent"
+              ? rentalLocationOptions
+              : buyRent === "buy" && allReadyOff !== "off"
+              ? buyLocationOptions
+              : locationOptions
+          }
           propertyTypes={propertyTypes}
           filterFunctions={filterFunctions}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
         />
       </div>
       {/* End Hero content */}
@@ -196,11 +247,16 @@ const Hero = () => {
             allReadyOff={allReadyOff}
             handleAllReadyOff={handleAllReadyOff}
             handleBuyRent={handleBuyRent}
-            locationOptions={locationOptions}
+            locationOptions={
+              buyRent === "rent"
+                ? rentalLocationOptions
+                : buyRent === "buy" && allReadyOff !== "off"
+                ? buyLocationOptions
+                : locationOptions
+            }
             propertyTypes={propertyTypes}
             facilityOptions={facilityOptions}
             filterFunctions={filterFunctions}
-            searchTerm={searchTerm}
             loading={loading}
             setDataFetched={setDataFetched}
           />

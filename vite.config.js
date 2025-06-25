@@ -17,11 +17,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/crm/, ""),
       },
-      "/adminApi": {
-        target: "https://admin.questrealestate.ae/api", // Your backend server
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/adminApi/, ""),
-      },
+    
     },
   },
   plugins: [react()],

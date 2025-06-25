@@ -26,14 +26,21 @@ const icons = [
 ];
 
 const ApartmentType = () => {
-  const { propertyTypes } = usePropertyStore();
   const [apartmentType, setApartmentType] = useState([]);
   const [loading, setLoading] = useState(true);
   // Function to fetch counts for each property type
   const fetchPropertyTypeData = async () => {
     setLoading(true);
+    const newPropertyTypes = await api.get("/unit-types");
+    const propertyTypeArray = [
+      { value: "All Property Types", label: "All Property Types" },
+      ...newPropertyTypes.data.map((type) => ({
+        value: type,
+        label: type,
+      })),
+    ];
     const propertData = await Promise.all(
-      propertyTypes
+      propertyTypeArray
         .filter(({ label }) => label !== "All Property Types")
         .map(async ({ label }, index) => {
           try {
@@ -64,7 +71,7 @@ const ApartmentType = () => {
     fetchPropertyTypeData().then((data) => {
       setApartmentType(data);
     });
-  }, [propertyTypes]);
+  }, []);
   return loading ? (
     <div className="row">
       <div className="spinner-border mx-auto m-5" role="status">

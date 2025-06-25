@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import AnimatedText from "./hero/AnimatedText ";
 
 const Cta = () => {
   return (
@@ -38,7 +39,9 @@ const Cta = () => {
               data-aos-delay="500"
             >
               <div className="cta-style2">
-                <h2 className="cta-title">Buying a Property With Questbloom</h2>
+                <AnimatedText className="cta-title">
+                  Buying a Property With Questbloom
+                </AnimatedText>
                 <p className="cta-text">Browse through more properties.</p>
                 <Link to="/off-plan" className="ud-btn btn-dark mt10">
                   Let's Get Started
