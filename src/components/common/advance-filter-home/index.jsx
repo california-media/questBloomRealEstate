@@ -282,7 +282,7 @@ const AdvanceFilterModal = ({
             )}
           </div>
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-sm-6">
               <div className="widget-wrapper">
                 <h6 className="list-title">Bedrooms</h6>
@@ -305,8 +305,7 @@ const AdvanceFilterModal = ({
                 </div>
               </div>
             </div>
-            {/* End .col-md-6 */}
-          </div>
+          </div> */}
         </div>
         {/* End modal body */}
 
