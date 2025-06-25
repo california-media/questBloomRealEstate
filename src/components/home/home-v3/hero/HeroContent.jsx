@@ -41,7 +41,10 @@ const HeroContent = ({
 
   return (
     <div className="advance-style3 mb30 mx-auto animate-up-2 ">
-      <div className="tab-content s">
+      <div
+        className="tab-content bg-white bg-opacity-50 backdrop-blur"
+        id="backdrop-blur"
+      >
         {buyRentTabs.map((tab) => (
           <div
             className={`${buyRent === tab.id ? "active" : ""} tab-pane `}
@@ -300,7 +303,10 @@ const HeroContent = ({
           color: #797631;
           border-color: #797631; /* Optional if you need to target another border */
         }
-
+         #backdrop-blur {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
       `}</style>
     </div>
   );
