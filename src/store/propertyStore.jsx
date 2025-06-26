@@ -16,6 +16,7 @@ const usePropertyStore = create((set, get) => ({
   location: "All Locations",
   rentalLocation: "All Locations",
   buyLocation: "All Locations",
+  allLocation: "All Locations", ///for listings page
   categories: [],
   bedrooms: 0,
   bathrooms: 0,
@@ -27,14 +28,16 @@ const usePropertyStore = create((set, get) => ({
   searchTerm: "",
   listingStatus: "All",
   detailedListings: [],
+  adminDetailedListings: [],
 
   // Options arrays
-  locationOptions: [],
+  locationOptions: [], ///off plan
   propertyTypes: [],
   facilityOptions: [],
   saleStatuses: [],
   rentalLocationOptions: [],
   buyLocationOptions: [],
+  allLocationOptions: [], ///for listings page
 
   // Actions for setting original data
   setListings: (listings) => set({ listings }),
@@ -49,9 +52,12 @@ const usePropertyStore = create((set, get) => ({
   setFacilityOptions: (facilityOptions) => set({ facilityOptions }),
   setSaleStatuses: (saleStatuses) => set({ saleStatuses }),
   setDetailedListings: (detailedListings) => set({ detailedListings }),
+  setAdminDetailedListings: (adminDetailedListings) =>
+    set({ adminDetailedListings }),
   setRentalLocationOptions: (rentalLocationOptions) =>
     set({ rentalLocationOptions }),
   setBuyLocationOptions: (buyLocationOptions) => set({ buyLocationOptions }),
+  setAllLocationOptions: (allLocationOptions) => set({ allLocationOptions }),
 
   // Filter actions for AdvanceFilterModal
   handlePropertyType: (propertyType) => {
@@ -63,6 +69,7 @@ const usePropertyStore = create((set, get) => ({
   handleLocation: (locationValue) => set({ location: locationValue }),
   handleRentalLocation: (rentalLocation) => set({ rentalLocation }),
   handleBuyLocation: (buyLocation) => set({ buyLocation }),
+  handleAllLocation: (allLocation) => set({ allLocation }),
   handleSearchTerm: (searchTerm) => set({ searchTerm }),
   handlePercentagePreHandover: (percentage) =>
     set({ percentagePreHandover: percentage }),
@@ -93,6 +100,7 @@ const usePropertyStore = create((set, get) => ({
       location: "All Locations",
       rentalLocation: "All Locations",
       buyLocation: "All Locations",
+      allLocation: "All Locations",
       categories: [],
       bedrooms: 0,
       bathrooms: 0,
@@ -103,10 +111,9 @@ const usePropertyStore = create((set, get) => ({
       propertyId: "",
       listingStatus: "All",
       detailedListings: [],
+      setAdminDetailedListings: [],
       searchTerm: "",
     }),
-
-
 
   // Check if data needs to be fetched
   shouldFetchData: () => {

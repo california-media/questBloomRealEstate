@@ -134,7 +134,9 @@ const AdvanceFilterModal = ({
                     styles={customStyles}
                     value={{
                       value: propertyType,
-                      label: propertyType,
+                      label:
+                        propertyType.charAt(0).toUpperCase() +
+                        propertyType.slice(1),
                     }}
                     onChange={(e) => setPropertyType(e.value)}
                     className="select-custom"

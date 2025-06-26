@@ -1,25 +1,13 @@
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
-import EnergyClass from "@/components/property/property-single-style/common/EnergyClass";
-import HomeValueChart from "@/components/property/property-single-style/common/HomeValueChart";
-import InfoWithForm from "@/components/property/property-single-style/common/more-info";
-import NearbySimilarProperty from "@/components/property/property-single-style/common/NearbySimilarProperty";
-import OverView from "@/components/property/property-single-style/common/OverView";
-import PropertyAddress from "@/components/property/property-single-style/single-v5/PropertyAddress";
-import PropertyDetails from "@/components/property/property-single-style/single-v5/PropertyDetails";
-import PropertyFeaturesAminites from "@/components/property/property-single-style/common/PropertyFeaturesAminites";
-import PropertyHeader from "@/components/property/property-single-style/single-v5/PropertyHeader";
+
 import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
 import MasterPlan from "@/components/property/property-single-style/common/MasterPlan";
-import PropertyViews from "@/components/property/property-single-style/common/property-view";
-import ProperytyDescriptions from "@/components/property/property-single-style/common/ProperytyDescriptions";
+
 import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
 import Lobby from "@/components/property/property-single-style/common/Lobby";
-import ScheduleTour from "@/components/property/property-single-style/sidebar/ScheduleTour";
-import PropertyGallery from "@/components/property/property-single-style/single-v5/property-gallery";
-import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
-import WalkScore from "@/components/property/property-single-style/common/WalkScore";
+import PropertyGallery from "@/components/property/property-single-style/single-v5/admin-property-gallery";
 
 const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
@@ -33,6 +21,14 @@ import BuildingDetails from "@/components/property/property-single-style/common/
 import PaymentPlans from "@/components/property/property-single-style/common/PaymentPlans";
 import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
 import usePropertyStore from "@/store/propertyStore";
+import adminApi from "@/api/adminApi";
+import ExtraPropertyDetails from "@/components/property/property-single-style/common/ExtraPropertyDetails";
+import AdminPropertyHeader from "@/components/property/property-single-style/single-v5/AdminPropertyHeader";
+import AdminOverView from "@/components/property/property-single-style/common/AdminOverView";
+import AdminProperytyDescriptions from "@/components/property/property-single-style/common/AdminProperytyDescriptions";
+import AdminPropertyDetails from "@/components/property/property-single-style/single-v5/AdminPropertyDetails";
+import AdminPropertyAddress from "@/components/property/property-single-style/single-v5/AdminPropertyAddress";
+import AdminPropertyFeaturesAminites from "@/components/property/property-single-style/common/AdminPropertyFeaturesAminites";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -40,10 +36,9 @@ const metaInformation = {
   title: "Property Single V5 || Homez - Real Estate ReactJS Template",
 };
 
-const SingleV5 = () => {
+const AdminSingleV5 = () => {
   const params = useParams();
   const { id: prefixedId } = params;
-
   // Function to extract the numeric ID
   const extractId = (prefixedId, pathPrefix) => {
     switch (pathPrefix) {
@@ -65,23 +60,15 @@ const SingleV5 = () => {
 
   // Get the actual ID
   const id = extractId(prefixedId, currentPathPrefix);
-
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
 
-  const {
-    detailedListings,
-    setDetailedListings,
-    loading: storePropertiesLoading,
-  } = usePropertyStore();
+  const { adminDetailedListings, setAdminDetailedListings } =
+    usePropertyStore();
   useEffect(() => {
     const fetchProperty = async () => {
-      // First, check if the property already exists in the store
-      if (storePropertiesLoading) {
-        return;
-      }
-      const existingProperty = detailedListings.find(
+      const existingProperty = adminDetailedListings.find(
         (listing) => listing.id == id
       );
 
@@ -89,6 +76,7 @@ const SingleV5 = () => {
         // Use cached data from store
         console.log("Using cached property data from store");
         setProperty({ ...existingProperty, id });
+        console.log({ ...existingProperty, id });
         setLoading(false);
         return;
       }
@@ -96,15 +84,17 @@ const SingleV5 = () => {
       // If not found in store, fetch from API
       try {
         console.log("Fetching property data from API");
-        const response = isDev
-          ? await api.get(`/properties/${id}`)
-          : await api.get("/property", {
-              params: {
-                id,
-              },
-            });
+        const response = await adminApi.get(
+          `/${
+            currentPathPrefix === "rent" ? "rental" : "resale"
+          }-properties/${id}`
+        );
+
         setProperty({ ...response.data, id });
-        setDetailedListings([...detailedListings, { ...response.data, id }]);
+        setAdminDetailedListings([
+          ...adminDetailedListings,
+          { ...response.data, id },
+        ]);
       } catch (error) {
         console.error("Failed to fetch property:", error);
         // Handle error appropriately
@@ -116,7 +106,7 @@ const SingleV5 = () => {
     if (id) {
       fetchProperty();
     }
-  }, [id, detailedListings, storePropertiesLoading]); // Add listings as dependency
+  }, [id, adminDetailedListings]); // Add listings as dependency
 
   useEffect(() => {
     if (property) {
@@ -140,8 +130,8 @@ const SingleV5 = () => {
       <section className="p-0 bgc-white">
         <PropertyGallery
           loading={loading}
-          architecture={property?.architecture}
-          coordinates={property?.coordinates}
+          photos={property?.photos}
+          googleMapsLink={property?.google_maps_link}
         />
       </section>
       {/* End Property Slider Gallery */}
@@ -150,7 +140,7 @@ const SingleV5 = () => {
       <section className="pt30 pb90 bgc-f7">
         <div className="container">
           <div className="row sp-v5-property-details">
-            <PropertyHeader property={property} />
+            <AdminPropertyHeader property={property} prefixedId={prefixedId} />
           </div>
           {/* End .row */}
 
@@ -159,19 +149,22 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
-                  <OverView property={property} prefixedId={prefixedId} />
+                  <AdminOverView property={property} prefixedId={prefixedId} />
                 </div>
               </div>
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Property Description</h4>
-                <ProperytyDescriptions property={property} />
+                <AdminProperytyDescriptions property={property} />
                 {/* End property description */}
 
                 <h4 className="title fz17 mb30 mt50">Property Details</h4>
                 <div className="row">
-                  <PropertyDetails property={property} />
+                  <AdminPropertyDetails
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -179,9 +172,9 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30 mt30">Address</h4>
                 <div className="row">
-                  <PropertyAddress
+                  <AdminPropertyAddress
                     property={property}
-                    coordinates={property?.coordinates}
+                    location={property?.location} // Now using the direct location string
                   />
                 </div>
               </div>
@@ -190,7 +183,9 @@ const SingleV5 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
                 <div className="row">
-                  <PropertyFeaturesAminites facilities={property?.facilities} />
+                  <AdminPropertyFeaturesAminites
+                    amenities={property?.amenities}
+                  />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -258,9 +253,10 @@ const SingleV5 = () => {
                 {/* End .Schedule a tour */}
 
                 <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Get More Information</h4>
+                  <h4 className="title fz17 mb30">Details</h4>
                   {/* <InfoWithForm /> */}
-                  <SingleAgentInfo developer_data={property?.developer_data} />
+                  {/* <SingleAgentInfo developer_data={property?.developer_data} /> */}
+                  <ExtraPropertyDetails property={property} />
                 </div>
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
@@ -452,4 +448,4 @@ const SingleV5 = () => {
   );
 };
 
-export default SingleV5;
+export default AdminSingleV5;

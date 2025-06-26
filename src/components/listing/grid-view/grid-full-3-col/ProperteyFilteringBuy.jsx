@@ -48,7 +48,7 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
     searchTerm,
-    handleSearchTerm
+    handleSearchTerm,
   } = usePropertyStore();
 
   // Local component states
@@ -155,7 +155,7 @@ export default function ProperteyFiltering({ region }) {
       }
 
       const mappedNewListings = adminListings.data.map((item) =>
-        mapAdminApiDataToTemplateSingle(item)
+        mapAdminApiDataToTemplateSingle(item, "qb")
       );
 
       setListings([...listings, ...mappedNewListings]);
@@ -198,7 +198,7 @@ export default function ProperteyFiltering({ region }) {
 
         // Set listings in store
         const mappedNewListings = adminListings.data.map((item) =>
-          mapAdminApiDataToTemplateSingle(item)
+          mapAdminApiDataToTemplateSingle(item, "qb")
         );
         setListings(mappedNewListings);
         setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
@@ -208,7 +208,7 @@ export default function ProperteyFiltering({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-            label: type,
+         label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);

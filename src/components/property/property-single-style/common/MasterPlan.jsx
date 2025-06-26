@@ -1,4 +1,5 @@
 import React from "react";
+import { ImageOff } from "lucide-react";
 
 const MasterPlan = ({ master_plan }) => {
   const imageUrl = master_plan?.[0]?.url;
@@ -16,7 +17,7 @@ const MasterPlan = ({ master_plan }) => {
           className="w-100 bdrs12 h-100 d-flex justify-content-center align-items-center bg-light border"
           style={{ aspectRatio: "16 / 9" }}
         >
-          <span className="text-muted fw-bold">N/A</span>
+          <ImageOff size={58} className="text-muted" />
         </div>
       )}
     </div>

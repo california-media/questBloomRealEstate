@@ -60,11 +60,17 @@ const Hero = () => {
   } = usePropertyStore();
   const [buyRent, setBuyRent] = useState("buy");
   const [allReadyOff, setAllReadyOff] = useState("all");
+  const [adminPropertyTypeOptions, setAdminPropertyTypeOptions] = useState([]);
+  const [offPlanPropertyTypeOptions, setOffPlanPropertyTypeOptions] = useState(
+    []
+  );
   const handleAllReadyOff = (tab) => {
+    handlePropertyType("All Property Types");
     setAllReadyOff(tab);
   };
 
   const handleBuyRent = (tab) => {
+    handlePropertyType("All Property Types");
     setBuyRent(tab);
   };
   const resetFilter = () => {
@@ -143,16 +149,14 @@ const Hero = () => {
             api.get("/unit-types"),
             adminApi.get("/rental-property-types"), ///same as resale
           ]);
-
-          // Create options array with all types
-          const options = [
+          setAdminPropertyTypeOptions([
+            { value: "All Property Types", label: "All Property Types" },
+            ...rentalTypes.data.map((type) => ({ value: type, label: type })),
+          ]);
+          setOffPlanPropertyTypeOptions([
             { value: "All Property Types", label: "All Property Types" },
             ...unitTypes.data.map((type) => ({ value: type, label: type })),
-            ...rentalTypes.data.map((type) => ({ value: type, label: type })),
-          ];
-
-          // Set property types once
-          setPropertyTypes(options);
+          ]);
         }
 
         if (locationOptions?.length === 0) {
@@ -227,7 +231,11 @@ const Hero = () => {
               ? buyLocationOptions
               : locationOptions
           }
-          propertyTypes={propertyTypes}
+          propertyTypes={
+            allReadyOff === "off"
+              ? offPlanPropertyTypeOptions
+              : adminPropertyTypeOptions
+          }
           filterFunctions={filterFunctions}
         />
       </div>
@@ -254,7 +262,11 @@ const Hero = () => {
                 ? buyLocationOptions
                 : locationOptions
             }
-            propertyTypes={propertyTypes}
+            propertyTypes={
+              allReadyOff === "off"
+                ? offPlanPropertyTypeOptions
+                : adminPropertyTypeOptions
+            }
             facilityOptions={facilityOptions}
             filterFunctions={filterFunctions}
             loading={loading}

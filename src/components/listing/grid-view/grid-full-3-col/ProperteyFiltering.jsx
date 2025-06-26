@@ -175,7 +175,7 @@ export default function ProperteyFiltering({ region }) {
       }
 
       const mappedNewListings = data.items.map((item) =>
-        mapApiDataToTemplateSingle(item)
+        mapApiDataToTemplateSingle(item, "op")
       );
 
       setListings([...listings, ...mappedNewListings]);
@@ -214,7 +214,7 @@ export default function ProperteyFiltering({ region }) {
 
         // Set listings in store
         const mappedNewListings = data.items.map((item) =>
-          mapApiDataToTemplateSingle(item)
+          mapApiDataToTemplateSingle(item, "op")
         );
         setListings(mappedNewListings);
         setHasMore(data.items.length === 9); // If we got 9 items, there might be more
@@ -229,7 +229,7 @@ export default function ProperteyFiltering({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-            label: type,
+               label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);

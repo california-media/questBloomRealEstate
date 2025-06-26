@@ -58,6 +58,7 @@ import SingleV2 from "./pages/property/(single-style)/single-v2";
 import SingleV3 from "./pages/property/(single-style)/single-v3";
 import SingleV4 from "./pages/property/(single-style)/single-v4";
 import SingleV5 from "./pages/property/(single-style)/single-v5";
+import AdminSingleV5 from "./pages/property/(single-style)/admin-single-v5";
 import SingleV6 from "./pages/property/(single-style)/single-v6";
 import SingleV7 from "./pages/property/(single-style)/single-v7";
 import SingleV8 from "./pages/property/(single-style)/single-v8";
@@ -71,6 +72,7 @@ import SearchProperties from "./pages/listings/(map-style)/search-properties";
 import BuyFull3Col from "./pages/listings/(grid-view)/buy";
 import Rent3Col from "./pages/listings/(grid-view)/rent";
 import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
+import { Toaster } from "react-hot-toast";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -88,6 +90,7 @@ function App() {
     <>
       <div className="wrapper ovh">
         <BrowserRouter>
+          <Toaster position="bottom-right" />
           <ScrollTopBehaviour />
           <Routes>
             <Route path="/">
@@ -186,11 +189,10 @@ function App() {
 
               {/* relevant */}
               <Route path="off-plan/:id" element={<SingleV5 />} />
-              <Route path="buy/:id" element={<SingleV5 />} />
-              <Route path="rent/:id" element={<SingleV5 />} />
-              <Route path="listings/:id" element={<SingleV5 />} />
-
+              <Route path="buy/:id" element={<AdminSingleV5 />} />
+              <Route path="rent/:id" element={<AdminSingleV5 />} />
               {/* /relevant */}
+
               <Route path="single-v6/:id" element={<SingleV6 />} />
               <Route path="single-v7/:id" element={<SingleV7 />} />
               <Route path="single-v8/:id" element={<SingleV8 />} />

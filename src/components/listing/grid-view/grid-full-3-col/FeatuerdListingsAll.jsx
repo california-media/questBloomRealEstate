@@ -15,21 +15,6 @@ const FeaturedListings = ({ data, colstyle }) => {
   const validPaths = ["off-plan", "buy", "rent", "listings"];
   const pathPrefix = validPaths.includes(basePath) ? basePath : "off-plan";
 
-  // Function to generate the prefixed ID
-  const getPrefixedId = (listing) => {
-    switch (pathPrefix) {
-      case "rent":
-        return `qr-${listing.id}`;
-      case "off-plan":
-        return `op-${listing.id}`;
-      case "buy":
-        return `qb-${listing.id}`;
-      case "listings":
-        return listing.id.toString(); // no prefix
-      default:
-        return `op-${listing.id}`; // default to off-plan
-    }
-  };
   return (
     <>
       {data.map((listing) => {
@@ -81,7 +66,17 @@ const FeaturedListings = ({ data, colstyle }) => {
               <div className="list-content flex-grow-1  d-flex flex-column justify-content-between ">
                 <div>
                   <h6 className="list-title">
-                    <Link to={`/${pathPrefix}/qr-${listing.id}`}>
+                    <Link
+                      to={`/${
+                        listing.listing_prefix === "op"
+                          ? "off-plan"
+                          : listing.listing_prefix === "qr"
+                          ? "rent"
+                          : listing.listing_prefix === "qb"
+                          ? "buy"
+                          : ""
+                      }/${listing.listing_prefix}-${listing.id}`}
+                    >
                       {listing.title}
                     </Link>
                   </h6>

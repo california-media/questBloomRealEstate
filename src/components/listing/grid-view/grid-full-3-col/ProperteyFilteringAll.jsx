@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ListingSidebar from "../../sidebar";
-import AdvanceFilterModal from "@/components/common/advance-filter-two-rent";
-import TopFilterBar from "./TopFilterBarRent";
-import FeaturedListingsRent from "./FeatuerdListingsRent";
+import AdvanceFilterModal from "@/components/common/advance-filter-two-all";
+import TopFilterBar from "./TopFilterBarAll";
+import FeaturedListingsAll from "./FeatuerdListingsAll";
 import usePropertyStore from "@/store/propertyStore";
 import { useLocation } from "react-router-dom";
 import adminApi from "@/api/adminApi";
@@ -11,6 +11,8 @@ import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateS
 export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
   const {
+    filteredData,
+    sortedFilteredData,
     selectedPropertyType,
     priceRange,
     categories,
@@ -22,25 +24,33 @@ export default function ProperteyFiltering({ region }) {
     listingStatus,
     propertyTypes,
     facilityOptions,
+    saleStatuses,
+    setFilteredData,
+    setSortedFilteredData,
     setDataFetched,
-    rentalLocationOptions,
-    setRentalLocationOptions,
-    rentalLocation,
+    allLocation,
+    setAllLocationOptions,
+    allLocationOptions,
+
     setPropertyTypes,
+    setFacilityOptions,
+    setSaleStatuses,
     handlePropertyType,
     handlePriceRange,
-    handleRentalLocation,
+
     handleCategories,
     handleBedrooms,
     handleBathrooms,
     handleSquirefeet,
     handleYearBuild,
+    handleAllLocation,
     handlePropertyId,
     handleListingStatus,
     resetAllFilters,
     percentagePreHandover,
     handlePercentagePreHandover,
     searchTerm,
+    handleSearchTerm,
   } = usePropertyStore();
 
   // Local component states
@@ -78,18 +88,19 @@ export default function ProperteyFiltering({ region }) {
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
-    handlelocation: handleRentalLocation,
+    handlelocation: handleAllLocation,
     handlesquirefeet: handleSquirefeet,
     handleyearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
+    handleSearchTerm: handleSearchTerm,
     priceRange,
     listingStatus,
     propertyTypes,
     resetFilter,
     bedrooms,
     bathrooms,
-    location: rentalLocation,
+    location: allLocation,
     squirefeet,
     yearBuild,
     categories,
@@ -111,9 +122,8 @@ export default function ProperteyFiltering({ region }) {
       ...(priceRange[1] != 10000000 && {
         unit_price_to: priceRange[1],
       }),
-
-      ...(rentalLocation != "All Locations" && { areas: rentalLocation }),
       ...(searchTerm != "" && { search_query: searchTerm }),
+      ...(allLocation != "All Locations" && { areas: allLocation }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
@@ -137,7 +147,7 @@ export default function ProperteyFiltering({ region }) {
     try {
       const nextPage = Math.floor(listings.length / 9) + 1;
 
-      const { data: adminListings } = await adminApi.get("/rental-properties", {
+      const { data: adminListings } = await adminApi.get("/resale-properties", {
         params: getRequestParams(nextPage),
       });
 
@@ -147,7 +157,7 @@ export default function ProperteyFiltering({ region }) {
       }
 
       const mappedNewListings = adminListings.data.map((item) =>
-        mapAdminApiDataToTemplateSingle(item, "qr")
+        mapAdminApiDataToTemplateSingle(item, "listing")
       );
 
       setListings([...listings, ...mappedNewListings]);
@@ -163,7 +173,7 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType,
     priceRange,
     propertyId,
-    rentalLocation,
+    allLocation,
     bedrooms,
     bathrooms,
     squirefeet,
@@ -181,39 +191,59 @@ export default function ProperteyFiltering({ region }) {
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
       try {
-        const { data: adminListings } = await adminApi.get(
-          "/rental-properties",
-          {
+        // Fetch both resale and rental properties in parallel
+        const [resaleResponse, rentalResponse] = await Promise.all([
+          adminApi.get("/resale-properties", {
             params: getRequestParams(),
-          }
-        );
+          }),
+          adminApi.get("/rental-properties", {
+            params: getRequestParams(),
+          }),
+        ]);
 
-        // Set listings in store
-        const mappedNewListings = adminListings.data.map((item) =>
+        // Combine and map both sets of listings
+        const mappedResaleListings = resaleResponse.data.data.map((item) =>
+          mapAdminApiDataToTemplateSingle(item, "qb")
+        );
+        const mappedRentalListings = rentalResponse.data.data.map((item) =>
           mapAdminApiDataToTemplateSingle(item, "qr")
         );
-        setListings(mappedNewListings);
-        setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
 
-        const newPropertyTypes = await adminApi.get("/rental-property-types");
+        const combinedListings = [
+          ...mappedResaleListings,
+          ...mappedRentalListings,
+        ];
+        setListings(combinedListings);
+        setHasMore(
+          resaleResponse.data.data.length + rentalResponse.data.data.length ===
+            9
+        );
+
+        // Fetch both location types in parallel
+        const [resaleLocations, rentalLocations] = await Promise.all([
+          adminApi.get("/resale-locations"),
+          adminApi.get("/rental-locations"),
+        ]);
+
+        // Merge and deduplicate all locations
+        const uniqueLocations = [
+          { value: "All Locations", label: "All Locations" },
+          ...new Set([...resaleLocations, ...rentalLocations]),
+        ].map((area) => ({
+          value: area,
+          label: area,
+        }));
+        setAllLocationOptions(uniqueLocations);
+
+        const newPropertyTypes = await adminApi.get("/rental-property-types"); ///same as resale
         const propertyTypeArray = [
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-            label: type.charAt(0).toUpperCase() + type.slice(1),
+        label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);
-
-        const newLocationOptions = await adminApi.get("/rental-locations");
-        const locationArray = [
-          { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
-            value: area,
-            label: area,
-          })),
-        ];
-        setRentalLocationOptions(locationArray);
 
         setDataFetched(true);
       } catch (error) {
@@ -231,7 +261,7 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType,
     bathrooms,
     bedrooms,
-    rentalLocation,
+    allLocation,
     squirefeet,
     yearBuild,
     categories,
@@ -325,7 +355,7 @@ export default function ProperteyFiltering({ region }) {
           >
             <AdvanceFilterModal
               setDataFetched={setDataFetched}
-              locationOptions={rentalLocationOptions}
+              locationOptions={allLocationOptions}
               propertyTypes={propertyTypes}
               facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
@@ -341,7 +371,7 @@ export default function ProperteyFiltering({ region }) {
             setColstyle={setColstyle}
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={rentalLocationOptions}
+            locationOptions={allLocationOptions}
           />
         </div>
         {/* End TopFilterBar */}
@@ -370,7 +400,7 @@ export default function ProperteyFiltering({ region }) {
           </h5>
         ) : (
           <div className="row">
-            <FeaturedListingsRent colstyle={colstyle} data={listings} />
+            <FeaturedListingsAll colstyle={colstyle} data={listings} />
             {loading && (
               <div className="text-center my-3">
                 <div className="spinner-border" role="status">

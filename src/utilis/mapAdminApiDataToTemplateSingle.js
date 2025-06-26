@@ -1,6 +1,9 @@
 import { adminBaseUrl } from "@/api/adminApi";
 
-export default function mapAdminApiDataToTemplateSingle(apiData) {
+export default function mapAdminApiDataToTemplateSingle(
+  apiData,
+  listing_prefix
+) {
   let imageUrl = "";
   try {
     // Use first photo if available, otherwise empty string
@@ -11,6 +14,7 @@ export default function mapAdminApiDataToTemplateSingle(apiData) {
 
   return {
     id: apiData.id,
+    listing_prefix,
     image: imageUrl ? adminBaseUrl + imageUrl : null, //1
     title: apiData.property_title || "Untitled Property", //2
     developer: "Unknown",

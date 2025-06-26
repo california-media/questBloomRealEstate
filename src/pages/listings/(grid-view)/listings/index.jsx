@@ -3,7 +3,7 @@ import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 
-import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFiltering";
+import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFilteringAll";
 
 import React from "react";
 
@@ -32,7 +32,7 @@ const ListingsFull3Col = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title"> UAE Homes for Sale</h2>
+                <h2 className="title"> UAE Homes for Rent and Sale</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Buying and Renting</a>

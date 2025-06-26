@@ -69,16 +69,26 @@ const DropdownSelect = ({
     placeholder === "Bathrooms"
       ? options.map((option) => ({
           value: option,
-          label: option === 1 ? `${option} Bathroom` : `${option} Bathrooms`,
+          label:
+            option === 1
+              ? `${option} Bathroom`.charAt(0).toUpperCase() +
+                `${option} Bathroom`.slice(1)
+              : `${option} Bathrooms`.charAt(0).toUpperCase() +
+                `${option} Bathrooms`.slice(1),
         }))
       : placeholder === "Bedrooms"
       ? options.map((option) => ({
           value: option,
-          label: option === 1 ? `${option} Bedroom` : `${option} Bedrooms`,
+          label:
+            option === 1
+              ? `${option} Bedroom`.charAt(0).toUpperCase() +
+                `${option} Bedroom`.slice(1)
+              : `${option} Bedrooms`.charAt(0).toUpperCase() +
+                `${option} Bedrooms`.slice(1),
         }))
       : options.map((option) => ({
           value: option,
-          label: option,
+          label: option.charAt(0).toUpperCase() + option.slice(1),
         }));
 
   // Handle creating new options from user input
@@ -124,7 +134,7 @@ const DropdownSelect = ({
           value && value != 0
             ? selectOptions.find((option) => option.value === value) || {
                 value: value,
-                label: value,
+                label: value.charAt(0).toUpperCase() + value.slice(1),
               }
             : null
         }
