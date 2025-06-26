@@ -13,7 +13,7 @@ export default function ProperteyFiltering({ region }) {
   const {
     filteredData,
     sortedFilteredData,
-    selectedPropertyType,
+
     priceRange,
     categories,
     bedrooms,
@@ -34,7 +34,9 @@ export default function ProperteyFiltering({ region }) {
     setPropertyTypes,
     setFacilityOptions,
     setSaleStatuses,
-    handlePropertyType,
+    adminPropertyType,
+    handleAdminPropertyType,
+
     handlePriceRange,
     handleBuyLocation,
     handleCategories,
@@ -82,7 +84,7 @@ export default function ProperteyFiltering({ region }) {
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
-    handlepropertyType: handlePropertyType,
+    handlepropertyType: handleAdminPropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
@@ -102,7 +104,7 @@ export default function ProperteyFiltering({ region }) {
     squirefeet,
     yearBuild,
     categories,
-    selectedPropertyType,
+    selectedPropertyType: adminPropertyType,
     percentagePreHandover,
     handlePercentagePreHandover,
   };
@@ -111,8 +113,8 @@ export default function ProperteyFiltering({ region }) {
     const params = {
       page: nextPage,
       per_page: 9,
-      ...(selectedPropertyType != "All Property Types" && {
-        unit_types: selectedPropertyType,
+      ...(adminPropertyType != "All Property Types" && {
+        unit_types: adminPropertyType,
       }),
       ...(priceRange[0] != 0 && {
         unit_price_from: priceRange[0],
@@ -168,7 +170,7 @@ export default function ProperteyFiltering({ region }) {
     listings,
     loading,
     hasMore,
-    selectedPropertyType,
+    adminPropertyType,
     priceRange,
     propertyId,
     buyLocation,
@@ -208,7 +210,7 @@ export default function ProperteyFiltering({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-         label: type.charAt(0).toUpperCase() + type.slice(1),
+            label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);
@@ -236,7 +238,7 @@ export default function ProperteyFiltering({ region }) {
     region,
     searchTerm,
     listingStatus,
-    selectedPropertyType,
+    adminPropertyType,
     bathrooms,
     bedrooms,
     buyLocation,

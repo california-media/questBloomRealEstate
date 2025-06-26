@@ -116,9 +116,9 @@ const FeaturedListingsHome = ({ index, section }) => {
                             </div>
                           </div>
                         ) : (
-                          listings.slice(0, 8).map((listing) => (
+                          listings.slice(0, 8).map((listing, index) => (
                             <SwiperSlide
-                              key={listing.id}
+                              key={listing.id || index}
                               style={{ height: "90%" }}
                             >
                               <Link
@@ -172,15 +172,15 @@ const FeaturedListingsHome = ({ index, section }) => {
                                       </div>
 
                                       <div className="list-meta d-flex gap-0 align-items-center">
-                                        <a href="#" className="text-start">
+                                        <span  className="text-start">
                                           <UserIcon
                                             size={16}
                                             color="gray"
                                             className="mb-1"
                                           />{" "}
                                           {listing.developer}
-                                        </a>
-                                        <a href="#" className="text-start">
+                                        </span>
+                                        <span  className="text-start">
                                           {listing.post_handover ? (
                                             <Check
                                               size={16}
@@ -197,15 +197,15 @@ const FeaturedListingsHome = ({ index, section }) => {
                                           {listing.post_handover
                                             ? "Post Handover"
                                             : "Pre Handover"}
-                                        </a>
-                                        <a href="#" className="text-start">
+                                        </span>
+                                        <span  className="text-start">
                                           <Clock
                                             size={16}
                                             color="gray"
                                             className="mb-1"
                                           />{" "}
                                           {listing.yearBuilding}
-                                        </a>
+                                        </span>
                                       </div>
 
                                       <div className="list-meta2 d-flex justify-content-between align-items-center">

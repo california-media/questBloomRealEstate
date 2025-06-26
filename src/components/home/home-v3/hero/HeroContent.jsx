@@ -16,9 +16,9 @@ const HeroContent = ({
   allReadyOff,
   handleAllReadyOff,
   handleBuyRent,
+  loading,
 }) => {
   let propertyTypesStrings = propertyTypes.map((item) => item.value);
-  let locationOptionsStrings = locationOptions.map((item) => item.label);
   const navigate = useNavigate();
 
   // Reset filters when tabs change
@@ -79,10 +79,11 @@ const HeroContent = ({
                 <div className="col-md-5 col-lg-4 ">
                   <div className="mt-3 mt-md-0 bootselect-multiselect">
                     <DropdownSelectLocation
-                      options={locationOptionsStrings}
+                      options={locationOptions}
                       value={filterFunctions?.location}
                       onChange={filterFunctions?.handlelocation}
                       placeholder="Enter Location"
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -172,6 +173,7 @@ const HeroContent = ({
                           value={filterFunctions?.rentDuration}
                           onChange={filterFunctions?.handleRentDuration}
                           placeholder="Rent Duration"
+                          loading={loading}
                         />
                       </div>
                     )}
@@ -186,6 +188,7 @@ const HeroContent = ({
                       value={filterFunctions?.selectedPropertyType}
                       onChange={filterFunctions?.handlepropertyType}
                       placeholder="Property Type"
+                      loading={loading}
                     />
                   </div>
                 </div>
@@ -200,6 +203,7 @@ const HeroContent = ({
                       onChange={(val) =>
                         filterFunctions?.handlebedrooms(parseInt(val || 0))
                       }
+                      loading={loading}
                       placeholder="Bedrooms"
                     />
                   </div>
@@ -215,6 +219,7 @@ const HeroContent = ({
                       onChange={(val) =>
                         filterFunctions?.handleBathrooms(parseInt(val || 0))
                       }
+                      loading={loading}
                       placeholder="Bathrooms"
                     />
                   </div>

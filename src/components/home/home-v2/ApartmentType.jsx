@@ -32,33 +32,27 @@ const ApartmentType = () => {
   const fetchPropertyTypeData = async () => {
     setLoading(true);
     const newPropertyTypes = await api.get("/unit-types");
-    const propertyTypeArray = [
-      { value: "All Property Types", label: "All Property Types" },
-      ...newPropertyTypes.data.map((type) => ({
-        value: type,
-        label: type,
-      })),
-    ];
+
     const propertData = await Promise.all(
-      propertyTypeArray
-        .filter(({ label }) => label !== "All Property Types")
-        .map(async ({ label }, index) => {
+      newPropertyTypes.data
+        .filter((pt) => pt !== "All Property Types")
+        .map(async (pt, index) => {
           try {
             const { data } = await api.get("/properties", {
-              params: { unit_types: label, per_page: 1 },
+              params: { unit_types: encodeURIComponent(pt), per_page: 1 },
             });
             return {
               id: index + 1,
               icon: icons[index % icons.length],
-              title: label,
+              title: pt,
               count: data.pagination?.total || 0,
             };
           } catch (error) {
-            console.error(`Failed to fetch count for ${label}:`, error);
+            console.error(`Failed to fetch count for ${pt}:`, error);
             return {
               id: index + 1,
               icon: icons[index % icons.length],
-              title: label,
+              title: pt,
               count: 0,
             };
           }

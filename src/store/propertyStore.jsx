@@ -12,6 +12,7 @@ const usePropertyStore = create((set, get) => ({
 
   // Filter states for AdvanceFilterModal and other filters
   selectedPropertyType: "All Property Types",
+  adminPropertyType: "All Property Types",
   priceRange: [0, 10000000],
   location: "All Locations",
   rentalLocation: "All Locations",
@@ -63,6 +64,10 @@ const usePropertyStore = create((set, get) => ({
   handlePropertyType: (propertyType) => {
     set({ selectedPropertyType: propertyType });
   },
+  handleAdminPropertyType: (adminPropertyType) => {
+    set({ adminPropertyType });
+  },
+
   handleRentDuration: (rentDuration) => set({ rentDuration }),
   handlePriceRange: (range) => set({ priceRange: range }),
 
@@ -113,6 +118,7 @@ const usePropertyStore = create((set, get) => ({
       detailedListings: [],
       setAdminDetailedListings: [],
       searchTerm: "",
+      adminPropertyType: "All Property Types",
     }),
 
   // Check if data needs to be fetched

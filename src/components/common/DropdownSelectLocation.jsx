@@ -6,6 +6,7 @@ const DropdownSelectLocation = ({
   onChange,
   placeholder = "Select...",
   isClearable = false,
+  loading,
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -27,7 +28,6 @@ const DropdownSelectLocation = ({
     dropdownIndicator: (provided) => ({
       ...provided,
       display: placeholder === "Enter Location" ? "none" : "inline",
-  
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
@@ -50,42 +50,22 @@ const DropdownSelectLocation = ({
     }),
   };
 
-  const selectOptions =
-    placeholder === "Bathrooms"
-      ? options.map((option) => ({
-          value: option,
-          label: option === 1 ? `${option} Bathroom` : `${option} Bathrooms`,
-        }))
-      : placeholder === "Bedrooms"
-      ? options.map((option) => ({
-          value: option,
-          label: option === 1 ? `${option} Bedroom` : `${option} Bedrooms`,
-        }))
-      : options.map((option) => ({
-          value: option,
-          label: option,
-        }));
-
-  // Handle creating new options from user input
-  const handleCreateOption = (inputValue) => {
-    const newOption = { value: inputValue, label: inputValue };
-    onChange(inputValue);
-    return newOption;
-  };
-
   // Format the "create" message
-  const formatCreateLabel = (inputValue) => `Use "${inputValue}"`;
 
   // Custom NoOptionsMessage component
-  const NoOptionsMessage = ({ inputValue }) => {
-    if (inputValue) {
-      return (
-        <div style={{ padding: "8px 12px", color: "#666" }}>
-          Press Enter to use "{inputValue}"
+  const NoOptionsMessage = () => {
+    return loading ? (
+      <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+        <div className="spinner-border  mx-auto mt-3" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
-      );
-    }
-    return <div style={{ padding: "8px 12px", color: "#666" }}>No options</div>;
+        <div style={{ padding: "8px 12px", color: "#666" }}>
+          fetching locations
+        </div>
+      </div>
+    ) : (
+      <div style={{ padding: "8px 12px", color: "#666" }}>No options</div>
+    );
   };
 
   return (
@@ -107,13 +87,10 @@ const DropdownSelectLocation = ({
       <Select
         value={
           value && value != 0
-            ? selectOptions.find((option) => option.value === value) || {
-                value: value,
-                label: value,
-              }
+            ? options.find((option) => option.value === value)
             : null
         }
-        options={selectOptions}
+        options={options}
         styles={customStyles}
         placeholder={placeholder}
         className="text-start select-borderless"
@@ -123,15 +100,9 @@ const DropdownSelectLocation = ({
         isSearchable={true}
         // Enable creating custom options
         creatable={true}
-        onCreateOption={handleCreateOption}
-        formatCreateLabel={formatCreateLabel}
         // Custom components
         components={{
           NoOptionsMessage,
-        }}
-        // Allow creating options when no exact match exists
-        isValidNewOption={(inputValue, selectValue, selectOptions) => {
-          return inputValue && inputValue.trim().length > 0;
         }}
       />
     </div>

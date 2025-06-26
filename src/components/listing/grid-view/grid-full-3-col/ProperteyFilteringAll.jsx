@@ -13,7 +13,7 @@ export default function ProperteyFiltering({ region }) {
   const {
     filteredData,
     sortedFilteredData,
-    selectedPropertyType,
+
     priceRange,
     categories,
     bedrooms,
@@ -35,7 +35,7 @@ export default function ProperteyFiltering({ region }) {
     setPropertyTypes,
     setFacilityOptions,
     setSaleStatuses,
-    handlePropertyType,
+
     handlePriceRange,
 
     handleCategories,
@@ -51,6 +51,8 @@ export default function ProperteyFiltering({ region }) {
     handlePercentagePreHandover,
     searchTerm,
     handleSearchTerm,
+    adminPropertyType,
+    handleAdminPropertyType,
   } = usePropertyStore();
 
   // Local component states
@@ -84,7 +86,7 @@ export default function ProperteyFiltering({ region }) {
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
-    handlepropertyType: handlePropertyType,
+    handlepropertyType: handleAdminPropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
@@ -104,7 +106,7 @@ export default function ProperteyFiltering({ region }) {
     squirefeet,
     yearBuild,
     categories,
-    selectedPropertyType,
+    selectedPropertyType: adminPropertyType,
     percentagePreHandover,
     handlePercentagePreHandover,
   };
@@ -113,8 +115,8 @@ export default function ProperteyFiltering({ region }) {
     const params = {
       page: nextPage,
       per_page: 9,
-      ...(selectedPropertyType != "All Property Types" && {
-        unit_types: selectedPropertyType,
+      ...(adminPropertyType != "All Property Types" && {
+        unit_types: adminPropertyType,
       }),
       ...(priceRange[0] != 0 && {
         unit_price_from: priceRange[0],
@@ -170,7 +172,7 @@ export default function ProperteyFiltering({ region }) {
     listings,
     loading,
     hasMore,
-    selectedPropertyType,
+    adminPropertyType,
     priceRange,
     propertyId,
     allLocation,
@@ -260,7 +262,7 @@ export default function ProperteyFiltering({ region }) {
     region,
     searchTerm,
     listingStatus,
-    selectedPropertyType,
+    adminPropertyType,
     bathrooms,
     bedrooms,
     allLocation,

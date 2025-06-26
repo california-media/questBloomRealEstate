@@ -6,6 +6,7 @@ const DropdownSelect = ({
   onChange,
   placeholder = "Select...",
   isClearable = false,
+  loading,
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -110,7 +111,18 @@ const DropdownSelect = ({
         </div>
       );
     }
-    return <div style={{ padding: "8px 12px", color: "#666" }}>No options</div>;
+    return loading ? (
+      <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+        <div className="spinner-border  mx-auto mt-3" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <div style={{ padding: "8px 12px", color: "#666" }}>
+          fetching options
+        </div>
+      </div>
+    ) : (
+      <div style={{ padding: "8px 12px", color: "#666" }}>No options</div>
+    );
   };
 
   return (

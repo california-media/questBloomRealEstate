@@ -11,7 +11,6 @@ import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateS
 export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
   const {
-    selectedPropertyType,
     priceRange,
     categories,
     bedrooms,
@@ -27,7 +26,7 @@ export default function ProperteyFiltering({ region }) {
     setRentalLocationOptions,
     rentalLocation,
     setPropertyTypes,
-    handlePropertyType,
+
     handlePriceRange,
     handleRentalLocation,
     handleCategories,
@@ -41,6 +40,8 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
     searchTerm,
+    adminPropertyType,
+    handleAdminPropertyType,
   } = usePropertyStore();
 
   // Local component states
@@ -74,7 +75,7 @@ export default function ProperteyFiltering({ region }) {
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
-    handlepropertyType: handlePropertyType,
+    handlepropertyType: handleAdminPropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
@@ -93,7 +94,7 @@ export default function ProperteyFiltering({ region }) {
     squirefeet,
     yearBuild,
     categories,
-    selectedPropertyType,
+    selectedPropertyType: adminPropertyType,
     percentagePreHandover,
     handlePercentagePreHandover,
   };
@@ -102,8 +103,8 @@ export default function ProperteyFiltering({ region }) {
     const params = {
       page: nextPage,
       per_page: 9,
-      ...(selectedPropertyType != "All Property Types" && {
-        unit_types: selectedPropertyType,
+      ...(adminPropertyType != "All Property Types" && {
+        unit_types: adminPropertyType,
       }),
       ...(priceRange[0] != 0 && {
         unit_price_from: priceRange[0],
@@ -160,7 +161,7 @@ export default function ProperteyFiltering({ region }) {
     listings,
     loading,
     hasMore,
-    selectedPropertyType,
+    adminPropertyType,
     priceRange,
     propertyId,
     rentalLocation,
@@ -213,7 +214,6 @@ export default function ProperteyFiltering({ region }) {
             label: area,
           })),
         ];
-         console.log(locationArray);
         setRentalLocationOptions(locationArray);
 
         setDataFetched(true);
@@ -229,7 +229,7 @@ export default function ProperteyFiltering({ region }) {
     region,
     searchTerm,
     listingStatus,
-    selectedPropertyType,
+    adminPropertyType,
     bathrooms,
     bedrooms,
     rentalLocation,

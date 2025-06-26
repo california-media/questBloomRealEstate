@@ -62,113 +62,95 @@ const ProSidebarContent = () => {
     <Sidebar width="100%" backgroundColor="#fff" className="my-custom-class">
       <Menu>
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <Link
-              className={topMenu == "home" ? "title menuActive" : "title"}
-              to={"/home"}
-            >
-              Home
-            </Link>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <Link
+            className={topMenu == "home" ? "title menuActive" : "title"}
+            to={"/home"}
+          >
+            Home
+          </Link>
+          {/* <span className="arrow"></span> */}
           {/* Level Two*/}
         </li>
         {/* End homeItems */}
 
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "listing" ? "title menuActive" : "title"}
-                to={"/off-plan"}
-              >
-                Off-Plan
-              </Link>
-            </span>
-          </a>
+          <span>
+            <Link
+              className={topMenu == "listing" ? "title menuActive" : "title"}
+              to={"/off-plan"}
+            >
+              Off-Plan
+            </Link>
+          </span>
         </li>
 
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "buy" ? "title menuActive" : "title"}
-                to={"/buy"}
-              >
-                Buy
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "buy" ? "title menuActive" : "title"}
+              to={"/buy"}
+            >
+              Buy
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "offplan" ? "title menuActive" : "title"}
-                to={"/listings"}
-              >
-                Listings
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "offplan" ? "title menuActive" : "title"}
+              to={"/listings"}
+            >
+              Listings
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
 
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "luxury" ? "title menuActive" : "title"}
-                to={"/rent"}
-              >
-                Rent
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "luxury" ? "title menuActive" : "title"}
+              to={"/rent"}
+            >
+              Rent
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "agents" ? "title menuActive" : "title"}
-                to={"/agents"}
-              >
-                Agents
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "agents" ? "title menuActive" : "title"}
+              to={"/agents"}
+            >
+              Agents
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
 
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={topMenu == "whoweare" ? "title menuActive" : "title"}
-                to={"/about"}
-              >
-                Who We Are
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "whoweare" ? "title menuActive" : "title"}
+              to={"/about"}
+            >
+              Who We Are
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
         <li className=" pl30 py10">
-          <a className="list-item" href="#">
-            <span>
-              <Link
-                className={
-                  topMenu == "contactus" ? "title menuActive" : "title"
-                }
-                to={"/contact"}
-              >
-                Contact Us
-              </Link>
-            </span>
-            {/* <span className="arrow"></span> */}
-          </a>
+          <span>
+            <Link
+              className={topMenu == "contactus" ? "title menuActive" : "title"}
+              to={"/contact"}
+            >
+              Contact Us
+            </Link>
+          </span>
+          {/* <span className="arrow"></span> */}
         </li>
       </Menu>
     </Sidebar>

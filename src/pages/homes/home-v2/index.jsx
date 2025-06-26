@@ -145,10 +145,9 @@ const Home_V2 = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">
-                  {" "}
-                  <AnimatedText color={"black"}>Explore Cities</AnimatedText>
-                </h2>
+                <AnimatedText className="title" color={"black"}>
+                  Explore Cities
+                </AnimatedText>
                 <p className="paragraph">
                   Browse prime real estate opportunities in the most
                   sought-after cities.

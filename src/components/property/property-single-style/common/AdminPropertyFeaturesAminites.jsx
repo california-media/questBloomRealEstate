@@ -5,7 +5,6 @@ import { adminBaseUrl } from "@/api/adminApi";
 
 const AdminPropertyFeaturesAminites = ({ amenities }) => {
   const amenitiesData = amenities || [];
-  console.log(amenitiesData);
   // Group amenities into columns of 2 for better image display
   const featuresAmenitiesData =
     amenitiesData.length > 0

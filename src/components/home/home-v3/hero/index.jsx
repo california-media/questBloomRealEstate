@@ -9,7 +9,6 @@ const hardcoded_facilities = ["Swimming Pool"];
 
 const Hero = () => {
   const {
-    loading,
     propertyId,
     selectedPropertyType,
     priceRange,
@@ -20,7 +19,6 @@ const Hero = () => {
     squirefeet,
     propertyTypes,
     setListings,
-    setLoading,
     setDataFetched,
     locationOptions,
     setLocationOptions,
@@ -55,22 +53,25 @@ const Hero = () => {
     handleSearchTerm,
     buyLocationOptions,
     setBuyLocationOptions,
+    handleAdminPropertyType,
+    adminPropertyType,
     buyLocation,
     handleBuyLocation,
   } = usePropertyStore();
   const [buyRent, setBuyRent] = useState("buy");
+  const [loading, setLoading] = useState(true);
   const [allReadyOff, setAllReadyOff] = useState("all");
   const [adminPropertyTypeOptions, setAdminPropertyTypeOptions] = useState([]);
   const [offPlanPropertyTypeOptions, setOffPlanPropertyTypeOptions] = useState(
     []
   );
   const handleAllReadyOff = (tab) => {
-    handlePropertyType("All Property Types");
+    // handlePropertyType("All Property Types");
     setAllReadyOff(tab);
   };
 
   const handleBuyRent = (tab) => {
-    handlePropertyType("All Property Types");
+    // handlePropertyType("All Property Types");
     setBuyRent(tab);
   };
   const resetFilter = () => {
@@ -92,7 +93,10 @@ const Hero = () => {
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
-    handlepropertyType: handlePropertyType,
+    handlepropertyType:
+      allReadyOff === "off" && buyRent === "buy"
+        ? handlePropertyType
+        : handleAdminPropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
@@ -129,74 +133,79 @@ const Hero = () => {
     listingStatus,
     searchTerm,
     categories,
-    selectedPropertyType,
+    selectedPropertyType:
+      allReadyOff === "off" && buyRent === "buy"
+        ? selectedPropertyType
+        : adminPropertyType,
     setDataFetched,
     setSaleStatuses,
   };
   useEffect(() => {
     async function fetchOptions() {
       // Must refetch this since the format in whcih they are fetched on home page is different
-      const { data: newSaleStatuses } = await api.get("/sale-statuses");
 
-      setSaleStatuses(newSaleStatuses);
       try {
         setLoading(true);
         setFacilityOptions(hardcoded_facilities);
+        console.log("fetching options");
 
-        if (propertyTypes?.length === 0) {
-          // Fetch all data in parallel
-          const [unitTypes, rentalTypes] = await Promise.all([
-            api.get("/unit-types"),
-            adminApi.get("/rental-property-types"), ///same as resale
-          ]);
-          setAdminPropertyTypeOptions([
-            { value: "All Property Types", label: "All Property Types" },
-            ...rentalTypes.data.map((type) => ({ value: type, label: type })),
-          ]);
-          setOffPlanPropertyTypeOptions([
-            { value: "All Property Types", label: "All Property Types" },
-            ...unitTypes.data.map((type) => ({ value: type, label: type })),
-          ]);
-        }
+        // Fetch all data in parallel
+        const [
+          saleStatusesResponse,
+          unitTypes,
+          rentalTypes,
+          newLocationOptions,
+          newRentLocationOptions,
+          newResaleLocationOptions,
+        ] = await Promise.all([
+          api.get("/sale-statuses"),
+          api.get("/unit-types"),
+          adminApi.get("/rental-property-types"),
+          api.get("/areas"),
+          adminApi.get("/rental-locations"),
+          adminApi.get("/resale-locations"),
+        ]);
 
-        if (locationOptions?.length === 0) {
-          const newLocationOptions = await api.get("/areas");
-          const options = [
-            { value: "All Locations", label: "All Locations" },
-            ...newLocationOptions.data.map((area) => ({
-              value: area.name,
-              label: area.name,
-            })),
-          ];
+        // Set all states (unchanged logic)
+        setSaleStatuses(saleStatusesResponse.data);
 
-          setLocationOptions(options);
-        }
-        if (rentalLocationOptions?.length === 0) {
-          const newLocationOptions = await adminApi.get("/rental-locations");
-          const options = [
-            { value: "All Locations", label: "All Locations" },
-            ...newLocationOptions.data.map((area) => ({
-              value: area,
-              label: area,
-            })),
-          ];
-          setRentalLocationOptions(options);
-        }
+        setAdminPropertyTypeOptions([
+          { value: "All Property Types", label: "All Property Types" },
+          ...rentalTypes.data.map((type) => ({ value: type, label: type })),
+        ]);
 
-        if (buyLocationOptions?.length === 0) {
-          const newLocationOptions = await adminApi.get("/rental-locations");
-          const options = [
-            { value: "All Locations", label: "All Locations" },
-            ...newLocationOptions.data.map((area) => ({
-              value: area,
-              label: area,
-            })),
-          ];
-          setBuyLocationOptions(options);
-        }
+        setOffPlanPropertyTypeOptions([
+          { value: "All Property Types", label: "All Property Types" },
+          ...unitTypes.data.map((type) => ({ value: type, label: type })),
+        ]);
+
+        setLocationOptions([
+          { value: "All Locations", label: "All Locations" },
+          ...newLocationOptions.data.map((area) => ({
+            value: area.id,
+            label: area.name,
+          })),
+        ]);
+
+        setRentalLocationOptions([
+          { value: "All Locations", label: "All Locations" },
+          ...newRentLocationOptions.data.map((area) => ({
+            value: area,
+            label: area,
+          })),
+        ]);
+
+        setBuyLocationOptions([
+          { value: "All Locations", label: "All Locations" },
+          ...newResaleLocationOptions.data.map((area) => ({
+            value: area,
+            label: area,
+          })),
+        ]);
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
+        console.log("Finished fetching options");
         setLoading(false);
       }
     }
@@ -223,6 +232,7 @@ const Hero = () => {
           allReadyOff={allReadyOff}
           handleAllReadyOff={handleAllReadyOff}
           handleBuyRent={handleBuyRent}
+          loading={loading}
           saleStatuses={saleStatuses}
           locationOptions={
             buyRent === "rent"
@@ -232,10 +242,13 @@ const Hero = () => {
               : locationOptions
           }
           propertyTypes={
-            allReadyOff === "off"
-              ? offPlanPropertyTypeOptions
-              : adminPropertyTypeOptions
+            buyRent === "rent"
+              ? adminPropertyTypeOptions
+              : buyRent === "buy" && allReadyOff !== "off"
+              ? adminPropertyTypeOptions
+              : offPlanPropertyTypeOptions
           }
+          facility
           filterFunctions={filterFunctions}
         />
       </div>
@@ -258,12 +271,14 @@ const Hero = () => {
             locationOptions={
               buyRent === "rent"
                 ? rentalLocationOptions
-                : buyRent === "buy" && allReadyOff !== "off"
-                ? buyLocationOptions
-                : locationOptions
+                : buyRent === "buy" && allReadyOff === "off"
+                ? locationOptions
+                : buyLocationOptions
             }
             propertyTypes={
-              allReadyOff === "off"
+              buyRent === "rent"
+                ? adminPropertyTypeOptions
+                : buyRent === "buy" && allReadyOff === "off"
                 ? offPlanPropertyTypeOptions
                 : adminPropertyTypeOptions
             }
