@@ -213,6 +213,7 @@ export default function ProperteyFiltering({ region }) {
             label: area,
           })),
         ];
+         console.log(locationArray);
         setRentalLocationOptions(locationArray);
 
         setDataFetched(true);

@@ -220,19 +220,21 @@ export default function ProperteyFiltering({ region }) {
         );
 
         // Fetch both location types in parallel
-        const [resaleLocations, rentalLocations] = await Promise.all([
-          adminApi.get("/resale-locations"),
-          adminApi.get("/rental-locations"),
-        ]);
-
+        const [{ data: resaleLocations }, { data: rentalLocations }] =
+          await Promise.all([
+            adminApi.get("/resale-locations"),
+            adminApi.get("/rental-locations"),
+          ]);
         // Merge and deduplicate all locations
         const uniqueLocations = [
           { value: "All Locations", label: "All Locations" },
-          ...new Set([...resaleLocations, ...rentalLocations]),
-        ].map((area) => ({
-          value: area,
-          label: area,
-        }));
+          ...Array.from(new Set([...resaleLocations, ...rentalLocations])).map(
+            (area) => ({
+              value: area,
+              label: area,
+            })
+          ),
+        ];
         setAllLocationOptions(uniqueLocations);
 
         const newPropertyTypes = await adminApi.get("/rental-property-types"); ///same as resale
@@ -240,7 +242,7 @@ export default function ProperteyFiltering({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-        label: type.charAt(0).toUpperCase() + type.slice(1),
+            label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);
