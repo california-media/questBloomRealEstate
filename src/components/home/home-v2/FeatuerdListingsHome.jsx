@@ -13,7 +13,8 @@ import {
   ChartNoAxesCombined,
 } from "lucide-react";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
-import AnimatedText from "./hero/AnimatedText ";
+import AnimatedText from "./hero/AnimatedText";
+import LuxuryHeading from "./hero/LuxuryHeading";
 
 const FeaturedListingsHome = ({ index, section }) => {
   const [listings, setListings] = useState([]);
@@ -53,24 +54,20 @@ const FeaturedListingsHome = ({ index, section }) => {
         <section className="pt20 pb0 pb0  bgc-white">
           <div className="container ">
             <div className="row align-items-center" data-aos="fade-up">
-              <div className="col-lg-9">
-                <div className="main-title2">
-                  <AnimatedText key={index} color={"black"}>
-                    {section.title}
-                  </AnimatedText>
+              <div className="col-lg-12 position-relative ">
+                <div className="main-title2  text-center">
+                  <LuxuryHeading>{section.title}</LuxuryHeading>
                   <p className="paragraph">{section.description}</p>
                 </div>
               </div>
-              {index === 0 && (
-                <div className="col-lg-3">
-                  <div className="text-start text-lg-end mb-3">
-                    <a className="ud-btn2" href="/off-plan">
-                      See All Properties
-                      <i className="fal fa-arrow-right-long" />
-                    </a>
-                  </div>
+              <div className=" position-absolute">
+                <div className="text-start text-lg-end mb-3">
+                  <a className="ud-btn2" href="/off-plan">
+                    {section.seeAll}
+                    <i className="fal fa-arrow-right-long" />
+                  </a>
                 </div>
-              )}
+              </div>
             </div>
 
             <div className="" style={{ marginTop: "-30px" }}>
@@ -172,7 +169,7 @@ const FeaturedListingsHome = ({ index, section }) => {
                                       </div>
 
                                       <div className="list-meta d-flex gap-0 align-items-center">
-                                        <span  className="text-start">
+                                        <span className="text-start">
                                           <UserIcon
                                             size={16}
                                             color="gray"
@@ -180,7 +177,7 @@ const FeaturedListingsHome = ({ index, section }) => {
                                           />{" "}
                                           {listing.developer}
                                         </span>
-                                        <span  className="text-start">
+                                        <span className="text-start">
                                           {listing.post_handover ? (
                                             <Check
                                               size={16}
@@ -198,7 +195,7 @@ const FeaturedListingsHome = ({ index, section }) => {
                                             ? "Post Handover"
                                             : "Pre Handover"}
                                         </span>
-                                        <span  className="text-start">
+                                        <span className="text-start">
                                           <Clock
                                             size={16}
                                             color="gray"

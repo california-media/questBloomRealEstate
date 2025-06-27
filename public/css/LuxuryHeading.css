@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Montserrat:wght@300&display=swap');
+
+.luxury-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #f8f4e6;
+  position: relative;
+  display: inline-block;
+  padding: .4rem 1.8rem;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%);
+  background-size: 200% auto;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(121, 118, 49, 0.3);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.luxury-heading:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(121, 118, 49, 0.4);
+}
+
+.luxury-heading-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #f8f4e6, transparent);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .luxury-heading {
+    font-size: 2rem;
+    padding: 0.8rem 1.5rem;
+  }
+}

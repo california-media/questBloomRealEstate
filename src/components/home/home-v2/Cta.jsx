@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import AnimatedText from "./hero/AnimatedText ";
+import AnimatedText from "./hero/AnimatedText";
 
 const Cta = () => {
   return (

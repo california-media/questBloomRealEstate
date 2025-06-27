@@ -4,7 +4,7 @@ import usePropertyStore from "@/store/propertyStore";
 import { useEffect, useState } from "react";
 import api from "@/api/axios";
 import adminApi from "@/api/adminApi";
-import AnimatedText from "../../home-v2/hero/AnimatedText ";
+import AnimatedText from "../../home-v2/hero/AnimatedText";
 const hardcoded_facilities = ["Swimming Pool"];
 
 const Hero = () => {

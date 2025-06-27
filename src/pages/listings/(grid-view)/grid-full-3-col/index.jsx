@@ -32,10 +32,10 @@ const GridFull3Col = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title"> UAE Homes for Sale</h2>
+                <h2 className="title">Off-Plan Homes for Sale in UAE</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
-                  <a href="#">For Buying and Renting</a>
+                  <a href="#">For Buying</a>
                 </div>
                 <a
                   className="filter-btn-left mobile-filter-btn d-block d-lg-none"

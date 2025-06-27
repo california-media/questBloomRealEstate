@@ -35,7 +35,7 @@ const Rent3Col = () => {
                 <h2 className="title">UAE Homes for Rent</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
-                  <a href="#">For Buying and Renting</a>
+                  <a href="#">For Renting</a>
                 </div>
                 <a
                   className="filter-btn-left mobile-filter-btn d-block d-lg-none"

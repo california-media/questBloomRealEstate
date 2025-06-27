@@ -1371,3 +1371,6 @@
 #animated_text_hover-underline:hover {
     color: #93914F !important;
 }
+#custom-max-width {
+  max-width: 1470px; /* Or any value you prefer */
+}

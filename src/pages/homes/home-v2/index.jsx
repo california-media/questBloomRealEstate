@@ -16,7 +16,7 @@ import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 import Hero from "@/components/home/home-v3/hero";
 import adminApi from "@/api/adminApi";
-import AnimatedText from "@/components/home/home-v2/hero/AnimatedText ";
+import AnimatedText from "@/components/home/home-v2/hero/AnimatedText";
 
 const metaInformation = {
   title: "Home",
@@ -48,11 +48,12 @@ const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
   const sections = [
     {
-      title: "Villas",
+      title: "Luxury Villas",
       paragraph: "Luxury villas with premium amenities and stunning views",
       params: {
         unit_types: "Villa,Villas",
       },
+      seeAll: "See All Villas",
     },
     {
       title: "Apartments",
@@ -61,6 +62,7 @@ const Home_V2 = () => {
       params: {
         unit_types: "Townhouse",
       },
+      seeAll: "See All Apartments",
     },
     {
       title: "Beachfront Properties",
@@ -68,6 +70,7 @@ const Home_V2 = () => {
       params: {
         areas: beachAreaProperties.map((item) => item.id).join(","),
       },
+      seeAll: "See All Beachfront Properties",
     },
     {
       title: "Properties by Sobha",
@@ -75,6 +78,7 @@ const Home_V2 = () => {
       params: {
         developer: String(sobhaDeveloper.id),
       },
+      seeAll: "See All Properties by Sobha",
     },
     {
       title: "Properties under 1 Million",
@@ -83,6 +87,7 @@ const Home_V2 = () => {
       params: {
         unit_price_to: 1000000,
       },
+      seeAll: "See All Properties under 1 Million",
     },
     {
       title: "Properties between 1 Million to 2 Million",
@@ -92,6 +97,7 @@ const Home_V2 = () => {
         unit_price_from: 1000000,
         unit_price_to: 2000000,
       },
+      seeAll: "See All Properties between 1 Million to 2 Million",
     },
   ];
 
@@ -109,8 +115,8 @@ const Home_V2 = () => {
       <AutoCarouselHero />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
-      <section className="pb90 pb30-md z-1">
-        <div className="container">
+      <section className="pb90 pb30-md z-1 ">
+        <div className="container custom-max-width" id="custom-max-width">
           <div className="row justify-content-center" data-aos="fade">
             <div className="col-lg-12">
               <ApartmentType />
