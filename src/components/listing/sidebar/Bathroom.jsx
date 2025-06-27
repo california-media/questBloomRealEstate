@@ -1,11 +1,11 @@
 const Bathroom = ({ setBathroomCount, bathroomCount }) => {
   const bathOptions = [
-    { id: "bathxany", label: "any", value: 0 },
-    { id: "bathxoneplus", label: "1+", value: 1 },
-    { id: "bathxtwoplus", label: "2+", value: 2 },
-    { id: "bathxthreeplus", label: "3+", value: 3 },
-    { id: "bathxfourplus", label: "4+", value: 4 },
-    { id: "bathxfiveplus", label: "5+", value: 5 },
+    { id: "sbathxany", label: "any", value: 0 },
+    { id: "sbathxoneplus", label: "1+", value: 1 },
+    { id: "sbathxtwoplus", label: "2+", value: 2 },
+    { id: "sbathxthreeplus", label: "3+", value: 3 },
+    { id: "sbathxfourplus", label: "4+", value: 4 },
+    { id: "sbathxfiveplus", label: "5+", value: 5 },
   ];
 
   return (

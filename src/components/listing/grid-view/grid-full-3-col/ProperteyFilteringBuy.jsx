@@ -80,7 +80,6 @@ export default function ProperteyFiltering({ region }) {
       element.value = "";
     });
   };
-
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
@@ -94,6 +93,8 @@ export default function ProperteyFiltering({ region }) {
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     handleSearchTerm: handleSearchTerm,
+    searchTerm,
+    propertyId,
     priceRange,
     listingStatus,
     propertyTypes,
@@ -122,6 +123,7 @@ export default function ProperteyFiltering({ region }) {
       ...(priceRange[1] != 10000000 && {
         unit_price_to: priceRange[1],
       }),
+      ...(propertyId != "" && { project_ids: propertyId }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(buyLocation != "All Locations" && { areas: buyLocation }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
@@ -188,43 +190,45 @@ export default function ProperteyFiltering({ region }) {
     async function fetchInitialData() {
       console.log("Fetching initial data");
       setLoading(true);
-      setListings([]); // Clear existing listings
-      setHasMore(true); // Reset hasMore when filters change
+      setListings([]);
+      setHasMore(true);
+
       try {
-        const { data: adminListings } = await adminApi.get(
-          "/resale-properties",
-          {
-            params: getRequestParams(),
-          }
+        // Fire all requests in parallel
+        const [listingsRes, propertyTypesRes, locationsRes] = await Promise.all(
+          [
+            adminApi.get("/resale-properties", { params: getRequestParams() }),
+            adminApi.get("/rental-property-types"),
+            adminApi.get("/resale-locations"),
+          ]
         );
 
-        // Set listings in store
-        const mappedNewListings = adminListings.data.map((item) =>
+        // Process all responses together
+        const mappedNewListings = listingsRes.data.data.map((item) =>
           mapAdminApiDataToTemplateSingle(item, "qb")
         );
-        setListings(mappedNewListings);
-        setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
 
-        const newPropertyTypes = await adminApi.get("/rental-property-types"); ///same as resale
         const propertyTypeArray = [
           { value: "All Property Types", label: "All Property Types" },
-          ...newPropertyTypes.data.map((type) => ({
+          ...propertyTypesRes.data.map((type) => ({
             value: type,
             label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
-        setPropertyTypes(propertyTypeArray);
 
-        const newLocationOptions = await adminApi.get("/resale-locations");
         const locationArray = [
           { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
+          ...locationsRes.data.map((area) => ({
             value: area,
             label: area,
           })),
         ];
-        setBuyLocationOptions(locationArray);
 
+        // Single state update for all data
+        setListings(mappedNewListings);
+        setHasMore(listingsRes.data.data.length === 9);
+        setPropertyTypes(propertyTypeArray);
+        setBuyLocationOptions(locationArray);
         setDataFetched(true);
       } catch (error) {
         console.error("Failed to fetch listings", error);
@@ -352,6 +356,7 @@ export default function ProperteyFiltering({ region }) {
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={buyLocationOptions}
+            propertyTypes={propertyTypes}
           />
         </div>
         {/* End TopFilterBar */}

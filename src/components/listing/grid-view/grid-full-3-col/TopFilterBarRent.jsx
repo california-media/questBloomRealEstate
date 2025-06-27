@@ -1,11 +1,11 @@
-import React from "react";
 import ListingStatus from "../../sidebar/ListingStatus";
+import React, { useEffect, useState } from "react";
 // import PropertyType from "../../sidebar/PropertyType";
 // import PriceRange from "../../sidebar/PriceRange";
 // import Bedroom from "../../sidebar/Bedroom";
 // import Bathroom from "../../sidebar/Bathroom";
 import Select from "react-select";
-
+import { Search } from "lucide-react";
 const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => {
     return {
@@ -38,7 +38,25 @@ const TopFilterBar = ({
   colstyle,
   setColstyle,
   locationOptions = [],
+  propertyTypes,
 }) => {
+  // Local state with default from filterFunctions
+  const [searchTerm, setSearchTerm] = useState(
+    filterFunctions?.searchTerm || ""
+  );
+
+  // Sync local state when filterFunctions.searchTerm changes
+  useEffect(() => {
+    if (filterFunctions?.searchTerm !== undefined) {
+      setSearchTerm(filterFunctions.searchTerm);
+    }
+  }, [filterFunctions?.searchTerm]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      filterFunctions?.handleSearchTerm(searchTerm);
+    }
+  };
   return (
     <>
       <div className="col-xl-9 d-none d-lg-block">
@@ -157,6 +175,62 @@ const TopFilterBar = ({
                 }}
                 required
               />
+            </li>
+            <li
+              className="list-inline-item position-relative font-bold"
+              style={{ width: "190px" }}
+            >
+              <Select
+                name="colors"
+                styles={customStyles}
+                options={propertyTypes}
+                className="select-custom filterSelect"
+                classNamePrefix="select"
+                value={{
+                  value: filterFunctions?.selectedPropertyType,
+                  label:
+                    propertyTypes.find(
+                      (option) =>
+                        option.value === filterFunctions?.selectedPropertyType
+                    )?.label || "All Property Types",
+                }}
+                onChange={(e) => {
+                  setDataFetched(false);
+                  console.log(e.value);
+                  filterFunctions?.handlepropertyType(e.value);
+                }}
+                required
+              />
+            </li>
+            <li
+              className="list-inline-item position-relative font-bold"
+              style={{ width: "190px" }}
+            >
+              <div className="form-style2 position-relative">
+                <Search
+                  size={18}
+                  className="position-absolute"
+                  style={{
+                    top: "50%",
+                    left: "14px",
+                    transform: "translateY(-50%)",
+                    color: "#888",
+                    pointerEvents: "none",
+                  }}
+                />
+                <input
+                  type="text"
+                  className="form-control border-none"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  style={{
+                    padding: "10px 10px 10px 40px",
+                    backgroundColor: "white",
+                  }}
+                />
+              </div>
             </li>
             {/* <li className="list-inline-item position-relative">
               <button

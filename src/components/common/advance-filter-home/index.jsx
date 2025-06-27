@@ -90,7 +90,6 @@ const AdvanceFilterModal = ({
   ]);
 
   const handleSearch = () => {
-    console.log("requesting", propertyType, propertyId, location, squareFeet);
     filterFunctions?.handlepropertyType(propertyType);
     filterFunctions?.handlePropertyId(propertyId);
     filterFunctions?.handlelocation(location);
@@ -324,7 +323,6 @@ const AdvanceFilterModal = ({
               setPropertyType("All Property Types");
               setDataFetched(false);
               setPriceRange([0, 10000000]);
-              setSquareFeet([0, 0]);
               setSearchTerm("");
             }}
           >

@@ -39,7 +39,7 @@ const ApartmentType = () => {
         .map(async (pt, index) => {
           try {
             const { data } = await api.get("/properties", {
-              params: { unit_types: encodeURIComponent(pt), per_page: 1 },
+              params: { unit_types: pt, per_page: 1 },
             });
             return {
               id: index + 1,

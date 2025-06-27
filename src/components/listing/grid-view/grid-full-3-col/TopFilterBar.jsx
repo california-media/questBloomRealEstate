@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListingStatus from "../../sidebar/ListingStatus";
 // import PropertyType from "../../sidebar/PropertyType";
 // import PriceRange from "../../sidebar/PriceRange";
 // import Bedroom from "../../sidebar/Bedroom";
 // import Bathroom from "../../sidebar/Bathroom";
 import Select from "react-select";
+import { Search } from "lucide-react";
 
 const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -39,12 +40,30 @@ const TopFilterBar = ({
   setColstyle,
   locationOptions = [],
   saleStatuses,
+  propertyTypes,
 }) => {
+  // Local state with default from filterFunctions
+  const [searchTerm, setSearchTerm] = useState(
+    filterFunctions?.searchTerm || ""
+  );
+
+  // Sync local state when filterFunctions.searchTerm changes
+  useEffect(() => {
+    if (filterFunctions?.searchTerm !== undefined) {
+      setSearchTerm(filterFunctions.searchTerm);
+    }
+  }, [filterFunctions?.searchTerm]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      filterFunctions?.handleSearchTerm(searchTerm);
+    }
+  };
   return (
     <>
       <div className="col-xl-9 d-none d-lg-block">
         <div className="dropdown-lists">
-          <ul className="p-0 text-center text-xl-start">
+          <ul className="p-0 text-center text-xl-start ">
             <li className="list-inline-item position-relative">
               <button
                 type="button"
@@ -135,10 +154,9 @@ const TopFilterBar = ({
             {/* End li Price */}
             <li
               className="list-inline-item position-relative font-bold"
-              style={{ width: "200px" }}
+              style={{ width: "180px" }}
             >
               <Select
-                defaultValue={locationOptions[0] || null}
                 name="colors"
                 styles={customStyles}
                 options={locationOptions}
@@ -146,17 +164,74 @@ const TopFilterBar = ({
                 classNamePrefix="select"
                 value={{
                   value: filterFunctions?.location,
-                  label: locationOptions.find(
-                    (option) => option.value === filterFunctions?.location
-                  )?.label || "All Locations",
+                  label:
+                    locationOptions.find(
+                      (option) => option.value === filterFunctions?.location
+                    )?.label || "All Locations",
                 }}
                 onChange={(e) => {
                   setDataFetched(false);
-                  console.log(e.value)
+                  console.log(e.value);
                   filterFunctions?.handlelocation(e.value);
                 }}
                 required
               />
+            </li>
+            <li
+              className="list-inline-item position-relative font-bold"
+              style={{ width: "190px" }}
+            >
+              <Select
+                name="colors"
+                styles={customStyles}
+                options={propertyTypes}
+                className="select-custom filterSelect"
+                classNamePrefix="select"
+                value={{
+                  value: filterFunctions?.selectedPropertyType,
+                  label:
+                    propertyTypes.find(
+                      (option) =>
+                        option.value === filterFunctions?.selectedPropertyType
+                    )?.label || "All Property Types",
+                }}
+                onChange={(e) => {
+                  setDataFetched(false);
+                  console.log(e.value);
+                  filterFunctions?.handlepropertyType(e.value);
+                }}
+                required
+              />
+            </li>
+            <li
+              className="list-inline-item position-relative font-bold"
+              style={{ width: "190px" }}
+            >
+              <div className="form-style2 position-relative">
+                <Search
+                  size={18}
+                  className="position-absolute"
+                  style={{
+                    top: "50%",
+                    left: "14px",
+                    transform: "translateY(-50%)",
+                    color: "#888",
+                    pointerEvents: "none",
+                  }}
+                />
+                <input
+                  type="text"
+                  className="form-control border-none"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  style={{
+                    padding: "10px 10px 10px 40px",
+                    backgroundColor: "white",
+                  }}
+                />
+              </div>
             </li>
             {/* <li className="list-inline-item position-relative">
               <button
@@ -208,8 +283,8 @@ const TopFilterBar = ({
       </div>
       {/* End .col-9 */}
 
-      <div className="col-xl-3 mb-md-0 mb-4">
-        <div className="page_control_shorting d-flex align-items-center justify-content-center justify-content-sm-end">
+      <div className="col-xl-3 mb-md-0 mb-3 mt-md-2 ">
+        <div className="page_control_shorting  d-flex align-items-center justify-content-center justify-content-sm-end">
           <div className="pcs_dropdown pr10 d-flex align-items-center">
             <span style={{ minWidth: "60px" }}>Sort by</span>
             <select

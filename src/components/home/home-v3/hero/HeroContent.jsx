@@ -126,7 +126,7 @@ const HeroContent = ({
                       if (buyRent === "rent") {
                         path = "/rent";
                       } else if (buyRent === "buy") {
-                        if (allReadyOff === "ready") {
+                        if (allReadyOff === "ready" || allReadyOff === "all") {
                           path = "/buy";
                         } else if (allReadyOff === "off") {
                           path = "/off-plan";

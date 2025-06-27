@@ -29,7 +29,7 @@
 
 // export default Bedroom;
 
-const Bedroom = ({ setBedroomCount, bedroomCount}) => {
+const Bedroom = ({ setBedroomCount, bedroomCount }) => {
   const bedOptions = [
     { id: "xany", label: "any", value: 0 },
     { id: "xoneplus", label: "1+", value: 1 },
@@ -38,7 +38,6 @@ const Bedroom = ({ setBedroomCount, bedroomCount}) => {
     { id: "xfourplus", label: "4+", value: 4 },
     { id: "xfiveplus", label: "5+", value: 5 },
   ];
-
   return (
     <>
       {bedOptions.map((option, index) => (
@@ -46,7 +45,9 @@ const Bedroom = ({ setBedroomCount, bedroomCount}) => {
           <input
             id={option.id}
             type="radio"
-            onChange={(e) => setBedroomCount(option.value)}
+            onChange={(e) => {
+              setBedroomCount(option.value);
+            }}
             checked={bedroomCount == option.value}
           />
           <label htmlFor={option.id}>{option.label}</label>

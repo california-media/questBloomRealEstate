@@ -96,6 +96,8 @@ export default function ProperteyFiltering({ region }) {
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     handleSearchTerm: handleSearchTerm,
+    propertyId,
+    searchTerm,
     priceRange,
     listingStatus,
     propertyTypes,
@@ -124,6 +126,7 @@ export default function ProperteyFiltering({ region }) {
       ...(priceRange[1] != 10000000 && {
         unit_price_to: priceRange[1],
       }),
+      ...(propertyId != "" && { project_ids: propertyId }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(allLocation != "All Locations" && { areas: allLocation }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
@@ -149,20 +152,22 @@ export default function ProperteyFiltering({ region }) {
     try {
       const nextPage = Math.floor(listings.length / 9) + 1;
 
-      const { data: adminListings } = await adminApi.get("/resale-properties", {
+      const combinedResponse = await adminApi.get("/all-properties", {
         params: getRequestParams(nextPage),
       });
 
-      if (adminListings.data.length === 0) {
+      if (combinedResponse.data.data.length === 0) {
         setHasMore(false);
         return;
       }
+      // Combine and map both sets of listings
+      const combinedListings = combinedResponse.data.data.map((item) => {
+        // Determine the type prefix based on property_source
+        const typePrefix = item.property_source === "rental" ? "qr" : "qb";
+        return mapAdminApiDataToTemplateSingle(item, typePrefix);
+      });
 
-      const mappedNewListings = adminListings.data.map((item) =>
-        mapAdminApiDataToTemplateSingle(item, "listing")
-      );
-
-      setListings([...listings, ...mappedNewListings]);
+      setListings([...listings, ...combinedListings]);
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -194,32 +199,18 @@ export default function ProperteyFiltering({ region }) {
       setHasMore(true); // Reset hasMore when filters change
       try {
         // Fetch both resale and rental properties in parallel
-        const [resaleResponse, rentalResponse] = await Promise.all([
-          adminApi.get("/resale-properties", {
-            params: getRequestParams(),
-          }),
-          adminApi.get("/rental-properties", {
-            params: getRequestParams(),
-          }),
-        ]);
+        const combinedResponse = await adminApi.get("/all-properties", {
+          params: getRequestParams(),
+        });
 
         // Combine and map both sets of listings
-        const mappedResaleListings = resaleResponse.data.data.map((item) =>
-          mapAdminApiDataToTemplateSingle(item, "qb")
-        );
-        const mappedRentalListings = rentalResponse.data.data.map((item) =>
-          mapAdminApiDataToTemplateSingle(item, "qr")
-        );
-
-        const combinedListings = [
-          ...mappedResaleListings,
-          ...mappedRentalListings,
-        ];
+        const combinedListings = combinedResponse.data.data.map((item) => {
+          // Determine the type prefix based on property_source
+          const typePrefix = item.property_source === "rental" ? "qr" : "qb";
+          return mapAdminApiDataToTemplateSingle(item, typePrefix);
+        });
         setListings(combinedListings);
-        setHasMore(
-          resaleResponse.data.data.length + rentalResponse.data.data.length ===
-            9
-        );
+        setHasMore(combinedListings.length === 9);
 
         // Fetch both location types in parallel
         const [{ data: resaleLocations }, { data: rentalLocations }] =
@@ -376,6 +367,7 @@ export default function ProperteyFiltering({ region }) {
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={allLocationOptions}
+            propertyTypes={propertyTypes}
           />
         </div>
         {/* End TopFilterBar */}

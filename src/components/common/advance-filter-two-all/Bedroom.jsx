@@ -29,7 +29,7 @@
 
 // export default Bedroom;
 
-const Bedroom = ({ setBedroomCount, bedroomCount}) => {
+const Bedroom = ({ setBedroomCount, bedroomCount }) => {
   const bedOptions = [
     { id: "xany", label: "any", value: 0 },
     { id: "xoneplus", label: "1+", value: 1 },

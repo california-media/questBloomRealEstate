@@ -66,7 +66,6 @@ export default function ProperteyFiltering({ region }) {
     searchTerm,
     handleSearchTerm,
   } = usePropertyStore();
-
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
@@ -109,21 +108,25 @@ export default function ProperteyFiltering({ region }) {
     handlePropertyId: handlePropertyId,
     handleSearchTerm: handleSearchTerm,
     handlePercentagePreHandover: handlePercentagePreHandover,
+    handleSearchTerm: handleSearchTerm,
     priceRange,
     listingStatus,
+    searchTerm,
+    propertyId,
     propertyTypes,
     resetFilter,
     bedrooms,
     bathrooms,
     location,
     squirefeet,
+
     yearBuild,
     categories,
     selectedPropertyType,
     percentagePreHandover,
   };
   function getRequestParams(nextPage = 1) {
-    return {
+    const params = {
       page: nextPage,
       per_page: 9,
       ...(selectedPropertyType != "All Property Types" && {
@@ -155,6 +158,8 @@ export default function ProperteyFiltering({ region }) {
       ...(region && { region }),
       ...(searchTerm != "" && { search_query: searchTerm }),
     };
+    console.log(params);
+    return params;
   }
 
   // Fetch more data when reaching bottom
@@ -229,7 +234,7 @@ export default function ProperteyFiltering({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
             value: type,
-               label: type.charAt(0).toUpperCase() + type.slice(1),
+            label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
         setPropertyTypes(propertyTypeArray);
@@ -372,6 +377,7 @@ export default function ProperteyFiltering({ region }) {
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={locationOptions}
             saleStatuses={saleStatuses}
+            propertyTypes={propertyTypes}
           />
         </div>
         {/* End TopFilterBar */}

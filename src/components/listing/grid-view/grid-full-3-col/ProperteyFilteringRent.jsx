@@ -40,6 +40,7 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
     searchTerm,
+    handleSearchTerm,
     adminPropertyType,
     handleAdminPropertyType,
   } = usePropertyStore();
@@ -85,8 +86,11 @@ export default function ProperteyFiltering({ region }) {
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     priceRange,
+    propertyId,
     listingStatus,
     propertyTypes,
+    searchTerm,
+    handleSearchTerm: handleSearchTerm,
     resetFilter,
     bedrooms,
     bathrooms,
@@ -112,7 +116,7 @@ export default function ProperteyFiltering({ region }) {
       ...(priceRange[1] != 10000000 && {
         unit_price_to: priceRange[1],
       }),
-
+      ...(propertyId != "" && { project_ids: propertyId }),
       ...(rentalLocation != "All Locations" && { areas: rentalLocation }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
@@ -343,6 +347,7 @@ export default function ProperteyFiltering({ region }) {
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={rentalLocationOptions}
+            propertyTypes={propertyTypes}
           />
         </div>
         {/* End TopFilterBar */}

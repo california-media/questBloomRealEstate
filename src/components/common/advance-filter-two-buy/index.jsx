@@ -79,7 +79,6 @@ const AdvanceFilterModal = ({
   ]);
 
   const handleSearch = () => {
-    setDataFetched(false); ////
     filterFunctions?.handlepropertyType(propertyType);
     filterFunctions?.handlePropertyId(propertyId);
     filterFunctions?.handlelocation(location);
@@ -126,22 +125,14 @@ const AdvanceFilterModal = ({
           <div className="row">
             <div className="col-sm-6">
               <div className="widget-wrapper">
-                <h6 className="list-title">Type</h6>
-                <div className="form-style2 input-group">
-                  <Select
-                    name="colors"
-                    options={propertyTypes}
-                    styles={customStyles}
-                    value={{
-                      value: propertyType,
-                      label:
-                        propertyType.charAt(0).toUpperCase() +
-                        propertyType.slice(1),
-                    }}
-                    onChange={(e) => setPropertyType(e.value)}
-                    className="select-custom"
-                    classNamePrefix="select"
-                    required
+                <h6 className="list-title">Property ID</h6>
+                <div className="form-style2">
+                  <input
+                    type="text"
+                    className="form-control property-id-reset"
+                    placeholder="RT04949213"
+                    value={propertyId}
+                    onChange={(e) => setPropertyId(e.target.value)}
                   />
                 </div>
               </div>
@@ -179,19 +170,7 @@ const AdvanceFilterModal = ({
                 </div>
               </div>
             </div>
-            {/* <div className="col-sm-6">
-              <div className="widget-wrapper">
-                <h6 className="list-title">Property ID</h6>
-                <div className="form-style2">
-                  <input
-                    type="text"
-                    className="form-control property-id-reset"
-                    placeholder="RT04949213"
-                    onChange={(e) => setPropertyId(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div> */}
+
             {/* End .col-6 */}
           </div>
           {/* End .row */}
@@ -300,7 +279,6 @@ const AdvanceFilterModal = ({
               setPropertyType("All Property Types");
               setDataFetched(false);
               setPriceRange([0, 10000000]);
-              setSquareFeet([0, 0]);
             }}
           >
             <span className="flaticon-turn-back" />
