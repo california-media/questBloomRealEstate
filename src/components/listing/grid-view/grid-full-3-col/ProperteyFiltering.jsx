@@ -339,10 +339,8 @@ export default function ProperteyFiltering({ region }) {
           </div>
           <div className="offcanvas-body p-0">
             <ListingSidebar
-              setDataFetched={setDataFetched}
               locationOptions={locationOptions}
               propertyTypes={propertyTypes}
-              facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
               saleStatuses={saleStatuses}
             />

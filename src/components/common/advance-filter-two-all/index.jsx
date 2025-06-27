@@ -6,15 +6,7 @@ import Bathroom from "./Bathroom";
 import { useEffect, useState } from "react";
 import DropdownSelect from "../DropdownSelect";
 
-const AdvanceFilterModal = ({
-  filterFunctions,
-  propertyTypes,
-  locationOptions,
-  facilityOptions,
-  searchTerm,
-  loading,
-  setDataFetched,
-}) => {
+const AdvanceFilterModal = ({ filterFunctions }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
@@ -199,7 +191,6 @@ const AdvanceFilterModal = ({
                       value={rentDuration}
                       onChange={setRentDuration}
                       placeholder="Rent Duration"
-                      loading={loading}
                     />
                   </button>
                 </div>
@@ -308,7 +299,6 @@ const AdvanceFilterModal = ({
               setLocation("All Locations");
               setPropertyId("");
               setPropertyType("All Property Types");
-              setDataFetched(false);
               setPriceRange([0, 10000000]);
               setRentDuration("Monthly");
             }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import ListingSidebar from "../../sidebar";
+import ListingSidebarAll from "../../sidebar/ListingSidebarAll";
 import AdvanceFilterModal from "@/components/common/advance-filter-two-all";
 import TopFilterBar from "./TopFilterBarAll";
 import FeaturedListingsAll from "./FeatuerdListingsAll";
@@ -334,14 +334,11 @@ export default function ProperteyFiltering({ region }) {
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            {/* <ListingSidebar
-              setDataFetched={setDataFetched}
-              rentalLocationOptions={rentalLocationOptions}
+            <ListingSidebarAll
+              locationOptions={allLocationOptions}
               propertyTypes={propertyTypes}
-              facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
-              saleStatuses={saleStatuses}
-            /> */}
+            />
           </div>
         </div>
         {/* End mobile filter sidebar */}
@@ -355,13 +352,7 @@ export default function ProperteyFiltering({ region }) {
             aria-labelledby="advanceSeachModalLabel"
             aria-hidden="true"
           >
-            <AdvanceFilterModal
-              setDataFetched={setDataFetched}
-              locationOptions={allLocationOptions}
-              propertyTypes={propertyTypes}
-              facilityOptions={facilityOptions}
-              filterFunctions={filterFunctions}
-            />
+            <AdvanceFilterModal filterFunctions={filterFunctions} />
           </div>
         </div>
         {/* <!-- Advance Feature Modal End --> */}
@@ -378,13 +369,12 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
- {searchTerm &&<p className="mb30">Search Results for: 
-          {" "}
-          <span className="fw-semibold">
-
-          "{searchTerm}"
-          </span>
-          </p>}
+        {searchTerm && (
+          <p className="mb30">
+            Search Results for:{" "}
+            <span className="fw-semibold">"{searchTerm}"</span>
+          </p>
+        )}
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

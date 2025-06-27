@@ -6,7 +6,7 @@ const PropertyType = ({
   propertyType,
 }) => {
   const options = propertyTypes.map((item, index) => ({
-    label: item.value,
+    label: item.value?.charAt(0).toUpperCase() + item.value.slice(1),
   }));
 
   return (

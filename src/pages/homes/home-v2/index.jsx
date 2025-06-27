@@ -53,7 +53,7 @@ const Home_V2 = () => {
       params: {
         unit_types: "Villa,Villas",
       },
-      seeAll: "See More Exclusive Villas",
+      seeAll: "See More Luxury Villas",
     },
     {
       title: "Apartments",
@@ -90,8 +90,7 @@ const Home_V2 = () => {
     },
     {
       title: "Properties between 1 Million to 2 Million",
-      paragraph:
-        "Luxury properties priced between 1 Million and 2 Million",
+      paragraph: "Luxury properties priced between 1 Million and 2 Million",
       params: {
         unit_price_from: 1000000,
         unit_price_to: 2000000,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import ListingSidebar from "../../sidebar";
+import ListingSidebarRent from "../../sidebar/ListingSidebarRent";
 import AdvanceFilterModal from "@/components/common/advance-filter-two-rent";
 import TopFilterBar from "./TopFilterBarRent";
 import FeaturedListingsRent from "./FeatuerdListingsRent";
@@ -314,14 +314,11 @@ export default function ProperteyFiltering({ region }) {
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            {/* <ListingSidebar
-              setDataFetched={setDataFetched}
-              rentalLocationOptions={rentalLocationOptions}
+            <ListingSidebarRent
+              locationOptions={rentalLocationOptions}
               propertyTypes={propertyTypes}
-              facilityOptions={facilityOptions}
               filterFunctions={filterFunctions}
-              saleStatuses={saleStatuses}
-            /> */}
+            />
           </div>
         </div>
         {/* End mobile filter sidebar */}
@@ -335,13 +332,7 @@ export default function ProperteyFiltering({ region }) {
             aria-labelledby="advanceSeachModalLabel"
             aria-hidden="true"
           >
-            <AdvanceFilterModal
-              setDataFetched={setDataFetched}
-              locationOptions={rentalLocationOptions}
-              propertyTypes={propertyTypes}
-              facilityOptions={facilityOptions}
-              filterFunctions={filterFunctions}
-            />
+            <AdvanceFilterModal filterFunctions={filterFunctions} />
           </div>
         </div>
         {/* <!-- Advance Feature Modal End --> */}
@@ -360,7 +351,8 @@ export default function ProperteyFiltering({ region }) {
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">
-            Search Results for: <span className="fw-semibold">"{searchTerm}"</span>
+            Search Results for:{" "}
+            <span className="fw-semibold">"{searchTerm}"</span>
           </p>
         )}
         {loading && listings.length === 0 ? (

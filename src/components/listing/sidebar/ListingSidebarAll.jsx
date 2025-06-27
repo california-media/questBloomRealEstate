@@ -14,14 +14,13 @@ import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 
 import { useEffect, useState } from "react";
-import DropdownSelectYearBuild from "@/components/common/DropdownSelectYearBuild";
-import PercentagePreHandover from "@/components/common/PercentagePreHandover";
+
+import DropdownSelect from "@/components/common/DropdownSelect";
 
 const ListingSidebar = ({
   filterFunctions,
   propertyTypes,
   locationOptions,
-  saleStatuses = [],
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -47,10 +46,10 @@ const ListingSidebar = ({
   const [squareFeet, setSquareFeet] = useState([0, 0]);
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
-  const [percentagePreHandover, setPercentagePreHandover] = useState(0);
-  const [yearBuild, setYearBuild] = useState(50000);
+  const [rentDuration, setRentDuration] = useState("Monthly");
   const [amenities, setAmenities] = useState([]);
 
+  const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
   useEffect(() => {
     if (!filterFunctions) return;
 
@@ -58,9 +57,9 @@ const ListingSidebar = ({
       setPropertyType(filterFunctions.selectedPropertyType);
 
     if (filterFunctions.priceRange) setPriceRange(filterFunctions.priceRange);
-    if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
-    if (filterFunctions.percentagePreHandover)
-      setPercentagePreHandover(filterFunctions.percentagePreHandover);
+    if (filterFunctions.rentDuration !== undefined)
+      setRentDuration(filterFunctions.rentDuration);
+
     if (filterFunctions.propertyId !== undefined)
       setPropertyId(filterFunctions.propertyId);
 
@@ -94,8 +93,8 @@ const ListingSidebar = ({
     filterFunctions?.bedrooms,
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
-    filterFunctions?.percentagePreHandover,
-    filterFunctions?.yearBuild,
+
+    filterFunctions?.rentDuration,
   ]);
 
   const handleSearch = () => {
@@ -108,49 +107,17 @@ const ListingSidebar = ({
     filterFunctions?.handleBathrooms(bathroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
-    filterFunctions?.handlePercentagePreHandover(percentagePreHandover);
-    filterFunctions?.handleYearBuild(yearBuild);
+    filterFunctions?.handleRentDuration(rentDuration);
   };
 
-  const formattedStatuses = [
-    { id: "flexRadioDefault0", label: "All", defaultChecked: true },
-    ...saleStatuses.map((status, index) => ({
-      id: `flexRadioDefault${index + 1}`,
-      label: status,
-    })),
-  ];
   return (
     <div className="list-sidebar-style1">
       {/* End .widget-wrapper */}
 
-      <div className="widget-wrapper bdrb1 pb25 mb0 ">
-        <h6 className="list-title">Listing Status</h6>
-        <div className="radio-element">
-          {formattedStatuses.map((option) => (
-            <div
-              className="form-check d-flex align-items-center mb10"
-              key={option.id}
-            >
-              <input
-                className="form-check-input"
-                type="radio"
-                checked={listingStatus == option.label}
-                onChange={() => {
-                  setListingStatus(option.label);
-                }}
-              />
-              <label className="form-check-label" htmlFor={option.id}>
-                {option.label}
-              </label>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper ">
-        <h6 className="list-title pt20">Property Type</h6>
+        <h6 className="list-title ">Property Type</h6>
         <div className="checkbox-style1 ">
           <PropertyType
             propertyTypes={propertyTypes}
@@ -248,58 +215,23 @@ const ListingSidebar = ({
           </div>
         </div>
       </div>
-      <div className="widget-wrapper">
-        <h6 className="list-title">Payment Plan</h6>
-        <div className="form-style2">
-          <button
-            type="button"
-            className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
-            style={{
-              padding: "15px 13px",
-              borderRadius: "12px",
-            }}
-            data-bs-toggle="dropdown"
-            data-bs-auto-close="outside"
-          >
-            Payment Plan <i className="fa fa-angle-down ms-2 text-gray" />
-          </button>
-
-          <div className="dropdown-menu dd3">
-            <div className="widget-wrapper  pb25 mb0 pl20 pr20">
-              <h5 className="mb30 mt20 fw-medium">Percentage pre-handover</h5>
-              {/* Range Slider Desktop Version */}
-              <div className="range-slider-style1 mb10 mt20">
-                <PercentagePreHandover
-                  percentagePreHandover={percentagePreHandover}
-                  setPercentagePreHandover={setPercentagePreHandover}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="widget-wrapper  ">
-        <h6 className="list-title">Handover Date</h6>
+        <h6 className="list-title">Rent Duration</h6>
         <div className="form-style2  ">
           <button
             type="button"
             className=" border-none w-100  fw-light"
             style={{
-              padding: "9px 0px",
-              borderRadius: "12px",
-              backgroundColor: "buttonface",
+              padding: "7px 0px",
+              borderRadius: "5px",
+              border: "1px solid gray",
             }}
           >
-            <DropdownSelectYearBuild
-              options={Array.from({ length: 11 }, (_, i) =>
-                (2023 + i).toString()
-              )}
-              value={
-                yearBuild.toString() !== "50000" ? yearBuild.toString() : ""
-              }
-              onChange={(val) => setYearBuild(parseInt(val || 0))}
-              placeholder="Handover"
+            <DropdownSelect
+              options={rentDurationOptions}
+              value={rentDuration}
+              onChange={setRentDuration}
+              placeholder="Rent Duration"
             />
           </button>
         </div>
@@ -342,8 +274,7 @@ const ListingSidebar = ({
             setPropertyId("");
             setPropertyType("All Property Types");
             setPriceRange([0, 10000000]);
-            setPercentagePreHandover(0);
-            setYearBuild(50000);
+            setRentDuration("Monthly");
           }}
           data-bs-dismiss="offcanvas"
         >

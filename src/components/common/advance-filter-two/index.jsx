@@ -8,29 +8,8 @@ import DropdownSelect from "../DropdownSelect";
 import PercentagePreHandover from "../PercentagePreHandover";
 import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
 
-const AdvanceFilterModal = ({
-  filterFunctions,
-  propertyTypes,
-  locationOptions,
-  facilityOptions,
-  searchTerm,
-  loading,
-  setDataFetched,
-}) => {
-  const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#797631"
-          : isHovered
-          ? "#DDE5C2"
-          : isFocused
-          ? "#DDE5C2"
-          : undefined,
-      };
-    },
-  };
+const AdvanceFilterModal = ({ filterFunctions }) => {
+  
   ///local state befrore actually applying filter
 
   const [propertyType, setPropertyType] = useState("All Property Types");
@@ -357,7 +336,6 @@ const AdvanceFilterModal = ({
               setLocation("All Locations");
               setPropertyId("");
               setPropertyType("All Property Types");
-              setDataFetched(false);
               setPriceRange([0, 10000000]);
               setPercentagePreHandover(0);
               setYearBuild(50000);
