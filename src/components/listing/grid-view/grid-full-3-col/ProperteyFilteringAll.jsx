@@ -35,7 +35,8 @@ export default function ProperteyFiltering({ region }) {
     setPropertyTypes,
     setFacilityOptions,
     setSaleStatuses,
-
+    rentDuration,
+    handleRentDuration,
     handlePriceRange,
 
     handleCategories,
@@ -111,6 +112,8 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType: adminPropertyType,
     percentagePreHandover,
     handlePercentagePreHandover,
+    rentDuration,
+    handleRentDuration,
   };
 
   function getRequestParams(nextPage = 1) {
@@ -124,11 +127,13 @@ export default function ProperteyFiltering({ region }) {
         unit_price_from: priceRange[0],
       }),
       ...(priceRange[1] != 10000000 && {
+        ///if 10000000 then that means no cap
         unit_price_to: priceRange[1],
       }),
       ...(propertyId != "" && { project_ids: propertyId }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(allLocation != "All Locations" && { areas: allLocation }),
+      ...{ rentDuration },
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
@@ -185,6 +190,7 @@ export default function ProperteyFiltering({ region }) {
     bathrooms,
     squirefeet,
     listingStatus,
+    rentDuration,
     region,
     searchTerm,
     setListings,
@@ -256,6 +262,7 @@ export default function ProperteyFiltering({ region }) {
     adminPropertyType,
     bathrooms,
     bedrooms,
+    rentDuration,
     allLocation,
     squirefeet,
     yearBuild,
@@ -371,7 +378,13 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
+ {searchTerm &&<p className="mb30">Search Results for: 
+          {" "}
+          <span className="fw-semibold">
 
+          "{searchTerm}"
+          </span>
+          </p>}
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

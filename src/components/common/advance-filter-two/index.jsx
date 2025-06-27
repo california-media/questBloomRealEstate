@@ -4,6 +4,8 @@ import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 
 import { useEffect, useState } from "react";
+import DropdownSelect from "../DropdownSelect";
+import PercentagePreHandover from "../PercentagePreHandover";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -37,6 +39,8 @@ const AdvanceFilterModal = ({
   const [squareFeet, setSquareFeet] = useState([0, 0]);
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
+  const [percentagePreHandover, setPercentagePreHandover] = useState(0);
+  const [yearBuild, setYearBuild] = useState(50000);
   const [amenities, setAmenities] = useState([]);
 
   useEffect(() => {
@@ -51,6 +55,11 @@ const AdvanceFilterModal = ({
       setPropertyId(filterFunctions.propertyId);
 
     if (filterFunctions.location) setLocation(filterFunctions.location);
+
+    if (filterFunctions.percentagePreHandover)
+      setPercentagePreHandover(filterFunctions.percentagePreHandover);
+
+    if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
 
     if (Array.isArray(filterFunctions.squirefeet))
       setSquareFeet(
@@ -76,6 +85,8 @@ const AdvanceFilterModal = ({
     filterFunctions?.bedrooms,
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
+    filterFunctions?.percentagePreHandover,
+    filterFunctions?.yearBuild,
   ]);
 
   const handleSearch = () => {
@@ -87,6 +98,8 @@ const AdvanceFilterModal = ({
     filterFunctions?.handleBathrooms(bathroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
+    filterFunctions?.handlePercentagePreHandover(percentagePreHandover);
+    filterFunctions?.handleYearBuild(yearBuild);
   };
 
   return (
@@ -174,7 +187,73 @@ const AdvanceFilterModal = ({
             {/* End .col-6 */}
           </div>
           {/* End .row */}
+          <div className="row ">
+            <div className="col-sm-6">
+              <div className="widget-wrapper  ">
+                <h6 className="list-title">Handover Date</h6>
+                <div className="form-style2  ">
+                  <button
+                    type="button"
+                    className=" border-none w-100  fw-light"
+                    style={{
+                      padding: "9px 0px",
+                      borderRadius: "12px",
+                      backgroundColor: "buttonface",
+                    }}
+                  >
+                    <DropdownSelect
+                      options={Array.from({ length: 11 }, (_, i) =>
+                        (2023 + i).toString()
+                      )}
+                      value={
+                        yearBuild.toString() !== "50000"
+                          ? yearBuild.toString()
+                          : ""
+                      }
+                      onChange={(val) => setYearBuild(parseInt(val || 0))}
+                      placeholder="Handover"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
 
+            <div className="col-sm-6">
+              <div className="widget-wrapper">
+                <h6 className="list-title">Payment Plan</h6>
+                <div className="form-style2">
+                  <button
+                    type="button"
+                    className=" d-flex justify-content-between align-items-center border-none w-100 fw-light"
+                    style={{
+                      padding: "15px 13px",
+                      borderRadius: "12px",
+                    }}
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                  >
+                    Payment Plan{" "}
+                    <i className="fa fa-angle-down ms-2 text-gray" />
+                  </button>
+
+                  <div className="dropdown-menu dd3">
+                    <div className="widget-wrapper  pb25 mb0 pl20 pr20">
+                      <h5 className="mb30 mt20 fw-medium">
+                        Percentage pre-handover
+                      </h5>
+                      {/* Range Slider Desktop Version */}
+                      <div className="range-slider-style1 mb10 mt20">
+                        <PercentagePreHandover
+                          percentagePreHandover={percentagePreHandover}
+                          setPercentagePreHandover={setPercentagePreHandover}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-6">
               <div className="widget-wrapper">
@@ -279,6 +358,8 @@ const AdvanceFilterModal = ({
               setPropertyType("All Property Types");
               setDataFetched(false);
               setPriceRange([0, 10000000]);
+              setPercentagePreHandover(0);
+              setYearBuild(50000);
             }}
           >
             <span className="flaticon-turn-back" />

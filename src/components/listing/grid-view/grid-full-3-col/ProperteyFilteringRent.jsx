@@ -43,6 +43,8 @@ export default function ProperteyFiltering({ region }) {
     handleSearchTerm,
     adminPropertyType,
     handleAdminPropertyType,
+    rentDuration,
+    handleRentDuration,
   } = usePropertyStore();
 
   // Local component states
@@ -101,6 +103,8 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType: adminPropertyType,
     percentagePreHandover,
     handlePercentagePreHandover,
+    rentDuration,
+    handleRentDuration,
   };
 
   function getRequestParams(nextPage = 1) {
@@ -121,6 +125,7 @@ export default function ProperteyFiltering({ region }) {
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
+      ...{ rentDuration },
       ...(squirefeet.length !== 0 &&
         squirefeet[0] !== 0 && {
           unit_area_from: squirefeet[0],
@@ -174,6 +179,7 @@ export default function ProperteyFiltering({ region }) {
     squirefeet,
     listingStatus,
     region,
+    rentDuration,
     searchTerm,
     setListings,
     setLoading,
@@ -239,6 +245,7 @@ export default function ProperteyFiltering({ region }) {
     rentalLocation,
     squirefeet,
     yearBuild,
+    rentDuration,
     categories,
     priceRange,
     propertyId,
@@ -351,7 +358,11 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
-
+        {searchTerm && (
+          <p className="mb30">
+            Search Results for: <span className="fw-semibold">"{searchTerm}"</span>
+          </p>
+        )}
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

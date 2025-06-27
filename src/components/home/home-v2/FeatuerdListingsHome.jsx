@@ -1,6 +1,6 @@
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -15,10 +15,20 @@ import {
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import AnimatedText from "./hero/AnimatedText";
 import LuxuryHeading from "./hero/LuxuryHeading";
+import usePropertyStore from "@/store/propertyStore";
 
 const FeaturedListingsHome = ({ index, section }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const {
+    handleSearchTerm,
+    handlePropertyType,
+    handlePriceRange,
+    priceRange,
+    resetAllFilters,
+  } = usePropertyStore();
+  const navigate = useNavigate();
   // Generate unique ID for this component instance
   const uniqueId = useState(() => Math.random().toString(36).substr(2, 9))[0];
 
@@ -51,21 +61,56 @@ const FeaturedListingsHome = ({ index, section }) => {
           opacity: 1,
         }}
       >
-        <section className="pt20 pb0 pb0  bgc-white">
+        <section className="pt10 pb0 pb0  bgc-white">
           <div className="container ">
-            <div className="row align-items-center" data-aos="fade-up">
-              <div className="col-lg-12 position-relative ">
+            <div
+              style={{ position: "relative" }}
+              className="row  "
+              data-aos="fade-up"
+            >
+              <div className="col-lg-12 ">
                 <div className="main-title2  text-center">
                   <LuxuryHeading>{section.title}</LuxuryHeading>
-                  <p className="paragraph">{section.description}</p>
+                  <p className="paragraph  ">{section.paragraph}</p>
                 </div>
               </div>
-              <div className=" position-absolute">
-                <div className="text-start text-lg-end mb-3">
-                  <a className="ud-btn2" href="/off-plan">
+              <div style={{ top: "120px", position: "absolute" }}>
+                <div className="text-start text-lg-end mb-3 cursor-pointer">
+                  <Link
+                    to="/off-plan"
+                    className="ud-btn2 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      resetAllFilters();
+                      ///search term
+                      section?.params?.areas
+                        ? handleSearchTerm("Dubai Beach")
+                        : section?.params?.developer
+                        ? handleSearchTerm("Sobha Dubai")
+                        : handleSearchTerm("Dubai");
+                      ///property types
+                      section?.params?.unit_types &&
+                        handlePropertyType(
+                          section.params.unit_types.split(",")[0].trim()
+                        );
+
+                      ///price range
+                      section?.params?.unit_price_from &&
+                        handlePriceRange([
+                          section.params.unit_price_from,
+                          priceRange[1],
+                        ]);
+                      section?.params?.unit_price_to &&
+                        handlePriceRange([
+                          priceRange[0],
+                          section.params.unit_price_to,
+                        ]);
+                      navigate("/off-plan");
+                    }}
+                  >
                     {section.seeAll}
                     <i className="fal fa-arrow-right-long" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

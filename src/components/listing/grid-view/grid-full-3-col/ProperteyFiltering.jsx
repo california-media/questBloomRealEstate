@@ -103,12 +103,12 @@ export default function ProperteyFiltering({ region }) {
     handleBathrooms: handleBathrooms,
     handlelocation: handleLocation,
     handlesquirefeet: handleSquirefeet,
-    handleyearBuild: handleYearBuild,
+    handleYearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     handleSearchTerm: handleSearchTerm,
-    handlePercentagePreHandover: handlePercentagePreHandover,
     handleSearchTerm: handleSearchTerm,
+    handlePercentagePreHandover: handlePercentagePreHandover,
     priceRange,
     listingStatus,
     searchTerm,
@@ -119,7 +119,6 @@ export default function ProperteyFiltering({ region }) {
     bathrooms,
     location,
     squirefeet,
-
     yearBuild,
     categories,
     selectedPropertyType,
@@ -196,6 +195,8 @@ export default function ProperteyFiltering({ region }) {
     selectedPropertyType,
     priceRange,
     propertyId,
+    yearBuild,
+    percentagePreHandover,
     location,
     bedrooms,
     bathrooms,
@@ -263,6 +264,7 @@ export default function ProperteyFiltering({ region }) {
     searchTerm,
     listingStatus,
     selectedPropertyType,
+    percentagePreHandover,
     bedrooms,
     bathrooms,
     location,
@@ -381,7 +383,13 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
+        {searchTerm &&<p className="mb30">Search Results for: 
+          {" "}
+          <span className="fw-semibold">
 
+          "{searchTerm}"
+          </span>
+          </p>}
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

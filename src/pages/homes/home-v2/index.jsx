@@ -53,7 +53,7 @@ const Home_V2 = () => {
       params: {
         unit_types: "Villa,Villas",
       },
-      seeAll: "See All Villas",
+      seeAll: "See More Exclusive Villas",
     },
     {
       title: "Apartments",
@@ -82,8 +82,7 @@ const Home_V2 = () => {
     },
     {
       title: "Properties under 1 Million",
-      paragraph:
-        "Explore handpicked premium homes that offer great value for less than AED 1 Million",
+      paragraph: "Handpicked premium homes that offer great value",
       params: {
         unit_price_to: 1000000,
       },
@@ -92,7 +91,7 @@ const Home_V2 = () => {
     {
       title: "Properties between 1 Million to 2 Million",
       paragraph:
-        "Step into luxury with a curated selection of upscale properties priced between AED 1 Million and 2 Million",
+        "Luxury properties priced between 1 Million and 2 Million",
       params: {
         unit_price_from: 1000000,
         unit_price_to: 2000000,
@@ -137,6 +136,7 @@ const Home_V2 = () => {
           section={{
             title: "Featured Listings",
             paragraph: " Premium homes designed to match your lifestyle",
+            seeAll: "See All Listings",
           }}
         />
       </>

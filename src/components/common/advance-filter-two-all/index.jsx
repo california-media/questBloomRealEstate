@@ -4,6 +4,7 @@ import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 
 import { useEffect, useState } from "react";
+import DropdownSelect from "../DropdownSelect";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -38,7 +39,8 @@ const AdvanceFilterModal = ({
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
   const [amenities, setAmenities] = useState([]);
-
+  const [rentDuration, setRentDuration] = useState("Monthly");
+  const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
   useEffect(() => {
     if (!filterFunctions) return;
 
@@ -58,6 +60,8 @@ const AdvanceFilterModal = ({
           ? [0, 0]
           : filterFunctions.squirefeet
       );
+    if (filterFunctions.rentDuration !== undefined)
+      setRentDuration(filterFunctions.rentDuration);
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
@@ -76,6 +80,7 @@ const AdvanceFilterModal = ({
     filterFunctions?.bedrooms,
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
+    filterFunctions?.rentDuration,
   ]);
 
   const handleSearch = () => {
@@ -87,6 +92,7 @@ const AdvanceFilterModal = ({
     filterFunctions?.handleBathrooms(bathroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
+    filterFunctions?.handleRentDuration(rentDuration);
   };
 
   return (
@@ -174,7 +180,32 @@ const AdvanceFilterModal = ({
             {/* End .col-6 */}
           </div>
           {/* End .row */}
-
+          <div className="row d-flex ">
+            <div className="col-sm-6">
+              <div className="widget-wrapper  ">
+                <h6 className="list-title">Rent Duration</h6>
+                <div className="form-style2  ">
+                  <button
+                    type="button"
+                    className=" border-none w-100  fw-light"
+                    style={{
+                      padding: "7px 0px",
+                      borderRadius: "5px",
+                      border: "1px solid gray",
+                    }}
+                  >
+                    <DropdownSelect
+                      options={rentDurationOptions}
+                      value={rentDuration}
+                      onChange={setRentDuration}
+                      placeholder="Rent Duration"
+                      loading={loading}
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-6">
               <div className="widget-wrapper">
@@ -279,6 +310,7 @@ const AdvanceFilterModal = ({
               setPropertyType("All Property Types");
               setDataFetched(false);
               setPriceRange([0, 10000000]);
+              setRentDuration("Monthly");
             }}
           >
             <span className="flaticon-turn-back" />
