@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Bathroom from "./Bathroom";
 import DropdownSelect from "../DropdownSelect";
 import PercentagePreHandover from "../PercentagePreHandover";
+import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -46,6 +47,7 @@ const AdvanceFilterModal = ({
   const [bathroomCount, setBathroomCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [amenities, setAmenities] = useState([]);
+  const [yearBuild, setYearBuild] = useState(50000);
 
   useEffect(() => {
     if (!filterFunctions) return;
@@ -66,6 +68,7 @@ const AdvanceFilterModal = ({
           ? [0, 0]
           : filterFunctions.squirefeet
       );
+    if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
@@ -87,6 +90,7 @@ const AdvanceFilterModal = ({
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
     filterFunctions?.searchTerm,
+    filterFunctions?.yearBuild,
   ]);
 
   const handleSearch = () => {
@@ -99,6 +103,8 @@ const AdvanceFilterModal = ({
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
     filterFunctions?.handleSearchTerm(searchTerm);
+    filterFunctions?.handleYearBuild(yearBuild);
+
     let path = "";
 
     if (buyRent === "rent") {
@@ -219,18 +225,16 @@ const AdvanceFilterModal = ({
                           backgroundColor: "buttonface",
                         }}
                       >
-                        <DropdownSelect
+                        <DropdownSelectYearBuild
                           options={Array.from({ length: 11 }, (_, i) =>
                             (2023 + i).toString()
                           )}
                           value={
-                            filterFunctions?.yearBuild?.toString() !== "50000"
-                              ? filterFunctions?.yearBuild?.toString()
+                            yearBuild.toString() !== "50000"
+                              ? yearBuild.toString()
                               : ""
                           }
-                          onChange={(val) =>
-                            filterFunctions?.handleyearBuild(parseInt(val || 0))
-                          }
+                          onChange={(val) => setYearBuild(parseInt(val || 0))}
                           placeholder="Handover"
                         />
                       </button>
@@ -324,6 +328,7 @@ const AdvanceFilterModal = ({
               setDataFetched(false);
               setPriceRange([0, 10000000]);
               setSearchTerm("");
+              setYearBuild(50000);
             }}
           >
             <span className="flaticon-turn-back" />

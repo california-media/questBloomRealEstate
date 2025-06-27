@@ -6,6 +6,7 @@ import Bathroom from "./Bathroom";
 import { useEffect, useState } from "react";
 import DropdownSelect from "../DropdownSelect";
 import PercentagePreHandover from "../PercentagePreHandover";
+import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -201,7 +202,7 @@ const AdvanceFilterModal = ({
                       backgroundColor: "buttonface",
                     }}
                   >
-                    <DropdownSelect
+                    <DropdownSelectYearBuild
                       options={Array.from({ length: 11 }, (_, i) =>
                         (2023 + i).toString()
                       )}

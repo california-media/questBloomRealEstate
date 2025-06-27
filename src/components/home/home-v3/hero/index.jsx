@@ -107,7 +107,7 @@ const Hero = () => {
         ? handleBuyLocation
         : handleLocation,
     handlesquirefeet: handleSquirefeet,
-    handleyearBuild: handleYearBuild,
+    handleYearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     handlePercentagePreHandover: handlePercentagePreHandover,
