@@ -65,14 +65,20 @@ const TopFilterBar = ({
       <div className="col-xl-9 d-none d-lg-block ">
         <div className="dropdown-lists">
           <ul className="p-0 text-center  text-xl-start ">
-            <li className="list-inline-item position-relative">
+            <li
+              className="list-inline-item position-relative"
+            >
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
               >
-                For Sale <i className="fa fa-angle-down ms-2" />
+                {" "}
+                {filterFunctions?.listingStatus === "All"
+                  ? "All Status"
+                  : filterFunctions?.listingStatus}{" "}
+                <i className="fa fa-angle-down ms-2" />
               </button>
               <div className="dropdown-menu">
                 <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
@@ -279,7 +285,7 @@ const TopFilterBar = ({
                 data-bs-toggle="modal"
                 data-bs-target="#advanceSeachModal"
               >
-                <i className="flaticon-settings me-2 mt-1" /> Advanced 
+                <i className="flaticon-settings me-2 mt-1" /> Advanced
                 {activeFilterCount > 0 && (
                   <span
                     className=" badge rounded-pill ms-2"

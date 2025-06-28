@@ -83,7 +83,13 @@ export default function ProperteyFiltering({ region }) {
       element.value = "";
     });
   };
-
+  const navLocation = useLocation();
+  const hasFilters = navLocation.state?.hasFilters || false;
+  useEffect(() => {
+    if (!hasFilters) {
+      resetFilter();
+    }
+  }, [hasFilters]);
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
@@ -189,9 +195,7 @@ export default function ProperteyFiltering({ region }) {
     bedrooms,
     bathrooms,
     squirefeet,
-    listingStatus,
     rentDuration,
-    region,
     searchTerm,
     setListings,
     setLoading,
@@ -256,9 +260,7 @@ export default function ProperteyFiltering({ region }) {
 
     fetchInitialData();
   }, [
-    region,
     searchTerm,
-    listingStatus,
     adminPropertyType,
     bathrooms,
     bedrooms,
@@ -266,7 +268,6 @@ export default function ProperteyFiltering({ region }) {
     allLocation,
     squirefeet,
     yearBuild,
-    categories,
     priceRange,
     propertyId,
   ]);

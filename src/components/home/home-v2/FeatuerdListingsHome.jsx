@@ -1,6 +1,6 @@
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -14,12 +14,19 @@ import {
 } from "lucide-react";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import LuxuryHeading from "./hero/LuxuryHeading";
+import usePropertyStore from "@/store/propertyStore";
 
 const FeaturedListingsHome = ({ index, section }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   // Generate unique ID for this component instance
-  const uniqueId = useState(() => Math.random().toString(36).substr(2, 9))[0];
+  const {
+    resetAllFilters,
+    handleSearchTerm,
+    handlePropertyType,
+    handlePriceRange,
+  } = usePropertyStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchListings() {
@@ -58,7 +65,6 @@ const FeaturedListingsHome = ({ index, section }) => {
                   className="ud-btn2 "
                   onClick={(e) => {
                     e.preventDefault();
-                    resetAllFilters();
                     ///search term
                     section?.params?.areas
                       ? handleSearchTerm("Dubai Beach")
@@ -82,7 +88,11 @@ const FeaturedListingsHome = ({ index, section }) => {
                         priceRange[0],
                         section.params.unit_price_to,
                       ]);
-                    navigate("/off-plan");
+                    navigate("/off-plan", {
+                      state: {
+                        hasFilters: true,
+                      },
+                    });
                   }}
                 >
                   {section.seeAll}

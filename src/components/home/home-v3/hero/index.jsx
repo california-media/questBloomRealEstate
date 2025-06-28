@@ -107,6 +107,9 @@ const Hero = () => {
       element.value = "";
     });
   };
+  useEffect(() => {
+    resetFilter();
+  }, []);
 
   // Filter functions object for components that need access to handlers
   const filterFunctions = {

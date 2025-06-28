@@ -26,6 +26,7 @@ const hardcoded_facilities = ["Swimming Pool"];
 
 export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
+
   const {
     filteredData,
     sortedFilteredData,
@@ -94,6 +95,14 @@ export default function ProperteyFiltering({ region }) {
       element.value = "";
     });
   };
+
+  const navLocation = useLocation();
+  const hasFilters = navLocation.state?.hasFilters || false;
+  useEffect(() => {
+    if (!hasFilters) {
+      resetFilter();
+    }
+  }, [hasFilters]);
 
   // Filter functions object for components that need access to handlers
   const filterFunctions = {

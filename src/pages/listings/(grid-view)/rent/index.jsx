@@ -8,7 +8,7 @@ import ProperteyFilteringRent from "@/components/listing/grid-view/grid-full-3-c
 import React from "react";
 
 import MetaData from "@/components/common/MetaData";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const metaInformation = {
   title: "Off-Plan Listings",
@@ -34,7 +34,7 @@ const Rent3Col = () => {
               <div className="breadcumb-style1">
                 <h2 className="title">UAE Homes for Rent</h2>
                 <div className="breadcumb-list">
-                  <a href="#">Home</a>
+                  <Link to="/">Home</Link>
                   <a href="#">For Renting</a>
                 </div>
                 <a

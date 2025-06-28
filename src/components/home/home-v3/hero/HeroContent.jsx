@@ -151,8 +151,11 @@ const HeroContent = ({
                           path = "/listings";
                         }
                       }
-
-                      navigate(path);
+                      navigate(path, {
+                        state: {
+                          hasFilters: true,
+                        },
+                      });
                     }}
                   >
                     <span className="flaticon-search " />
