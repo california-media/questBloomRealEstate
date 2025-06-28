@@ -265,7 +265,8 @@ const ExtraPropertyDetails = ({ property }) => {
               left: "0",
               right: "0",
               height: "10px",
-              background: "linear-gradient(90deg, #DDE5C2 0%, #6b6b2d 100%)",
+              background:
+                "linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%)",
               borderRadius: "12px 12px 0 0",
             }}
           ></div>
@@ -303,7 +304,7 @@ const ExtraPropertyDetails = ({ property }) => {
                 style={{
                   padding: item.highlight ? "20px" : "15px",
                   background: item.highlight
-                    ? "linear-gradient(90deg, 	#737C54 0%, #6b6b2d 70%)"
+                    ? "linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%)"
                     : "rgba(121, 118, 51, 0.05)",
                   borderRadius: "10px",
                   marginBottom: "30px",

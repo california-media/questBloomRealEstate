@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap');
 
-
-/* Original desktop styles - remain completely unchanged */
 .luxury-heading {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
@@ -20,6 +18,34 @@
   text-shadow: .5px .5px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   overflow: hidden;
+}
+
+.luxury-heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine 5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .luxury-heading:hover {
@@ -43,21 +69,25 @@
 /* Mobile-only adjustments */
 @media (max-width: 768px) {
   .luxury-heading {
-    font-size: 1.3rem; /* Slightly smaller font */
-    padding: 0.5rem 1.2rem; /* More compact padding */
-    margin: 0.8rem 0; /* Reduced margin */
-    letter-spacing: 1px; /* Tighter letter spacing */
-    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3); /* Lighter shadow */
+    font-size: 1.3rem;
+    padding: 0.5rem 1.2rem;
+    margin: 0.8rem 0;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
+  }
+  
+  .luxury-heading::before {
+    animation: shine 5s infinite; /* Slower on mobile */
   }
   
   .luxury-heading:hover {
-    transform: none; /* Remove hover effect on mobile */
-    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3); /* Keep consistent shadow */
+    transform: none;
+    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
   }
   
   .luxury-heading-decoration {
-    width: 50%; /* Narrower decoration line */
-    height: 2px; /* Thinner line */
+    width: 50%;
+    height: 2px;
   }
 }
 

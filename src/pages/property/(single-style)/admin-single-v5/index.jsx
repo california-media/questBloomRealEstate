@@ -76,7 +76,6 @@ const AdminSingleV5 = () => {
         // Use cached data from store
         console.log("Using cached property data from store");
         setProperty({ ...existingProperty, id });
-        console.log({ ...existingProperty, id });
         setLoading(false);
         return;
       }
@@ -197,7 +196,7 @@ const AdminSingleV5 = () => {
                 </div>
               </div> */}
               {/* End .ps-widget */}
-
+              {/* 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Unit Plans</h4>
                 <div className="row">
@@ -207,15 +206,15 @@ const AdminSingleV5 = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
                 <h4 className="title fz17 mb30">Master Plan</h4>
                 <div className="row">
                   <MasterPlan master_plan={property?.master_plan} />
                 </div>
-              </div>
+              </div> */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <div className="row">
@@ -326,41 +325,40 @@ const AdminSingleV5 = () => {
                 </div> */}
                 {/* End .Mortgage Calculator */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                   <div className="row">
                     <PropertyNearby map_points={property?.map_points} />
                   </div>
-                </div>
+                </div> */}
                 {/* End What&apos;s Nearby? */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Payment Plans</h4>
                   <div className="row">
                     <div className="col-md-12">
-                      {/* <WalkScore /> */}
                       <PaymentPlans payment_plans={property?.payment_plans} />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 {/* End Walkscore */}
 
-                {property?.lobby?.[0]?.url && (
+                {/* {property?.lobby?.[0]?.url && (
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <h4 className="title fz17 mb30">Lobby</h4>
                     <div className="row">
                       <Lobby lobby={property?.lobby} />
                     </div>
                   </div>
-                )}
+                )} */}
                 {/* End .360° Virtual Tour */}
 
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
                   <div className="row">
                     <h4 className="title fz17 mb30 pl20">Building Details</h4>
                     <BuildingDetails buildings={property?.buildings} />
                   </div>
-                </div>
+                </div> */}
 
                 {/* End PropertyViews */}
 
@@ -393,29 +391,6 @@ const AdminSingleV5 = () => {
             </div>
             {/* End header */}
 
-            <div className="col-auto mb30">
-              <div className="row align-items-center justify-content-center">
-                <div className="col-auto">
-                  <button className="featured-prev__active swiper_button">
-                    <i className="far fa-arrow-left-long" />
-                  </button>
-                </div>
-                {/* End prev */}
-
-                <div className="col-auto">
-                  <div className="pagination swiper--pagination featured-pagination__active" />
-                </div>
-                {/* End pagination */}
-
-                <div className="col-auto">
-                  <button className="featured-next__active swiper_button">
-                    <i className="far fa-arrow-right-long" />
-                  </button>
-                </div>
-                {/* End Next */}
-              </div>
-              {/* End .col for navigation and pagination */}
-            </div>
             {/* End .col for navigation and pagination */}
           </div>
           {/* End .row */}

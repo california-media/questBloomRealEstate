@@ -127,7 +127,7 @@ const Home_V2 = () => {
       <>
         {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
-          <FeaturedListingsHome section={section} index={index} />
+          <FeaturedListingsHome section={section} key={index} index={index} />
         ))}
         {/* Main Featured Listings Section */}
 

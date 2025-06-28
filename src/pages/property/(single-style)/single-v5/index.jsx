@@ -397,29 +397,6 @@ const SingleV5 = () => {
             </div>
             {/* End header */}
 
-            <div className="col-auto mb30">
-              <div className="row align-items-center justify-content-center">
-                <div className="col-auto">
-                  <button className="featured-prev__active swiper_button">
-                    <i className="far fa-arrow-left-long" />
-                  </button>
-                </div>
-                {/* End prev */}
-
-                <div className="col-auto">
-                  <div className="pagination swiper--pagination featured-pagination__active" />
-                </div>
-                {/* End pagination */}
-
-                <div className="col-auto">
-                  <button className="featured-next__active swiper_button">
-                    <i className="far fa-arrow-right-long" />
-                  </button>
-                </div>
-                {/* End Next */}
-              </div>
-              {/* End .col for navigation and pagination */}
-            </div>
             {/* End .col for navigation and pagination */}
           </div>
           {/* End .row */}

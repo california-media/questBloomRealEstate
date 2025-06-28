@@ -114,7 +114,7 @@ const PropertyFeaturesAmenities = ({ facilities }) => {
         </div>
       ))}
 
-      <style jsx>{`
+      <style>{`
         .facility-image-container:hover .gallery-overlay {
           opacity: 1 !important;
         }
