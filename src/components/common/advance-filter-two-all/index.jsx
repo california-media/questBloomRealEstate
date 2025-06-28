@@ -143,7 +143,8 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
+                        value={squareFeet[0]}
                         className="form-control filterInput"
                         onChange={(e) =>
                           setSquareFeet([Number(e.target.value), squareFeet[1]])
@@ -155,7 +156,8 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                     <span className="dark-color">-</span>
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
+                        value={squareFeet[1]}
                         className="form-control filterInput"
                         placeholder="Max"
                         id="maxFeet3"

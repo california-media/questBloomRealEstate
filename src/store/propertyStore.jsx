@@ -23,8 +23,8 @@ const usePropertyStore = create((set, get) => ({
   bathrooms: 0,
   percentagePreHandover: 0,
   rentDuration: "Monthly",
-  squirefeet: [],
-  yearBuild: 50000,
+  squirefeet: [0, 0],
+  yearBuild: 50000, //handover date for off plan
   propertyId: "",
   searchTerm: "",
   listingStatus: "All",
@@ -111,7 +111,7 @@ const usePropertyStore = create((set, get) => ({
       bathrooms: 0,
       percentagePreHandover: 0,
       rentDuration: "Monthly",
-      squirefeet: [],
+      squirefeet: [0, 0],
       yearBuild: 50000,
       propertyId: "",
       listingStatus: "All",
@@ -125,6 +125,154 @@ const usePropertyStore = create((set, get) => ({
   shouldFetchData: () => {
     const state = get();
     return !state.dataFetched;
+  },
+
+  // Add this to your usePropertyStore actions
+  getActiveFilterCount: (filterType) => {
+    const state = get();
+    // Default values for comparison
+    const defaults = {
+      priceRange: [0, 10000000],
+      bedrooms: 0,
+      bathrooms: 0,
+      rentDuration: "Monthly",
+      squirefeet: [0, 0],
+      propertyId: "",
+      yearBuild: 50000,
+      percentagePreHandover: 0,
+    };
+
+    let count = 0;
+
+    switch (filterType) {
+      case "rent":
+        if (
+          JSON.stringify(state.priceRange) !==
+          JSON.stringify(defaults.priceRange)
+        )
+          count++;
+        if (state.bedrooms !== defaults.bedrooms) count++;
+        if (state.bathrooms !== defaults.bathrooms) count++;
+        if (state.rentDuration !== defaults.rentDuration) count++;
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        break;
+
+      case "all":
+        if (
+          JSON.stringify(state.priceRange) !==
+          JSON.stringify(defaults.priceRange)
+        )
+          count++;
+        if (state.bedrooms !== defaults.bedrooms) count++;
+        if (state.bathrooms !== defaults.bathrooms) count++;
+        if (state.rentDuration !== defaults.rentDuration) count++;
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        break;
+
+      case "off-plan":
+        if (
+          JSON.stringify(state.priceRange) !==
+          JSON.stringify(defaults.priceRange)
+        )
+          count++;
+        if (state.bedrooms !== defaults.bedrooms) count++;
+        if (state.bathrooms !== defaults.bathrooms) count++;
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        if (state.yearBuild !== defaults.yearBuild) count++;
+        if (state.percentagePreHandover !== defaults.percentagePreHandover)
+          count++;
+        break;
+
+      case "buy":
+        if (
+          JSON.stringify(state.priceRange) !==
+          JSON.stringify(defaults.priceRange)
+        )
+          count++;
+        if (state.bedrooms !== defaults.bedrooms) count++;
+        if (state.bathrooms !== defaults.bathrooms) count++;
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        break;
+
+      default:
+        return 0;
+    }
+
+    return count;
+  },
+  getHomeFilterCount: (filterType) => {
+    const state = get();
+
+    // Default values for comparison
+    const defaults = {
+      squirefeet: [0, 0],
+      searchTerm: "",
+      propertyId: "",
+      yearBuild: 50000,
+      percentagePreHandover: 0,
+    };
+
+    let count = 0;
+
+    switch (filterType) {
+      case "rent":
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        break;
+
+      case "off-plan":
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        if (state.yearBuild !== defaults.yearBuild) count++;
+        if (state.percentagePreHandover !== defaults.percentagePreHandover)
+          count++;
+        break;
+
+      case "buy":
+        if (
+          JSON.stringify(state.squirefeet) !==
+          JSON.stringify(defaults.squirefeet)
+        )
+          count++;
+        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.propertyId !== defaults.propertyId) count++;
+        break;
+
+      default:
+        return 0;
+    }
+
+    return count;
   },
 }));
 

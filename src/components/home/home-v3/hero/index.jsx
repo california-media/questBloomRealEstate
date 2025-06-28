@@ -8,6 +8,23 @@ import AnimatedText from "../../home-v2/hero/AnimatedText";
 const hardcoded_facilities = ["Swimming Pool"];
 
 const Hero = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  ///ONLY for home page advance filter to reset local state
+  useEffect(() => {
+    const modal = document.getElementById("advanceSeachModal");
+    const handleModalClose = () => {
+      // Your function to run when modal closes
+      setModalOpen(false);
+    };
+
+    modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+    // Cleanup
+    return () => {
+      modal.removeEventListener("hidden.bs.modal", handleModalClose);
+    };
+  }, []);
+
   const {
     propertyId,
     selectedPropertyType,
@@ -57,6 +74,7 @@ const Hero = () => {
     adminPropertyType,
     buyLocation,
     handleBuyLocation,
+    getHomeFilterCount,
   } = usePropertyStore();
   const [buyRent, setBuyRent] = useState("buy");
   const [loading, setLoading] = useState(true);
@@ -228,6 +246,14 @@ const Hero = () => {
         </div>
 
         <HeroContent
+          activeFilterCount={getHomeFilterCount(
+            buyRent === "rent"
+              ? "rent"
+              : allReadyOff === "off"
+              ? "off-plan"
+              : "buy"
+          )}
+          setModalOpen={setModalOpen}
           buyRent={buyRent}
           allReadyOff={allReadyOff}
           handleAllReadyOff={handleAllReadyOff}
@@ -264,6 +290,7 @@ const Hero = () => {
           aria-hidden="true"
         >
           <AdvanceFilterModal
+            modalOpen={modalOpen}
             buyRent={buyRent}
             allReadyOff={allReadyOff}
             handleAllReadyOff={handleAllReadyOff}

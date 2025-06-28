@@ -46,6 +46,7 @@ export default function ProperteyFiltering({ region }) {
     setFilteredData,
     setSortedFilteredData,
     setDataFetched,
+    getActiveFilterCount,
     setLocationOptions,
     setPropertyTypes,
     setFacilityOptions,
@@ -370,6 +371,7 @@ export default function ProperteyFiltering({ region }) {
 
         <div className="row">
           <TopFilterBar
+            activeFilterCount={getActiveFilterCount("off-plan")}
             setDataFetched={setDataFetched}
             colstyle={colstyle}
             setColstyle={setColstyle}
@@ -381,13 +383,12 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
-        {searchTerm &&<p className="mb30">Search Results for: 
-          {" "}
-          <span className="fw-semibold">
-
-          "{searchTerm}"
-          </span>
-          </p>}
+        {searchTerm && (
+          <p className="mb30">
+            Search Results for:{" "}
+            <span className="fw-semibold">"{searchTerm}"</span>
+          </p>
+        )}
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

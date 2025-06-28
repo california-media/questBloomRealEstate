@@ -28,24 +28,29 @@ const DropdownSelectLocation = ({
     dropdownIndicator: (provided) => ({
       ...provided,
       display: placeholder === "Enter Location" ? "none" : "inline",
+      padding: "0px",
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
       display: placeholder === "Enter Location" ? "none" : "inline",
+      padding: "0px",
     }),
     // Add padding to input to make space for the icon
     input: (provided) => ({
       ...provided,
+      padding: "0px",
       paddingLeft: placeholder === "Enter Location" ? "35px" : "10px",
     }),
     // Ensure the placeholder also has proper spacing
     placeholder: (provided) => ({
       ...provided,
+      padding: "0px",
       paddingLeft: placeholder === "Enter Location" ? "35px" : "10px",
     }),
     // Style the single value (selected value) to have proper spacing
     singleValue: (provided) => ({
       ...provided,
+      padding: "0px",
       paddingLeft: placeholder === "Enter Location" ? "35px" : "10px",
     }),
   };

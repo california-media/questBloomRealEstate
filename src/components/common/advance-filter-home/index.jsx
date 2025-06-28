@@ -17,25 +17,12 @@ const AdvanceFilterModal = ({
   setDataFetched,
   buyRent,
   allReadyOff,
+  modalOpen,
   handleAllReadyOff,
   handleBuyRent,
 }) => {
   const navigate = useNavigate();
-  // console.log(filterFunctions?.location, locationOptions)
-  const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#797631"
-          : isHovered
-          ? "#DDE5C2"
-          : isFocused
-          ? "#DDE5C2"
-          : undefined,
-      };
-    },
-  };
+
   ///local state befrore actually applying filter
 
   const [propertyType, setPropertyType] = useState("All Property Types");
@@ -49,7 +36,7 @@ const AdvanceFilterModal = ({
   const [amenities, setAmenities] = useState([]);
   const [yearBuild, setYearBuild] = useState(50000);
 
-  useEffect(() => {
+  function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
@@ -72,14 +59,25 @@ const AdvanceFilterModal = ({
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
-    if (filterFunctions.searchTerm !== undefined)
+    if (filterFunctions.searchTerm !== undefined) {
       setSearchTerm(filterFunctions.searchTerm);
+    }
 
     if (filterFunctions.bathrooms !== undefined)
       setBathroomCount(filterFunctions.bathrooms);
 
     if (Array.isArray(filterFunctions.categories))
       setAmenities(filterFunctions.categories);
+  }
+
+  useEffect(() => {
+    if (!modalOpen) {
+      setFromStore();
+    }
+  }, [modalOpen]);
+
+  useEffect(() => {
+    setFromStore();
   }, [
     filterFunctions?.selectedPropertyType,
     filterFunctions?.priceRange,
@@ -93,6 +91,23 @@ const AdvanceFilterModal = ({
     filterFunctions?.yearBuild,
   ]);
 
+  ///ONLY for home page advance filter to reset local state
+  // useEffect(() => {
+  //   const modal = document.getElementById("advanceSeachModal");
+  //   console.log("modal closed");
+  //   const handleModalClose = () => {
+  //     // Your function to run when modal closes
+  //     setFromStore();
+  //   };
+
+  //   modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+  //   // Cleanup
+  //   return () => {
+  //     modal.removeEventListener("hidden.bs.modal", handleModalClose);
+  //   };
+  // }, []);
+
   const handleSearch = () => {
     filterFunctions?.handlepropertyType(propertyType);
     filterFunctions?.handlePropertyId(propertyId);
@@ -105,21 +120,21 @@ const AdvanceFilterModal = ({
     filterFunctions?.handleSearchTerm(searchTerm);
     filterFunctions?.handleYearBuild(yearBuild);
 
-    let path = "";
+    // let path = "";
 
-    if (buyRent === "rent") {
-      path = "/rent";
-    } else if (buyRent === "buy") {
-      if (allReadyOff === "ready") {
-        path = "/buy";
-      } else if (allReadyOff === "off") {
-        path = "/off-plan";
-      } else {
-        path = "/listings";
-      }
-    }
+    // if (buyRent === "rent") {
+    //   path = "/rent";
+    // } else if (buyRent === "buy") {
+    //   if (allReadyOff === "ready") {
+    //     path = "/buy";
+    //   } else if (allReadyOff === "off") {
+    //     path = "/off-plan";
+    //   } else {
+    //     path = "/listings";
+    //   }
+    // }
 
-    navigate(path);
+    // navigate(path);
   };
 
   return (
@@ -180,7 +195,8 @@ const AdvanceFilterModal = ({
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
+                        value={squareFeet[0]}
                         className="form-control filterInput"
                         onChange={(e) =>
                           setSquareFeet([Number(e.target.value), squareFeet[1]])
@@ -192,7 +208,8 @@ const AdvanceFilterModal = ({
                     <span className="dark-color">-</span>
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
+                        value={squareFeet[1]}
                         className="form-control filterInput"
                         placeholder="Max"
                         id="maxFeet3"
@@ -342,7 +359,7 @@ const AdvanceFilterModal = ({
               onClick={handleSearch}
             >
               <span className="flaticon-search align-text-top pr10" />
-              Search
+              Apply
             </button>
           </div>
         </div>

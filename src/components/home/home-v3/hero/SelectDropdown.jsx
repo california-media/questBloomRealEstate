@@ -14,6 +14,49 @@ const SelectDropdown = ({ saleStatuses = [], filterFunctions }) => {
           : undefined,
       };
     },
+    control: (provided) => ({
+      ...provided,
+      cursor: "pointer",
+      padding: "0px",
+      paddingRight: "10px",
+      paddingLeft: "5px",
+      backgroundColor: "buttonface",
+      borderRadius: "12px",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      display:  "inline",
+      padding: "0px",
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: "inline",
+      padding: "0px",
+      paddingRight: "10px",
+      paddingLeft: "5px",
+    }),
+    // Add padding to input to make space for the icon
+    input: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingRight: "5px",
+      paddingLeft: "5px",
+    }),
+    // Ensure the placeholder also has proper spacing
+    placeholder: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingLeft: "5px",
+    }),
+    // Style the single value (selected value) to have proper spacing
+    singleValue: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingLeft: "5px",
+    }),
   };
 
   const statuses = [

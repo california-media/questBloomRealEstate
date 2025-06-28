@@ -41,6 +41,7 @@ const TopFilterBar = ({
   locationOptions = [],
   saleStatuses,
   propertyTypes,
+  activeFilterCount,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -61,9 +62,9 @@ const TopFilterBar = ({
   };
   return (
     <>
-      <div className="col-xl-9 d-none d-lg-block">
+      <div className="col-xl-9 d-none d-lg-block ">
         <div className="dropdown-lists">
-          <ul className="p-0 text-center text-xl-start ">
+          <ul className="p-0 text-center  text-xl-start ">
             <li className="list-inline-item position-relative">
               <button
                 type="button"
@@ -268,14 +269,30 @@ const TopFilterBar = ({
             </li> */}
             {/* End bed and bathroom check */}
 
-            <li className="list-inline-item">
+            <li
+              className="list-inline-item position-relative"
+              style={{ width: "150px" }}
+            >
               <button
                 type="button"
-                className="open-btn mb15"
+                className="open-btn mb15 position-relative d-flex align-items-center"
                 data-bs-toggle="modal"
                 data-bs-target="#advanceSeachModal"
               >
-                <i className="flaticon-settings me-2" /> Advanced Filter
+                <i className="flaticon-settings me-2 mt-1" /> Advanced 
+                {activeFilterCount > 0 && (
+                  <span
+                    className=" badge rounded-pill ms-2"
+                    style={{
+                      backgroundColor: "#797631",
+                      color: "white",
+                      paddingTop: "0.4rem",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {activeFilterCount}
+                  </span>
+                )}
               </button>
             </li>
           </ul>

@@ -17,6 +17,8 @@ const HeroContent = ({
   handleAllReadyOff,
   handleBuyRent,
   loading,
+  setModalOpen,
+  activeFilterCount,
 }) => {
   let propertyTypesStrings = propertyTypes.map((item) => item.value);
   const navigate = useNavigate();
@@ -105,15 +107,30 @@ const HeroContent = ({
                 <button
                   className="advance-search-btn col-2 ms-1 me-1 mt-3  d-none d-md-block"
                   style={{
-                    padding: "15px 13px",
                     borderRadius: "12px",
                     backgroundColor: "#f7f7f7",
+                  }}
+                  onClick={() => {
+                    setModalOpen(true);
                   }}
                   type="button"
                   data-bs-toggle="modal"
                   data-bs-target="#advanceSeachModal"
                 >
                   <span className="flaticon-settings" /> Advanced
+                  {activeFilterCount > 0 && (
+                    <span
+                      className=" badge rounded-pill ms-2"
+                      style={{
+                        backgroundColor: "#797631",
+                        color: "white",
+                        paddingTop: "0.4rem",
+                        fontSize: "0.8rem",
+                      }}
+                    >
+                      {activeFilterCount}
+                    </span>
+                  )}
                 </button>
                 <div className=" col-lg-auto ms-2 me  d-none d-md-block">
                   <button

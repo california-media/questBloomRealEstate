@@ -26,7 +26,7 @@ export default function ProperteyFiltering({ region }) {
     setRentalLocationOptions,
     rentalLocation,
     setPropertyTypes,
-
+    getActiveFilterCount,
     handlePriceRange,
     handleRentalLocation,
     handleCategories,
@@ -339,6 +339,7 @@ export default function ProperteyFiltering({ region }) {
 
         <div className="row">
           <TopFilterBar
+            activeFilterCount={getActiveFilterCount("rent")}
             setDataFetched={setDataFetched}
             colstyle={colstyle}
             setColstyle={setColstyle}

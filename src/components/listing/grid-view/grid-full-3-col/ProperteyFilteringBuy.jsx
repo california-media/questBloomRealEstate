@@ -36,7 +36,7 @@ export default function ProperteyFiltering({ region }) {
     setSaleStatuses,
     adminPropertyType,
     handleAdminPropertyType,
-
+    getActiveFilterCount,
     handlePriceRange,
     handleBuyLocation,
     handleCategories,
@@ -341,6 +341,7 @@ export default function ProperteyFiltering({ region }) {
 
         <div className="row">
           <TopFilterBar
+            activeFilterCount={getActiveFilterCount("buy")}
             setDataFetched={setDataFetched}
             colstyle={colstyle}
             setColstyle={setColstyle}

@@ -31,7 +31,7 @@ export default function ProperteyFiltering({ region }) {
     allLocation,
     setAllLocationOptions,
     allLocationOptions,
-
+    getActiveFilterCount,
     setPropertyTypes,
     setFacilityOptions,
     setSaleStatuses,
@@ -359,6 +359,7 @@ export default function ProperteyFiltering({ region }) {
 
         <div className="row">
           <TopFilterBar
+            activeFilterCount={getActiveFilterCount("all")}
             setDataFetched={setDataFetched}
             colstyle={colstyle}
             setColstyle={setColstyle}

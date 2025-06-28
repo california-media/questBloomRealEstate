@@ -4495,13 +4495,13 @@ section {
 
 .main-title,
 .main-title2 {
-    position: relative;
-    margin-bottom: 60px;
+    // position: relative;
+    margin-bottom: 0px;
 }
 @media (max-width: 991.98px) {
     .main-title,
     .main-title2 {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 }
 .main-title .title,
@@ -4518,7 +4518,7 @@ section {
 
 @media (max-width: 991.98px) {
     .main-title2 {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 }
 

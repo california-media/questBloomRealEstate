@@ -9,7 +9,6 @@ import PercentagePreHandover from "../PercentagePreHandover";
 import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
 
 const AdvanceFilterModal = ({ filterFunctions }) => {
-  
   ///local state befrore actually applying filter
 
   const [propertyType, setPropertyType] = useState("All Property Types");
@@ -41,12 +40,9 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
 
     if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
 
-    if (Array.isArray(filterFunctions.squirefeet))
-      setSquareFeet(
-        filterFunctions.squirefeet.length === 0
-          ? [0, 0]
-          : filterFunctions.squirefeet
-      );
+    if (Array.isArray(filterFunctions.squirefeet)) {
+      setSquareFeet(filterFunctions.squirefeet);
+    }
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
@@ -138,8 +134,9 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
                         className="form-control filterInput"
+                        value={squareFeet[0]}
                         onChange={(e) =>
                           setSquareFeet([Number(e.target.value), squareFeet[1]])
                         }
@@ -150,10 +147,11 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                     <span className="dark-color">-</span>
                     <div className="form-style1">
                       <input
-                        type="number"
+                        type="text"
                         className="form-control filterInput"
                         placeholder="Max"
                         id="maxFeet3"
+                        value={squareFeet[1]}
                         onChange={(e) =>
                           setSquareFeet([squareFeet[0], Number(e.target.value)])
                         }
