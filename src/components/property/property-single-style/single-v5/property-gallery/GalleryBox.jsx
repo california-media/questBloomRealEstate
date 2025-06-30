@@ -1,11 +1,14 @@
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
+import { ImageOff } from "lucide-react"; // Import the no-image icon from Lucide
 
 const GalleryBox = ({
   imageUrls = ["/images/listings/listing-single-slide4.jpg"],
   loading = true,
 }) => {
+  const isEmpty = imageUrls.length === 0;
+
   return (
     <>
       <Swiper
@@ -16,11 +19,11 @@ const GalleryBox = ({
           prevEl: ".single-pro-slide-prev__active",
         }}
         slidesPerView={1}
-        loop={true}
+        loop={!isEmpty} // Disable loop if empty to prevent infinite empty slides
         speed={1000}
       >
-        {imageUrls.map((imageUrl, index) => (
-          <SwiperSlide key={index}>
+        {isEmpty ? (
+          <SwiperSlide>
             <div
               style={{
                 aspectRatio: "3.2",
@@ -28,23 +31,48 @@ const GalleryBox = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: "gray",
               }}
               className="item"
             >
-              {loading ? (
-                <div className="spinner-border mx-auto m-5" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              ) : (
-                <img
-                  className=" w-100 h-100 cover"
-                  src={imageUrl.url}
-                  alt={`Image ${index + 1}`}
+              <div className="text-center p-4">
+                <ImageOff
+                  color={"white"}
+                  size={48}
+                  className="text-gray-400 mx-auto mb-3"
                 />
-              )}
+                <p className="text-white">No images available</p>
+              </div>
             </div>
           </SwiperSlide>
-        ))}
+        ) : (
+          imageUrls.map((imageUrl, index) => (
+            <SwiperSlide key={index}>
+              <div
+                style={{
+                  aspectRatio: "3.2",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="item"
+              >
+                {loading ? (
+                  <div className="spinner-border mx-auto m-5" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  <img
+                    className="w-100 h-100 cover"
+                    src={imageUrl.url} // Assuming imageUrl is an object with url property
+                    alt={`Image ${index + 1}`}
+                  />
+                )}
+              </div>
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
 
       <div className="rounded-arrow arrowY-center-position">
