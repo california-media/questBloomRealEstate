@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import api from "@/api/axios";
 import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
 import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
-import InteriorImages from "@/components/property/property-single-style/common/InteriorImages";
+import AdminInteriorImages from "@/components/property/property-single-style/common/AdminInteriorImages";
 import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 import PaymentPlans from "@/components/property/property-single-style/common/PaymentPlans";
 import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
@@ -225,14 +225,13 @@ const AdminSingleV5 = () => {
                         <div className="col-lg-12">
                           <div className="total_review d-flex align-items-center justify-content-between mb20">
                             <h6 className="fz17 mb15">
-                              <i className="fas fa-couch fz18 pe-2" />
-                              Interior Images
+                              Property Images
                             </h6>
                           </div>
                         </div>
                         {/* End review filter */}
 
-                        <InteriorImages interior={property?.interior} />
+                        <AdminInteriorImages interior={property?.photos} />
                         {/* End reviews */}
                       </div>
                     </div>

@@ -121,7 +121,25 @@ export default function ProperteyFiltering({ region }) {
     rentDuration,
     handleRentDuration,
   };
-
+  function sortListings(unsorted) {
+    let sorted = [];
+    if (currentSortingOption === "Newest") {
+      sorted = [...unsorted].sort((a, b) => b.yearBuilding - a.yearBuilding);
+    } else if (currentSortingOption.trim() === "Price Low") {
+      sorted = [...unsorted].sort(
+        (a, b) =>
+          a.price.split("$")[1].split(",").join("") -
+          b.price.split("$")[1].split(",").join("")
+      );
+    } else if (currentSortingOption.trim() === "Price High") {
+      sorted = [...unsorted].sort(
+        (a, b) =>
+          b.price.split("$")[1].split(",").join("") -
+          a.price.split("$")[1].split(",").join("")
+      );
+    }
+    return sorted;
+  }
   function getRequestParams(nextPage = 1) {
     const params = {
       page: nextPage,
@@ -178,7 +196,7 @@ export default function ProperteyFiltering({ region }) {
         return mapAdminApiDataToTemplateSingle(item, typePrefix);
       });
 
-      setListings([...listings, ...combinedListings]);
+      setListings(sortListings([...listings, ...mappedNewListings]));
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -219,7 +237,7 @@ export default function ProperteyFiltering({ region }) {
           const typePrefix = item.property_source === "rental" ? "qr" : "qb";
           return mapAdminApiDataToTemplateSingle(item, typePrefix);
         });
-        setListings(combinedListings);
+        setListings(sortListings(combinedListings));
         setHasMore(combinedListings.length === 9);
 
         // Fetch both location types in parallel

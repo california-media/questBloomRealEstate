@@ -114,6 +114,27 @@ export default function ProperteyFiltering({ region }) {
     rentDuration,
     handleRentDuration,
   };
+  function sortListings(unsorted) {
+    let sorted = [];
+    if (currentSortingOption === "Newest") {
+      sorted = [...unsorted].sort((a, b) => b.yearBuilding - a.yearBuilding);
+    } else if (currentSortingOption.trim() === "Price Low") {
+      sorted = [...unsorted].sort(
+        (a, b) =>
+          a.price.split("$")[1].split(",").join("") -
+          b.price.split("$")[1].split(",").join("")
+      );
+    } else if (currentSortingOption.trim() === "Price High") {
+      sorted = [...unsorted].sort(
+        (a, b) =>
+          b.price.split("$")[1].split(",").join("") -
+          a.price.split("$")[1].split(",").join("")
+      );
+    }
+    return sorted;
+  }
+  // Sorting effect remains the same
+  useEffect(() => setListings(sortListings(listings)), [currentSortingOption]);
 
   function getRequestParams(nextPage = 1) {
     const params = {
@@ -168,7 +189,7 @@ export default function ProperteyFiltering({ region }) {
         mapAdminApiDataToTemplateSingle(item, "qr")
       );
 
-      setListings([...listings, ...mappedNewListings]);
+      setListings(sortListings([...listings, ...mappedNewListings]));
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -209,7 +230,7 @@ export default function ProperteyFiltering({ region }) {
         const mappedNewListings = adminListings.data.map((item) =>
           mapAdminApiDataToTemplateSingle(item, "qr")
         );
-        setListings(mappedNewListings);
+        setListings(sortListings(mappedNewListings));
         setHasMore(adminListings.data.length === 9); // If we got 9 items, there might be more
 
         const newPropertyTypes = await adminApi.get("/rental-property-types");

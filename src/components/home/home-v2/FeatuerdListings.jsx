@@ -73,7 +73,7 @@ const FeaturedListings = ({ params }) => {
           ) : (
             listings.slice(5, 13).map((listing) => (
               <SwiperSlide key={listing.id} style={{ height: "90%" }}>
-                <Link to={`/off-plan/${listing.id}`} className="w-100">
+                <Link to={`/off-plan/op-${listing.id}`} className="w-100">
                   <div className="h-100 w-100">
                     <div
                       className="listing-style1 w-100 d-flex flex-column"
@@ -119,11 +119,11 @@ const FeaturedListings = ({ params }) => {
                         </div>
 
                         <div className="list-meta d-flex gap-0 align-items-center">
-                          <a href="#" className="text-start">
+                          <span className="text-start">
                             <UserIcon size={16} color="gray" className="mb-1" />{" "}
                             {listing.developer}
-                          </a>
-                          <a href="#" className="text-start">
+                          </span>
+                          <span className="text-start">
                             {listing.post_handover ? (
                               <Check size={16} color="gray" className="m-1" />
                             ) : (
@@ -136,11 +136,11 @@ const FeaturedListings = ({ params }) => {
                             {listing.post_handover
                               ? "Post Handover"
                               : "Pre Handover"}
-                          </a>
-                          <a href="#" className="text-start">
+                          </span>
+                          <span  className="text-start">
                             <Clock size={16} color="gray" className="mb-1" />{" "}
                             {listing.yearBuilding}
-                          </a>
+                          </span>
                         </div>
 
                         <div className="list-meta2 d-flex justify-content-between align-items-center">

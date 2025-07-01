@@ -171,7 +171,10 @@ const SingleV5 = () => {
 
                 <h4 className="title fz17 mb30 mt50">Property Details</h4>
                 <div className="row">
-                  <PropertyDetails property={property} />
+                  <PropertyDetails
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
                 </div>
               </div>
               {/* End .ps-widget */}

@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-const PropertyDetails = ({ property }) => {
-      const location = useLocation();
-      const isOffPlan = location.pathname.startsWith("/off-plan");
+const PropertyDetails = ({ property, prefixedId }) => {
+  const location = useLocation();
+  const isOffPlan = location.pathname.startsWith("/off-plan");
   // Helper function to get comma-separated bedroom list
   const getBedroomList = () => {
     if (!property?.unit_blocks || property.unit_blocks.length === 0) {
@@ -41,7 +41,9 @@ const PropertyDetails = ({ property }) => {
     if (!property?.completion_datetime) return "Under Construction";
     const year = new Date(property.completion_datetime).getFullYear();
     const currentYear = new Date().getFullYear();
-    return year > currentYear ? `${!isOffPlan ? "Est. " : ""} ${year}` : year.toString();
+    return year > currentYear
+      ? `${!isOffPlan ? "Est. " : ""} ${year}`
+      : year.toString();
   };
   // Helper function to get area range in sqft
   const getAreaRange = () => {
@@ -121,7 +123,7 @@ const PropertyDetails = ({ property }) => {
     [
       {
         label: "Property ID",
-        value: property?.id || "N/A",
+        value: prefixedId || "N/A",
       },
       {
         label: "Price",

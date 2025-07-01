@@ -33,8 +33,7 @@ const AutoCarouselHero = () => {
         const response = await adminApi.get("/media/home-page-banner");
         response.data.length === 0
           ? setImages(defaultImages)
-          : setImages(response.data);
-        console.log(response.data);
+          : setImages(response.data.map((image) => adminBaseUrl + image.url));
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch banner images");
@@ -73,7 +72,7 @@ const AutoCarouselHero = () => {
               className={`carousel-slide ${
                 index === currentIndex ? "active" : ""
               }`}
-              style={{ backgroundImage: `url(${adminBaseUrl + image}` }}
+              style={{ backgroundImage: `url(${image}` }}
             ></div>
           ))}
         </div>

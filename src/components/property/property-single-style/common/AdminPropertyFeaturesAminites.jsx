@@ -32,8 +32,8 @@ const AdminPropertyFeaturesAminites = ({ amenities }) => {
             {row.map((amenity, index) => (
               <div key={index} className="facility-item mb20">
                 <Item
-                  original={adminBaseUrl + amenity.image}
-                  thumbnail={adminBaseUrl + amenity.image}
+                  original={adminBaseUrl + amenity.image_url}
+                  thumbnail={adminBaseUrl + amenity.image_url}
                   width={1100}
                   height={700}
                 >
@@ -64,15 +64,30 @@ const AdminPropertyFeaturesAminites = ({ amenities }) => {
                           e.currentTarget.style.transform = "scale(1)";
                         }}
                       >
-                        <img
-                          src={adminBaseUrl + amenity.image}
-                          alt={amenity.name}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
+                        {amenity.image_url ? (
+                          <img
+                            src={adminBaseUrl + amenity.image_url}
+                            alt={amenity.title}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              backgroundColor: "#f0f0f0",
+                            }}
+                          >
+                            <ImageIcon size={24} color="#6c757d" />
+                          </div>
+                        )}
                         {/* Overlay expand icon */}
                         <div
                           style={{
@@ -99,7 +114,7 @@ const AdminPropertyFeaturesAminites = ({ amenities }) => {
                         </div>
                       </div>
                       <div className="facility-info flex-grow-1">
-                        <h6 className="mb-1 text-dark">{amenity.name}</h6>
+                        <h6 className="mb-1 text-dark">{amenity.title}</h6>
                       </div>
                     </div>
                   )}

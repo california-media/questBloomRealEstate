@@ -126,7 +126,7 @@ const FeaturedListingsHome = ({ index, section }) => {
                             style={{ height: "90%" }}
                           >
                             <Link
-                              to={`/off-plan/${listing.id}`}
+                              to={`/off-plan/op-${listing.id}`}
                               className="w-100"
                             >
                               <div className="h-100 w-100">

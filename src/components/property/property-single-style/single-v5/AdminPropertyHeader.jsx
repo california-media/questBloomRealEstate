@@ -6,7 +6,7 @@ const styles = {
     // Base style (no shadow by default)
     textShadow: "none",
     // Apply shadow only on desktop (≥ 992px)
-    "@media (min-width: 992px)": {
+    "@media (minWidth: 992px)": {
       textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
     },
   },
