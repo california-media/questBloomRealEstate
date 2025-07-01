@@ -120,7 +120,6 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
   };
-  console.log(listings.length)
   function sortListings(unsorted) {
     let sorted = [];
     if (currentSortingOption === "Newest") {
