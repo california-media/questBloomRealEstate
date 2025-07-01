@@ -7,6 +7,7 @@ import usePropertyStore from "@/store/propertyStore";
 import { useLocation } from "react-router-dom";
 import adminApi from "@/api/adminApi";
 import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateSingle";
+import { useInView } from "react-intersection-observer";
 
 export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
@@ -61,7 +62,9 @@ export default function ProperteyFiltering({ region }) {
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const { ref, inView } = useInView({
+    threshold: 0.1, // trigger when 10% of the loader is visible
+  });
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
     resetAllFilters();
@@ -117,7 +120,7 @@ export default function ProperteyFiltering({ region }) {
     percentagePreHandover,
     handlePercentagePreHandover,
   };
-
+  console.log(listings.length)
   function sortListings(unsorted) {
     let sorted = [];
     if (currentSortingOption === "Newest") {
@@ -219,7 +222,6 @@ export default function ProperteyFiltering({ region }) {
     bathrooms,
     squirefeet,
     searchTerm,
-   
   ]);
   // Initial data fetch
   useEffect(() => {
@@ -287,19 +289,12 @@ export default function ProperteyFiltering({ region }) {
     propertyId,
   ]);
   // Handle scroll events for infinite loading
+  // Handle scroll events for infinite loading
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 500
-      ) {
-        fetchMoreData();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [fetchMoreData]);
+    if (inView) {
+      fetchMoreData();
+    }
+  }, [inView, fetchMoreData]);
 
   return (
     <section className="pt0 pb90 bgc-f7">
@@ -390,6 +385,7 @@ export default function ProperteyFiltering({ region }) {
         ) : (
           <div className="row">
             <FeaturedListingsBuy colstyle={colstyle} data={listings} />
+            <div ref={ref} style={{ height: "1px" }} />
             {loading && (
               <div className="text-center my-3">
                 <div className="spinner-border" role="status">

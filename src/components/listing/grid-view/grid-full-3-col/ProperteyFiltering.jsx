@@ -8,6 +8,7 @@ import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import usePropertyStore from "@/store/propertyStore";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useLocation } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 
 const isDev = import.meta.env.DEV;
 
@@ -76,7 +77,9 @@ export default function ProperteyFiltering({ region }) {
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const { ref, inView } = useInView({
+    threshold: 0.1, // trigger when 10% of the loader is visible
+  });
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
     resetAllFilters();
@@ -317,18 +320,10 @@ export default function ProperteyFiltering({ region }) {
 
   // Handle scroll events for infinite loading
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 500
-      ) {
-        fetchMoreData();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [fetchMoreData]);
+    if (inView) {
+      fetchMoreData();
+    }
+  }, [inView, fetchMoreData]);
 
   return (
     <section className="pt0 pb90 bgc-f7">
@@ -427,6 +422,7 @@ export default function ProperteyFiltering({ region }) {
         ) : (
           <div className="row">
             <FeaturedListings colstyle={colstyle} data={listings} />
+            <div ref={ref} style={{ height: "1px" }} />
             {loading && (
               <div className="text-center my-3">
                 <div className="spinner-border" role="status">
