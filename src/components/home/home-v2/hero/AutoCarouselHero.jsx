@@ -33,7 +33,7 @@ const AutoCarouselHero = () => {
         const response = await adminApi.get("/media/home-page-banner");
         response.data.length === 0
           ? setImages(defaultImages)
-          : setImages(response.data.map((image) => adminBaseUrl + image.url));
+          : setImages(response.data.map((image) => adminBaseUrl + image));
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch banner images");
