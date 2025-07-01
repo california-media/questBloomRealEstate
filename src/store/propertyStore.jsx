@@ -116,7 +116,7 @@ const usePropertyStore = create((set, get) => ({
       propertyId: "",
       listingStatus: "All",
       detailedListings: [],
-      setAdminDetailedListings: [],
+      adminDetailedListings: [],
       searchTerm: "",
       adminPropertyType: "All Property Types",
     }),
