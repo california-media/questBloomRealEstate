@@ -137,8 +137,13 @@ export default function ProperteyFiltering({ region }) {
     }
     return sorted;
   }
-  // Sorting effect remains the same
-  useEffect(() => setListings(sortListings(listings)), [currentSortingOption]);
+
+  // Handle sorting changes - only re-sort when sorting option changes
+  useEffect(() => {
+    if (listings.length > 0) {
+      setListings((prevListings) => sortListings(prevListings));
+    }
+  }, [currentSortingOption]);
 
   function getRequestParams(nextPage = 1) {
     const params = {
@@ -192,7 +197,11 @@ export default function ProperteyFiltering({ region }) {
         mapAdminApiDataToTemplateSingle(item, "qb")
       );
 
-      setListings(sortListings([...listings, ...mappedNewListings]));
+      const newListings = [...listings, ...mappedNewListings];
+      setListings(sortListings(newListings));
+
+      // Update hasMore based on returned data length
+      setHasMore(mappedNewListings.length === 9);
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -210,8 +219,7 @@ export default function ProperteyFiltering({ region }) {
     bathrooms,
     squirefeet,
     searchTerm,
-    setListings,
-    setLoading,
+   
   ]);
   // Initial data fetch
   useEffect(() => {
@@ -278,7 +286,6 @@ export default function ProperteyFiltering({ region }) {
     priceRange,
     propertyId,
   ]);
-
   // Handle scroll events for infinite loading
   useEffect(() => {
     const handleScroll = () => {

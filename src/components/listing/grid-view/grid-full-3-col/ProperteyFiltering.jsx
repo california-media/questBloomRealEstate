@@ -154,6 +154,14 @@ export default function ProperteyFiltering({ region }) {
     }
     return sorted;
   }
+
+  // Handle sorting changes - only re-sort when sorting option changes
+  useEffect(() => {
+    if (listings.length > 0) {
+      setListings((prevListings) => sortListings(prevListings));
+    }
+  }, [currentSortingOption]);
+
   function getRequestParams(nextPage = 1) {
     const params = {
       page: nextPage,
@@ -212,7 +220,11 @@ export default function ProperteyFiltering({ region }) {
         mapApiDataToTemplateSingle(item, "op")
       );
 
-      setListings(sortListings([...listings, ...mappedNewListings]));
+      const newListings = [...listings, ...mappedNewListings];
+      setListings(sortListings(newListings));
+
+      // Update hasMore based on returned data length
+      setHasMore(mappedNewListings.length === 9);
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -234,8 +246,6 @@ export default function ProperteyFiltering({ region }) {
     listingStatus,
     region,
     searchTerm,
-    setListings,
-    setLoading,
   ]);
   // Initial data fetch
   useEffect(() => {
@@ -319,32 +329,6 @@ export default function ProperteyFiltering({ region }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchMoreData]);
-
-  // Sorting effect remains the same
-  useEffect(() => {
-    if (currentSortingOption === "Newest") {
-      const sorted = [...listings].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setListings(sorted);
-    } else if (currentSortingOption.trim() === "Price Low") {
-      const sorted = [...listings].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
-      setListings(sorted);
-    } else if (currentSortingOption.trim() === "Price High") {
-      const sorted = [...listings].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
-      setListings(sorted);
-    } else {
-      setListings(listings);
-    }
-  }, [currentSortingOption]);
 
   return (
     <section className="pt0 pb90 bgc-f7">

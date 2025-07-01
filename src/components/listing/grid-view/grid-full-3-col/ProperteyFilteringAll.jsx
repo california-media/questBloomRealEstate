@@ -13,7 +13,6 @@ export default function ProperteyFiltering({ region }) {
   const {
     filteredData,
     sortedFilteredData,
-
     priceRange,
     categories,
     bedrooms,
@@ -38,7 +37,6 @@ export default function ProperteyFiltering({ region }) {
     rentDuration,
     handleRentDuration,
     handlePriceRange,
-
     handleCategories,
     handleBedrooms,
     handleBathrooms,
@@ -83,13 +81,16 @@ export default function ProperteyFiltering({ region }) {
       element.value = "";
     });
   };
+
   const navLocation = useLocation();
   const hasFilters = navLocation.state?.hasFilters || false;
+
   useEffect(() => {
     if (!hasFilters) {
       resetFilter();
     }
   }, [hasFilters]);
+
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
@@ -121,25 +122,36 @@ export default function ProperteyFiltering({ region }) {
     rentDuration,
     handleRentDuration,
   };
+
+  // Consistent sorting function
   function sortListings(unsorted) {
     let sorted = [];
     if (currentSortingOption === "Newest") {
       sorted = [...unsorted].sort((a, b) => b.yearBuilding - a.yearBuilding);
     } else if (currentSortingOption.trim() === "Price Low") {
-      sorted = [...unsorted].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
+      sorted = [...unsorted].sort((a, b) => {
+        const priceA = parseFloat(
+          a.price.split("$")[1]?.split(",").join("") || 0
+        );
+        const priceB = parseFloat(
+          b.price.split("$")[1]?.split(",").join("") || 0
+        );
+        return priceA - priceB;
+      });
     } else if (currentSortingOption.trim() === "Price High") {
-      sorted = [...unsorted].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
+      sorted = [...unsorted].sort((a, b) => {
+        const priceA = parseFloat(
+          a.price.split("$")[1]?.split(",").join("") || 0
+        );
+        const priceB = parseFloat(
+          b.price.split("$")[1]?.split(",").join("") || 0
+        );
+        return priceB - priceA;
+      });
     }
     return sorted;
   }
+
   function getRequestParams(nextPage = 1) {
     const params = {
       page: nextPage,
@@ -151,7 +163,6 @@ export default function ProperteyFiltering({ region }) {
         unit_price_from: priceRange[0],
       }),
       ...(priceRange[1] != 10000000 && {
-        ///if 10000000 then that means no cap
         unit_price_to: priceRange[1],
       }),
       ...(propertyId != "" && { project_ids: propertyId }),
@@ -189,14 +200,19 @@ export default function ProperteyFiltering({ region }) {
         setHasMore(false);
         return;
       }
+
       // Combine and map both sets of listings
       const combinedListings = combinedResponse.data.data.map((item) => {
-        // Determine the type prefix based on property_source
         const typePrefix = item.property_source === "rental" ? "qr" : "qb";
         return mapAdminApiDataToTemplateSingle(item, typePrefix);
       });
 
-      setListings(sortListings([...listings, ...mappedNewListings]));
+      // Sort the new combined listings and add to existing listings
+      const newListings = [...listings, ...combinedListings];
+      setListings(sortListings(newListings));
+
+      // Update hasMore based on returned data length
+      setHasMore(combinedListings.length === 9);
     } catch (error) {
       console.error("Failed to fetch more data", error);
     } finally {
@@ -207,6 +223,7 @@ export default function ProperteyFiltering({ region }) {
     loading,
     hasMore,
     adminPropertyType,
+    currentSortingOption,
     priceRange,
     propertyId,
     allLocation,
@@ -215,9 +232,8 @@ export default function ProperteyFiltering({ region }) {
     squirefeet,
     rentDuration,
     searchTerm,
-    setListings,
-    setLoading,
   ]);
+
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
@@ -225,18 +241,18 @@ export default function ProperteyFiltering({ region }) {
       setLoading(true);
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
+
       try {
-        // Fetch both resale and rental properties in parallel
         const combinedResponse = await adminApi.get("/all-properties", {
           params: getRequestParams(),
         });
 
         // Combine and map both sets of listings
         const combinedListings = combinedResponse.data.data.map((item) => {
-          // Determine the type prefix based on property_source
           const typePrefix = item.property_source === "rental" ? "qr" : "qb";
           return mapAdminApiDataToTemplateSingle(item, typePrefix);
         });
+
         setListings(sortListings(combinedListings));
         setHasMore(combinedListings.length === 9);
 
@@ -246,6 +262,7 @@ export default function ProperteyFiltering({ region }) {
             adminApi.get("/resale-locations"),
             adminApi.get("/rental-locations"),
           ]);
+
         // Merge and deduplicate all locations
         const uniqueLocations = [
           { value: "All Locations", label: "All Locations" },
@@ -258,7 +275,7 @@ export default function ProperteyFiltering({ region }) {
         ];
         setAllLocationOptions(uniqueLocations);
 
-        const newPropertyTypes = await adminApi.get("/rental-property-types"); ///same as resale
+        const newPropertyTypes = await adminApi.get("/rental-property-types");
         const propertyTypeArray = [
           { value: "All Property Types", label: "All Property Types" },
           ...newPropertyTypes.data.map((type) => ({
@@ -305,31 +322,13 @@ export default function ProperteyFiltering({ region }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchMoreData]);
 
-  // Sorting effect remains the same
+  // Handle sorting changes - only re-sort when sorting option changes
   useEffect(() => {
-    if (currentSortingOption === "Newest") {
-      const sorted = [...listings].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setListings(sorted);
-    } else if (currentSortingOption.trim() === "Price Low") {
-      const sorted = [...listings].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
-      setListings(sorted);
-    } else if (currentSortingOption.trim() === "Price High") {
-      const sorted = [...listings].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
-      setListings(sorted);
-    } else {
-      setListings(listings);
+    if (listings.length > 0) {
+      setListings((prevListings) => sortListings(prevListings));
     }
   }, [currentSortingOption]);
+
 
   return (
     <section className="pt0 pb90 bgc-f7">
@@ -389,12 +388,14 @@ export default function ProperteyFiltering({ region }) {
           />
         </div>
         {/* End TopFilterBar */}
+
         {searchTerm && (
           <p className="mb30">
             Search Results for:{" "}
             <span className="fw-semibold">"{searchTerm}"</span>
           </p>
         )}
+
         {loading && listings.length === 0 ? (
           <div className="row">
             <div

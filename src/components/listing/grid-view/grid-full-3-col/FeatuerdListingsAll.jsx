@@ -23,7 +23,7 @@ const FeaturedListings = ({ data, colstyle }) => {
             className={`d-flex ${
               colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
             }`}
-            key={listing.id}
+            key={listing.listing_prefix + listing.id}
           >
             <div
               className={`listing-style1 ${
