@@ -30,8 +30,8 @@ const AdminPropertyDetails = ({ property, prefixedId }) => {
   // Helper function to get property type
   const getPropertyType = () => {
     return (
-      (property?.property_type || "Residential").charAt(0).toUpperCase() +
-      property?.property_type?.slice(1)
+      (property?.property_type.name || "Residential").charAt(0).toUpperCase() +
+      property?.property_type.name?.slice(1)
     );
   };
 

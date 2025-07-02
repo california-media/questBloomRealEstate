@@ -114,6 +114,7 @@ const AdminSingleV5 = () => {
       });
     }
   }, [property]);
+
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -224,9 +225,7 @@ const AdminSingleV5 = () => {
                       <div className="row">
                         <div className="col-lg-12">
                           <div className="total_review d-flex align-items-center justify-content-between mb20">
-                            <h6 className="fz17 mb15">
-                              Property Images
-                            </h6>
+                            <h6 className="fz17 mb15">Property Images</h6>
                           </div>
                         </div>
                         {/* End review filter */}

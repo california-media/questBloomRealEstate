@@ -76,7 +76,8 @@ export default function ProperteyFiltering({ region }) {
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
   const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
@@ -202,59 +203,12 @@ export default function ProperteyFiltering({ region }) {
     return params;
   }
 
-  // Fetch more data when reaching bottom
-  const fetchMoreData = useCallback(async () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    try {
-      const nextPage = Math.floor(listings.length / 9) + 1;
-
-      const { data } = await api.get("/properties", {
-        params: getRequestParams(nextPage),
-      });
-
-      if (data.items.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      const mappedNewListings = data.items.map((item) =>
-        mapApiDataToTemplateSingle(item, "op")
-      );
-
-      const newListings = [...listings, ...mappedNewListings];
-      setListings(sortListings(newListings));
-
-      // Update hasMore based on returned data length
-      setHasMore(mappedNewListings.length === 9);
-    } catch (error) {
-      console.error("Failed to fetch more data", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [
-    listings,
-    loading,
-    hasMore,
-    selectedPropertyType,
-    priceRange,
-    propertyId,
-    yearBuild,
-    percentagePreHandover,
-    location,
-    bedrooms,
-    bathrooms,
-    squirefeet,
-    listingStatus,
-    region,
-    searchTerm,
-  ]);
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
       setLoading(true);
       setListings([]); // Clear existing listings
+      setInitialLoading(true);
       setHasMore(true); // Reset hasMore when filters change
       try {
         const { data } = await api.get("/properties", {
@@ -265,7 +219,7 @@ export default function ProperteyFiltering({ region }) {
         const mappedNewListings = data.items.map((item) =>
           mapApiDataToTemplateSingle(item, "op")
         );
-        setListings(sortListings(mappedNewListings));
+        setListings(mappedNewListings);
         setHasMore(data.items.length === 9); // If we got 9 items, there might be more
 
         const newSaleStatuses = await api.get("/sale-statuses");
@@ -292,18 +246,16 @@ export default function ProperteyFiltering({ region }) {
           })),
         ];
         setLocationOptions(locationArray);
-
-        setDataFetched(true);
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
         setLoading(false);
+        setInitialLoading(false);
       }
     }
 
     fetchInitialData();
   }, [
-    region,
     searchTerm,
     listingStatus,
     selectedPropertyType,
@@ -319,12 +271,38 @@ export default function ProperteyFiltering({ region }) {
   ]);
 
   // Handle scroll events for infinite loading
-  useEffect(() => {
-    if (inView) {
-      fetchMoreData();
-    }
-  }, [inView, fetchMoreData]);
+  // Fetch more data when reaching bottom
 
+  useEffect(() => {
+    const fetchMoreData = async () => {
+      if (inView) {
+        if (loading || !hasMore || initialLoading) return;
+
+        setLoading(true);
+        try {
+          const nextPage = Math.floor(listings.length / 9) + 1;
+
+          const { data } = await api.get("/properties", {
+            params: getRequestParams(nextPage),
+          });
+
+          const mappedNewListings = data.items.map((item) =>
+            mapApiDataToTemplateSingle(item, "op")
+          );
+
+          setListings([...listings, ...mappedNewListings]);
+
+          // Update hasMore based on returned data length
+          setHasMore(mappedNewListings.length === 9);
+        } catch (error) {
+          console.error("Failed to fetch more data", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchMoreData();
+  }, [inView, initialLoading]);
   return (
     <section className="pt0 pb90 bgc-f7">
       <div className="container">

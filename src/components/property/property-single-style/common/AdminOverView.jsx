@@ -34,10 +34,10 @@ const AdminOverView = ({ property, prefixedId }) => {
 
   // Helper function to get property type
   const getPropertyType = () => {
-    if (!property?.property_type) return "Residential";
+    if (!property?.property_type?.name) return "Residential";
 
     // Capitalize first letter of each word
-    return property.property_type
+    return property.property_type.name
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");

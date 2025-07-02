@@ -60,8 +60,10 @@ export default function ProperteyFiltering({ region }) {
   const [hasMore, setHasMore] = useState(true);
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
+
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
@@ -178,50 +180,6 @@ export default function ProperteyFiltering({ region }) {
     return params;
   }
 
-  // Fetch more data when reaching bottom
-  const fetchMoreData = useCallback(async () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    try {
-      const nextPage = Math.floor(listings.length / 9) + 1;
-
-      const { data: adminListings } = await adminApi.get("/resale-properties", {
-        params: getRequestParams(nextPage),
-      });
-
-      if (adminListings.data.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      const mappedNewListings = adminListings.data.map((item) =>
-        mapAdminApiDataToTemplateSingle(item, "qb")
-      );
-
-      const newListings = [...listings, ...mappedNewListings];
-      setListings(sortListings(newListings));
-
-      // Update hasMore based on returned data length
-      setHasMore(mappedNewListings.length === 9);
-    } catch (error) {
-      console.error("Failed to fetch more data", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [
-    listings,
-    loading,
-    hasMore,
-    adminPropertyType,
-    priceRange,
-    propertyId,
-    buyLocation,
-    bedrooms,
-    bathrooms,
-    squirefeet,
-    searchTerm,
-  ]);
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
@@ -229,7 +187,7 @@ export default function ProperteyFiltering({ region }) {
       setLoading(true);
       setListings([]);
       setHasMore(true);
-
+      setInitialLoading(true);
       try {
         // Fire all requests in parallel
         const [listingsRes, propertyTypesRes, locationsRes] = await Promise.all(
@@ -262,7 +220,7 @@ export default function ProperteyFiltering({ region }) {
         ];
 
         // Single state update for all data
-        setListings(sortListings(mappedNewListings));
+        setListings(mappedNewListings);
         setHasMore(listingsRes.data.data.length === 9);
         setPropertyTypes(propertyTypeArray);
         setBuyLocationOptions(locationArray);
@@ -271,6 +229,7 @@ export default function ProperteyFiltering({ region }) {
         console.error("Failed to fetch listings", error);
       } finally {
         setLoading(false);
+        setInitialLoading(false);
       }
     }
 
@@ -290,10 +249,40 @@ export default function ProperteyFiltering({ region }) {
   // Handle scroll events for infinite loading
   // Handle scroll events for infinite loading
   useEffect(() => {
-    if (inView) {
-      fetchMoreData();
-    }
-  }, [inView, fetchMoreData]);
+    const fetchMoreData = async () => {
+      if (inView) {
+        if (loading || !hasMore || initialLoading) return;
+        console.log("Fetching more data");
+
+        setLoading(true);
+        try {
+          const nextPage = Math.floor(listings.length / 9) + 1;
+
+          const { data: adminListings } = await adminApi.get(
+            "/resale-properties",
+            {
+              params: getRequestParams(nextPage),
+            }
+          );
+
+          const mappedNewListings = adminListings.data.map((item) =>
+            mapAdminApiDataToTemplateSingle(item, "qb")
+          );
+
+          const newListings = [...listings, ...mappedNewListings];
+          setListings(newListings);
+
+          // Update hasMore based on returned data length
+          setHasMore(mappedNewListings.length === 9);
+        } catch (error) {
+          console.error("Failed to fetch more data", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchMoreData();
+  }, [inView, initialLoading]);
 
   return (
     <section className="pt0 pb90 bgc-f7">

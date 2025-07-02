@@ -62,7 +62,9 @@ export default function ProperteyFiltering({ region }) {
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
   const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
+
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
@@ -187,56 +189,6 @@ export default function ProperteyFiltering({ region }) {
     return params;
   }
 
-  // Fetch more data when reaching bottom
-  const fetchMoreData = useCallback(async () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    try {
-      const nextPage = Math.floor(listings.length / 9) + 1;
-
-      const combinedResponse = await adminApi.get("/all-properties", {
-        params: getRequestParams(nextPage),
-      });
-
-      if (combinedResponse.data.data.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      // Combine and map both sets of listings
-      const combinedListings = combinedResponse.data.data.map((item) => {
-        const typePrefix = item.property_source === "rental" ? "qr" : "qb";
-        return mapAdminApiDataToTemplateSingle(item, typePrefix);
-      });
-
-      // Sort the new combined listings and add to existing listings
-      const newListings = [...listings, ...combinedListings];
-      setListings(sortListings(newListings));
-
-      // Update hasMore based on returned data length
-      setHasMore(combinedListings.length === 9);
-    } catch (error) {
-      console.error("Failed to fetch more data", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [
-    listings,
-    loading,
-    hasMore,
-    adminPropertyType,
-    currentSortingOption,
-    priceRange,
-    propertyId,
-    allLocation,
-    bedrooms,
-    bathrooms,
-    squirefeet,
-    rentDuration,
-    searchTerm,
-  ]);
-
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
@@ -244,6 +196,7 @@ export default function ProperteyFiltering({ region }) {
       setLoading(true);
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
+      setInitialLoading(true);
 
       try {
         const combinedResponse = await adminApi.get("/all-properties", {
@@ -256,7 +209,7 @@ export default function ProperteyFiltering({ region }) {
           return mapAdminApiDataToTemplateSingle(item, typePrefix);
         });
 
-        setListings(sortListings(combinedListings));
+        setListings(combinedListings);
         setHasMore(combinedListings.length === 9);
 
         // Fetch both location types in parallel
@@ -287,12 +240,11 @@ export default function ProperteyFiltering({ region }) {
           })),
         ];
         setPropertyTypes(propertyTypeArray);
-
-        setDataFetched(true);
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
         setLoading(false);
+        setInitialLoading(false);
       }
     }
 
@@ -311,13 +263,40 @@ export default function ProperteyFiltering({ region }) {
   ]);
 
   // Handle scroll events for infinite loading
-  // Handle scroll events for infinite loading
-  // Handle scroll events for infinite loading
+
   useEffect(() => {
-    if (inView) {
-      fetchMoreData();
-    }
-  }, [inView, fetchMoreData]);
+    const fetchMoreData = async () => {
+      if (inView) {
+        if (loading || !hasMore || initialLoading) return;
+
+        setLoading(true);
+        try {
+          const nextPage = Math.floor(listings.length / 9) + 1;
+
+          const combinedResponse = await adminApi.get("/all-properties", {
+            params: getRequestParams(nextPage),
+          });
+
+          // Combine and map both sets of listings
+          const combinedListings = combinedResponse.data.data.map((item) => {
+            const typePrefix = item.property_source === "rental" ? "qr" : "qb";
+            return mapAdminApiDataToTemplateSingle(item, typePrefix);
+          });
+
+          const newListings = [...listings, ...combinedListings];
+          setListings(newListings);
+
+          // Update hasMore based on returned data length
+          setHasMore(combinedListings.length === 9);
+        } catch (error) {
+          console.error("Failed to fetch more data", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchMoreData();
+  }, [inView, initialLoading]);
 
   // Handle sorting changes - only re-sort when sorting option changes
   useEffect(() => {

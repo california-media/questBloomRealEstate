@@ -57,6 +57,7 @@ const ExtraPropertyDetails = ({ property }) => {
             padding: "25px",
             color: "#797633",
             position: "relative",
+            border: "1px solid #e9ecef",
             overflow: "hidden",
           }}
         >
@@ -145,16 +146,30 @@ const ExtraPropertyDetails = ({ property }) => {
       </div>
 
       {/* Property Specifications Section */}
-      <div className="col-md-6 mb-4">
+      <div className="col-md-12 p-2 mb-4">
         <div
           style={{
             background: "#f8f9fa",
             borderRadius: "12px",
             padding: "25px",
+            position: "relative",
+            // border: "2px solid #797633",
             border: "1px solid #e9ecef",
             height: "100%",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              right: "0",
+              height: "10px",
+              // background:
+              //   "linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%)",
+              borderRadius: "12px 12px 0 0",
+            }}
+          ></div>
           <div className="d-flex align-items-center mb-4">
             <h5 className="mb-0" style={{ color: "black", fontWeight: "600" }}>
               Property Specifications
@@ -246,7 +261,7 @@ const ExtraPropertyDetails = ({ property }) => {
       </div>
 
       {/* Financial & Timeline Section */}
-      <div className="col-md-6 mb-4">
+      {/* <div className="col-md-6 mb-4">
         <div
           style={{
             background: "linear-gradient(135deg, #fff 0%, #f8f9fa 100%)",
@@ -353,7 +368,7 @@ const ExtraPropertyDetails = ({ property }) => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Additional Features Section */}
       <div className="col-12">
