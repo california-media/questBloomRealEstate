@@ -5,6 +5,7 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
+
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
 
