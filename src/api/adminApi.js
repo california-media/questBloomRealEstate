@@ -11,7 +11,7 @@ const adminApi = axios.create({
     Accept: "application/json",
     "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 export { adminBaseUrl };
 export default adminApi;

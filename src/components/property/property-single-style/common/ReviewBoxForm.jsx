@@ -1,4 +1,5 @@
 import adminApi from "@/api/adminApi";
+import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -83,42 +84,31 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
 
     try {
       // Send to CRM API
-      // const crmResponse = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization:
-      //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
-      //   },
-      //   body: JSON.stringify(enquiryData),
-      // });
+      const crmResponse = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+        },
+        body: JSON.stringify(enquiryData),
+      });
 
-      // const crmData = await crmResponse.json();
+      const crmData = await crmResponse.json();
 
-      if (true || (crmResponse.ok && crmData.status)) {
+      if (crmResponse.ok && crmData.status) {
         // Send email notification to admin
-        console.log(enquiryData);
         const { status, source, assigned, ...cleanedEnquiry } = enquiryData;
-        await adminApi.post("/crm-leads-email", {
-          subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
+
+        ////work around from vercel API until cors POST error on laravel API is not resolved
+        await api.post("/send-crm-lead-email", {
+          subject: "Property Enquiry",
           lead: cleanedEnquiry,
         });
 
-        
-
-        // await fetch("http://localhost:8000/api/crm-leads-email", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Accept: "application/json",
-        //     "X-Requested-With": "XMLHttpRequest",
-        //     "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
-        //     credentials: "include",
-        //   },
-        //   body: JSON.stringify({
-        //     subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
-        //     lead: cleanedEnquiry,
-        //   }),
+        // await adminApi.post("/crm-leads-email", {
+        //   subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
+        //   lead: cleanedEnquiry,
         // });
 
         setSubmitStatus({
