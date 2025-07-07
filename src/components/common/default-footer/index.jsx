@@ -5,8 +5,30 @@ import Social from "./Social";
 import Subscribe from "./Subscribe";
 import MenuWidget from "./MenuWidget";
 import Copyright from "./Copyright";
+import adminApi, { adminBaseUrl } from "@/api/adminApi";
+import { useEffect, useState } from "react";
 
 const Footer = () => {
+  const [logos, setLogos] = useState({
+    whiteLogo: "/images/Questrealstatewhite.svg",
+  });
+
+  // Fetch theme images on component mount
+  useEffect(() => {
+    const fetchThemeImages = async () => {
+      try {
+        const { data } = await adminApi.get("/media/theme-images");
+
+        setLogos((prev) => ({
+          whiteLogo: data.logo_white || prev.whiteLogo,
+        }));
+      } catch (error) {
+        console.error("Failed to fetch theme images:", error);
+      }
+    };
+
+    fetchThemeImages();
+  }, []);
   return (
     <>
       <div className="container">
@@ -17,7 +39,7 @@ const Footer = () => {
                 <img
                   className="mb40"
                   style={{ height: "50px" }}
-                  src="/images/Questrealstatewhite.svg"
+                  src={adminBaseUrl + logos.whiteLogo}
                   alt="Header Logo"
                 />
               </Link>

@@ -73,6 +73,7 @@ import BuyFull3Col from "./pages/listings/(grid-view)/buy";
 import Rent3Col from "./pages/listings/(grid-view)/rent";
 import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
 import { Toaster } from "react-hot-toast";
+import adminApi, { adminBaseUrl } from "./api/adminApi";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -84,6 +85,27 @@ function App() {
       duration: 1200,
       once: true,
     });
+
+    // Function to update favicon
+    const updateFavicon = async () => {
+      try {
+        const {data} = await adminApi.get("/media/theme-images");
+
+        if (data.favicon) {
+          const favicon =
+            document.querySelector("link[rel*='icon']") ||
+            document.createElement("link");
+          favicon.type = "image/x-icon";
+          favicon.rel = "shortcut icon";
+          favicon.href = adminBaseUrl + data.favicon;
+          document.head.appendChild(favicon);
+        }
+      } catch (error) {
+        console.error("Failed to update favicon:", error);
+      }
+    };
+
+    updateFavicon();
   }, []);
 
   return (

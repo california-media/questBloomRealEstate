@@ -4,7 +4,7 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-
+import adminApi, { adminBaseUrl } from "@/api/adminApi";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -16,6 +16,29 @@ const Header = () => {
       setNavbar(false);
     }
   };
+
+  const [logos, setLogos] = useState({
+    whiteLogo: "/images/Questrealstatewhite.svg",
+    normalLogo: "/images/QMC-logo.webp",
+  });
+
+  // Fetch theme images on component mount
+  useEffect(() => {
+    const fetchThemeImages = async () => {
+      try {
+        const { data } = await adminApi.get("/media/theme-images");
+
+        setLogos((prev) => ({
+          whiteLogo: data.logo_white || prev.whiteLogo,
+          normalLogo: data.logo || prev.normalLogo,
+        }));
+      } catch (error) {
+        console.error("Failed to fetch theme images:", error);
+      }
+    };
+
+    fetchThemeImages();
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
@@ -43,15 +66,23 @@ const Header = () => {
                     <Link className="header-logo logo1" to="/">
                       <img
                         style={{ height: "50px" }}
-                        src="/images/Questrealstatewhite.svg"
-                        alt="Header Logo"
+                        src={adminBaseUrl + logos.whiteLogo}
+                        alt="Header Logo White"
+                        onError={(e) => {
+                          e.target.src = "/images/Questrealstatewhite.svg";
+                        }}
                       />
                     </Link>
+
+                    {/* Normal logo (shown on light backgrounds) */}
                     <Link className="header-logo logo2" to="/">
                       <img
                         style={{ height: "50px" }}
-                        src="/images/QMC-logo.webp"
+                        src={adminBaseUrl + logos.normalLogo}
                         alt="Header Logo"
+                        onError={(e) => {
+                          e.target.src = "/images/QMC-logo.webp";
+                        }}
                       />
                     </Link>
                   </div>
