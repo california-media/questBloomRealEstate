@@ -2,6 +2,7 @@ import React from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import { adminBaseUrl } from "@/api/adminApi";
+import { ImageIcon } from "lucide-react";
 
 const AdminPropertyFeaturesAminites = ({ amenities }) => {
   const amenitiesData = amenities || [];

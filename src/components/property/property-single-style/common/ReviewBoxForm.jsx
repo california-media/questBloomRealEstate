@@ -78,20 +78,30 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
       source: "9",
       assigned: "129",
     };
+    formData.append("status", "14");
+    formData.append("source", "9");
+    formData.append("assigned", "129");
 
     setIsSubmitting(true);
     setSubmitStatus({ success: null, message: "" });
-
+    console.log(enquiryData);
     try {
       // Send to CRM API
       const crmResponse = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+          ...(isDev
+            ? {
+                Authorization:
+                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+              }
+            : {
+                "Content-Type": "application/json",
+                Authorization:
+                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+              }),
         },
-        body: JSON.stringify(enquiryData),
+        body: isDev ? formData : JSON.stringify(enquiryData),
       });
 
       const crmData = await crmResponse.json();
@@ -101,15 +111,49 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
         const { status, source, assigned, ...cleanedEnquiry } = enquiryData;
 
         ////work around from vercel API until cors POST error on laravel API is not resolved
-        await api.post("/send-crm-lead-email", {
-          subject: "Property Enquiry",
-          lead: cleanedEnquiry,
-        });
 
+        const emailResponse = isDev
+          ? await fetch("/leads-email", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
+              },
+              body: JSON.stringify({
+                subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
+                lead: cleanedEnquiry,
+              }),
+            })
+          : await api.post("/send-crm-lead-email", {
+              subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
+              lead: cleanedEnquiry,
+            });
         // await adminApi.post("/crm-leads-email", {
         //   subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
         //   lead: cleanedEnquiry,
         // });
+
+        // Handle non-OK responses for fetch
+        if (isDev && !emailResponse.ok) {
+          const errorData = await emailResponse.json();
+          throw {
+            isHttpError: true,
+            status: emailResponse.status,
+            data: errorData,
+          };
+        }
+        const emailResult = isDev
+          ? await emailResponse.json()
+          : emailResponse.data;
+
+        // Handle business logic errors (success: false)
+        if (!emailResult.success) {
+          throw {
+            isBusinessError: true,
+            data: emailResult,
+          };
+        }
 
         setSubmitStatus({
           success: true,
@@ -130,10 +174,25 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
       }
     } catch (error) {
       console.error("Error submitting enquiry:", error);
+
+      // Handle different error types
+      let errorMessage = "An error occurred while submitting your enquiry.";
+
+      if (error.isHttpError) {
+        // HTTP error (500, 422 etc.)
+        errorMessage = error.data.message || `Server error (${error.status})`;
+      } else if (error.isBusinessError) {
+        // Business logic error (success: false)
+        errorMessage = error.data.message || "Failed to process your enquiry";
+      } else if (error.response) {
+        // Axios error structure
+        errorMessage = error.response.data.message || "API request failed";
+      }
+
       setSubmitStatus({
         success: false,
-        message:
-          "An error occurred while submitting your enquiry. Please try again later.",
+        message: errorMessage,
+        details: error.data?.errors, // Include validation errors if available
       });
     } finally {
       setIsSubmitting(false);

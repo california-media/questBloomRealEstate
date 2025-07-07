@@ -17,7 +17,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/crm/, ""),
       },
-    
+      "/leads-email": {
+        target: "http://localhost:8000/api/crm-leads-email", // Your backend server
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/leads-email/, ""),
+      },
     },
   },
   plugins: [react()],
