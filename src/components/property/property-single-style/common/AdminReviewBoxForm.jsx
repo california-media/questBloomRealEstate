@@ -5,7 +5,7 @@ import "react-phone-input-2/lib/style.css";
 
 const isDev = import.meta.env.DEV;
 
-const ReviewBoxForm = ({ property, prefixedId }) => {
+const AdminReviewBoxForm = ({ property, prefixedId }) => {
   const [enquiryText, setEnquiryText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
@@ -22,7 +22,7 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
   useEffect(() => {
     setEnquiryText(
       `I would like to submit an Enquiry about ${
-        property?.name || "Property 1"
+        property?.property_title || "Property 1"
       }`
     );
   }, [property]);
@@ -70,7 +70,7 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
       name: formData.get("name"),
       email: formData.get("email"),
       phonenumber: formData.get("phone"),
-      description: `${property?.name} - ${prefixedId}\n${formData.get(
+      description: `${property?.property_title} - ${prefixedId}\n${formData.get(
         "enquiry"
       )}`,
       status: "14",
@@ -83,43 +83,26 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
 
     try {
       // Send to CRM API
-      // const crmResponse = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization:
-      //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
-      //   },
-      //   body: JSON.stringify(enquiryData),
-      // });
+      const crmResponse = await fetch(isDev ? "/crm/api/leads" : "/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoid2ViX2FwaV9rZXkiLCJuYW1lIjoid2ViX2FwaV9rZXkiLCJBUElfVElNRSI6MTc1MDc0NTU1MH0.bArzQAQZrOua-U4TCe0W3PQvsUvBSDNt6QKHbS1FkpA",
+        },
+        body: JSON.stringify(enquiryData),
+      });
 
-      // const crmData = await crmResponse.json();
+      const crmData = await crmResponse.json();
 
-      if (true || (crmResponse.ok && crmData.status)) {
+      if (crmResponse.ok && crmData.status) {
         // Send email notification to admin
-        console.log(enquiryData);
-        const { status, source, assigned, ...cleanedEnquiry } = enquiryData;
-        await adminApi.post("/crm-leads-email", {
-          subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
-          lead: cleanedEnquiry,
+        await adminApi.post("/appearance/crm-leads-email", {
+          subject: `New Enquiry: ${
+            property?.property_title || "Property Enquiry"
+          }`,
+          lead: enquiryData,
         });
-
-        
-
-        // await fetch("http://localhost:8000/api/crm-leads-email", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Accept: "application/json",
-        //     "X-Requested-With": "XMLHttpRequest",
-        //     "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
-        //     credentials: "include",
-        //   },
-        //   body: JSON.stringify({
-        //     subject: `New Enquiry: ${property?.name || "Property Enquiry"}`,
-        //     lead: cleanedEnquiry,
-        //   }),
-        // });
 
         setSubmitStatus({
           success: true,
@@ -128,7 +111,7 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
         event.target.reset();
         setEnquiryText(
           `I would like to submit an Enquiry about ${
-            property?.name || "Property 1"
+            property?.property_title || "Property 1"
           }`
         );
       } else {
@@ -149,7 +132,6 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
       setIsSubmitting(false);
     }
   };
-
   return (
     <form className="comments_form mt10" onSubmit={handleSubmit}>
       <div className="row">
@@ -292,4 +274,4 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
   );
 };
 
-export default ReviewBoxForm;
+export default AdminReviewBoxForm;

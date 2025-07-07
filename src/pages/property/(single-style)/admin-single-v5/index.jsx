@@ -5,7 +5,7 @@ import MobileMenu from "@/components/common/mobile-menu";
 import PropertyNearby from "@/components/property/property-single-style/common/PropertyNearby";
 import MasterPlan from "@/components/property/property-single-style/common/MasterPlan";
 
-import ReviewBoxForm from "@/components/property/property-single-style/common/ReviewBoxForm";
+import AdminReviewBoxForm from "@/components/property/property-single-style/common/AdminReviewBoxForm";
 import Lobby from "@/components/property/property-single-style/common/Lobby";
 import PropertyGallery from "@/components/property/property-single-style/single-v5/admin-property-gallery";
 
@@ -258,7 +258,10 @@ const AdminSingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
-                    <ReviewBoxForm property={property} />
+                    <AdminReviewBoxForm
+                      property={property}
+                      prefixedId={prefixedId}
+                    />
                   </div>
                 </div>
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">

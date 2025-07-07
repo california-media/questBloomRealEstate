@@ -268,7 +268,7 @@ const SingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
-                    <ReviewBoxForm property={property} />
+                    <ReviewBoxForm property={property} prefixedId={prefixedId}  />
                   </div>
                 </div>
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
