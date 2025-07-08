@@ -44,60 +44,87 @@ const sobhaDeveloper = {
   website: "https://www.sobharealty.com/",
 };
 
+const sections = [
+  {
+    title: "Luxury Villas",
+    paragraph: "Luxury villas with premium amenities and stunning views",
+    params: {
+      unit_types: "Villa,Villas",
+    },
+    seeAll: "See More Luxury Villas",
+  },
+  {
+    title: "Apartments",
+    paragraph: "Modern apartments in prime locations with excellent facilities",
+    params: {
+      unit_types: "Townhouse",
+    },
+    seeAll: "See All Apartments",
+  },
+  {
+    title: "Beachfront Properties",
+    paragraph: "Premium Beachfront Properties",
+    params: {
+      areas: beachAreaProperties.map((item) => item.id).join(","),
+    },
+    seeAll: "See All Beachfront Properties",
+  },
+  {
+    title: "Properties by Sobha",
+    paragraph: "Premium Properties by Sobha with excellent facilities",
+    params: {
+      developer: String(sobhaDeveloper.id),
+    },
+    seeAll: "See All Properties by Sobha",
+  },
+  {
+    title: "Properties under 1 Million",
+    paragraph: "Handpicked premium homes that offer great value",
+    params: {
+      unit_price_to: 1000000,
+    },
+    seeAll: "See All Properties under 1 Million",
+  },
+  {
+    title: "Properties between 1 Million to 2 Million",
+    paragraph: "Luxury properties priced between 1 Million and 2 Million",
+    params: {
+      unit_price_from: 1000000,
+      unit_price_to: 2000000,
+    },
+    seeAll: "See All Properties between 1 Million to 2 Million",
+  },
+];
+
 const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
-  const sections = [
-    {
-      title: "Luxury Villas",
-      paragraph: "Luxury villas with premium amenities and stunning views",
-      params: {
-        unit_types: "Villa,Villas",
-      },
-      seeAll: "See More Luxury Villas",
-    },
-    {
-      title: "Apartments",
-      paragraph:
-        "Modern apartments in prime locations with excellent facilities",
-      params: {
-        unit_types: "Townhouse",
-      },
-      seeAll: "See All Apartments",
-    },
-    {
-      title: "Beachfront Properties",
-      paragraph: "Premium Beachfront Properties",
-      params: {
-        areas: beachAreaProperties.map((item) => item.id).join(","),
-      },
-      seeAll: "See All Beachfront Properties",
-    },
-    {
-      title: "Properties by Sobha",
-      paragraph: "Premium Properties by Sobha with excellent facilities",
-      params: {
-        developer: String(sobhaDeveloper.id),
-      },
-      seeAll: "See All Properties by Sobha",
-    },
-    {
-      title: "Properties under 1 Million",
-      paragraph: "Handpicked premium homes that offer great value",
-      params: {
-        unit_price_to: 1000000,
-      },
-      seeAll: "See All Properties under 1 Million",
-    },
-    {
-      title: "Properties between 1 Million to 2 Million",
-      paragraph: "Luxury properties priced between 1 Million and 2 Million",
-      params: {
-        unit_price_from: 1000000,
-        unit_price_to: 2000000,
-      },
-      seeAll: "See All Properties between 1 Million to 2 Million",
-    },
-  ];
+  const [metaInformation, setMetaInformation] = useState({
+    title: "QMC - Real Estate",
+    description: "QMC - Real Estate",
+  });
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      try {
+        // Fetch only the needed fields using query params
+        const response = await adminApi.get(
+          "/theme-options/general?keys=site_title,seo_description"
+        );
+
+        if (response.data.success) {
+          setMetaInformation({
+            title: response.data.data.site_title || "QMC - Real Estate",
+            description:
+              response.data.data.seo_description || "QMC - Real Estate",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching meta data:", error);
+      }
+    };
+
+    fetchMetaData();
+  }, []);
 
   return (
     <>

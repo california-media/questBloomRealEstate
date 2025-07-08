@@ -21,17 +21,21 @@ const Header = () => {
     whiteLogo: "/images/Questrealstatewhite.svg",
     normalLogo: "/images/QMC-logo.webp",
   });
+  const [hotline, setHotline] = useState("+971 (56) 406 5672");
 
   // Fetch theme images on component mount
   useEffect(() => {
     const fetchThemeImages = async () => {
       try {
         const { data } = await adminApi.get("/media/theme-images");
-
+        const { data: hotlineData } = await adminApi.get(
+          "/theme-options/general"
+        );
         setLogos((prev) => ({
           whiteLogo: data.logo_white || prev.whiteLogo,
           normalLogo: data.logo || prev.normalLogo,
         }));
+        setHotline((prev) => hotlineData.data.hotline || prev.hotline);
       } catch (error) {
         console.error("Failed to fetch theme images:", error);
       }
@@ -98,12 +102,10 @@ const Header = () => {
                 <div className="d-flex align-items-center">
                   <a
                     className="login-info d-flex align-items-center me-3"
-                    href="tel:+9710564065672"
+                    href={`tel:${hotline}`}
                   >
                     <i className="far fa-phone fz16 me-2"></i>{" "}
-                    <span className="d-none d-xl-block">
-                      +971 (56) 406 5672
-                    </span>
+                    <span className="d-none d-xl-block">{hotline}</span>
                   </a>
                   <a
                     href="#"
