@@ -11,12 +11,37 @@ import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
 import WealthManagementTabs from "@/components/pages/about/WealthManagementTabs";
+import adminApi from "@/api/adminApi";
+import { useEffect, useState } from "react";
 
 const metaInformation = {
   title: "About  || Homez - Real Estate ReactJS Template",
 };
 
 const About = () => {
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const response = await adminApi.get("/pages/who-we-are/sections");
+        setSections(response.data.data.sections || []);
+      } catch (err) {
+        console.error("Failed to fetch sections:", err);
+      }
+    };
+
+    fetchSections();
+  }, []);
+
+  // Find the Cover section
+  const coverSection = sections.find(
+    (section) => section.section_name === "Cover"
+  );
+
+  const tabsSection = sections.find(
+    (section) => section.section_name === "Tabs"
+  );
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -30,38 +55,28 @@ const About = () => {
       <section className="breadcumb-section2  p-0">
         <div className="container">
           <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcumb-style1 ml80 mt60">
-                <h2
-                  className="title text-white"
-                  style={{
-                    textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
-                  }}
-                >
-                  About Us
-                </h2>
-                <div className="breadcumb-list">
-                  <a
-                    style={{
-                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
-                    }}
-                    className="text-white"
-                    href="#"
-                  >
-                    Home
-                  </a>
-                  <a
-                    style={{
-                      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
-                    }}
-                    className="text-white"
-                    href="#"
-                  >
-                    About
-                  </a>
+            {coverSection?.html_content ? (
+              <div
+                className="col-lg-12"
+                dangerouslySetInnerHTML={{ __html: coverSection.html_content }}
+              ></div>
+            ) : (
+              <div className="col-lg-12">
+                <div className="breadcumb-style1 ml80 mt60">
+                  <div className="breadcumb-style1 ml80 mt60">
+                    <h2 className="title text-white">About Us</h2>
+                    <div className="breadcumb-list">
+                      <a className="text-white" href="/">
+                        Home
+                      </a>
+                      <a className="text-white" href="#">
+                        About
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -154,7 +169,7 @@ const About = () => {
       </section> */}
       {/* End Our About Area */}
       {/* About Banner */}
-      <WealthManagementTabs />
+      <WealthManagementTabs sections={sections} />
 
       <section className="our-about pb40 ">
         <div className="container">
