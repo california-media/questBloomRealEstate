@@ -4857,6 +4857,25 @@ section {
     }
 }
 
+.cta-banner3-new {
+    background-image: url(/images/background/about-dubai.jpg);
+    background-size: cover;
+    background-position: right;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 42%;
+}
+
+@media (max-width: 767.98px) {
+    .cta-banner3-new {
+        display: none;
+    }
+}
+
 .cta-style2 {
     position: relative;
 }

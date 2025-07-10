@@ -4,10 +4,7 @@ import Partner from "@/components/common/Partner";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import Agents from "@/components/pages/about/Agents";
-import Features from "@/components/pages/about/Features";
-import FunFact from "@/components/pages/about/FunFact";
 
-import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
 import WealthManagementTabs from "@/components/pages/about/WealthManagementTabs";
@@ -15,7 +12,7 @@ import adminApi from "@/api/adminApi";
 import { useEffect, useState } from "react";
 
 const metaInformation = {
-  title: "About  || Homez - Real Estate ReactJS Template",
+  title: "About | QMC",
 };
 
 const About = () => {
@@ -39,9 +36,6 @@ const About = () => {
     (section) => section.section_name === "Cover"
   );
 
-  const tabsSection = sections.find(
-    (section) => section.section_name === "Tabs"
-  );
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -52,34 +46,71 @@ const About = () => {
       <MobileMenu />
       {/* End Mobile Nav  */}
       {/* Breadcrumb Sections */}
-      <section className="breadcumb-section2  p-0">
-        <div className="container">
-          <div className="row">
-            {coverSection?.html_content ? (
-              <div
-                className="col-lg-12"
-                dangerouslySetInnerHTML={{ __html: coverSection.html_content }}
-              ></div>
-            ) : (
-              <div className="col-lg-12">
-                <div className="breadcumb-style1 ml80 mt60">
-                  <div className="breadcumb-style1 ml80 mt60">
-                    <h2 className="title text-white">About Us</h2>
-                    <div className="breadcumb-list">
-                      <a className="text-white" href="/">
-                        Home
-                      </a>
-                      <a className="text-white" href="#">
-                        About
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+      <section
+        className=" p-0"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find((section) => section.section_name === "Cover")
+              ?.html_content ||
+            `<div
+  style="
+    display: flex;
+    align-items: center;
+    height: 450px;
+    position: relative;
+  "
+>
+  <div
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(/images/background/aboutus-cover.jfif);
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    "
+  ></div>
+
+  <div
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    "
+  ></div>
+
+  <div
+    class="container"
+    style="
+      position: relative;
+      z-index: 2;
+    "
+  >
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcumb-style1 ml80 mt60">
+          <div class="breadcumb-style1 ml80 mt60">
+            <h2 class="title text-white">About Us</h2>
+            <div class="breadcumb-list">
+              <a class="text-white" href="/">Home</a>
+              <a class="text-white" href="#">About</a>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</div>
+`,
+        }}
+      ></section>
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
       {/* <section style={{ marginTop: "-50px" }} className="our-about pb10 ">
@@ -175,14 +206,21 @@ const About = () => {
         <div className="container">
           <div className="row" data-aos="fade-up" data-aos-delay="300">
             <div className="col-lg-12">
-              <div className="about-page-img d-flex justify-content-center">
-                <img
-                  style={{ margin: "auto" }}
-                  className="w-60  h-100 cover "
-                  src="/images/background/team.webp"
-                  alt="about banner"
-                />
-              </div>
+              <div
+                className="about-page-img d-flex justify-content-center"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    sections.find(
+                      (section) => section.section_name === "Team Image"
+                    )?.html_content ||
+                    `<img
+                      style="margin: auto;"
+                      class="w-60 h-100 cover"
+                      src="/images/background/team.webp"
+                      alt="about banner"
+                    />`,
+                }}
+              ></div>
             </div>
           </div>
         </div>
@@ -205,21 +243,23 @@ const About = () => {
 
       <section className="pb90">
         <div className="container">
-          <div className="row  justify-content-center">
-            <div className="col-auto">
-              <div
-                className="main-title"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <h2 className="title">Our Exclusive Agents</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
-              </div>
-            </div>
-            {/* End header */}
-          </div>
+          <div
+            className="row  justify-content-center mb30"
+            dangerouslySetInnerHTML={{
+              __html:
+                sections.find(
+                  (section) => section.section_name === "Agents Header"
+                )?.html_content ||
+                `<div class="col-auto">
+  <div class="main-title" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="title">Our Exclusive Agents</h2>
+    <p class="paragraph text-center">
+      Aliquam lacinia diam quis lacus euismod
+    </p>
+  </div>
+</div>`,
+            }}
+          ></div>
           {/* End .row */}
 
           <div className="row">
@@ -230,7 +270,7 @@ const About = () => {
             >
               <div className="property-city-slider ">
                 {/* Add this wrapper to center content */}
-                <Agents />
+                <Agents sections={sections} />
               </div>
             </div>
           </div>
@@ -238,32 +278,79 @@ const About = () => {
       </section>
       {/* Exclusive Agents */}
       {/* Abut intro */}
-      <section className="pt30 pb30">
-        <div className="cta-banner3 bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-md-6 col-lg-5 pl30-md pl15-xs"
-                data-aos="fade-left"
-                data-aos-delay="300"
-              >
-                <div className="mb30">
-                  <h2 className="title text-capitalize">
-                    Let’s redefine your real estate experience in Dubai
-                  </h2>
-                </div>
-                <div className="why-chose-list style2">
-                  <Features />
-                </div>
-                <Link to="/off-plan" className="ud-btn btn-dark">
-                  Learn More
-                  <i className="fal fa-arrow-right-long" />
-                </Link>
+      <section
+        className="pt30 pb30"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find((section) => section.section_name === "Learn more")
+              ?.html_content ||
+            `<div class="bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-5 pl30-md pl15-xs" data-aos="fade-left" data-aos-delay="300">
+        <div>
+          <div class="mb30">
+            <h2 class="title text-capitalize">
+              Let’s redefine your real estate experience in Dubai
+            </h2>
+          </div>
+          <div class="why-chose-list style2">
+            <div class="list-one d-flex align-items-start mb30">
+              <span class="list-icon flex-shrink-0 flaticon-security"></span>
+              <div class="list-content flex-grow-1 ml20">
+                <h6 class="mb-1">Personalized Property Guidance</h6>
+                <p class="text mb-0 fz15">
+                  Tailored support to help you find a home that fits your lifestyle and aspirations
+                </p>
+              </div>
+            </div>
+            <div class="list-one d-flex align-items-start mb30">
+              <span class="list-icon flex-shrink-0 flaticon-keywording"></span>
+              <div class="list-content flex-grow-1 ml20">
+                <h6 class="mb-1">Unmatched Market Expertise</h6>
+                <p class="text mb-0 fz15">
+                  In-depth knowledge of Dubai's real estate ensures smarter decisions and better opportunities
+                </p>
+              </div>
+            </div>
+            <div class="list-one d-flex align-items-start mb30">
+              <span class="list-icon flex-shrink-0 flaticon-investment"></span>
+              <div class="list-content flex-grow-1 ml20">
+                <h6 class="mb-1">Trust, Integrity &amp; Excellence</h6>
+                <p class="text mb-0 fz15">
+                  A service built on honesty, quality, and long-term relationships.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+        <a href="/off-plan" class="ud-btn btn-dark">
+          Learn More
+          <i class="fal fa-arrow-right-long"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-none d-md-block"
+    style="
+      background-image: url('/images/background/about-dubai.jpg');
+      background-size: cover;
+      background-position: right;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      width: 42%;
+    "
+  ></div>
+</div>
+`,
+        }}
+      ></section>
       {/* Abut intro */}
       {/* Our Partners */}
       {/* <section className="our-partners">
@@ -288,7 +375,59 @@ const About = () => {
       </section> */}
       {/* End Our Partners */}
       {/* Our CTA */}
-      <CallToActions />
+      <section
+        className="our-cta pt0"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find(
+              (section) => section.section_name === "Call to Action"
+            )?.html_content ||
+            `<div class="cta-banner bgc-f7 mx-auto maxw1600 pt120 pt60-md pb120 pb60-md bdrs12 position-relative mx20-lg">
+  <div class="img-box-5">
+    <img
+      class="img-1 spin-right"
+      src="/images/about/element-1.png"
+      alt="spinner"
+    />
+  </div>
+  <div class="img-box-6">
+    <img
+      class="img-1 spin-left"
+      src="/images/about/element-1.png"
+      alt="spinner"
+    />
+  </div>
+
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7 col-xl-6" data-aos="fade-right">
+        <div class="cta-style1">
+          <h2 class="cta-title">PROMPT CONSULTATION</h2>
+          <p class="cta-text mb-0">
+            Fill in the form and our agent will contact you shortly.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-5 col-xl-6" data-aos="fade-left">
+        <div class="cta-btns-style1 d-block d-sm-flex align-items-center justify-content-lg-end">
+          <a
+            href="/contact"
+            class="ud-btn btn-transparent mr30 mr0-xs"
+          >
+            Enquire now
+            <i class="fal fa-arrow-right-long"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+`,
+        }}
+      ></section>
+
       {/* Our CTA */}
       {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
