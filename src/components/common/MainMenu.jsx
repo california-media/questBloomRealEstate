@@ -101,7 +101,7 @@ const MainMenu = () => {
     <>
       <style>{`
         .title:hover {
-          color: #a3a075; /* Adjusted lighter shade of #797631 */
+          // color: #a3a075; 
         }
       `}</style>
       <ul className="ace-responsive-menu">

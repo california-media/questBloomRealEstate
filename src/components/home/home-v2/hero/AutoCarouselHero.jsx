@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Hero from "@/components/home/home-v3/hero";
 import adminApi, { adminBaseUrl } from "@/api/adminApi";
 
-const AutoCarouselHero = () => {
+const AutoCarouselHero = ({HeroTitle}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,7 +81,7 @@ const AutoCarouselHero = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-10">
-              <Hero />
+              <Hero  HeroTitle={HeroTitle}/>
             </div>
           </div>
         </div>

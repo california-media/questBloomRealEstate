@@ -7,7 +7,7 @@ import adminApi from "@/api/adminApi";
 import AnimatedText from "../../home-v2/hero/AnimatedText";
 const hardcoded_facilities = ["Swimming Pool"];
 
-const Hero = () => {
+const Hero = ({ HeroTitle }) => {
   const [modalOpen, setModalOpen] = useState(false);
   ///ONLY for home page advance filter to reset local state
   useEffect(() => {
@@ -245,7 +245,9 @@ const Hero = () => {
     <>
       <div className="inner-banner-style3 ">
         <div className=" d-flex justify-content-center">
-          <AnimatedText>Find Your Property</AnimatedText>
+          <AnimatedText className="mb30">
+            {HeroTitle || "Find Your Property"}
+          </AnimatedText>
         </div>
 
         <HeroContent

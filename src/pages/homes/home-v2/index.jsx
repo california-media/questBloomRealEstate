@@ -94,6 +94,11 @@ const sections = [
     },
     seeAll: "See All Properties between 1 Million to 2 Million",
   },
+  {
+    title: "Featured Listings",
+    paragraph: " Premium homes designed to match your lifestyle",
+    seeAll: "See All Listings",
+  },
 ];
 
 const Home_V2 = () => {
@@ -102,6 +107,21 @@ const Home_V2 = () => {
     title: "QMC - Real Estate",
     description: "QMC - Real Estate",
   });
+
+  const [pageSections, setPageSections] = useState([]);
+
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const response = await adminApi.get("/pages/home/sections");
+        setPageSections(response.data.data.sections || []);
+      } catch (err) {
+        console.error("Failed to fetch sections:", err);
+      }
+    };
+
+    fetchSections();
+  }, []);
 
   useEffect(() => {
     const fetchMetaData = async () => {
@@ -137,7 +157,12 @@ const Home_V2 = () => {
       <MobileMenu />
       {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
-      <AutoCarouselHero />
+      <AutoCarouselHero
+        HeroTitle={
+          pageSections.find((sec) => sec.section_name === "Hero Title")
+            ?.html_content
+        }
+      />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
       <section className="pb90 pb30-md z-1 ">
@@ -154,17 +179,23 @@ const Home_V2 = () => {
       <>
         {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
-          <FeaturedListingsHome section={section} key={index} index={index} />
+          <FeaturedListingsHome
+            pageSections={pageSections}
+            section={section}
+            key={index}
+            index={index}
+          />
         ))}
         {/* Main Featured Listings Section */}
 
-        <FeaturedListingsHome
+        {/* <FeaturedListingsHome
+          pageSections={pageSections}
           section={{
             title: "Featured Listings",
             paragraph: " Premium homes designed to match your lifestyle",
             seeAll: "See All Listings",
           }}
-        />
+        /> */}
       </>
       {/* Explore Featured Listings */}
       {/* Property Cities */}
@@ -176,15 +207,21 @@ const Home_V2 = () => {
                 className="main-title"
                 data-aos="fade-up"
                 data-aos-delay="100"
-              >
-                <AnimatedText className="title" color={"black"}>
+                dangerouslySetInnerHTML={{
+                  __html:
+                    pageSections.find(
+                      (sec) => sec.section_name === "Section 8 Header"
+                    )?.html_content ||
+                    `<h2 className="title">
+
                   Explore Cities
-                </AnimatedText>
-                <p className="paragraph">
+                  </h2>
+                <p className="paragraph mt10 ">
                   Browse prime real estate opportunities in the most
                   sought-after cities.
-                </p>
-              </div>
+                </p>`,
+                }}
+              ></div>
             </div>
             {/* End header */}
 
@@ -214,7 +251,7 @@ const Home_V2 = () => {
           </div>
           {/* End .row */}
 
-          <div className="row">
+          <div className="row mt20">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
               <div className="property-city-slider">
                 <ExploreCities />
@@ -258,35 +295,77 @@ const Home_V2 = () => {
       </section> */}
       {/* End About Us */}
       {/* Our Testimonials */}
-      <section className="our-testimonial p-0">
-        <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt60 pt60-md pb110 pb60-md bdrs12 position-relative">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-lg-6 mx-auto"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <div className="main-title text-center">
-                  <AnimatedText color={"black"}>Testimonials</AnimatedText>
-                  <p className="paragraph">What our customers saying</p>
-                </div>
+      <section
+        className="our-testimonial p-0"
+        dangerouslySetInnerHTML={{
+          __html:
+            pageSections.find((sec) => sec.section_name === "Testimonials")
+              ?.html_content ||
+            `<div class="cta-banner2 bgc-f7 maxw1600 mx-auto pt60 pt60-md pb110 pb60-md bdrs12 position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto" data-aos="fade-up" data-aos-delay="100">
+        <div class="main-title text-center">
+           <h2 className="hero-title  animate-up-1">Testimonials</h2>
+          <p class="paragraph">What our customers saying</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 m-auto" data-aos="fade-up" data-aos-delay="300">
+        <div class="testimonial-style2">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade" id="pills-1st" role="tabpanel" aria-labelledby="pills-1st-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Questbloom Real Estate exceeded expectations, finding us a dream home in Dubai's iconic Downtown.</h4>
+                <h6 class="name">Ali Bin Saleh</h6>
+                <p class="design">Customer</p>
               </div>
             </div>
-            <div className="row">
-              <div
-                className="col-lg-8 m-auto"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <div className="testimonial-style2">
-                  <Testimonial />
-                </div>
+            <div class="tab-pane fade show active" id="pills-2nd" role="tabpanel" aria-labelledby="pills-2nd-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Unmatched service and luxury properties – Questbloom made our Dubai home search effortless and enjoyable.</h4>
+                <h6 class="name">Nour Mohamed</h6>
+                <p class="design">Customer</p>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-third" role="tabpanel" aria-labelledby="pills-third-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Questbloom Real Estate's expertise and dedication led us to the perfect home in Dubai Marina.</h4>
+                <h6 class="name">Lina Kamal-Eddin</h6>
+                <p class="design">Customer</p>
               </div>
             </div>
           </div>
+          <div class="tab-list position-relative">
+            <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link ps-0" id="pills-1st-tab" data-bs-toggle="pill" data-bs-target="#pills-1st" type="button" role="tab" aria-controls="pills-1st" aria-selected="false">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-1.webp" alt="">
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-2nd-tab" data-bs-toggle="pill" data-bs-target="#pills-2nd" type="button" role="tab" aria-controls="pills-2nd" aria-selected="true">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-2.webp" alt="">
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-third-tab" data-bs-toggle="pill" data-bs-target="#pills-third" type="button" role="tab" aria-controls="pills-third" aria-selected="false">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-3.webp" alt="">
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</div>`,
+        }}
+      ></section>
       {/* End Our Testimonials */}
       {/* Exclusive Agents */}
       {/* <section className="pb90">
@@ -358,7 +437,48 @@ const Home_V2 = () => {
       </section> */}
       {/* End Our Partners */}
       {/* Our CTA */}
-      <Cta />
+      <section
+        className="our-cta2 p0 px20"
+        dangerouslySetInnerHTML={{
+          __html:
+            pageSections.find((section) => section.id === "Home Page Call to Action")
+              ?.html_content ||
+            `<div class="cta-banner2 bgc-thm maxw1600 mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
+  <div
+    class="cta-style2 d-none d-lg-block"
+    data-aos="fade-left"
+    data-aos-delay="300"
+  >
+    <img
+      style="width: 35%; border-radius: 30px;"
+      src="/images/cta-image.jpg"
+      alt="element"
+    />
+  </div>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-7 col-xl-5"
+        data-aos="fade-up"
+        data-aos-delay="500"
+      >
+        <div class="cta-style2">
+          <h2 class="cta-title">
+            Buying a Property With Questbloom
+          </h2>
+          <p class="cta-text">Browse through more properties.</p>
+          <a href="/off-plan" class="ud-btn btn-dark mt10">
+            Let's Get Started
+            <i class="fal fa-arrow-right-long"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`,
+        }}
+      ></section>
       {/* End Our CTA */}
       {/* Start Our Footer */}
       <section className="footer-style1 at-home2 pb-0">

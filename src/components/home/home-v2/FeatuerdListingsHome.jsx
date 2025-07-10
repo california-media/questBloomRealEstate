@@ -1,10 +1,8 @@
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-
+import "/public/css/LuxuryHeading.css";
 import {
   UserIcon,
   Check,
@@ -16,7 +14,7 @@ import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import LuxuryHeading from "./hero/LuxuryHeading";
 import usePropertyStore from "@/store/propertyStore";
 
-const FeaturedListingsHome = ({ index, section }) => {
+const FeaturedListingsHome = ({ index, section, pageSections }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   // Generate unique ID for this component instance
@@ -53,9 +51,24 @@ const FeaturedListingsHome = ({ index, section }) => {
         <div className="container  ">
           <div className=" " data-aos="fade-up">
             <div className="col-12 d-flex justify-content-center">
-              <div className="main-title2 text-center">
-                <LuxuryHeading>{section.title}</LuxuryHeading>
-                <p className="paragraph">{section.paragraph}</p>
+              <div
+                className="main-title2 text-center"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    pageSections.find(
+                      (sec) =>
+                        sec.section_name === `Section ${index + 1} Header`
+                    )?.html_content ||
+                    `
+  <h2 class="luxury-heading">
+    ${section.title}
+    <span class="luxury-heading-decoration"></span>
+  </h2>
+  <p class="paragraph">${section.paragraph}</p>
+`,
+                }}
+              >
+                {/* <LuxuryHeading>{section.title}</LuxuryHeading> */}
               </div>
             </div>
             <div className="col-lg-12 mt-1 ms-lg-auto">

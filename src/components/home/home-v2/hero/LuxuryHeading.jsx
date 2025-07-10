@@ -1,5 +1,5 @@
 import React from "react";
-import "/public/css/LuxuryHeading.css"; // We'll create this next
+import "/public/css/LuxuryHeading.css"; 
 
 const LuxuryHeading = ({ children }) => {
   return (

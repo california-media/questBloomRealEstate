@@ -31,10 +31,6 @@ const About = () => {
     fetchSections();
   }, []);
 
-  // Find the Cover section
-  const coverSection = sections.find(
-    (section) => section.section_name === "Cover"
-  );
 
   return (
     <>
