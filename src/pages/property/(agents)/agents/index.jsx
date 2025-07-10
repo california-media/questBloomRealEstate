@@ -3,15 +3,30 @@ import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import FilteringAgent from "@/components/property/FilteringAgent";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import MetaData from "@/components/common/MetaData";
+import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Agents || Homez - Real Estate ReactJS Template",
+  title: "Agents | QMC",
 };
 
 const Agents = () => {
+  const [pageSections, setPageSections] = useState([]);
+
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const response = await adminApi.get("/pages/agents/sections");
+        setPageSections(response.data.data.sections || []);
+      } catch (err) {
+        console.error("Failed to fetch sections:", err);
+      }
+    };
+
+    fetchSections();
+  }, []);
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -24,16 +39,23 @@ const Agents = () => {
       {/* End Mobile Nav  */}
 
       {/* Breadcumb Sections */}
-      <section className="breadcumb-section" >
+      <section className="breadcumb-section">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="breadcumb-style1">
-                <h2 className="title">Agents</h2>
-                <div className="text ">
-                  <a href="#">Our Exclusive Agents</a>
-                </div>
-              </div>
+              <div
+                className="breadcumb-style1"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    pageSections.find(
+                      (section) => section.section_name === "Agents Page Header"
+                    )?.html_content ||
+                    `<h2 class="title">Agents</h2>
+<div class="text">
+  <a href="#">Our Exclusive Agents</a>
+</div>`,
+                }}
+              ></div>
             </div>
           </div>
         </div>
@@ -41,7 +63,7 @@ const Agents = () => {
       {/* End Breadcumb Sections */}
 
       {/* Agent Section Area */}
-      <FilteringAgent />
+      <FilteringAgent pageSections={pageSections} />
 
       {/* End Agent Section Area */}
 

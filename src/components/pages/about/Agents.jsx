@@ -47,7 +47,7 @@ const Agents = ({ sections }) => {
                     __html:
                       sections.find(
                         (section) =>
-                          section.section_name === `Agent ${index + 1}`
+                          section.section_name === `Home Page Agent ${index + 1}`
                       )?.html_content ||
                       `
   <div class="team-img">

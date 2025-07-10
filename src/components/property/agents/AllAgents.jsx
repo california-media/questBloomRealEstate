@@ -1,64 +1,65 @@
+import React from "react";
 import agents from "@/data/agents";
 
-import { Link } from "react-router-dom";
-import React from "react";
-
-const AllAgents = ({ data }) => {
+const AllAgents = ({ pageSections }) => {
   return (
     <>
-      {data.map((agent) => (
-        <div className="col" key={agent.id}>
-          <div className="feature-style2 mb30">
-            <div className="feature-img">
-              <Link to={`#`}>
-                {/* <img
-                  style={{ aspectRatio: "1/1", objectPosition: "50% center" }} // shift image to the left
-                  className="bdrs12 w-100 h-100 cover"
-                  src={agent.image}
-                  alt="agents"
-                /> */}
-                <div
-                  style={{
-                    aspectRatio: "1 / 1",
-                    overflow: "hidden",
-                    position: "relative",
-                  }}
-                  className="bdrs12 w-100 h-100 "
-                >
-                  <img
-                    src={agent.image}
-                    className="cover"
-                    alt="agents"
-                    style={{
-                      width: "110%",
-                      height: "100%",
-                      objectFit: "cover",
-                      transform: "translateX(-3%)",
-                    }}
-                  />
-                </div>
-              </Link>
-            </div>
-            <div className="feature-content pt20">
-              <h6 className="title mb-1 mt-2">
-                <Link to={`#`}>{agent.name}</Link>
-              </h6>
-              <p
-                style={{ margin: "0", marginTop: "8px", marginBottom: "8px" }}
-                className="text fz15  fw-light"
-              >
-                <span className="fw-normal">{agent.category}</span>
-              </p>
-              <p style={{ margin: "0" }} className="text fz15 mt0 fw-light">
-                Properties:{" "}
-                <span className="fw-semibold">{agent.properties}</span>
-              </p>
-              <p style={{ margin: "0" }} className="text fz15 fw-light">
-                Language: <span className="fw-semibold">{agent.language}</span>
-              </p>
-            </div>
-          </div>
+      {agents.slice(0, 5).map((agent, index) => (
+        <div
+          className="col"
+          key={agent.id}
+          dangerouslySetInnerHTML={{
+            __html:
+              pageSections.find(
+                (section) => section.section_name === `Agent ${index + 1}`
+              )?.html_content ||
+              `
+  <div class="feature-style2 mb30">
+    <div class="feature-img">
+      <a href="#">
+        <div
+          class="bdrs12 w-100 h-100"
+          style="
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            position: relative;
+          "
+        >
+          <img
+            src="${agent.image}"
+            class="cover"
+            alt="agents"
+            style="
+              width: 110%;
+              height: 100%;
+              object-fit: cover;
+              transform: translateX(-3%);
+            "
+          />
         </div>
+      </a>
+    </div>
+    <div class="feature-content pt20">
+      <h6 class="title mb-1 mt-2">
+        <a href="#">${agent.name}</a>
+      </h6>
+      <p
+        class="text fz15 fw-light"
+        style="margin: 0; margin-top: 8px; margin-bottom: 8px;"
+      >
+        <span class="fw-normal">${agent.category}</span>
+      </p>
+      <p class="text fz15 mt0 fw-light" style="margin: 0;">
+        Properties: <span class="fw-semibold">${agent.properties}</span>
+      </p>
+      <p class="text fz15 fw-light" style="margin: 0;">
+        Language: <span class="fw-semibold">${agent.language}</span>
+      </p>
+    </div>
+  </div>
+`,
+          }}
+        ></div>
       ))}
     </>
   );

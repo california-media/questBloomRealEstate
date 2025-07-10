@@ -245,9 +245,16 @@ const Hero = ({ HeroTitle }) => {
     <>
       <div className="inner-banner-style3 ">
         <div className=" d-flex justify-content-center">
-          <AnimatedText className="mb30">
-            {HeroTitle || "Find Your Property"}
-          </AnimatedText>
+          <h2
+            className="mb30 hero-title  animate-up-1"
+            style={{
+              textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)" ,
+              color:  "#ffffff",
+            }}
+            dangerouslySetInnerHTML={{
+              __html: HeroTitle || "Find Your Property",
+            }}
+          ></h2>
         </div>
 
         <HeroContent
