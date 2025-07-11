@@ -34,13 +34,13 @@ const CallToActions = () => {
 
             <div className="col-lg-5 col-xl-6 " data-aos="fade-left">
               <div className="cta-btns-style1 d-block d-sm-flex align-items-center justify-content-lg-end">
-                <Link
-                  to="/contact"
+                <a
+                  href="/contact"
                   className="ud-btn btn-transparent mr30 mr0-xs"
                 >
                   Enquire now
                   <i className="fal fa-arrow-right-long" />
-                </Link>
+                </a>
 
                 {/* <Link to="tel:+9710564065672" className="ud-btn btn-dark">
                   <span className="flaticon-call vam pe-2" />
