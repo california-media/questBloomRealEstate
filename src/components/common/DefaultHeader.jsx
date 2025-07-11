@@ -5,7 +5,7 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-const DefaultHeader = () => {
+const DefaultHeader = ({ menuItems, error }) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -53,7 +53,7 @@ const DefaultHeader = () => {
                   </div>
                   {/* End Logo */}
 
-                  <MainMenu />
+                  <MainMenu menuItems={menuItems} error={error} />
                   {/* End Main Menu */}
                 </div>
               </div>

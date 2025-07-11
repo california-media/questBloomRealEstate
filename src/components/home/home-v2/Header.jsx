@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import adminApi, { adminBaseUrl } from "@/api/adminApi";
 
-const Header = () => {
+const Header = ({ menuItems, error }) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -92,7 +92,7 @@ const Header = () => {
                   </div>
                   {/* End Logo */}
 
-                  <MainMenu />
+                  <MainMenu menuItems={menuItems} error={error} />
                   {/* End Main Menu */}
                 </div>
               </div>

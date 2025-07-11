@@ -107,8 +107,41 @@ const Home_V2 = () => {
     title: "QMC - Real Estate",
     description: "QMC - Real Estate",
   });
-
   const [pageSections, setPageSections] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [error, setError] = useState(null);
+
+  // Fetch menu items from API (same logic as MainMenu)
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await adminApi.get("/appearance/menus", {
+          params: {
+            type: "header",
+          },
+        });
+
+        setMenuItems(response.data || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching menu items:", err);
+        setError("Failed to load menu items");
+        // Fallback to default menu structure if API fails
+        setMenuItems([
+          { id: 1, name: "Home", page: "Home" },
+          { id: 2, name: "Off-Plan", page: "Off-Plan" },
+          { id: 3, name: "Buy", page: "Buy" },
+          { id: 4, name: "Listings", page: "Listings" },
+          { id: 5, name: "Rent", page: "Rent" },
+          { id: 6, name: "Agents", page: "Agents" },
+          { id: 7, name: "Who We Are", page: "Who we are" },
+          { id: 8, name: "Contact Us", page: "Contact Us" },
+        ]);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -145,16 +178,15 @@ const Home_V2 = () => {
 
     fetchMetaData();
   }, []);
-
   return (
     <>
       {" "}
       <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
-      <Header />
+      <Header menuItems={menuItems} error={error} />
       {/* End Main Header Nav */}
       {/* Mobile Nav  */}
-      <MobileMenu />
+      <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
       <AutoCarouselHero
@@ -441,8 +473,9 @@ const Home_V2 = () => {
         className="our-cta2 p0 px20"
         dangerouslySetInnerHTML={{
           __html:
-            pageSections.find((section) => section.id === "Home Page Call to Action")
-              ?.html_content ||
+            pageSections.find(
+              (section) => section.id === "Home Page Call to Action"
+            )?.html_content ||
             `<div class="cta-banner2 bgc-thm maxw1600 mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
   <div
     class="cta-style2 d-none d-lg-block"

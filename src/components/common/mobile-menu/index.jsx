@@ -4,7 +4,7 @@ import ContactInfo from "./ContactInfo";
 import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
 
-const MobileMenu = () => {
+const MobileMenu = (menuItems, error) => {
   return (
     <div className="mobilie_header_nav stylehome1">
       <div className="mobile-menu">
@@ -58,7 +58,7 @@ const MobileMenu = () => {
 
           <div className="hsidebar-content ">
             <div className="hiddenbar_navbar_content">
-              <ProSidebarContent />
+              <ProSidebarContent menuItems={menuItems} error={error} />
               {/* End .hiddenbar_navbar_menu */}
 
               <div className="hiddenbar_footer position-relative bdrt1">
