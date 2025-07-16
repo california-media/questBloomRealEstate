@@ -27,9 +27,7 @@ const MobileMenu = (menuItems, error) => {
                   alt="Header Logo"
                 />
               </Link>
-              <Link to="#">
-             
-              </Link>
+              <Link to="#"></Link>
             </div>
           </div>
         </div>
@@ -52,7 +50,7 @@ const MobileMenu = (menuItems, error) => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">Welcome to Questbloom</h4>
+            <h4 className="title">Welcome to Quest Bloom</h4>
           </div>
           {/* End header */}
 
@@ -62,7 +60,7 @@ const MobileMenu = (menuItems, error) => {
               {/* End .hiddenbar_navbar_menu */}
 
               <div className="hiddenbar_footer position-relative bdrt1">
-                <div className="row pt45 pb30 pl30">
+                <div className="row pt45 pb30 gy-3 pl30">
                   <ContactInfo />
                 </div>
                 {/* End .row */}

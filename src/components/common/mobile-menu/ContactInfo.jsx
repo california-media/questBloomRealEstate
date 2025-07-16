@@ -1,25 +1,77 @@
-import React from "react";
+import adminApi from "@/api/adminApi";
+import React, { useState, useEffect } from "react";
 
 const ContactInfo = () => {
-  const contactInfo = [
-    {
-      id: 1,
-      title: "Total Free Customer Care",
-      phone: "+971 (56) 406 5672",
-      phoneHref: "tel:+9710564065672",
-    },
-    {
-      id: 2,
-      title: "Need Live Support?",
-      email: "Info@questbloom.ae",
-      emailHref: "mailto:Info@questbloom.ae",
-    },
-  ];
+  const [contactInfo, setContactInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        // Fetch all needed configuration at once
+        const response = await adminApi.get(
+          "/theme-options/general?keys=hotline,email"
+        );
+
+        if (response.data.success) {
+          setContactInfo([
+            {
+              id: 1,
+              title: "Total Free Customer Care",
+              phone: response.data.data.hotline || "+971 (56) 406 5672",
+              phoneHref: `tel:${
+                response.data.data.hotline?.replace(/\D/g, "") || "971564065672"
+              }`,
+            },
+            {
+              id: 2,
+              title: "Need Live Support?",
+              email: response.data.data.email || "Info@questbloom.ae",
+              emailHref: `mailto:${
+                response.data.data.email || "Info@questbloom.ae"
+              }`,
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+        // Fallback to default values if API fails
+        setContactInfo([
+          {
+            id: 1,
+            title: "Total Free Customer Care",
+            phone: "+971 (56) 406 5672",
+            phoneHref: "tel:+9710564065672",
+          },
+          {
+            id: 2,
+            title: "Need Live Support?",
+            email: "Info@questbloom.ae",
+            emailHref: "mailto:Info@questbloom.ae",
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-center py-4">Loading contact information...</div>
+    );
+  }
+
+  if (!contactInfo) {
+    return null; // or some error message
+  }
 
   return (
     <>
       {contactInfo.map((info) => (
-        <div className="col-auto" key={info.id}>
+        <div className="col-12" key={info.id}>
           <div className="contact-info">
             <p className="info-title dark-color">{info.title}</p>
             {info.phone && (
