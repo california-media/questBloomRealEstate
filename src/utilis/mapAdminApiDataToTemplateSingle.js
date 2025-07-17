@@ -11,7 +11,6 @@ export default function mapAdminApiDataToTemplateSingle(
   } catch {
     imageUrl = "";
   }
-
   return {
     id: apiData.id,
     listing_prefix,
@@ -38,9 +37,12 @@ export default function mapAdminApiDataToTemplateSingle(
       "Houses", //12
     yearBuilding: apiData.year_built || "N/A", //7
     featured: false,
-    sale_status: apiData.project_status //8
-      ? formatEnumValue(apiData.project_status) || apiData.project_status
-      : "",
+    sale_status:
+      listing_prefix === "qb" //8
+        ? formatEnumValue(apiData.project_status) || apiData.project_status
+        : apiData.is_available
+        ? "Available"
+        : "Unavailable",
     status: apiData.is_available ? "Available" : "Unavailable",
     lat: 0,
     long: 0,

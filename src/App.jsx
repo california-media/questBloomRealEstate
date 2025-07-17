@@ -74,6 +74,7 @@ import Rent3Col from "./pages/listings/(grid-view)/rent";
 import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
 import { Toaster } from "react-hot-toast";
 import adminApi, { adminBaseUrl } from "./api/adminApi";
+import BuyOffplan3Col from "./pages/listings/(grid-view)/buy-off-plan";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -89,7 +90,7 @@ function App() {
     // Function to update favicon
     const updateFavicon = async () => {
       try {
-        const {data} = await adminApi.get("/media/theme-images");
+        const { data } = await adminApi.get("/media/theme-images");
 
         if (data.favicon) {
           const favicon =
@@ -133,6 +134,7 @@ function App() {
               <Route path="off-plan" element={<GridFull3Col />} />
               <Route path="rent" element={<Rent3Col />} />
               <Route path="listings" element={<ListingsFull3Col />} />
+              <Route path="buy-off-plan" element={<BuyOffplan3Col />} />
               <Route path="grid-full-4-col" element={<GridFull4Col />} />
               <Route path="grid-full-2-col" element={<GridFull2Col />} />
               <Route path="grid-full-1-col-v1" element={<GridFull1ColV1 />} />

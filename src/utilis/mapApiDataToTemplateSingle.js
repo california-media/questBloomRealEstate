@@ -1,4 +1,4 @@
-export default function mapApiDataToTemplateSingle(apiData, listing_prefix) {
+export default function mapApiDataToTemplateSingle(apiData, listing_prefix= "op") {
   let imageUrl = "";
   try {
     const parsedImage = JSON.parse(apiData.cover_image_url);

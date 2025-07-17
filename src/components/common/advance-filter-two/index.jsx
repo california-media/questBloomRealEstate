@@ -75,6 +75,7 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
     filterFunctions?.handlePercentagePreHandover(percentagePreHandover);
+   
     filterFunctions?.handleYearBuild(yearBuild);
   };
 

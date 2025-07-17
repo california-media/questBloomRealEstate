@@ -18,6 +18,7 @@ const usePropertyStore = create((set, get) => ({
   rentalLocation: "All Locations",
   buyLocation: "All Locations",
   allLocation: "All Locations", ///for listings page
+  offplanBuyLocation: "All Locations",
   categories: [],
   bedrooms: 0,
   bathrooms: 0,
@@ -39,6 +40,7 @@ const usePropertyStore = create((set, get) => ({
   rentalLocationOptions: [],
   buyLocationOptions: [],
   allLocationOptions: [], ///for listings page
+  offplanBuyLocationOptions: [],
 
   // Actions for setting original data
   setListings: (listings) => set({ listings }),
@@ -59,6 +61,8 @@ const usePropertyStore = create((set, get) => ({
     set({ rentalLocationOptions }),
   setBuyLocationOptions: (buyLocationOptions) => set({ buyLocationOptions }),
   setAllLocationOptions: (allLocationOptions) => set({ allLocationOptions }),
+  setOffplanBuyLocationOptions: (offplanBuyLocationOptions) =>
+    set({ offplanBuyLocationOptions }),
 
   // Filter actions for AdvanceFilterModal
   handlePropertyType: (propertyType) => {
@@ -75,6 +79,8 @@ const usePropertyStore = create((set, get) => ({
   handleRentalLocation: (rentalLocation) => set({ rentalLocation }),
   handleBuyLocation: (buyLocation) => set({ buyLocation }),
   handleAllLocation: (allLocation) => set({ allLocation }),
+  handleOffplanBuyLocation: (offplanBuyLocation) =>
+    set({ offplanBuyLocation }),
   handleSearchTerm: (searchTerm) => set({ searchTerm }),
   handlePercentagePreHandover: (percentage) =>
     set({ percentagePreHandover: percentage }),
@@ -106,6 +112,7 @@ const usePropertyStore = create((set, get) => ({
       rentalLocation: "All Locations",
       buyLocation: "All Locations",
       allLocation: "All Locations",
+      offplanBuyLocation: "All Locations",
       categories: [],
       bedrooms: 0,
       bathrooms: 0,

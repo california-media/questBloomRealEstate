@@ -1,0 +1,116 @@
+import {
+  ChartNoAxesCombined,
+  Check,
+  CircleDot,
+  Clock,
+  ImageOff,
+  Scale3D,
+  SlashSquare,
+  UserIcon,
+} from "lucide-react";
+import { Link} from "react-router-dom";
+
+const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
+  return (
+    <>
+      {data.map((listing) => (
+        <div
+          className={`d-flex ${
+            colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
+          }`}
+          key={listing.listing_prefix + String(listing.id)}
+        >
+          <div
+            className={`listing-style1 ${
+              colstyle ? "listCustom listing-type" : ""
+            } w-100 d-flex flex-column`}
+          >
+            <div className="list-thumb">
+              {listing.image ? (
+                <img
+                  className="w-100 cover"
+                  style={{ height: "230px" }}
+                  src={listing.image}
+                  alt={listing.title}
+                />
+              ) : (
+                <div
+                  className="d-flex flex-column align-items-center justify-content-center bg-light"
+                  style={{ height: "230px" }}
+                >
+                  <ImageOff size={48} className="text-muted mb-2" />
+                  <span className="text-muted">No Image Available</span>
+                </div>
+              )}
+
+              <div className="list-price">
+                {listing.price === "$0"
+                  ? "Ask for price"
+                  : `AED ${listing.price
+                      .slice(1)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+              </div>
+            </div>
+
+            <div className="list-content flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <h6 className="list-title">
+                  <Link
+                    to={`/${
+                      listing.listing_prefix === "op" ? "off-plan" : "buy"
+                    }/${listing.listing_prefix}-${listing.id}`}
+                  >
+                    {listing.title}
+                  </Link>
+                </h6>
+                <p className="list-text">{listing.location}</p>
+              </div>
+
+              <div className="list-meta d-flex align-items-center">
+                <a href="#">
+                  <UserIcon size={16} color="gray" className="mb-1 me-1" />
+                  {listing.developer}
+                </a>
+                <a href="#">
+                  {listing.post_handover ? (
+                    <Check size={16} color="gray" className="m-1 me-1"  />
+                  ) : (
+                    <CircleDot size={16} color="gray" className="m-1 me-1" />
+                  )}
+                  {listing.post_handover ? "Post Handover" : "Pre Handover"}
+                </a>
+                <a href="#">
+                  <Clock size={16} color="gray" className="mb-1 me-1" />
+                  {listing.yearBuilding}
+                </a>
+              </div>
+
+              <hr className="mt-2 mb-2" />
+
+              <div className="list-meta2 d-flex justify-content-between align-items-center">
+                <span>
+                  <ChartNoAxesCombined
+                    size={16}
+                    color="gray"
+                    className="mb-1 me-1"
+                  />
+                  {listing.sale_status}
+                </span>
+                <span>
+                  <SlashSquare size={16} color="gray" className="mb-1 me-1" />
+                  {listing.listing_prefix === "op" ? "Off-Plan" : "Resale"}
+                </span>
+                <span>
+                  <Scale3D size={16} color="gray" className="mb-1 me-1" />
+                  {listing.sqft} sqft.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+};
+
+export default FeatuerdListingsBuyOffplan;

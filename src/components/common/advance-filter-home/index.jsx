@@ -227,7 +227,7 @@ const AdvanceFilterModal = ({
           {/* End .row */}
 
           <div className="row ">
-            {buyRent === "buy" && allReadyOff === "off" && (
+            {buyRent === "buy" && allReadyOff !== "ready" && (
               <>
                 <div className="col-sm-6">
                   <div className="widget-wrapper  ">

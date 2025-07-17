@@ -58,6 +58,10 @@ const Hero = ({ HeroTitle }) => {
     saleStatuses,
     handlePercentagePreHandover,
     bathrooms,
+    offplanBuyLocationOptions,
+    setOffplanBuyLocationOptions,
+    offplanBuyLocation,
+    handleOffplanBuyLocation,
     percentagePreHandover,
     handleRentDuration,
     rentDuration,
@@ -124,7 +128,9 @@ const Hero = ({ HeroTitle }) => {
     handlelocation:
       buyRent === "rent"
         ? handleRentalLocation
-        : buyRent === "buy" && allReadyOff !== "off"
+        : buyRent === "buy" && allReadyOff === "all"
+        ? handleOffplanBuyLocation
+        : buyRent === "buy" && allReadyOff === "ready"
         ? handleBuyLocation
         : handleLocation,
     handlesquirefeet: handleSquirefeet,
@@ -145,7 +151,9 @@ const Hero = ({ HeroTitle }) => {
     location:
       buyRent === "rent"
         ? rentalLocation
-        : buyRent === "buy" && allReadyOff !== "off"
+        : buyRent === "buy" && allReadyOff == "all"
+        ? offplanBuyLocation
+        : buyRent === "buy" && allReadyOff == "ready"
         ? buyLocation
         : location,
     yearBuild,
@@ -163,7 +171,7 @@ const Hero = ({ HeroTitle }) => {
   };
   useEffect(() => {
     async function fetchOptions() {
-      // Must refetch this since the format in whcih they are fetched on home page is different
+      // Must refetch this since the format in which they are fetched on home page is different
 
       try {
         setLoading(true);
@@ -176,15 +184,13 @@ const Hero = ({ HeroTitle }) => {
           unitTypes,
           rentalTypes,
           newLocationOptions,
-          newRentLocationOptions,
-          newResaleLocationOptions,
+          newAdminLocationOptions,
         ] = await Promise.all([
           api.get("/sale-statuses"),
           api.get("/unit-types"),
           adminApi.get("/rental-property-types"),
           api.get("/areas"),
-          adminApi.get("/rental-locations"),
-          adminApi.get("/resale-locations"),
+          adminApi.get("/rental-locations"),  ///same for both rental and resale
         ]);
 
         // Set all states (unchanged logic)
@@ -208,9 +214,21 @@ const Hero = ({ HeroTitle }) => {
           })),
         ]);
 
+        setOffplanBuyLocationOptions([
+          { value: "All Locations", label: "All Locations" },
+          ...newLocationOptions.data.map((area) => ({
+            value: area.id,
+            label: area.name,
+          })),
+          ...newAdminLocationOptions.data.map((area) => ({
+            value: area,
+            label: area,
+          })),
+        ]);
+
         setRentalLocationOptions([
           { value: "All Locations", label: "All Locations" },
-          ...newRentLocationOptions.data.map((area) => ({
+          ...newAdminLocationOptions.data.map((area) => ({
             value: area,
             label: area,
           })),
@@ -218,7 +236,7 @@ const Hero = ({ HeroTitle }) => {
 
         setBuyLocationOptions([
           { value: "All Locations", label: "All Locations" },
-          ...newResaleLocationOptions.data.map((area) => ({
+          ...newAdminLocationOptions.data.map((area) => ({
             value: area,
             label: area,
           })),
@@ -248,8 +266,8 @@ const Hero = ({ HeroTitle }) => {
           <h2
             className="mb30 hero-title  animate-up-1"
             style={{
-              textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)" ,
-              color:  "#ffffff",
+              textShadow: "0px 0px 7px rgba(0, 0, 0, 0.5)",
+              color: "#ffffff",
             }}
             dangerouslySetInnerHTML={{
               __html: HeroTitle || "Find Your Property",
@@ -275,7 +293,9 @@ const Hero = ({ HeroTitle }) => {
           locationOptions={
             buyRent === "rent"
               ? rentalLocationOptions
-              : buyRent === "buy" && allReadyOff !== "off"
+              : buyRent === "buy" && allReadyOff == "all"
+              ? offplanBuyLocationOptions
+              : buyRent === "buy" && allReadyOff == "ready"
               ? buyLocationOptions
               : locationOptions
           }
@@ -310,16 +330,18 @@ const Hero = ({ HeroTitle }) => {
             locationOptions={
               buyRent === "rent"
                 ? rentalLocationOptions
-                : buyRent === "buy" && allReadyOff === "off"
-                ? locationOptions
-                : buyLocationOptions
+                : buyRent === "buy" && allReadyOff == "all"
+                ? offplanBuyLocationOptions
+                : buyRent === "buy" && allReadyOff == "ready"
+                ? buyLocationOptions
+                : locationOptions
             }
             propertyTypes={
               buyRent === "rent"
                 ? adminPropertyTypeOptions
-                : buyRent === "buy" && allReadyOff === "off"
-                ? offPlanPropertyTypeOptions
-                : adminPropertyTypeOptions
+                : buyRent === "buy" && allReadyOff !== "off"
+                ? adminPropertyTypeOptions
+                : offPlanPropertyTypeOptions
             }
             facilityOptions={facilityOptions}
             filterFunctions={filterFunctions}

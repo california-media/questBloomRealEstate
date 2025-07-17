@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ListingSidebar from "../../sidebar";
-import AdvanceFilterModal from "@/components/common/advance-filter-two";
-import TopFilterBar from "./TopFilterBar";
-import FeaturedListings from "./FeatuerdListings";
-import api from "@/api/axios";
+import AdvanceFilterModal from "@/components/common/advance-filter-two"; ////using off-plan's advance filter
+import TopFilterBar from "./TopFilterBar"; ////using off-plan's topbar filter
+import FeatuerdListingsBuyOffplan from "./FeatuerdListingsBuyOffplan";
 import usePropertyStore from "@/store/propertyStore";
-import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useLocation } from "react-router-dom";
+import adminApi from "@/api/adminApi";
+import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateSingle";
+import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useInView } from "react-intersection-observer";
+import api from "@/api/axios";
 
 // Function to create completion_date_ranges for a single year
 const createCompletionDateRangesForYear = (year) => {
@@ -21,15 +23,10 @@ const createCompletionDateRangesForYear = (year) => {
   return `${fromTimestamp}-${toTimestamp}`;
 };
 
-const hardcoded_facilities = ["Swimming Pool"];
-
-export default function ProperteyFiltering({ region }) {
+export default function ProperteyFilteringBuy({ region }) {
   // Get all data and actions from store
-
   const {
-    selectedPropertyType,
     priceRange,
-    location,
     categories,
     bedrooms,
     bathrooms,
@@ -37,19 +34,17 @@ export default function ProperteyFiltering({ region }) {
     yearBuild,
     propertyId,
     listingStatus,
-    locationOptions,
     propertyTypes,
-    facilityOptions,
-    saleStatuses,
     setDataFetched,
-    getActiveFilterCount,
-    setLocationOptions,
+    offplanBuyLocationOptions,
+    setOffplanBuyLocationOptions,
+    offplanBuyLocation,
     setPropertyTypes,
-    setFacilityOptions,
-    setSaleStatuses,
-    handlePropertyType,
+    adminPropertyType,
+    handleAdminPropertyType,
+    getActiveFilterCount,
     handlePriceRange,
-    handleLocation,
+    handleOffplanBuyLocation,
     handleCategories,
     handleBedrooms,
     handleBathrooms,
@@ -62,24 +57,42 @@ export default function ProperteyFiltering({ region }) {
     handlePercentagePreHandover,
     searchTerm,
     handleSearchTerm,
+    setSaleStatuses,
+    saleStatuses,
   } = usePropertyStore();
+
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const routelocation = useLocation();
-  const isOffPlan = routelocation.pathname.startsWith("/off-plan");
+
   const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [loading, setLoading] = useState(true);
+
+  // Pagination state for both APIs
+  const [paginationState, setPaginationState] = useState({
+    adminApiPage: 1,
+    regularApiPage: 1,
+    adminApiHasMore: true,
+    regularApiHasMore: true,
+  });
+
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
+
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
     resetAllFilters();
     setListings([]); // Clear existing listings
     setHasMore(true); // Reset hasMore when filters change
+    setPaginationState({
+      adminApiPage: 1,
+      regularApiPage: 1,
+      adminApiHasMore: true,
+      regularApiHasMore: true,
+    });
 
     document.querySelectorAll(".filterInput").forEach(function (element) {
       element.value = null;
@@ -105,32 +118,33 @@ export default function ProperteyFiltering({ region }) {
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
-    handlepropertyType: handlePropertyType,
+    handlepropertyType: handleAdminPropertyType,
     handlepriceRange: handlePriceRange,
     handlebedrooms: handleBedrooms,
     handleBathrooms: handleBathrooms,
-    handlelocation: handleLocation,
+    handlelocation: handleOffplanBuyLocation,
     handlesquirefeet: handleSquirefeet,
     handleYearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
     handleSearchTerm: handleSearchTerm,
-    handleSearchTerm: handleSearchTerm,
-    handlePercentagePreHandover: handlePercentagePreHandover,
-    priceRange,
-    listingStatus,
     searchTerm,
     propertyId,
+    priceRange,
+    listingStatus,
     propertyTypes,
     resetFilter,
     bedrooms,
     bathrooms,
-    location,
+    location: offplanBuyLocation,
     squirefeet,
     yearBuild,
     categories,
-    selectedPropertyType,
+    selectedPropertyType: adminPropertyType,
     percentagePreHandover,
+    handlePercentagePreHandover: handlePercentagePreHandover,
+
+    listingStatus,
   };
 
   function sortListings(unsorted) {
@@ -160,12 +174,12 @@ export default function ProperteyFiltering({ region }) {
     }
   }, [currentSortingOption]);
 
-  function getRequestParams(nextPage = 1) {
+  function getRequestParams(page = 1, isOffPlan) {
     const params = {
-      page: nextPage,
+      page: page,
       per_page: 9,
-      ...(selectedPropertyType != "All Property Types" && {
-        unit_types: selectedPropertyType,
+      ...(adminPropertyType != "All Property Types" && {
+        unit_types: adminPropertyType,
       }),
       ...(priceRange[0] != 0 && {
         unit_price_from: priceRange[0],
@@ -174,72 +188,182 @@ export default function ProperteyFiltering({ region }) {
         unit_price_to: priceRange[1],
       }),
       ...(propertyId != "" && { project_ids: propertyId }),
+      ...(searchTerm != "" && { search_query: searchTerm }),
+      ...(offplanBuyLocation != "All Locations" && {
+        areas: offplanBuyLocation,
+      }),
       ...(yearBuild != 50000 &&
         isOffPlan && {
           completion_date_ranges: createCompletionDateRangesForYear(yearBuild),
         }),
-      ...(location != "All Locations" && { areas: location }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
         squirefeet[0] !== 0 && {
           unit_area_from: squirefeet[0],
         }),
+      ...(listingStatus != "All" && { sale_status: listingStatus }),
       ...(squirefeet.length !== 0 &&
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
         }),
-      ...(listingStatus != "All" && { sale_status: listingStatus }),
-      ...(region && { region }),
-      ...(searchTerm != "" && { search_query: searchTerm }),
     };
     console.log(params);
     return params;
   }
 
+  // Function to fetch combined data from both APIs
+  const fetchCombinedData = async (
+    adminPage = 1,
+    regularPage = 1,
+    filtersReset = false
+  ) => {
+    try {
+      // Calculate how many items to fetch from each API to get total of 9
+      const itemsPerApiCall = 9; // You can adjust this based on your needs
+
+      const promises = [];
+      const currentPaginationState = filtersReset
+        ? {
+            adminApiPage: 1,
+            regularApiPage: 1,
+            adminApiHasMore: true,
+            regularApiHasMore: true,
+          }
+        : paginationState;
+
+      // Only fetch from adminApi if it has more data
+      if (currentPaginationState.adminApiHasMore) {
+        promises.push(
+          adminApi.get("/resale-properties", {
+            params: getRequestParams(adminPage, false),
+          })
+        );
+      }
+
+      // Only fetch from regular api if it has more data
+      if (currentPaginationState.regularApiHasMore) {
+        promises.push(
+          api.get("/properties", {
+            params: getRequestParams(regularPage, true),
+          })
+        );
+      }
+
+      const responses = await Promise.all(promises);
+
+      let adminListings = [];
+      let regularListings = [];
+      let newAdminHasMore = currentPaginationState.adminApiHasMore;
+      let newRegularHasMore = currentPaginationState.regularApiHasMore;
+
+      // Process admin API response
+      if (responses.length > 0 && currentPaginationState.adminApiHasMore) {
+        const adminResponse = responses[0];
+
+        adminListings = adminResponse.data.data.map((item) =>
+          mapAdminApiDataToTemplateSingle(item, "qb")
+        );
+        newAdminHasMore = adminResponse.data.data.length === itemsPerApiCall;
+      }
+
+      // Process regular API response
+      if (
+        responses.length > 1 ||
+        (responses.length === 1 && !currentPaginationState.adminApiHasMore)
+      ) {
+        const regularResponse = responses[responses.length - 1];
+        regularListings = regularResponse.data.items.map((item) =>
+          mapApiDataToTemplateSingle(item, "op")
+        );
+        newRegularHasMore =
+          regularResponse.data.items.length === itemsPerApiCall;
+      }
+
+      // Combine and limit to 9 items
+      const combinedListings = [...adminListings, ...regularListings];
+      const limitedListings = combinedListings.slice(0, 9);
+
+      // Update pagination state
+      setPaginationState((prev) => ({
+        ...prev,
+        adminApiHasMore: newAdminHasMore,
+        regularApiHasMore: newRegularHasMore,
+        ...(adminListings.length > 0 && { adminApiPage: adminPage }),
+        ...(regularListings.length > 0 && { regularApiPage: regularPage }),
+      }));
+
+      // Update global hasMore state
+      const globalHasMore = newAdminHasMore || newRegularHasMore;
+      setHasMore(globalHasMore);
+
+      return limitedListings;
+    } catch (error) {
+      console.error("Failed to fetch combined data", error);
+      return [];
+    }
+  };
+
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
+      console.log("Fetching initial data");
       setLoading(true);
-      setListings([]); // Clear existing listings
+      setListings([]);
+      setHasMore(true);
       setInitialLoading(true);
-      setHasMore(true); // Reset hasMore when filters change
+
+      // Reset pagination state
+      setPaginationState({
+        adminApiPage: 1,
+        regularApiPage: 1,
+        adminApiHasMore: true,
+        regularApiHasMore: true,
+      });
+
       try {
-        const { data } = await api.get("/properties", {
-          params: getRequestParams(),
-        });
+        // Fire all requests in parallel
+        const [
+          combinedListings,
+          propertyTypesRes,
+          locationsRes,
+          areasRes,
+          saleStatusesResponse,
+        ] = await Promise.all([
+          fetchCombinedData(1, 1, true),
+          adminApi.get("/rental-property-types"), ///same as admin and off-plan
+          adminApi.get("/resale-locations"),
+          api.get("/areas"),
+          api.get("/sale-statuses"),
+        ]);
 
-        // Set listings in store
-        const mappedNewListings = data.items.map((item) =>
-          mapApiDataToTemplateSingle(item, "op")
-        );
-        setListings(mappedNewListings);
-        setHasMore(data.items.length === 9); // If we got 9 items, there might be more
-
-        const newSaleStatuses = await api.get("/sale-statuses");
-        setSaleStatuses(newSaleStatuses.data);
-
-        setFacilityOptions(hardcoded_facilities);
-
-        const newPropertyTypes = await api.get("/unit-types");
+        // Set all states (unchanged logic)
+        setSaleStatuses(saleStatusesResponse.data);
         const propertyTypeArray = [
           { value: "All Property Types", label: "All Property Types" },
-          ...newPropertyTypes.data.map((type) => ({
+          ...propertyTypesRes.data.map((type) => ({
             value: type,
             label: type.charAt(0).toUpperCase() + type.slice(1),
           })),
         ];
-        setPropertyTypes(propertyTypeArray);
 
-        const newLocationOptions = await api.get("/areas");
         const locationArray = [
           { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
+          ...locationsRes.data.map((area) => ({
+            value: area,
+            label: area,
+          })),
+          ...areasRes.data.map((area) => ({
             value: area.id,
             label: area.name,
           })),
         ];
-        setLocationOptions(locationArray);
+
+        // Single state update for all data
+        setListings(combinedListings);
+        setPropertyTypes(propertyTypeArray);
+        setOffplanBuyLocationOptions(locationArray);
+        setCurrentSortingOption(currentSortingOption);
       } catch (error) {
         console.error("Failed to fetch listings", error);
       } finally {
@@ -250,44 +374,49 @@ export default function ProperteyFiltering({ region }) {
 
     fetchInitialData();
   }, [
+    region,
     searchTerm,
-    listingStatus,
-    selectedPropertyType,
-    percentagePreHandover,
-    bedrooms,
+    adminPropertyType,
     bathrooms,
-    location,
+    bedrooms,
+    offplanBuyLocation,
+    percentagePreHandover,
     squirefeet,
     yearBuild,
-    categories,
+    listingStatus,
     priceRange,
     propertyId,
   ]);
 
   // Handle scroll events for infinite loading
-  // Fetch more data when reaching bottom
-
   useEffect(() => {
     const fetchMoreData = async () => {
       if (inView) {
         if (loading || !hasMore || initialLoading) return;
+        console.log("Fetching more data");
 
         setLoading(true);
         try {
-          const nextPage = Math.floor(listings.length / 9) + 1;
+          // Determine which API pages to fetch next
+          let nextAdminPage = paginationState.adminApiPage;
+          let nextRegularPage = paginationState.regularApiPage;
 
-          const { data } = await api.get("/properties", {
-            params: getRequestParams(nextPage),
-          });
+          // Increment page numbers for APIs that still have data
+          if (paginationState.adminApiHasMore) {
+            nextAdminPage += 1;
+          }
+          if (paginationState.regularApiHasMore) {
+            nextRegularPage += 1;
+          }
 
-          const mappedNewListings = data.items.map((item) =>
-            mapApiDataToTemplateSingle(item, "op")
+          const newListings = await fetchCombinedData(
+            nextAdminPage,
+            nextRegularPage
           );
 
-          setListings([...listings, ...mappedNewListings]);
-
-          // Update hasMore based on returned data length
-          setHasMore(mappedNewListings.length === 9);
+          if (newListings.length > 0) {
+            setListings((prevListings) => [...prevListings, ...newListings]);
+          }
         } catch (error) {
           console.error("Failed to fetch more data", error);
         } finally {
@@ -295,8 +424,10 @@ export default function ProperteyFiltering({ region }) {
         }
       }
     };
+
     fetchMoreData();
   }, [inView, initialLoading]);
+
   return (
     <section className="pt0 pb90 bgc-f7">
       <div className="container">
@@ -320,10 +451,10 @@ export default function ProperteyFiltering({ region }) {
           </div>
           <div className="offcanvas-body p-0">
             <ListingSidebar
-              locationOptions={locationOptions}
+              locationOptions={offplanBuyLocationOptions}
               propertyTypes={propertyTypes}
-              filterFunctions={filterFunctions}
               saleStatuses={saleStatuses}
+              filterFunctions={filterFunctions}
             />
           </div>
         </div>
@@ -351,7 +482,7 @@ export default function ProperteyFiltering({ region }) {
             setColstyle={setColstyle}
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={locationOptions}
+            locationOptions={offplanBuyLocationOptions}
             saleStatuses={saleStatuses}
             propertyTypes={propertyTypes}
           />
@@ -387,7 +518,7 @@ export default function ProperteyFiltering({ region }) {
           </h5>
         ) : (
           <div className="row">
-            <FeaturedListings colstyle={colstyle} data={listings} />
+            <FeatuerdListingsBuyOffplan colstyle={colstyle} data={listings} />
             <div ref={ref} style={{ height: "1px" }} />
             {loading && (
               <div className="text-center my-3">
