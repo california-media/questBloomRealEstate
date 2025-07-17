@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-const FeaturedListings = ({ data, colstyle }) => {
+const FeaturedListingsAll = ({ data, colstyle }) => {
   const location = useLocation();
   const basePath = location.pathname.split("/")[1];
   const validPaths = ["off-plan", "buy", "rent", "listings"];
@@ -120,4 +120,4 @@ const FeaturedListings = ({ data, colstyle }) => {
   );
 };
 
-export default FeaturedListings;
+export default FeaturedListingsAll;

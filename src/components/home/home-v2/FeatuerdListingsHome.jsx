@@ -33,7 +33,9 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
         const { data } = section.params
           ? await api.get("/properties", { params: section.params })
           : await api.get("/properties");
-        const newListings = data.items.map(mapApiDataToTemplateSingle);
+        const newListings = data.items.map((item) =>
+          mapApiDataToTemplateSingle(item, "op")
+        );
         setListings(newListings);
       } catch (error) {
         console.error("Failed to fetch listings", error);

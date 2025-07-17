@@ -4,13 +4,11 @@ import AdvanceFilterModal from "@/components/common/advance-filter-two";
 import TopFilterBar from "./TopFilterBar";
 import FeaturedListings from "./FeatuerdListings";
 import api from "@/api/axios";
-import mapApiDataToTemplate from "@/utilis/mapApiDataToTemplate";
 import usePropertyStore from "@/store/propertyStore";
 import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import { useLocation } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 
-const isDev = import.meta.env.DEV;
 
 // Function to create completion_date_ranges for a single year
 const createCompletionDateRangesForYear = (year) => {
@@ -29,8 +27,6 @@ export default function ProperteyFiltering({ region }) {
   // Get all data and actions from store
 
   const {
-    filteredData,
-    sortedFilteredData,
     selectedPropertyType,
     priceRange,
     location,
@@ -45,8 +41,6 @@ export default function ProperteyFiltering({ region }) {
     propertyTypes,
     facilityOptions,
     saleStatuses,
-    setFilteredData,
-    setSortedFilteredData,
     setDataFetched,
     getActiveFilterCount,
     setLocationOptions,

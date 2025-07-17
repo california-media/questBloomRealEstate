@@ -9,12 +9,9 @@ import adminApi from "@/api/adminApi";
 import mapAdminApiDataToTemplateSingle from "@/utilis/mapAdminApiDataToTemplateSingle";
 import { useInView } from "react-intersection-observer";
 
-export default function ProperteyFiltering({ region }) {
+export default function ProperteyFilteringBuy({ region }) {
   // Get all data and actions from store
   const {
-    filteredData,
-    sortedFilteredData,
-
     priceRange,
     categories,
     bedrooms,
@@ -24,17 +21,11 @@ export default function ProperteyFiltering({ region }) {
     propertyId,
     listingStatus,
     propertyTypes,
-    facilityOptions,
-    saleStatuses,
-    setFilteredData,
-    setSortedFilteredData,
     setDataFetched,
     buyLocationOptions,
     setBuyLocationOptions,
     buyLocation,
     setPropertyTypes,
-    setFacilityOptions,
-    setSaleStatuses,
     adminPropertyType,
     handleAdminPropertyType,
     getActiveFilterCount,
@@ -59,7 +50,6 @@ export default function ProperteyFiltering({ region }) {
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const routelocation = useLocation();
-  const isOffPlan = routelocation.pathname.startsWith("/off-plan");
 
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);

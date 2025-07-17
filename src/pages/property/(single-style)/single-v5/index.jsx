@@ -33,6 +33,7 @@ import BuildingDetails from "@/components/property/property-single-style/common/
 import PaymentPlans from "@/components/property/property-single-style/common/PaymentPlans";
 import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
 import usePropertyStore from "@/store/propertyStore";
+import adminApi from "@/api/adminApi";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -44,6 +45,39 @@ const SingleV5 = () => {
   const params = useParams();
   const { id: prefixedId } = params;
 
+  const [menuItems, setMenuItems] = useState([]);
+  const [error, setError] = useState(null);
+  // Fetch menu items from API (same logic as MainMenu)
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await adminApi.get("/appearance/menus", {
+          params: {
+            type: "header",
+          },
+        });
+
+        setMenuItems(response.data || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching menu items:", err);
+        setError("Failed to load menu items");
+        // Fallback to default menu structure if API fails
+        setMenuItems([
+          { id: 1, name: "Home", page: "Home" },
+          { id: 2, name: "Off-Plan", page: "Off-Plan" },
+          { id: 3, name: "Buy", page: "Buy" },
+          { id: 4, name: "Listings", page: "Listings" },
+          { id: 5, name: "Rent", page: "Rent" },
+          { id: 6, name: "Agents", page: "Agents" },
+          { id: 7, name: "Who We Are", page: "Who we are" },
+          { id: 8, name: "Contact Us", page: "Contact Us" },
+        ]);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
   // Function to extract the numeric ID
   const extractId = (prefixedId, pathPrefix) => {
     switch (pathPrefix) {
@@ -75,6 +109,7 @@ const SingleV5 = () => {
     setDetailedListings,
     loading: storePropertiesLoading,
   } = usePropertyStore();
+
   useEffect(() => {
     const fetchProperty = async () => {
       // First, check if the property already exists in the store
@@ -129,11 +164,11 @@ const SingleV5 = () => {
     <>
       <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
-      <DefaultHeader />
+      <DefaultHeader menuItems={menuItems} error={error} />
       {/* End Main Header Nav */}
 
       {/* Mobile Nav  */}
-      <MobileMenu />
+      <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
 
       {/* Property Slider Gallery */}
@@ -268,7 +303,10 @@ const SingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
-                    <ReviewBoxForm property={property} prefixedId={prefixedId}  />
+                    <ReviewBoxForm
+                      property={property}
+                      prefixedId={prefixedId}
+                    />
                   </div>
                 </div>
                 {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">

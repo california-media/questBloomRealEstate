@@ -39,6 +39,5 @@ export default function mapApiDataToTemplateSingle(apiData, listing_prefix) {
     lat,
     long,
     features: [], // You may fill this manually or enhance the API if possible
-    listing_prefix: "op",
   };
 }
