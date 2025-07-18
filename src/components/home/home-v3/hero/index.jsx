@@ -87,6 +87,7 @@ const Hero = ({ HeroTitle }) => {
   const [offPlanPropertyTypeOptions, setOffPlanPropertyTypeOptions] = useState(
     []
   );
+
   const handleAllReadyOff = (tab) => {
     // handlePropertyType("All Property Types");
     setAllReadyOff(tab);
@@ -190,7 +191,7 @@ const Hero = ({ HeroTitle }) => {
           api.get("/unit-types"),
           adminApi.get("/rental-property-types"),
           api.get("/areas"),
-          adminApi.get("/rental-locations"),  ///same for both rental and resale
+          adminApi.get("/rental-locations"), ///same for both rental and resale
         ]);
 
         // Set all states (unchanged logic)
@@ -300,11 +301,17 @@ const Hero = ({ HeroTitle }) => {
               : locationOptions
           }
           propertyTypes={
-            buyRent === "rent"
-              ? adminPropertyTypeOptions
-              : buyRent === "buy" && allReadyOff !== "off"
-              ? adminPropertyTypeOptions
-              : offPlanPropertyTypeOptions
+            buyRent === "buy" && allReadyOff == "off"
+              ? offPlanPropertyTypeOptions
+              : buyRent === "buy" && allReadyOff == "all"
+              ? [
+                  ...adminPropertyTypeOptions,
+                  ...offPlanPropertyTypeOptions,
+                ].filter(
+                  (obj, index, self) =>
+                    index === self.findIndex((o) => o.value === obj.value)
+                )
+              : adminPropertyTypeOptions
           }
           facility
           filterFunctions={filterFunctions}
@@ -337,11 +344,17 @@ const Hero = ({ HeroTitle }) => {
                 : locationOptions
             }
             propertyTypes={
-              buyRent === "rent"
-                ? adminPropertyTypeOptions
-                : buyRent === "buy" && allReadyOff !== "off"
-                ? adminPropertyTypeOptions
-                : offPlanPropertyTypeOptions
+              buyRent === "buy" && allReadyOff == "off"
+                ? offPlanPropertyTypeOptions
+                : buyRent === "buy" && allReadyOff == "all"
+                ? [
+                    ...adminPropertyTypeOptions,
+                    ...offPlanPropertyTypeOptions,
+                  ].filter(
+                    (obj, index, self) =>
+                      index === self.findIndex((o) => o.value === obj.value)
+                  )
+                : adminPropertyTypeOptions
             }
             facilityOptions={facilityOptions}
             filterFunctions={filterFunctions}

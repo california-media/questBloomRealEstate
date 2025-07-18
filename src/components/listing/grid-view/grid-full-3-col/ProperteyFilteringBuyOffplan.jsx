@@ -325,12 +325,14 @@ export default function ProperteyFilteringBuy({ region }) {
         // Fire all requests in parallel
         const [
           combinedListings,
+          adminPropertyTypesRes,
           propertyTypesRes,
           locationsRes,
           areasRes,
           saleStatusesResponse,
         ] = await Promise.all([
           fetchCombinedData(1, 1, true),
+          api.get("/unit-types"),
           adminApi.get("/rental-property-types"), ///same as admin and off-plan
           adminApi.get("/resale-locations"),
           api.get("/areas"),
@@ -343,9 +345,16 @@ export default function ProperteyFilteringBuy({ region }) {
           { value: "All Property Types", label: "All Property Types" },
           ...propertyTypesRes.data.map((type) => ({
             value: type,
-            label: type.charAt(0).toUpperCase() + type.slice(1),
+            label: type,
           })),
-        ];
+          ...adminPropertyTypesRes.data.map((type) => ({
+            value: type,
+            label: type,
+          })),
+        ].filter(   ///remove duplicates
+          (obj, index, self) =>
+            index === self.findIndex((o) => o.value === obj.value)
+        );
 
         const locationArray = [
           { value: "All Locations", label: "All Locations" },

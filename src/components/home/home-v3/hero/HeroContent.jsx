@@ -469,8 +469,10 @@ const HeroContent = ({
                       if (buyRent === "rent") {
                         path = "/rent";
                       } else if (buyRent === "buy") {
-                        if (allReadyOff === "ready" || allReadyOff === "all") {
+                        if (allReadyOff === "ready") {
                           path = "/buy";
+                        } else if (allReadyOff === "all") {
+                          path = "/buy-off-plan";
                         } else if (allReadyOff === "off") {
                           path = "/off-plan";
                         } else {
