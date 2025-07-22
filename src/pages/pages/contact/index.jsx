@@ -93,102 +93,39 @@ const Contact = () => {
       {/* End Our Contact With Map */}
 
       {/* Start Our Contact Form */}
-      <section
-        dangerouslySetInnerHTML={{
-          __html:
-            sections.find((section) => section.section_name === "Form")
-              ?.html_content ||
-            `<div class="container">
-  <div class="row d-flex align-items-end">
-    <div class="col-lg-5 position-relative">
-      <div class="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
-        <h4 class="form-title mb25">Have questions? Get in touch!</h4>
-        <form class="form-style1">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="mb20">
-                <label class="heading-color ff-heading fw600 mb10">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required
-                />
+      <section>
+        <div className="container">
+          <div className="row d-flex align-items-end">
+            <div className="col-lg-5 position-relative">
+              <div className="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
+                <h4 className="form-title mb25">
+                  Have questions? Get in touch!
+                </h4>
+                <Form />
               </div>
             </div>
+            {/* End .col */}
 
-            <div class="col-lg-12">
-              <div class="mb20">
-                <label class="heading-color ff-heading fw600 mb10">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="mb20">
-                <label class="heading-color ff-heading fw600 mb10">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="mb10">
-                <label class="heading-color ff-heading fw600 mb10">
-                  Notes
-                </label>
-                <textarea
-                  cols="30"
-                  rows="4"
-                  placeholder="Your notes..."
-                  required
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="d-grid">
-                <button type="submit" class="ud-btn btn-thm">
-                  Submit
-                  <i class="fal fa-arrow-right-long"></i>
-                </button>
-              </div>
-            </div>
+            <div
+              className="col-lg-5 offset-lg-2"
+              dangerouslySetInnerHTML={{
+                __html:
+                  sections.find((section) => section.section_name === "Form")
+                    ?.html_content ||
+                  ` <h2 class="mb30 text-capitalize">
+                We’d love to hear <br className="d-none d-lg-block" />
+                from you.
+              </h2>
+              <p class="text">
+                Let us know how we can help! Fill out our contact form and we
+                will get back to you as soon as possible.
+              </p>`,
+              }}
+            ></div>
+            {/* End .col */}
           </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-lg-5 offset-lg-2">
-      <h2 class="mb30 text-capitalize">
-        We’d love to hear <br class="d-none d-lg-block" />
-        from you.
-      </h2>
-      <p class="text">
-        Let us know how we can help! Fill out our contact form and we
-        will get back to you as soon as possible.
-      </p>
-    </div>
-  </div>
-</div>
-`,
-        }}
-      ></section>
+        </div>
+      </section>
       {/* End Our Contact Form */}
 
       {/* Visit our Office */}

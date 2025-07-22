@@ -1,8 +1,86 @@
-import React from "react";
-
+import api from "@/api/axios";
+import React, { useState } from "react";
+const isDev = import.meta.env.DEV;
 const Form = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    notes: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = isDev
+        ? await fetch("/contact-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
+            },
+            body: JSON.stringify({
+              subject: "New Contact Form Submission",
+              first_name: formData.firstName,
+              last_name: formData.lastName,
+              email: formData.email,
+              notes: formData.notes,
+            }),
+          })
+        : await api.post("/send-contact-email", {
+            subject: "New Contact Form Submission",
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            notes: formData.notes,
+          });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({
+          success: true,
+          message: "Thank you for contacting us!",
+        });
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          notes: "",
+        });
+      } else {
+        setSubmitStatus({
+          success: false,
+          message: data.message || "Submission failed",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus({
+        success: false,
+        message: "An error occurred. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form className="form-style1">
+    <form className="form-style1" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-lg-12">
           <div className="mb20">
@@ -11,13 +89,15 @@ const Form = () => {
             </label>
             <input
               type="text"
+              name="firstName"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Your First Name"
+              value={formData.firstName}
+              onChange={handleChange}
               required
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-lg-12">
           <div className="mb20">
@@ -26,48 +106,66 @@ const Form = () => {
             </label>
             <input
               type="text"
+              name="lastName"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Your Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
               required
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">Email</label>
             <input
               type="email"
+              name="email"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="mb10">
             <label className="heading-color ff-heading fw600 mb10">Notes</label>
             <textarea
+              name="notes"
               cols={30}
               rows={4}
               placeholder="Your notes..."
-              defaultValue={""}
+              value={formData.notes}
+              onChange={handleChange}
               required
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="d-grid">
-            <button type="submit" className="ud-btn btn-thm">
-              Submit
+            <button
+              type="submit"
+              className="ud-btn btn-thm"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Submit"}
               <i className="fal fa-arrow-right-long" />
             </button>
           </div>
+          {submitStatus && (
+            <div
+              className={`mt-3 alert alert-${
+                submitStatus.success ? "success" : "danger"
+              }`}
+            >
+              {submitStatus.message}
+            </div>
+          )}
         </div>
       </div>
     </form>
