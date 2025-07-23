@@ -49,7 +49,7 @@ const Form = () => {
             notes: formData.notes,
           });
 
-      const data = await response.json();
+      const data = isDev ? await response.json() : response.data;
 
       if (data.success) {
         setSubmitStatus({
