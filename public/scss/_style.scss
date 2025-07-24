@@ -10566,3 +10566,14 @@ input:focus-visible {
         border-bottom: 1px solid #DDE5C2;
     }
 }
+
+
+
+.hover-scale-rotate{
+    overflow: hidden; // Added to contain the scaled image
+}
+  .hover-scale-rotate:hover .about-us-cover-image {
+    transform: scale(1.1) rotate(-1deg) !important;
+    -webkit-transform: scale(1.1) rotate(-1deg) !important;
+    -ms-transform: scale(1.1) rotate(-1deg) !important;
+  }

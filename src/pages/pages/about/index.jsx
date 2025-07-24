@@ -74,71 +74,76 @@ const About = () => {
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
       {/* Breadcrumb Sections */}
-      <section
-        className=" p-0"
-        dangerouslySetInnerHTML={{
-          __html:
-            sections.find((section) => section.section_name === "Cover")
-              ?.html_content ||
-            `<div
-  style="
-    display: flex;
-    align-items: center;
-    height: 450px;
-    position: relative;
-  "
->
-  <div
-    style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url(/images/background/aboutus-cover.jfif);
-      background-size: cover;
-      background-position: center;
-      z-index: 0;
-    "
-  ></div>
+      <section className=" p-0">
+        <div
+          className="hover-scale-rotate"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "450px",
+            position: "relative",
+        
+          }}
+        >
+          {/* Hover overlay - moved inside the image container */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              zIndex: 1,
+            }}
+          ></div>
 
-  <div
-    style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 1;
-    "
-  ></div>
+          {/* Image container with hover effect */}
+          <div
+          className="about-us-cover-image"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: "url(/images/background/aboutus-cover.jfif)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              zIndex: 0,
+              transition: "transform 0.3s ease", // Smooth transition
+              transform: "scale(1) rotate(0deg)", // Initial state
+            }}
+            // Added class for hover effect
+          ></div>
 
-  <div
-    class="container"
-    style="
-      position: relative;
-      z-index: 2;
-    "
-  >
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="breadcumb-style1 ml80 mt60">
-          <div class="breadcumb-style1 ml80 mt60">
-            <h2 class="title text-white">About Us</h2>
-            <div class="breadcumb-list">
-              <a class="text-white" href="/">Home</a>
-              <a class="text-white" href="#">About</a>
+          <div
+            className="container"
+            style={{
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="breadcumb-style1 mt60">
+                  <div className="breadcumb-style1 mt60">
+                    <h2 className="title text-white">About Us</h2>
+                    <div className="breadcumb-list">
+                      <a className="text-white" href="/">
+                        Home
+                      </a>
+                      <a className="text-white" href="#">
+                        About
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-`,
-        }}
-      ></section>
+      </section>
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
       {/* <section style={{ marginTop: "-50px" }} className="our-about pb10 ">
@@ -292,7 +297,7 @@ const About = () => {
 
           <div className="row">
             <div
-              className="col-lg-12  "
+              className="col-lg-8 mx-auto  "
               data-aos="fade-up"
               data-aos-delay="300"
             >

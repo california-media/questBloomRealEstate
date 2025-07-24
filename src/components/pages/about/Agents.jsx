@@ -9,7 +9,7 @@ const Agents = ({ sections }) => {
   return (
     <>
       <Swiper
-        spaceBetween={30}
+        spaceBetween={60}
         modules={[Navigation, Pagination]}
         navigation={{
           nextEl: ".agent_next__active",
@@ -32,7 +32,7 @@ const Agents = ({ sections }) => {
             slidesPerView: 3,
           },
           1200: {
-            slidesPerView: 4,
+            slidesPerView: 3,
           },
         }}
         autoplay={{ delay: 50000 }} // Set the desired delay for autoplay
@@ -47,13 +47,13 @@ const Agents = ({ sections }) => {
                     __html:
                       sections.find(
                         (section) =>
-                          section.section_name === `Home Page Agent ${index + 1}`
+                          section.section_name === `Home Page Agent adsacas ${index + 1}`
                       )?.html_content ||
                       `
-  <div class="team-img">
+  <div class="team-img bg-danger">
     <div
-      style="aspect-ratio: 1 / 1; overflow: hidden; position: relative;"
-      class="bdrs12 w-100 h-100"
+      style="aspect-ratio: 1 / 1.3; overflow: hidden; position: relative;"
+      class="bdrs12 w-100 "
     >
       <img
         src="${agent.image}"
