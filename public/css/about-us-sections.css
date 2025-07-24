@@ -1,0 +1,363 @@
+
+        /* Enhanced Hero Parallax Section */
+        .hero-parallax {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: #000;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            width: 110%;
+            height: 120%;
+            background-image: url('/images/background/team.webp');
+                background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+            transform: translateZ(0) scale(1.1);
+            transition: transform 0.1s ease-out;
+        }
+
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+        }
+
+        .btn-contact-us {
+            background: linear-gradient(135deg, #797631, #9d9a4a, #b8b566);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(121, 118, 49, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-contact-us::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-contact-us:hover::before {
+            left: 100%;
+        }
+
+        .btn-contact-us:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(121, 118, 49, 0.5);
+            background: linear-gradient(135deg, #9d9a4a, #b8b566, #797631);
+            color: white;
+        }
+
+       
+
+        /* Enhanced Content Section */
+        .content-info-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f2f5 100%);
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2d2d2d;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #797631, #9d9a4a);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        
+
+        /* Enhanced Contact Card */
+        .contact-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 25px;
+            padding: 0;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #797631, #9d9a4a);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 100px rgba(121, 118, 49, 0.3);
+        }
+
+        .card-header {
+            padding: 30px;
+            text-align: center;
+            background: rgba(121, 118, 49, 0.1);
+        }
+
+        .card-header .logo {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .card-body {
+            padding: 40px;
+            padding-top: 20px;
+            color: white;
+        }
+
+        .card-body h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: white;
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(121, 118, 49, 0.1);
+        }
+
+        .contact-item i {
+            color: #797631;
+            font-size: 1.4rem;
+            width: 25px;
+            flex-shrink: 0;
+        }
+
+        .contact-item span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .whatsapp-btn, .speak-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #797631, #9d9a4a);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn::before, .speak-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .whatsapp-btn:hover::before, .speak-btn:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp-btn:hover, .speak-btn:hover {
+            background: linear-gradient(135deg, #9d9a4a, #b8b566);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(121, 118, 49, 0.4);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(135deg, transparent, #797631, transparent);
+            margin: 30px 0;
+            border-radius: 1px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #797631, #9d9a4a);
+            color: white;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: white;
+            box-shadow: 0 10px 25px rgba(121, 118, 49, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes parallaxMove {
+            0%, 100% { 
+                transform: translateZ(0) scale(1.1) translateY(0); 
+            }
+            50% { 
+                transform: translateZ(0) scale(1.1) translateY(-15px); 
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .strengths-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .contact-card {
+                margin-top: 3rem;
+            }
+
+            .hero-text-container {
+                margin-top: -40px;
+            }
+        }
+
+        /* Enhanced Parallax Effect */
+        @media (min-width: 769px) {
+            .parallax-bg {
+                animation: parallaxMove 25s ease-in-out infinite;
+            }
+        }

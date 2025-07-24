@@ -9,6 +9,7 @@ import MetaData from "@/components/common/MetaData";
 import WealthManagementTabs from "@/components/pages/about/WealthManagementTabs";
 import adminApi from "@/api/adminApi";
 import { useEffect, useState } from "react";
+import "/public/css/about-us-sections.css";
 
 const metaInformation = {
   title: "About | QMC",
@@ -82,7 +83,6 @@ const About = () => {
             alignItems: "center",
             height: "450px",
             position: "relative",
-        
           }}
         >
           {/* Hover overlay - moved inside the image container */}
@@ -100,7 +100,7 @@ const About = () => {
 
           {/* Image container with hover effect */}
           <div
-          className="about-us-cover-image"
+            className="about-us-cover-image"
             style={{
               position: "absolute",
               top: 0,
@@ -233,31 +233,113 @@ const About = () => {
       </section> */}
       {/* End Our About Area */}
       {/* About Banner */}
-      <WealthManagementTabs sections={sections} />
+      {/* <WealthManagementTabs sections={sections} /> */}
 
-      <section className="our-about pb40 ">
+      <section className="contact-info-section pt-5 mt100 ">
         <div className="container">
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
-            <div className="col-lg-12">
-              <div
-                className="about-page-img d-flex justify-content-center"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    sections.find(
-                      (section) => section.section_name === "Team Image"
-                    )?.html_content ||
-                    `<img
-                      style="margin: auto;"
-                      class="w-60 h-100 cover"
-                      src="/images/background/team.webp"
-                      alt="about banner"
-                    />`,
-                }}
-              ></div>
+          <div className="row align-items-center gx-5">
+            <div class="col-lg-7">
+              <div class="content-wrapper">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-description">
+                  At Questbloom Real Estate, our mission is to guide you on your
+                  journey to finding the perfect home in Dubai. We prioritize
+                  unparalleled service, expertise, and personalized attention
+                  for every client. Our goal is to redefine the real estate
+                  experience by putting your needs first and foremost.
+                </p>
+                <h2 class="section-title">Our Vision</h2>
+                <p class="section-description">
+                  We aim to be the premier choice for clients seeking
+                  unparalleled service, expertise, and personalized attention.
+                  Our vision encompasses creating lasting relationships built on
+                  trust, transparency, and integrity.
+                </p>
+                <h2 class="section-title">Our Strengths</h2>
+                <p class="section-description">
+                  Our strengths lie in our unwavering commitment to excellence,
+                  unparalleled market expertise, and personalized service. With
+                  a deep understanding of Dubai's real estate landscape, we
+                  offer invaluable insights and guidance.
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-5">
+              <div className="contact-card">
+                <div className="card-header">
+                  <img
+                    src="/images/Questrealstatewhite.svg"
+                    alt="Quest Real Estate"
+                    className="logo"
+                  />
+                </div>
+                <div className="card-body">
+                  <h3 className="text-start">Contact Us</h3>
+                  <div className="contact-item">
+                    <i className="fas fa-phone"></i>
+                    <span>+97145476400</span>
+                  </div>
+                  <a href="#" className="whatsapp-btn">
+                    <i className="fab fa-whatsapp"></i>
+                    WhatsApp
+                  </a>
+                  <div className="divider"></div>
+                  <p className="follow-text">Follow us on:</p>
+                  <div className="social-links">
+                    <a href="#" className="social-link facebook">
+                      <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" className="social-link instagram">
+                      <i className="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" className="social-link linkedin">
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" className="social-link youtube">
+                      <i className="fab fa-youtube"></i>
+                    </a>
+                  </div>
+                  <div className="divider"></div>
+                  <p className="valuation-text">
+                    Do you need a property valuation?
+                  </p>
+                  <a href="#" className="speak-btn">
+                    <i className="fas fa-phone"></i>
+                    Speak with us
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <section class="hero-parallax mt50">
+        <div class="parallax-bg" id="parallaxBg"></div>
+        <div class="hero-content">
+          <div class="container">
+            <div class="row align-items-center min-vh-90">
+              <div
+                class="col-lg-7 hero-text-container"
+                data-aos="fade-bottom"
+                data-aos-delay="300"
+              >
+                <h1 class="hero-title">Meet the Team</h1>
+                <p class="hero-subtitle">
+                  Discover the passionate professionals behind our success
+                  story. Experience excellence in every interaction with our
+                  dedicated real estate experts.
+                </p>
+                <button class="btn-contact-us">
+                  Contact Us
+                  <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* End About Banner */}
       {/* Funfact */}
       {/* <section className="pt-0">
