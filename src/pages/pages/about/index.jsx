@@ -320,7 +320,7 @@ const About = () => {
 
       <section className="hero-parallax mt50">
         <div className="parallax-dark-overlay" id="parallaxBg"></div>
-        <div className="hero-content">
+        <div className="about-us-hero-content">
           <div className="container">
             <div className="row align-items-center min-vh-90">
               <div
@@ -328,8 +328,8 @@ const About = () => {
                 data-aos="fade-bottom"
                 data-aos-delay="300"
               >
-                <h1 className="hero-title">Meet the Team</h1>
-                <p className="hero-subtitle">
+                <h1 className="about-us-hero-title">Meet the Team</h1>
+                <p className="about-us-hero-subtitle">
                   Discover the passionate professionals behind our success
                   story. Experience excellence in every interaction with our
                   dedicated real estate experts.

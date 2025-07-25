@@ -14,30 +14,7 @@
     background-attachment: fixed;
         }
 
-       /* .parallax-bg {
-    position: absolute;
-    top: -10%;
-    left: -5%;
-    width: 110%;
-    height: 120%;
-    background-image: url('/images/background/team.webp');
-    background-size: cover;
-    background-position: top;
-    background-repeat: no-repeat;
-    transform: translateZ(0) scale(1.1);
-    transition: transform 0.1s ease-out;
-}
-
-        .parallax-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        } */
+       
 
         .parallax-dark-overlay {
             content: '';
@@ -47,14 +24,14 @@
             z-index: 1;
         }
 
-        .hero-content {
+        .about-us-hero-content {
             position: relative;
             z-index: 2;
             width: 100%;
             padding: 0 20px;
         }
 
-        .hero-title {
+        .about-us-hero-title {
             font-size: 4.5rem;
             font-weight: 600;
             color: white;
@@ -67,7 +44,7 @@
             background-clip: text;
         }
 
-        .hero-subtitle {
+        .about-us-hero-subtitle {
             font-size: 1.4rem;
             color: rgba(255, 255, 255, 0.95);
             margin-bottom: 3rem;
@@ -319,27 +296,7 @@
             box-shadow: 0 10px 25px rgba(121, 118, 49, 0.4);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes parallaxMove {
-            0%, 100% { 
-                transform: translateZ(0) scale(1.1) translateY(0); 
-            }
-            50% { 
-                transform: translateZ(0) scale(1.1) translateY(-15px); 
-            }
-        }
-
+    
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-title {
