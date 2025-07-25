@@ -7,6 +7,9 @@ const egents = [
     image: "/images/team/JALENDHAR.webp",
     properties: 4,
     language: "English, Hindi",
+    facebook: "https://www.facebook.com/sharma.jalendhar",
+    instagram: "https://www.instagram.com/jalendhar.quest",
+    linkedin: "https://www.linkedin.com/in/jalendhar-sharma-ab80017b",
   },
   {
     id: 2,
@@ -16,6 +19,9 @@ const egents = [
     image: "/images/team/pragya.webp",
     properties: 4,
     language: "English, Spanish, French",
+    facebook: "https://www.facebook.com/pragya.sharma.972918",
+    instagram: "https://www.instagram.com/pragya.quest",
+    linkedin: "https://www.linkedin.com/in/pragya-sharma-a6599a21b",
   },
   // {
   //   id: 3,
@@ -34,6 +40,9 @@ const egents = [
     image: "/images/team/Brahmarup.webp",
     properties: 4,
     language: "English, Hindi",
+    facebook: "https://www.facebook.com/rup.ganguly",
+    instagram: "https://www.instagram.com/brahmarupganguly.quest",
+    linkedin: "https://www.linkedin.com/in/brahmarup-ganguly-0b12b517",
   },
   // {
   //   id: 5,

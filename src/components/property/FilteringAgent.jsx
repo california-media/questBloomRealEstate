@@ -3,8 +3,7 @@ import TopFilter from "./TopFilter";
 
 import AllAgents from "./agents/AllAgents";
 // import PaginationTwo from '../listing/PaginationTwo';
-export default function FilteringAgent({pageSections}) {
-  
+export default function FilteringAgent({ pageSections }) {
   return (
     <section className="our-agents pt-0" style={{ minHeight: "70vh" }}>
       <div className="container">
@@ -13,12 +12,10 @@ export default function FilteringAgent({pageSections}) {
           </div> */}
         {/* End .row */}
 
-        <div
-          className="row row-cols-4 gx4"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
-          <AllAgents  pageSections={pageSections}/>
+        <div className="row gx4" data-aos="fade-up" data-aos-delay="100">
+          <div className="col-9 mx-auto">
+            <AllAgents pageSections={pageSections} />
+          </div>
         </div>
         {/* End .row */}
 

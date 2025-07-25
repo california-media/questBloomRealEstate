@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const Agents = ({ sections }) => {
+  
   return (
     <>
       <Swiper
@@ -41,8 +42,78 @@ const Agents = ({ sections }) => {
         {agents.slice(0, 7).map((agent, index) => (
           <SwiperSlide key={index}>
             <div className="item  h-100 " key={index}>
-              <Link to={`#`}>
-                <div className="team-style1  rounded ">
+              <Link
+                to={`#`}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    sections.find(
+                      (section) =>
+                        section.section_name ===
+                        `About Us Page Agent ${index + 1}`
+                    )?.html_content ||
+                    `
+<div class="team-style1 rounded">
+  <div class="team-img">
+    <div
+      style="
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 1 / 1.15;
+      "
+      class="bdrs12 w-100 h-100"
+    >
+      <img
+        src="${agent.image}"
+        class="cover"
+        alt="agents"
+        style="
+          width: 110%;
+          object-fit: cover;
+          transform: translateX(-3%);
+        "
+      />
+    </div>
+  </div>
+  <div class="team-content p20">
+    <h6 class="title mb-1 mt-2">
+      <a href="#">${agent.name}</a>
+    </h6>
+    <p
+      style="
+        margin: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      "
+      class="text fz15 fw-light"
+    >
+      <span class="fw-normal">${agent.category}</span>
+    </p>
+    <p style="margin: 0" class="text fz15 mt0 fw-light">
+      Properties:
+      <span class="fw-semibold">${agent.properties}</span>
+    </p>
+    <p style="margin: 0" class="text fz15 fw-light">
+      Language:
+      <span class="fw-semibold">${agent.language}</span>
+    </p>
+    <div class="divider"></div>
+    <div class="social-links">
+      <a href="${agent.facebook}" class="social-link facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="${agent.instagram}" class="social-link instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="${agent.linkedin}" class="social-link linkedin">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+  </div>
+</div>
+`,
+                }}
+              >
+                {/* <div className="team-style1  rounded ">
                   <div className="team-img">
                     <div
                       style={{
@@ -92,18 +163,30 @@ const Agents = ({ sections }) => {
                     </p>
                     <div className="divider"></div>
                     <div className="social-links">
-                      <a href="#" className="social-link facebook">
+                      <a
+                        href={agent.facebook}
+                        className="social-link facebook"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <i className="fab fa-facebook-f"></i>
                       </a>
-                      <a href="#" className="social-link instagram">
+                      <a
+                        href={agent.instagram}
+                        className="social-link instagram"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <i className="fab fa-instagram"></i>
                       </a>
-                      <a href="#" className="social-link linkedin">
+                      <a
+                        href={agent.linkedin}
+                        className="social-link linkedin"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <i className="fab fa-linkedin-in"></i>
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </Link>
             </div>
           </SwiperSlide>
