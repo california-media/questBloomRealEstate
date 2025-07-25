@@ -50,7 +50,6 @@ const Agents = ({ sections }) => {
                         position: "relative",
                         aspectRatio: "1 / 1.15",
                       }}
-                      
                       className="bdrs12 w-100 h-100 "
                     >
                       <img
@@ -59,7 +58,6 @@ const Agents = ({ sections }) => {
                         alt="agents"
                         style={{
                           width: "110%",
-                  
 
                           objectFit: "cover",
                           transform: "translateX(-3%)",
@@ -69,7 +67,7 @@ const Agents = ({ sections }) => {
                   </div>
                   <div className="team-content p20 ">
                     <h6 className="title mb-1 mt-2 ">
-                      <Link  to={`#`}>{agent.name}</Link>
+                      <Link to={`#`}>{agent.name}</Link>
                     </h6>
                     <p
                       style={{

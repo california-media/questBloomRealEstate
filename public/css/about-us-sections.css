@@ -347,6 +347,12 @@
        .team-style1:hover a, .team-style1:hover span, .team-style1:hover p {
         color: white;
        }
+
+  .team-style1a, .team-style1 span, .team-style1 p {
+          transition: all 0.4s ease;
+
+       }
+
        .about-cta-image{
         transition: all 0.4s ease;
        }
