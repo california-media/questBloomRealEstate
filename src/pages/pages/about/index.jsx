@@ -154,85 +154,8 @@ const About = () => {
             sections.find(
               (section) => section.section_name === "About Us Main Section"
             )?.html_content ||
-            `<div class="container">
-  <div class="row align-items-center gx-5">
-    <div
-      class="col-lg-7"
-      data-aos="fade-right"
-      data-aos-delay="300"
-    >
-      <div class="content-wrapper">
-        <h2 class="section-title">Our Mission</h2>
-        <p class="section-description">
-          At Questbloom Real Estate, our mission is to guide you on your
-          journey to finding the perfect home in Dubai. We prioritize
-          unparalleled service, expertise, and personalized attention
-          for every client. Our goal is to redefine the real estate
-          experience by putting your needs first and foremost.
-        </p>
-        <h2 class="section-title">Our Vision</h2>
-        <p class="section-description">
-          We aim to be the premier choice for clients seeking
-          unparalleled service, expertise, and personalized attention.
-          Our vision encompasses creating lasting relationships built on
-          trust, transparency, and integrity.
-        </p>
-        <h2 class="section-title">Our Strengths</h2>
-        <p class="section-description">
-          Our strengths lie in our unwavering commitment to excellence,
-          unparalleled market expertise, and personalized service. With
-          a deep understanding of Dubai's real estate landscape, we
-          offer invaluable insights and guidance.
-        </p>
-      </div>
-    </div>
-    <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
-      <div class="contact-card">
-        <div class="card-header">
-          <img
-            src="/images/Questrealstatewhite.svg"
-            alt="Quest Real Estate"
-            class="logo"
-          />
-        </div>
-        <div class="card-body">
-          <h4 class="text-start text-white">Contact Us</h4>
-          <div class="contact-item">
-            <i class="fas fa-phone"></i>
-            <span>+971 4 529 9247</span>
-          </div>
-          <a href="tel:+971 4 529 9247" class="whatsapp-btn">
-            <i class="fab fa-whatsapp"></i>
-            WhatsApp
-          </a>
-          <div class="divider"></div>
-          <p class="follow-text text-white">Follow us on:</p>
-          <div class="social-links">
-            <a href="#" class="social-link facebook">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="social-link instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="social-link linkedin">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" class="social-link youtube">
-              <i class="fab fa-youtube"></i>
-            </a>
-          </div>
-          <div class="divider"></div>
-          <p class="valuation-text">
-            Do you need a property valuation?
-          </p>
-          <a href="tel:+971 4 529 9247" class="speak-btn">
-            <i class="fas fa-phone"></i>
-            Speak with us
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+            `<div class="container " style="height: 500px;">
+  
 </div>
 `,
         }}
