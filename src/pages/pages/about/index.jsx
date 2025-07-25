@@ -238,25 +238,29 @@ const About = () => {
       <section className="contact-info-section pt-5 mt100 ">
         <div className="container">
           <div className="row align-items-center gx-5">
-            <div class="col-lg-7">
-              <div class="content-wrapper">
-                <h2 class="section-title">Our Mission</h2>
-                <p class="section-description">
+            <div
+              className="col-lg-7"
+              data-aos="fade-right"
+              data-aos-delay="300"
+            >
+              <div className="content-wrapper">
+                <h2 className="section-title">Our Mission</h2>
+                <p className="section-description">
                   At Questbloom Real Estate, our mission is to guide you on your
                   journey to finding the perfect home in Dubai. We prioritize
                   unparalleled service, expertise, and personalized attention
                   for every client. Our goal is to redefine the real estate
                   experience by putting your needs first and foremost.
                 </p>
-                <h2 class="section-title">Our Vision</h2>
-                <p class="section-description">
+                <h2 className="section-title">Our Vision</h2>
+                <p className="section-description">
                   We aim to be the premier choice for clients seeking
                   unparalleled service, expertise, and personalized attention.
                   Our vision encompasses creating lasting relationships built on
                   trust, transparency, and integrity.
                 </p>
-                <h2 class="section-title">Our Strengths</h2>
-                <p class="section-description">
+                <h2 className="section-title">Our Strengths</h2>
+                <p className="section-description">
                   Our strengths lie in our unwavering commitment to excellence,
                   unparalleled market expertise, and personalized service. With
                   a deep understanding of Dubai's real estate landscape, we
@@ -264,7 +268,7 @@ const About = () => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-5" data-aos="fade-left" data-aos-delay="300">
               <div className="contact-card">
                 <div className="card-header">
                   <img
@@ -284,7 +288,7 @@ const About = () => {
                     WhatsApp
                   </a>
                   <div className="divider"></div>
-                  <p className="follow-text">Follow us on:</p>
+                  <p className="follow-text text-white">Follow us on:</p>
                   <div className="social-links">
                     <a href="#" className="social-link facebook">
                       <i className="fab fa-facebook-f"></i>
@@ -314,25 +318,25 @@ const About = () => {
         </div>
       </section>
 
-      <section class="hero-parallax mt50">
-        <div class="parallax-bg" id="parallaxBg"></div>
-        <div class="hero-content">
-          <div class="container">
-            <div class="row align-items-center min-vh-90">
+      <section className="hero-parallax mt50">
+        <div className="parallax-dark-overlay" id="parallaxBg"></div>
+        <div className="hero-content">
+          <div className="container">
+            <div className="row align-items-center min-vh-90">
               <div
-                class="col-lg-7 hero-text-container"
+                className="col-lg-7 hero-text-container"
                 data-aos="fade-bottom"
                 data-aos-delay="300"
               >
-                <h1 class="hero-title">Meet the Team</h1>
-                <p class="hero-subtitle">
+                <h1 className="hero-title">Meet the Team</h1>
+                <p className="hero-subtitle">
                   Discover the passionate professionals behind our success
                   story. Experience excellence in every interaction with our
                   dedicated real estate experts.
                 </p>
-                <button class="btn-contact-us">
+                <button className="btn-contact-us">
                   Contact Us
-                  <i class="fas fa-arrow-right ms-2"></i>
+                  <i className="fas fa-arrow-right ms-2"></i>
                 </button>
               </div>
             </div>
@@ -366,10 +370,10 @@ const About = () => {
                   (section) => section.section_name === "Agents Header"
                 )?.html_content ||
                 `<div class="col-auto">
-  <div class="main-title" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="title">Our Exclusive Agents</h2>
+  <div class="main-title " data-aos="fade-up" data-aos-delay="100">
+    <h2 class="title text-center">Our Exclusive Agents</h2>
     <p class="paragraph text-center">
-      Aliquam lacinia diam quis lacus euismod
+     Meet our dedicated team of professional agents committed to finding your perfect property with expertise and care.
     </p>
   </div>
 </div>`,
@@ -379,7 +383,7 @@ const About = () => {
 
           <div className="row">
             <div
-              className="col-lg-8 mx-auto  "
+              className="col-lg-10 mx-auto  "
               data-aos="fade-up"
               data-aos-delay="300"
             >
@@ -393,79 +397,92 @@ const About = () => {
       </section>
       {/* Exclusive Agents */}
       {/* Abut intro */}
-      <section
-        className="pt30 pb30"
-        dangerouslySetInnerHTML={{
-          __html:
-            sections.find((section) => section.section_name === "Learn more")
-              ?.html_content ||
-            `<div class="bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-lg-5 pl30-md pl15-xs" data-aos="fade-left" data-aos-delay="300">
-        <div>
-          <div class="mb30">
-            <h2 class="title text-capitalize">
-              Let’s redefine your real estate experience in Dubai
-            </h2>
+      <section className="pt30 pb30">
+        <div className="bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-md-6 col-lg-5 pl30-md pl15-xs"
+                data-aos="fade-left"
+                data-aos-delay="300"
+              >
+                <div>
+                  <div className="mb30">
+                    <h2 className="title text-capitalize">
+                      Let’s redefine your real estate experience in Dubai
+                    </h2>
+                  </div>
+                  <div className="why-chose-list style2">
+                    <div className="list-one d-flex align-items-start mb30">
+                      <span className="list-icon flex-shrink-0 flaticon-security"></span>
+                      <div className="list-content flex-grow-1 ml20">
+                        <h6 className="mb-1">Personalized Property Guidance</h6>
+                        <p className="text mb-0 fz15">
+                          Tailored support to help you find a home that fits
+                          your lifestyle and aspirations
+                        </p>
+                      </div>
+                    </div>
+                    <div className="list-one d-flex align-items-start mb30">
+                      <span className="list-icon flex-shrink-0 flaticon-keywording"></span>
+                      <div className="list-content flex-grow-1 ml20">
+                        <h6 className="mb-1">Unmatched Market Expertise</h6>
+                        <p className="text mb-0 fz15">
+                          In-depth knowledge of Dubai's real estate ensures
+                          smarter decisions and better opportunities
+                        </p>
+                      </div>
+                    </div>
+                    <div className="list-one d-flex align-items-start mb30">
+                      <span className="list-icon flex-shrink-0 flaticon-investment"></span>
+                      <div className="list-content flex-grow-1 ml20">
+                        <h6 className="mb-1">
+                          Trust, Integrity &amp; Excellence
+                        </h6>
+                        <p className="text mb-0 fz15">
+                          A service built on honesty, quality, and long-term
+                          relationships.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <a href="/off-plan" className="ud-btn btn-dark">
+                  Learn More
+                  <i className="fal fa-arrow-right-long"></i>
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="why-chose-list style2">
-            <div class="list-one d-flex align-items-start mb30">
-              <span class="list-icon flex-shrink-0 flaticon-security"></span>
-              <div class="list-content flex-grow-1 ml20">
-                <h6 class="mb-1">Personalized Property Guidance</h6>
-                <p class="text mb-0 fz15">
-                  Tailored support to help you find a home that fits your lifestyle and aspirations
-                </p>
-              </div>
-            </div>
-            <div class="list-one d-flex align-items-start mb30">
-              <span class="list-icon flex-shrink-0 flaticon-keywording"></span>
-              <div class="list-content flex-grow-1 ml20">
-                <h6 class="mb-1">Unmatched Market Expertise</h6>
-                <p class="text mb-0 fz15">
-                  In-depth knowledge of Dubai's real estate ensures smarter decisions and better opportunities
-                </p>
-              </div>
-            </div>
-            <div class="list-one d-flex align-items-start mb30">
-              <span class="list-icon flex-shrink-0 flaticon-investment"></span>
-              <div class="list-content flex-grow-1 ml20">
-                <h6 class="mb-1">Trust, Integrity &amp; Excellence</h6>
-                <p class="text mb-0 fz15">
-                  A service built on honesty, quality, and long-term relationships.
-                </p>
-              </div>
-            </div>
+          <div
+            className="d-none d-md-block"
+            style={{
+              height: "100%",
+              width: "42%",
+              position: "absolute",
+              right: 0,
+              top: 0,
+              bottom: 0,
+              overflow: "hidden",
+            }}
+          >
+            <div
+              className="d-none d-md-block about-cta-image bg-danger"
+              style={{
+                backgroundImage: "url('/images/background/about-dubai.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "right",
+                  height: "100%",
+              width: "100%",
+                right: 0,
+                top: 0,
+                bottom: 0,
+              }}
+            ></div>
           </div>
         </div>
-
-        <a href="/off-plan" class="ud-btn btn-dark">
-          Learn More
-          <i class="fal fa-arrow-right-long"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div
-    class="d-none d-md-block"
-    style="
-      background-image: url('/images/background/about-dubai.jpg');
-      background-size: cover;
-      background-position: right;
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      width: 42%;
-    "
-  ></div>
-</div>
-`,
-        }}
-      ></section>
+      </section>
       {/* Abut intro */}
       {/* Our Partners */}
       {/* <section className="our-partners">

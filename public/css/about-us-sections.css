@@ -7,21 +7,26 @@
             display: flex;
             align-items: center;
             background: #000;
+              background-image: url('/images/background/team.webp');
+               background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
         }
 
-        .parallax-bg {
-            position: absolute;
-            top: -10%;
-            left: -5%;
-            width: 110%;
-            height: 120%;
-            background-image: url('/images/background/team.webp');
-                background-size: cover;
-            background-position: top;
-            background-repeat: no-repeat;
-            transform: translateZ(0) scale(1.1);
-            transition: transform 0.1s ease-out;
-        }
+       /* .parallax-bg {
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 110%;
+    height: 120%;
+    background-image: url('/images/background/team.webp');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    transform: translateZ(0) scale(1.1);
+    transition: transform 0.1s ease-out;
+}
 
         .parallax-bg::before {
             content: '';
@@ -30,6 +35,14 @@
             left: 0;
             right: 0;
             bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        } */
+
+        .parallax-dark-overlay {
+            content: '';
+            position: absolute;
+           inset:0;
             background: rgba(0, 0, 0, 0.7);
             z-index: 1;
         }
@@ -102,7 +115,7 @@
             color: white;
         }
 
-       
+    
 
         /* Enhanced Content Section */
         .content-info-section {
@@ -355,9 +368,28 @@
             }
         }
 
-        /* Enhanced Parallax Effect */
-        @media (min-width: 769px) {
-            .parallax-bg {
-                animation: parallaxMove 25s ease-in-out infinite;
-            }
+
+        
+        .team-style1:hover {
+             transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(121, 118, 49, 0.5);
+            background: linear-gradient(135deg, #9d9a4a, #b8b566, #797631);
+            color: white;
         }
+       .team-style1 {
+       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+       }
+       .team-style1:hover a, .team-style1:hover span, .team-style1:hover p {
+        color: white;
+       }
+       .about-cta-image{
+        transition: all 0.4s ease;
+       }
+       .about-cta-image:hover {
+    -webkit-transform: scale(1.1) rotate(-1deg);
+    -ms-transform: scale(1.1) rotate(-1deg);
+    transform: scale(1.1) rotate(-1deg);
+}
+    
+       
