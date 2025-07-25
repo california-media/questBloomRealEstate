@@ -235,7 +235,7 @@ const About = () => {
       {/* About Banner */}
       {/* <WealthManagementTabs sections={sections} /> */}
 
-      <section className="contact-info-section pt-5 mt100 ">
+      <section className="contact-info-section  mt-md-100 ">
         <div className="container">
           <div className="row align-items-center gx-5">
             <div

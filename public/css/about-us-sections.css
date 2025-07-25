@@ -9,7 +9,7 @@
             background: #000;
               background-image: url('/images/background/team.webp');
                background-size: cover;
-    background-position: top;
+    background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
         }
@@ -299,16 +299,19 @@
     
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero-title {
+           .about-us-hero-title {
                 font-size: 2.8rem;
             }
             
-            .hero-subtitle {
+            .about-us-hero-subtitle {
                 font-size: 1.2rem;
             }
             
             .section-title {
-                font-size: 2.2rem;
+                font-size: 1.5rem;
+            }
+            .section-description {
+                font-size: 1rem;
             }
 
             .strengths-grid {
@@ -323,6 +326,10 @@
             .hero-text-container {
                 margin-top: -40px;
             }
+            .btn-contact-us{
+                font-size: 1rem;
+            }
+          
         }
 
 
