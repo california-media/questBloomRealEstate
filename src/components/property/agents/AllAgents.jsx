@@ -46,7 +46,7 @@ const AllAgents = ({ pageSections }) => {
                 dangerouslySetInnerHTML={{
                   __html:
                     pageSections.find(
-                      (section) => section.section_name === `Agent ${index +1 }`
+                      (section) => section.section_name === `Agent ${index + 1}`
                     )?.html_content ||
                     `<div class="team-style1 rounded">
   <div class="team-img">
@@ -94,13 +94,13 @@ const AllAgents = ({ pageSections }) => {
     </p>
     <div class="divider"></div>
     <div class="social-links">
-      <a href="${agent.facebook}" class="social-link facebook">
+      <a href="${agent.facebook}" class="social-link facebook" onclick="event.stopPropagation();">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="${agent.instagram}" class="social-link instagram">
+      <a href="${agent.instagram}" class="social-link instagram" onclick="event.stopPropagation();">
         <i class="fab fa-instagram"></i>
       </a>
-      <a href="${agent.linkedin}" class="social-link linkedin">
+      <a href="${agent.linkedin}" class="social-link linkedin" onclick="event.stopPropagation();">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </div>
