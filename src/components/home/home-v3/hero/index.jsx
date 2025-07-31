@@ -179,71 +179,102 @@ const Hero = ({ HeroTitle }) => {
         setFacilityOptions(hardcoded_facilities);
         console.log("fetching options");
 
-        // Fetch all data in parallel
+        // Create an array of promises with error handling for each one
+        const promises = [
+          api.get("/sale-statuses").catch((e) => {
+            console.error("Failed to fetch sale statuses", e);
+            return null;
+          }),
+          api.get("/unit-types").catch((e) => {
+            console.error("Failed to fetch unit types", e);
+            return null;
+          }),
+          adminApi.get("/rental-property-types").catch((e) => {
+            console.error("Failed to fetch rental types", e);
+            return null;
+          }),
+          api.get("/areas").catch((e) => {
+            console.error("Failed to fetch areas", e);
+            return null;
+          }),
+          adminApi.get("/rental-locations").catch((e) => {
+            console.error("Failed to fetch rental locations", e);
+            return null;
+          }),
+        ];
+
+        // Wait for all promises to settle (either resolve or reject)
         const [
           saleStatusesResponse,
           unitTypes,
           rentalTypes,
           newLocationOptions,
           newAdminLocationOptions,
-        ] = await Promise.all([
-          api.get("/sale-statuses"),
-          api.get("/unit-types"),
-          adminApi.get("/rental-property-types"),
-          api.get("/areas"),
-          adminApi.get("/rental-locations"), ///same for both rental and resale
-        ]);
+        ] = await Promise.all(promises);
 
-        // Set all states (unchanged logic)
-        setSaleStatuses(saleStatusesResponse.data);
+        // Only set state for successful responses
+        if (saleStatusesResponse) {
+          setSaleStatuses(saleStatusesResponse.data);
+        }
 
-        setAdminPropertyTypeOptions([
-          { value: "All Property Types", label: "All Property Types" },
-          ...rentalTypes.data.map((type) => ({ value: type, label: type })),
-        ]);
+        if (rentalTypes) {
+          setAdminPropertyTypeOptions([
+            { value: "All Property Types", label: "All Property Types" },
+            ...rentalTypes.data.map((type) => ({ value: type, label: type })),
+          ]);
+        }
 
-        setOffPlanPropertyTypeOptions([
-          { value: "All Property Types", label: "All Property Types" },
-          ...unitTypes.data.map((type) => ({ value: type, label: type })),
-        ]);
+        if (unitTypes) {
+          setOffPlanPropertyTypeOptions([
+            { value: "All Property Types", label: "All Property Types" },
+            ...unitTypes.data.map((type) => ({ value: type, label: type })),
+          ]);
+        }
 
-        setLocationOptions([
-          { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
-            value: area.id,
-            label: area.name,
-          })),
-        ]);
+        if (newLocationOptions) {
+          setLocationOptions([
+            { value: "All Locations", label: "All Locations" },
+            ...newLocationOptions.data.map((area) => ({
+              value: area.id,
+              label: area.name,
+            })),
+          ]);
 
-        setOffplanBuyLocationOptions([
-          { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
-            value: area.id,
-            label: area.name,
-          })),
-          ...newAdminLocationOptions.data.map((area) => ({
-            value: area,
-            label: area,
-          })),
-        ]);
+          setOffplanBuyLocationOptions([
+            { value: "All Locations", label: "All Locations" },
+            ...newLocationOptions.data.map((area) => ({
+              value: area.id,
+              label: area.name,
+            })),
+            ...(newAdminLocationOptions
+              ? newAdminLocationOptions.data.map((area) => ({
+                  value: area,
+                  label: area,
+                }))
+              : []),
+          ]);
+        }
 
-        setRentalLocationOptions([
-          { value: "All Locations", label: "All Locations" },
-          ...newAdminLocationOptions.data.map((area) => ({
-            value: area,
-            label: area,
-          })),
-        ]);
+        if (newAdminLocationOptions) {
+          setRentalLocationOptions([
+            { value: "All Locations", label: "All Locations" },
+            ...newAdminLocationOptions.data.map((area) => ({
+              value: area,
+              label: area,
+            })),
+          ]);
 
-        setBuyLocationOptions([
-          { value: "All Locations", label: "All Locations" },
-          ...newAdminLocationOptions.data.map((area) => ({
-            value: area,
-            label: area,
-          })),
-        ]);
+          setBuyLocationOptions([
+            { value: "All Locations", label: "All Locations" },
+            ...newAdminLocationOptions.data.map((area) => ({
+              value: area,
+              label: area,
+            })),
+          ]);
+        }
       } catch (error) {
-        console.error("Failed to fetch listings", error);
+        // This will only catch errors not handled by individual catch() above
+        console.error("Unexpected error", error);
       } finally {
         console.log("Finished fetching options");
         setLoading(false);

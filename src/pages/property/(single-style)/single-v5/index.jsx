@@ -185,7 +185,7 @@ const SingleV5 = () => {
       <section className="pt30 pb90 bgc-f7">
         <div className="container">
           <div className="row sp-v5-property-details">
-            <PropertyHeader property={property} />
+            <PropertyHeader property={property} prefixedId={prefixedId} />
           </div>
           {/* End .row */}
 
@@ -233,13 +233,7 @@ const SingleV5 = () => {
               </div>
               {/* End .ps-widget */}
 
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Energy Class</h4>
-                <div className="row">
-                  <EnergyClass />
-                </div>
-              </div> */}
-              {/* End .ps-widget */}
+          
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Unit Plans</h4>
@@ -264,17 +258,7 @@ const SingleV5 = () => {
 
             <div className="col-lg-6">
               <div className="column">
-                {/* <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
-                  <h4 className="form-title mb5">Schedule a tour</h4>
-                  <p className="text">Choose your preferred day</p>
-                  <ScheduleTour />
-                </div> */}
-                {/* End .Schedule a tour */}
-
-                {/* <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Get More Information</h4>
-                  <SingleAgentInfo developer_data={property?.developer_data} />
-                </div> */}
+              
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
@@ -284,67 +268,7 @@ const SingleV5 = () => {
                     />
                   </div>
                 </div>
-                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30 d-flex align-items-center">
-                    <i className="fab fa-whatsapp text-success me-3 fs-4"></i>
-                    WhatsApp Support
-                  </h4>
-
-                  <div className="contact-method">
-                    <div className="d-flex align-items-center mb-3 p-3 bg-light rounded-3 hover-bg-success hover-text-white transition-300">
-                      <i className="fas fa-phone-alt text-success me-3 fs-5"></i>
-                      <a
-                        href="https://wa.me/yournumber"
-                        className="text-dark fs-6 hover-text-white text-decoration-none fw-medium"
-                      >
-                        +1 (234) 567-8900
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-top">
-                    <p className="text-muted mb-0 ">
-                      <i className="fas  fa-clock  me-2"></i>
-                      Instant response within minutes
-                    </p>
-                  </div>
-                </div> */}
-
-                {/* Email */}
-                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30 d-flex align-items-center">
-                    <i className="fas fa-envelope text-primary me-3 fs-4"></i>
-                    Email Support
-                  </h4>
-
-                  <div className="contact-method">
-                    <div className="d-flex align-items-center mb-3 p-3 bg-light rounded-3 hover-bg-primary hover-text-white transition-300">
-                      <i className="fas fa-envelope-open-text text-primary me-3 fs-5"></i>
-                      <a
-                        href="mailto:contact@example.com"
-                        className="text-dark  fs-6 hover-text-white text-decoration-none fw-medium"
-                      >
-                        {property?.developer_data?.email}
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-top">
-                    <p className="text-muted">
-                      <i className="fas fa-clock me-2"></i>
-                      Response within 24 hours
-                    </p>
-                  </div>
-                </div> */}
-                {/* End Get More Information */}
-
-                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Mortgage Calculator</h4>
-                  <div className="row">
-                    <MortgageCalculator />
-                  </div>
-                </div> */}
-                {/* End .Mortgage Calculator */}
+              
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>

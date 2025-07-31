@@ -1,6 +1,10 @@
-import { Heart } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import AdminPropertyPDF from "./AdminPropertyPDF";
+import { useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 const styles = {
   textShadowDesktop: {
     // Base style (no shadow by default)
@@ -11,13 +15,15 @@ const styles = {
     },
   },
 };
+
 const AdminPropertyHeader = ({ property, prefixedId }) => {
+  const pdfRef = useRef();
+  const [isGenerating, setIsGenerating] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     typeof window !== "undefined" && localStorage.getItem("favourites")
       ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
       : false
   );
-
   const handleShareClick = (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(window.location.href);
@@ -27,9 +33,37 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
     });
   };
 
-  const handlePrintClick = (e) => {
-    e.preventDefault();
-    window.print();
+  const handlePrintClick = () => {
+    setIsGenerating(true);
+    const input = pdfRef.current;
+    html2canvas(input, {
+      scale: 2, // higher scale for better quality
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+    })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/*");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 295; // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save(`${property.property_title}_brochure.pdf`);
+      })
+      .finally(() => setIsGenerating(false));
   };
 
   const handleFavoriteClick = (e) => {
@@ -174,15 +208,15 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
           </div>
           <div className="property-meta d-flex align-items-center">
             <a
-              className="ff-heading text-thm fz15 bdrr1 pr10 bdrrn-sm d-none d-lg-block"
+              className="ff-heading text-thm fz15 bdrr1 d-flex pr10 bdrrn-sm d-none d-lg-block "
               href="#"
               style={styles.textShadowDesktop}
             >
-              <i className="fas fa-circle fz10 pe-2" />
+              <i className="fas fa-circle fz10  pe-2  " />
               {getPropertyStatus()}
             </a>
             <a
-              className="ff-heading text-thm fz15 bdrr1 pr10 bdrrn-sm d-lg-none"
+              className="ff-heading text-thm fz15 bdrr1 pr10 bdrrn-sm d-lg-none "
               href="#"
             >
               <i className="fas fa-circle fz10 pe-2" />
@@ -285,10 +319,22 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
                 onClick={handlePrintClick}
                 style={styles.textShadowDesktop}
               >
-                <span className="flaticon-printer" />
+                {isGenerating ? (
+                  <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  <span className="flaticon-printer" />
+                )}
               </a>
               <a className="icon d-lg-none" href="#" onClick={handlePrintClick}>
-                <span className="flaticon-printer" />
+                {isGenerating ? (
+                  <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  <span className="flaticon-printer" />
+                )}
               </a>
             </div>
 
@@ -324,6 +370,9 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
             })()}
           </div>
         </div>
+      </div>
+      <div style={{ position: "absolute", left: "-9999px" }}>
+        <AdminPropertyPDF ref={pdfRef} property={property} />
       </div>
     </>
   );

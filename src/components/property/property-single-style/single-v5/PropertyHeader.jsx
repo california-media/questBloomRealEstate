@@ -1,5 +1,6 @@
-import React from "react";
-
+import { Heart } from "lucide-react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 const styles = {
   textShadowDesktop: {
     // Base style (no shadow by default)
@@ -10,7 +11,7 @@ const styles = {
     },
   },
 };
-const PropertyHeader = ({ property }) => {
+const PropertyHeader = ({ property, prefixedId }) => {
   // Helper function to format price
   const formatPrice = (price) => {
     if (!price) return "Ask for price";
@@ -99,7 +100,91 @@ const PropertyHeader = ({ property }) => {
     }
     return null;
   };
+  const [isFavorite, setIsFavorite] = useState(
+    typeof window !== "undefined" && localStorage.getItem("favourites")
+      ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
+      : false
+  );
+  const handleShareClick = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied to clipboard!", {
+      position: "bottom-right",
+      duration: 3000,
+    });
+  };
 
+  const handlePrintClick = (e) => {
+    e.preventDefault();
+
+    if (!property?.brochure_url) {
+      toast.error("Brochure not available", { position: "bottom-right" });
+      return;
+    }
+
+    // Convert Google Drive view link to direct download
+    const fileId = property.brochure_url.match(/\/file\/d\/([^\/]+)/)?.[1];
+    if (!fileId) {
+      toast.error("Invalid Google Drive link", { position: "bottom-right" });
+      return;
+    }
+
+    const directDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+    const link = document.createElement("a");
+    link.href = directDownloadUrl;
+    link.download = `brochure-${property.title || "property"}.pdf`;
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    let favorites = [];
+    if (typeof window !== "undefined") {
+      favorites = localStorage.getItem("favourites")
+        ? JSON.parse(localStorage.getItem("favourites"))
+        : [];
+    }
+
+    if (isFavorite) {
+      // Remove from favorites
+      favorites = favorites.filter((id) => id !== prefixedId);
+      toast(
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="red">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>Removed from favorites!</span>
+        </div>,
+        {
+          position: "bottom-right",
+          duration: 2000,
+        }
+      );
+    } else {
+      // Add to favorites
+      favorites.push(prefixedId);
+      toast(
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="red">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>Added to favorites!</span>
+        </div>,
+        {
+          position: "bottom-right",
+          duration: 2000,
+        }
+      );
+    }
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("favourites", JSON.stringify(favorites));
+    }
+    setIsFavorite(!isFavorite);
+  };
   return (
     <>
       <div className="col-lg-8">
@@ -185,47 +270,61 @@ const PropertyHeader = ({ property }) => {
         <div className="single-property-content">
           <div className="property-action text-lg-end">
             <div className="d-flex mb20 mb10-md align-items-center justify-content-lg-end">
+              {/* Favorite/Like Button - Desktop */}
               <a
                 className="icon mr10 d-none d-lg-block"
                 href="#"
+                onClick={handleFavoriteClick}
                 style={styles.textShadowDesktop}
               >
-                <span className="flaticon-like" />
-              </a>
-              <a className="icon mr10 d-lg-none" href="#">
-                <span className="flaticon-like" />
+                <Heart
+                  fill={isFavorite ? "red" : "none"}
+                  color={isFavorite ? "red" : "currentColor"}
+                  size={20} // adjust as needed
+                  className="pb5"
+                />
               </a>
 
+              {/* Favorite/Like Button - Mobile */}
               <a
-                className="icon mr10 d-none d-lg-block"
+                className="icon mr10 d-lg-none"
                 href="#"
-                style={styles.textShadowDesktop}
+                onClick={handleFavoriteClick}
               >
-                <span className="flaticon-new-tab" />
-              </a>
-              <a className="icon mr10 d-lg-none" href="#">
-                <span className="flaticon-new-tab" />
+                <Heart
+                  fill={isFavorite ? "red" : "none"}
+                  color={isFavorite ? "red" : "currentColor"}
+                  size={20} // adjust as needed
+                />
               </a>
 
+              {/* Share Button */}
               <a
                 className="icon mr10 d-none d-lg-block"
                 href="#"
+                onClick={handleShareClick}
                 style={styles.textShadowDesktop}
               >
                 <span className="flaticon-share-1" />
               </a>
-              <a className="icon mr10 d-lg-none" href="#">
+              <a
+                className="icon mr10 d-lg-none"
+                href="#"
+                onClick={handleShareClick}
+              >
                 <span className="flaticon-share-1" />
               </a>
 
+              {/* Print Button */}
               <a
                 className="icon d-none d-lg-block"
                 href="#"
+                onClick={handlePrintClick}
                 style={styles.textShadowDesktop}
               >
                 <span className="flaticon-printer" />
               </a>
-              <a className="icon d-lg-none" href="#">
+              <a className="icon d-lg-none" href="#" onClick={handlePrintClick}>
                 <span className="flaticon-printer" />
               </a>
             </div>

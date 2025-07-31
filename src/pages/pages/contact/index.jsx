@@ -10,7 +10,7 @@ import adminApi from "@/api/adminApi";
 import { useEffect, useState } from "react";
 
 const metaInformation = {
-  title: "Contact | QMC",
+  title: "Contact | Quest Real Estate",
 };
 
 const Contact = () => {

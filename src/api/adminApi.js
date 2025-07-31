@@ -1,6 +1,10 @@
 import axios from "axios";
 const isDev = import.meta.env.DEV;
-const adminBaseUrl =  "https://admin.questrealestate.ae";
+const adminBaseUrl = isDev
+  ? "http://localhost:8000"
+  : "https://admin.questrealestate.ae";
+
+// const adminBaseUrl = "https://admin.questrealestate.ae";
 
 const adminApi = axios.create({
   baseURL: adminBaseUrl + "/api",

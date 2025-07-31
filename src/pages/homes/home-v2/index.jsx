@@ -61,22 +61,7 @@ const sections = [
     },
     seeAll: "See All Apartments",
   },
-  {
-    title: "Beachfront Properties",
-    paragraph: "Premium Beachfront Properties",
-    params: {
-      areas: beachAreaProperties.map((item) => item.id).join(","),
-    },
-    seeAll: "See All Beachfront Properties",
-  },
-  {
-    title: "Properties by Sobha",
-    paragraph: "Premium Properties by Sobha with excellent facilities",
-    params: {
-      developer: String(sobhaDeveloper.id),
-    },
-    seeAll: "See All Properties by Sobha",
-  },
+
   {
     title: "Properties under 1 Million",
     paragraph: "Handpicked premium homes that offer great value",
@@ -95,6 +80,22 @@ const sections = [
     seeAll: "See All Properties between 1 Million to 2 Million",
   },
   {
+    title: "Properties by Sobha",
+    paragraph: "Premium Properties by Sobha with excellent facilities",
+    params: {
+      developer: String(sobhaDeveloper.id),
+    },
+    seeAll: "See All Properties by Sobha",
+  },
+  {
+    title: "Beachfront Properties",
+    paragraph: "Premium Beachfront Properties",
+    params: {
+      areas: beachAreaProperties.map((item) => item.id).join(","),
+    },
+    seeAll: "See All Beachfront Properties",
+  },
+  {
     title: "Featured Listings",
     paragraph: " Premium homes designed to match your lifestyle",
     seeAll: "See All Listings",
@@ -104,8 +105,8 @@ const sections = [
 const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
   const [metaInformation, setMetaInformation] = useState({
-    title: "QMC - Real Estate",
-    description: "QMC - Real Estate",
+    title: "Quest Real Estate",
+    description: "Quest Real Estate",
   });
   const [pageSections, setPageSections] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -122,6 +123,7 @@ const Home_V2 = () => {
         });
 
         setMenuItems(response.data || []);
+        console.log( "menu items",response.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching menu items:", err);
@@ -166,9 +168,9 @@ const Home_V2 = () => {
 
         if (response.data.success) {
           setMetaInformation({
-            title: response.data.data.site_title || "QMC - Real Estate",
+            title: response.data.data.site_title || "Quest Real Estate",
             description:
-              response.data.data.seo_description || "QMC - Real Estate",
+              response.data.data.seo_description || "Quest Real Estate",
           });
         }
       } catch (error) {
@@ -197,7 +199,7 @@ const Home_V2 = () => {
       />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
-      <section className="pb90 pb30-md z-1 ">
+      <section className="pb15 pb30-md z-1 ">
         <div className="container custom-max-width" id="custom-max-width">
           <div className="row justify-content-center" data-aos="fade">
             <div className="col-lg-12">

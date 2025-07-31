@@ -9,7 +9,7 @@ import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Agents | QMC",
+  title: "Agents | Quest Real Estate",
 };
 
 const Agents = () => {
