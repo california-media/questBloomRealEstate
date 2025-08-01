@@ -769,7 +769,16 @@ const AdminPropertyPDF = ({ property }) => {
           </View>
         </View>
         <Text style={styles.footer}>
-          This brochure was generated on {new Date().toLocaleDateString()}.
+          This brochure was generated on{" "}
+          {new Date().toLocaleString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}
+          .
         </Text>
       </Page>
     </Document>
