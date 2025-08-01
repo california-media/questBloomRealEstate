@@ -1,19 +1,25 @@
-import { adminBaseUrl } from "@/api/adminApi";
+import React, { useCallback, useEffect } from "react";
 import {
-  Download,
-  MapPin,
-  Bed,
-  Bath,
-  Square,
-  Calendar,
-  Car,
-  Phone,
-  Mail,
-  Star,
-} from "lucide-react";
-import { forwardRef } from "react";
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Font,
+  Link,
+  Svg,
+  Path,
+} from "@react-pdf/renderer";
+import { adminBaseUrl } from "@/api/adminApi";
 
-const AdminPropertyPDF = forwardRef(({ property }, ref) => {
+// Register fonts (optional - you can use system fonts too)
+// Font.register({
+//   family: 'Roboto',
+//   src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf'
+// });
+
+const AdminPropertyPDF = ({ property }) => {
   const formatPrice = (price) => {
     return new Intl.NumberFormat("en-AE", {
       style: "currency",
@@ -26,788 +32,748 @@ const AdminPropertyPDF = forwardRef(({ property }, ref) => {
     const prefix = property?.rent_duration ? "qr" : "qb";
     return `${prefix}-${property?.id}`;
   };
-  // Style objects for reusability
-  const styles = {
-    pageBreak: {
-      pageBreakAfter: "always",
-    },
-    gradientBackground: {
-      background:
-        "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #334155 100%)",
-      minHeight: "700px",
-      color: "white",
-      padding: "32px",
-      display: "flex",
+  const getGoogleMapsRedirectUrl = (embedUrl) => {
+    const match = embedUrl?.match(/!2d([-.\d]+)!3d([-.\d]+)/);
+    if (match) {
+      const longitude = match[1];
+      const latitude = match[2];
+      return `https://www.google.com/maps?q=${latitude},${longitude}`;
+    }
+    return embedUrl; // fallback if pattern doesn't match
+  };
+
+  // For static image (using staticmap service)
+  const getStaticOpenStreetMapUrl = (
+    embedUrl,
+    zoom = 14,
+    width = 600,
+    height = 300
+  ) => {
+    const match = embedUrl?.match(/!2d([-.\d]+)!3d([-.\d]+)/);
+    if (match) {
+      const lon = match[1];
+      const lat = match[2];
+      return `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=${width}&height=${height}&center=lonlat:${lon},${lat}&zoom=${zoom}&scale=3&format=png&marker=lonlat:${lon},${lat};type:material;color:%23ff0000;size:large&apiKey=c43591606adf464db4c5dc378424a6a0`;
+    }
+  };
+
+  //if we were using google maps API with API key
+  // const getStaticMapUrl = useCallback(() => {
+  //   const iframeSrc = property?.google_maps_link;
+  //   console.log("iframeSrc", iframeSrc);
+  //   if (!iframeSrc) return null;
+
+  //   // Try to extract lat/lng from embed URL
+  //   const match = iframeSrc.match(/2d([-.\d]+)!3d([-.\d]+)/);
+
+  //   if (match) {
+  //     const longitude = match[1];
+  //     const latitude = match[2];
+
+  //     return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=15&size=600x300&maptype=roadmap&markers=color:red%7C${latitude},${longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`;
+  //   }
+
+  //   return null;
+  // }, [property]);
+
+  const styles = StyleSheet.create({
+    // Page setup - Brochure size (similar to PPT slide: 10" x 7.5")
+    page: {
       flexDirection: "column",
+      backgroundColor: "#ffffff",
+      padding: 20,
+      size: [720, 540], // 10" x 7.5" in points (72 points per inch)
+    },
+
+    // Cover page styles
+    coverPage: {
+      backgroundColor: "#0f172a",
+
+      padding: 30,
+      height: "100%",
+      color: "white",
       justifyContent: "space-between",
     },
-    container: {
-      maxWidth: "1024px",
-      margin: "0 auto",
+
+    coverHeader: {
+      alignItems: "flex-end",
+      marginBottom: 20,
     },
+
+    propertyCode: {
+      fontSize: 10,
+      opacity: 0.75,
+    },
+
+    coverTitle: {
+      textAlign: "center",
+      marginBottom: 30,
+    },
+
+    mainTitle: {
+      fontSize: 32,
+      fontWeight: "bold",
+      marginBottom: 10,
+      textAlign: "center",
+    },
+
+    propertyType: {
+      fontSize: 16,
+      opacity: 0.9,
+      marginBottom: 10,
+      textAlign: "center",
+    },
+
+    locationRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 10,
+    },
+
+    locationText: {
+      fontSize: 14,
+      marginLeft: 5,
+    },
+
+    statsGrid: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      marginBottom: 30,
+    },
+
+    statItem: {
+      alignItems: "center",
+      flex: 1,
+    },
+
+    statCircle: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 10,
+    },
+
+    statNumber: {
+      fontSize: 24,
+      fontWeight: "bold",
+    },
+
+    statLabel: {
+      fontSize: 12,
+      opacity: 0.75,
+    },
+
+    priceSection: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+
+    priceText: {
+      fontSize: 40,
+      fontWeight: "bold",
+      marginBottom: 5,
+    },
+
+    priceLabel: {
+      fontSize: 14,
+      opacity: 0.75,
+    },
+    mapLink: {
+      color: "blue",
+      textDecoration: "underline",
+      fontSize: 12,
+      marginTop: 3,
+    },
+
+    // Content page styles
+    contentPage: {
+      padding: 25,
+    },
+
+    pageTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: "#111827",
+      marginBottom: 20,
+      textAlign: "center",
+    },
+
+    twoColumnGrid: {
+      flexDirection: "row",
+      gap: 20,
+      marginBottom: 20,
+    },
+
+    threeColumnGrid: {
+      flexDirection: "row",
+      gap: 15,
+      marginBottom: 20,
+      flexWrap: "wrap",
+    },
+
     card: {
       backgroundColor: "#f9fafb",
-      padding: "24px",
-      borderRadius: "8px",
-      marginBottom: "16px",
+      padding: 15,
+      borderRadius: 8,
+      flex: 1,
     },
+
     blueCard: {
       backgroundColor: "#eff6ff",
-      padding: "24px",
-      borderRadius: "8px",
-      marginBottom: "16px",
+      padding: 15,
+      borderRadius: 8,
+      flex: 1,
     },
+
     greenCard: {
       backgroundColor: "#f0fdf4",
-      padding: "24px",
-      borderRadius: "8px",
-      marginBottom: "16px",
+      padding: 15,
+      borderRadius: 8,
+      flex: 1,
     },
-    purpleCard: {
-      backgroundColor: "#faf5ff",
-      padding: "24px",
-      borderRadius: "8px",
-      marginBottom: "16px",
+
+    cardTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: "#111827",
     },
-    darkCard: {
+
+    infoRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 8,
+    },
+
+    infoLabel: {
+      color: "#6b7280",
+      fontSize: 12,
+    },
+
+    infoValue: {
+      fontWeight: "bold",
+      fontSize: 12,
+    },
+
+    description: {
       backgroundColor: "#eff6ff",
-      color: "white",
-      padding: "24px",
-      borderRadius: "8px",
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 15,
     },
-    gradientCard: {
-      background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
-      color: "white",
-      padding: "32px",
-      borderRadius: "8px",
+
+    descriptionText: {
+      fontSize: 14,
+      lineHeight: 1.4,
+      color: "#374151",
     },
-    iconCircle: {
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-      borderRadius: "50%",
-      width: "64px",
-      height: "64px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 16px auto",
+
+    // Gallery styles
+    photoGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 10,
+      marginBottom: 20,
     },
+
+    photo: {
+      width: "30%",
+      height: 120,
+      borderRadius: 8,
+      border: "1px solid #e5e7eb",
+    },
+
+    // Amenities styles
+    amenitiesGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 12,
+      marginBottom: 20,
+    },
+
     amenityCard: {
       backgroundColor: "white",
-      border: "2px solid #e5e7eb",
-      borderRadius: "8px",
-      padding: "24px",
-      textAlign: "center",
-      transition: "border-color 0.3s ease",
-    },
-    amenityIcon: {
-      width: "64px",
-      height: "64px",
-      backgroundColor: "#dbeafe",
-      borderRadius: "50%",
-      display: "flex",
+      border: "1px solid #e5e7eb",
+      borderRadius: 8,
+      padding: 12,
       alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 16px auto",
-      fontSize: "24px",
-      color: "#2563eb",
+      width: "20%",
+      minHeight: 40,
     },
-    photoGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-      gap: "16px",
-      marginBottom: "32px",
+
+    amenityText: {
+      fontSize: 10,
+      fontWeight: "bold",
+      color: "#111827",
+      textAlign: "center",
     },
-    photo: {
-      width: "100%",
-      height: "200px",
-      objectFit: "cover",
-      borderRadius: "8px",
-      border: "2px solid #e5e7eb",
+
+    highlightsCard: {
+      backgroundColor: "#2563eb",
+      padding: 20,
+      borderRadius: 8,
+      marginTop: 15,
     },
-    mapContainer: {
-      backgroundColor: "#e5e7eb",
-      borderRadius: "8px",
-      overflow: "hidden",
-      height: "400px",
-      marginBottom: "32px",
+
+    highlightsTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: "white",
+      textAlign: "center",
+      marginBottom: 15,
     },
+
+    highlightsGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 10,
+    },
+
+    highlightItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "48%",
+      marginBottom: 8,
+    },
+
+    highlightText: {
+      color: "white",
+      fontSize: 12,
+      marginLeft: 8,
+    },
+
+    // Contact page styles
     mapPlaceholder: {
-      width: "100%",
-      height: "100%",
-      display: "flex",
+      backgroundColor: "#e5e7eb",
+      height: 200,
+      borderRadius: 8,
       alignItems: "center",
       justifyContent: "center",
-      color: "#6b7280",
-      textAlign: "center",
+      marginBottom: 20,
     },
+
+    mapText: {
+      color: "#6b7280",
+      fontSize: 14,
+    },
+
+    contactCard: {
+      backgroundColor: "#f9fafb",
+      padding: 15,
+      borderRadius: 8,
+      flex: 1,
+    },
+
+    contactItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 12,
+    },
+
+    contactText: {
+      marginLeft: 10,
+    },
+
+    contactLabel: {
+      fontSize: 10,
+      marginBottom: 3,
+      color: "#6b7280",
+    },
+
+    contactValue: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: "#111827",
+    },
+
+    summaryCard: {
+      backgroundColor: "#eff6ff",
+      padding: 15,
+      borderRadius: 8,
+      flex: 1,
+    },
+
+    priceHighlight: {
+      fontSize: 13,
+      fontWeight: "bold",
+      color: "#16a34a",
+    },
+
+    statusText: {
+      fontWeight: "bold",
+      fontSize: 13,
+    },
+
+    availableStatus: {
+      color: "#16a34a",
+    },
+
+    unavailableStatus: {
+      color: "#dc2626",
+    },
+
+    callToAction: {
+      backgroundColor: "white",
+      padding: 12,
+      borderRadius: 8,
+      borderLeft: "4px solid #2563eb",
+      marginTop: 15,
+    },
+
+    ctaText: {
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+
+    footer: {
+      textAlign: "center",
+      color: "#6b7280",
+      fontSize: 10,
+      marginTop: 20,
+    },
+  });
+
+  // Helper component for icons (using text symbols as react-pdf doesn't support icon libraries)
+  const Icon = ({ type, size = 14, color = "#fff", ...props }) => {
+    const iconMap = {
+      bed: "M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9",
+      bath: "M10 4 8 6M17 19v2M2 12h20M7 19v2M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5",
+      area: "M3 3h18v18H3z M5 5v14h14V5z M8 8h8v8H8z",
+      location:
+        "M12 2c3.866 0 7 3.134 7 7 0 5-7 13-7 13S5 14 5 9c0-3.866 3.134-7 7-7z M12 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",
+      star: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
+      phone:
+        "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+      email:
+        "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6",
+    };
+
+    if (!iconMap[type]) return <Text>•</Text>;
+
+    return (
+      <Svg width={size} height={size} viewBox="0 0 24 24" {...props}>
+        <Path
+          d={iconMap[type]}
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </Svg>
+    );
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif" }} ref={ref}>
+    <Document>
       {/* Page 1 - Cover Page */}
-      <div style={{ ...styles.gradientBackground, ...styles.pageBreak }}>
-        <div>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: "14px", opacity: 0.75 }}>
-              Property Code: {getPropertyCode()}
-            </div>
-          </div>
+      <Page size={[720, 540]} style={styles.coverPage}>
+        <View style={styles.coverHeader}>
+          <Text style={styles.propertyCode}>
+            Property Code: {getPropertyCode()}
+          </Text>
+        </View>
 
-          <div style={{ textAlign: "center", marginBottom: "48px" }}>
-            <h1
-              style={{
-                fontSize: "48px",
-                fontWeight: "bold",
-                marginBottom: "16px",
-                margin: 0,
-                color: "white",
-              }}
-            >
-              {property?.property_title}
-            </h1>
-            <p
-              style={{
-                fontSize: "24px",
-                opacity: 0.9,
-                margin: "16px 0",
-                color: "white",
-              }}
-            >
-              {property?.property_type?.name}
-            </p>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                marginTop: "16px",
-                fontSize: "20px",
-              }}
-            >
-              <MapPin size={24} />
-              <span>{property?.location_area}</span>
-            </div>
-          </div>
+        <View style={styles.coverTitle}>
+          <Text style={styles.mainTitle}>{property?.property_title}</Text>
+          <Text style={styles.propertyType}>
+            {property?.property_type?.name}
+          </Text>
+          <View style={styles.locationRow}>
+            <Icon type="location" />
+            <Text style={styles.locationText}>{property?.location_area}</Text>
+          </View>
+        </View>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
-            <div style={{ textAlign: "center" }}>
-              <div style={styles.iconCircle}>
-                <Bed size={32} />
-              </div>
-              <div style={{ fontSize: "32px", fontWeight: "bold" }}>
-                {property?.bedrooms}
-              </div>
-              <div style={{ opacity: 0.75 }}>Bedrooms</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={styles.iconCircle}>
-                <Bath size={32} />
-              </div>
-              <div style={{ fontSize: "32px", fontWeight: "bold" }}>
-                {property?.bathrooms}
-              </div>
-              <div style={{ opacity: 0.75 }}>Bathrooms</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={styles.iconCircle}>
-                <Square size={32} />
-              </div>
-              <div style={{ fontSize: "32px", fontWeight: "bold" }}>
-                {property?.area}
-              </div>
-              <div style={{ opacity: 0.75 }}>Sq Ft</div>
-            </div>
-          </div>
-        </div>
+        <View style={styles.statsGrid}>
+          <View style={styles.statItem}>
+            <View style={styles.statCircle}>
+              <Icon type="bed" size={20} />
+            </View>
+            <Text style={styles.statNumber}>{property?.bedrooms}</Text>
+            <Text style={styles.statLabel}>Bedrooms</Text>
+          </View>
+          <View style={styles.statItem}>
+            <View style={styles.statCircle}>
+              <Icon type="bath" size={20} />
+            </View>
+            <Text style={styles.statNumber}>{property?.bathrooms}</Text>
+            <Text style={styles.statLabel}>Bathrooms</Text>
+          </View>
+          <View style={styles.statItem}>
+            <View style={styles.statCircle}>
+              <Icon type="area" size={20} />
+            </View>
+            <Text style={styles.statNumber}>{property?.area}</Text>
+            <Text style={styles.statLabel}>Sq Ft</Text>
+          </View>
+        </View>
 
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div
-            style={{
-              fontSize: "64px",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+        <View style={styles.priceSection}>
+          <Text style={styles.priceText}>
             {formatPrice(property?.price)}
-            {property?.rent_duration && (
-              <span style={{ fontSize: "24px" }}>
-                /{property.rent_duration}
-              </span>
-            )}
-          </div>
-          <div style={{ fontSize: "20px", opacity: 0.75 }}>
+            {property?.rent_duration && `/${property.rent_duration}`}
+          </Text>
+          <Text style={styles.priceLabel}>
             {property?.rent_duration ? "Rental Price" : "Sale Price"}
-          </div>
-        </div>
-      </div>
+          </Text>
+        </View>
+      </Page>
 
-      {/* Page 2 - Property Photos */}
-      <div
-        style={{ minHeight: "1050px", padding: "32px", ...styles.pageBreak }}
-      >
-        <div style={styles.container}>
-          {/* <h2
-            style={{
-              fontSize: "36px",
-              fontWeight: "bold",
-              color: "#111827",
-              marginBottom: "32px",
-              textAlign: "center",
-            }}
-          >
-            Property Gallery
-          </h2>
+      {/* Page 2 - Property Photos & Details */}
+      <Page size={[720, 540]} style={styles.contentPage}>
+        {/* <Text style={styles.pageTitle}>Property Gallery & Details</Text>
 
-          {property?.photos && property.photos.length > 0 && (
-            <div style={styles.photoGrid}>
-              {property.photos.map((photo, index) => (
-                <img
-                  key={index}
-                  src={`${adminBaseUrl}${photo}`}
-                  alt={`Property photo ${index + 1}`}
-                  style={styles.photo}
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                  }}
-                />
-              ))}
-            </div>
-          )} */}
+        {property?.photos && property.photos.length > 0 && (
+          <View style={styles.photoGrid}>
+            {property.photos.slice(0, 6).map((photo, index) => (
+              <Image
+                key={index}
+                src={`${adminBaseUrl}${photo}`}
+                style={styles.photo}
+              />
+            ))}
+          </View>
+        )} */}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
-            <div style={{ ...styles.card, marginBottom: 0 }}>
-              <h3
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  marginBottom: "16px",
-                  color: "#111827",
-                }}
-              >
-                Basic Information
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                }}
-              >
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Property Type:</span>
-                  <span style={{ fontWeight: "500" }}>
-                    {property?.property_type?.name}
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Usage:</span>
-                  <span
-                    style={{ fontWeight: "500", textTransform: "capitalize" }}
-                  >
-                    {property?.usage}
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Furnishing:</span>
-                  <span
-                    style={{ fontWeight: "500", textTransform: "capitalize" }}
-                  >
-                    {property?.furnishing}
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Ownership:</span>
-                  <span
-                    style={{ fontWeight: "500", textTransform: "capitalize" }}
-                  >
-                    {property?.ownership}
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Year Built:</span>
-                  <span style={{ fontWeight: "500" }}>
-                    {property?.year_built}
-                  </span>
-                </div>
-              </div>
-            </div>
+        {/* Property Details */}
+        <View style={styles.twoColumnGrid}>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Basic Information</Text>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Property Type:</Text>
+              <Text style={styles.infoValue}>
+                {property?.property_type?.name}
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Usage:</Text>
+              <Text style={styles.infoValue}>{property?.usage}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Furnishing:</Text>
+              <Text style={styles.infoValue}>{property?.furnishing}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Ownership:</Text>
+              <Text style={styles.infoValue}>{property?.ownership}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Year Built:</Text>
+              <Text style={styles.infoValue}>{property?.year_built}</Text>
+            </View>
+          </View>
 
-            <div style={{ ...styles.blueCard, marginBottom: 0 }}>
-              <h3
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  marginBottom: "16px",
-                  color: "#111827",
-                }}
-              >
-                Space Details
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                }}
-              >
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Total Area:</span>
-                  <span style={{ fontWeight: "500" }}>
-                    {property?.area} sq ft
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Balcony Size:</span>
-                  <span style={{ fontWeight: "500" }}>
-                    {property?.balcony_size} sq ft
-                  </span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span style={{ color: "#6b7280" }}>Parking:</span>
-                  <span style={{ fontWeight: "500" }}>
-                    {property?.parking_available
-                      ? "Available"
-                      : "Not Available"}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <View style={styles.blueCard}>
+            <Text style={styles.cardTitle}>Space Details</Text>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Total Area:</Text>
+              <Text style={styles.infoValue}>{property?.area} sq ft</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Balcony Size:</Text>
+              <Text style={styles.infoValue}>
+                {property?.balcony_size} sq ft
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Parking:</Text>
+              <Text style={styles.infoValue}>
+                {property?.parking_available ? "Available" : "Not Available"}
+              </Text>
+            </View>
+          </View>
+        </View>
 
-          <div style={styles.darkCard}>
-            <h3
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "16px",
-              }}
-            >
-              Description
-            </h3>
-            <p style={{ fontSize: "18px", lineHeight: "1.6" }}>
-              {property?.property_description}
-            </p>
-            <p style={{ marginTop: "16px", fontSize: "14px", opacity: 0.75 }}>
-              {property?.property_type?.description}
-            </p>
-          </div>
-        </div>
-      </div>
+        <View style={styles.description}>
+          <Text style={styles.cardTitle}>Description</Text>
+          <Text style={styles.descriptionText}>
+            {property?.property_description}
+          </Text>
+        </View>
+      </Page>
 
       {/* Page 3 - Amenities & Features */}
-      <div style={{ padding: "32px", ...styles.pageBreak }}>
-        <div style={styles.container}>
-          <h2
-            style={{
-              fontSize: "36px",
-              fontWeight: "bold",
-              color: "#111827",
-              marginBottom: "32px",
-              textAlign: "center",
-            }}
-          >
-            Amenities & Features
-          </h2>
+      <Page size={[720, 540]} style={styles.contentPage}>
+        <Text style={styles.pageTitle}>Amenities & Features</Text>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "24px",
-              marginBottom: "48px",
-            }}
-          >
-            {property?.amenities?.map((amenity) => (
-              <div key={amenity.id} style={styles.amenityCard}>
-                <div style={styles.amenityIcon}>
-                  <i
-                    className={`fas ${amenity.icon}`}
-                    style={{ fontSize: "24px", color: "#2563eb" }}
-                  ></i>
-                </div>
-                <h3
-                  style={{
-                    fontWeight: "600",
-                    fontSize: "18px",
-                    color: "#111827",
-                    margin: 0,
-                  }}
+        <View style={styles.amenitiesGrid}>
+          {property?.amenities?.map((amenity) => (
+            <View key={amenity.id} style={styles.amenityCard}>
+              <Text style={styles.amenityText}>{amenity.title}</Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.highlightsCard}>
+          <Text style={styles.highlightsTitle}>Key Highlights</Text>
+          <View style={styles.highlightsGrid}>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                Prime {property?.location_area} Location
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                Modern {property?.property_type?.name}
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                {property?.furnishing} Property
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                {property?.ownership} Ownership
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                Built in {property?.year_built}
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                {property?.retail_centers} Nearby Retail Centers
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Page>
+
+      {/* Page 4 - Location & Contact */}
+      <Page size={[720, 540]} style={styles.contentPage}>
+        <Text style={styles.pageTitle}>Location & Contact</Text>
+
+        {/* if we were using google maps API with API key */}
+        {/* Map Section */}
+        {/* <View style={styles.mapContainer}>
+          {getStaticMapUrl() ? (
+            <Image src={getStaticMapUrl()} style={styles.mapImage} />
+          ) : (
+            <View style={styles.mapPlaceholder}>
+              <Text style={styles.mapText}>📍 Property Location Map</Text>
+              {property?.google_maps_link && (
+                <Link src={property.google_maps_link} style={styles.mapLink}>
+                  View on Google Maps
+                </Link>
+              )}
+            </View>
+          )}
+        </View> */}
+        <View style={styles.coverHeader}>
+          {/* Add the map image */}
+          <Image
+            // style={styles.mapImage}
+            src={getStaticOpenStreetMapUrl(property?.google_maps_link)}
+          />
+        </View>
+      </Page>
+
+      <Page size={[720, 540]} style={styles.contentPage}>
+        <View style={styles.twoColumnGrid}>
+          <View style={styles.contactCard}>
+            <Text style={styles.cardTitle}>Get In Touch</Text>
+
+            <View style={styles.contactItem}>
+              <Icon type="phone" color="black" />
+              <View style={styles.contactText}>
+                <Text style={styles.contactLabel}>Phone</Text>
+                <Text style={styles.contactValue}>{property?.phone}</Text>
+              </View>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Icon type="email" color="black" />
+              <View style={styles.contactText}>
+                <Text style={styles.contactLabel}>Email</Text>
+                <Text style={styles.contactValue}>{property?.email}</Text>
+              </View>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Icon type="location" color="black" />
+              <View style={styles.contactText}>
+                <Text style={styles.contactLabel}>Location</Text>
+                <Text style={styles.contactValue}>{property?.location}</Text>
+                <Text style={styles.contactLabel}>
+                  {property?.location_area}
+                </Text>
+
+                <Link
+                  src={getGoogleMapsRedirectUrl(property?.google_maps_link)}
+                  style={styles.mapLink}
                 >
-                  {amenity.title}
-                </h3>
-                {amenity.image_url && (
-                  <img
-                    src={`${adminBaseUrl}${amenity.image_url}`}
-                    alt={amenity.title}
-                    style={{
-                      width: "100%",
-                      height: "120px",
-                      objectFit: "cover",
-                      borderRadius: "4px",
-                      marginTop: "12px",
-                    }}
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                    }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+                  View on Google Maps
+                </Link>
+              </View>
+            </View>
+          </View>
 
-          <div style={styles.gradientCard}>
-            <h3
-              style={{
-                fontSize: "24px",
-                fontWeight: "bold",
-                marginBottom: "24px",
-                textAlign: "center",
-                color: "white",
-              }}
-            >
-              Key Highlights
-            </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "24px",
-              }}
-            >
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>Prime {property?.location_area} Location</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>Modern {property?.property_type?.name}</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>{property?.furnishing} Property</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>{property?.ownership} Ownership</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>Built in {property?.year_built}</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <Star color="#fbbf24" size={24} />
-                <span>{property?.retail_centers} Nearby Retail Centers</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+          <View style={styles.summaryCard}>
+            <Text style={styles.cardTitle}>Property Summary</Text>
 
-      {/* Page 4 - Location Map & Final Details */}
-      <div
-        style={{
-          minHeight: "842px",
-          marginTop: "32px",
-          padding: "32px",
-          ...styles.pageBreak,
-        }}
-      >
-        <div style={styles.container}>
-          <h2
-            style={{
-              fontSize: "36px",
-              fontWeight: "bold",
-              color: "#111827",
-              marginBottom: "32px",
-              textAlign: "center",
-            }}
-          >
-            Location & Contact
-          </h2>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Property Code:</Text>
+              <Text style={[styles.infoValue, { color: "#2563eb" }]}>
+                {getPropertyCode()}
+              </Text>
+            </View>
 
-          {/* <div style={styles.mapContainer}>
-            {property?.google_maps_link ? (
-              <iframe
-                src={property.google_maps_link}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Property Location"
-              />
-            ) : (
-              <div style={styles.mapPlaceholder}>
-                <div>
-                  <MapPin size={48} style={{ margin: "0 auto 16px auto" }} />
-                  <p>Map location will be displayed here</p>
-                </div>
-              </div>
-            )}
-          </div> */}
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Price:</Text>
+              <Text style={styles.priceHighlight}>
+                {formatPrice(property?.price)}
+                {property?.rent_duration && `/${property.rent_duration}`}
+              </Text>
+            </View>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "32px",
-            }}
-          >
-            <div style={styles.card}>
-              <h3
-                style={{
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                  color: "#111827",
-                }}
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Status:</Text>
+              <Text
+                style={[
+                  styles.statusText,
+                  property?.is_available
+                    ? styles.availableStatus
+                    : styles.unavailableStatus,
+                ]}
               >
-                Get In Touch
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "16px",
-                }}
-              >
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
-                  <Phone color="#2563eb" size={24} />
-                  <div>
-                    <p
-                      style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}
-                    >
-                      Phone
-                    </p>
-                    <p
-                      style={{ fontWeight: "600", fontSize: "18px", margin: 0 }}
-                    >
-                      {property?.phone}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
-                  <Mail color="#2563eb" size={24} />
-                  <div>
-                    <p
-                      style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}
-                    >
-                      Email
-                    </p>
-                    <p
-                      style={{ fontWeight: "600", fontSize: "18px", margin: 0 }}
-                    >
-                      {property?.email}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
-                  <MapPin color="#2563eb" size={24} />
-                  <div>
-                    <p
-                      style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}
-                    >
-                      Location
-                    </p>
-                    <p style={{ fontWeight: "600", margin: 0 }}>
-                      {property?.location}
-                    </p>
-                    <p style={{ color: "#6b7280", margin: 0 }}>
-                      {property?.location_area}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                {property?.is_available ? "Available" : "Not Available"}
+              </Text>
+            </View>
 
-            <div style={styles.blueCard}>
-              <h3
-                style={{
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                  color: "#111827",
-                }}
-              >
-                Property Summary
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <span style={{ color: "#6b7280" }}>Property Code:</span>
-                  <span style={{ fontWeight: "bold", color: "#2563eb" }}>
-                    {getPropertyCode()}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <span style={{ color: "#6b7280" }}>Price:</span>
-                  <span
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "24px",
-                      color: "#16a34a",
-                    }}
-                  >
-                    {formatPrice(property?.price)}
-                    {property?.rent_duration && (
-                      <span style={{ fontSize: "14px" }}>
-                        /{property.rent_duration}
-                      </span>
-                    )}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <span style={{ color: "#6b7280" }}>Status:</span>
-                  <span
-                    style={{
-                      fontWeight: "600",
-                      color: property?.is_available ? "#16a34a" : "#dc2626",
-                    }}
-                  >
-                    {property?.is_available ? "Available" : "Not Available"}
-                  </span>
-                </div>
-              </div>
-
-              <div
-                style={{
-                  marginTop: "24px",
-                  padding: "16px",
-                  backgroundColor: "white",
-                  borderRadius: "8px",
-                  borderLeft: "4px solid #2563eb",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "14px",
-                    color: "#6b7280",
-                    marginBottom: "8px",
-                    margin: 0,
-                  }}
-                >
-                  Don't miss this opportunity!
-                </p>
-                <p style={{ fontWeight: "600", margin: 0 }}>
-                  Contact us today to schedule a viewing.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              marginTop: "32px",
-              textAlign: "center",
-              color: "#6b7280",
-              fontSize: "14px",
-            }}
-          >
-            <p>
-              This brochure was generated on {new Date().toLocaleDateString()}.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Print Styles */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @media print {
-            .page-break {
-              page-break-after: always;
-            }
-            body {
-              -webkit-print-color-adjust: exact;
-              color-adjust: exact;
-            }
-            * {
-              -webkit-print-color-adjust: exact;
-              color-adjust: exact;
-            }
-          }
-          @page {
-            margin: 0.5in;
-            size: A4;
-          }
-        `,
-        }}
-      />
-    </div>
+            <View style={styles.callToAction}>
+              <Text style={styles.contactLabel}>
+                Don't miss this opportunity!
+              </Text>
+              <Text style={styles.ctaText}>
+                Contact us today to schedule a viewing.
+              </Text>
+            </View>
+          </View>
+        </View>
+        <Text style={styles.footer}>
+          This brochure was generated on {new Date().toLocaleDateString()}.
+        </Text>
+      </Page>
+    </Document>
   );
-});
+};
+
 export default AdminPropertyPDF;

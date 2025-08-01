@@ -1,10 +1,9 @@
 import { Heart, Loader2 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import AdminPropertyPDF from "./AdminPropertyPDF";
-import { useRef } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { pdf } from "@react-pdf/renderer";
+
 const styles = {
   textShadowDesktop: {
     // Base style (no shadow by default)
@@ -17,13 +16,15 @@ const styles = {
 };
 
 const AdminPropertyHeader = ({ property, prefixedId }) => {
-  const pdfRef = useRef();
   const [isGenerating, setIsGenerating] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     typeof window !== "undefined" && localStorage.getItem("favourites")
       ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
       : false
   );
+
+  
+
   const handleShareClick = (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(window.location.href);
@@ -33,37 +34,23 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
     });
   };
 
-  const handlePrintClick = () => {
-    setIsGenerating(true);
-    const input = pdfRef.current;
-    html2canvas(input, {
-      scale: 2, // higher scale for better quality
-      useCORS: true,
-      allowTaint: true,
-      logging: false,
-    })
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/*");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const imgWidth = 210; // A4 width in mm
-        const pageHeight = 295; // A4 height in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        pdf.save(`${property.property_title}_brochure.pdf`);
-      })
-      .finally(() => setIsGenerating(false));
+  const handlePrintClick = async () => {
+    try {
+      setIsGenerating(true);
+      const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${property.property_title}_brochure.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const handleFavoriteClick = (e) => {
@@ -370,9 +357,6 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
             })()}
           </div>
         </div>
-      </div>
-      <div style={{ position: "absolute", left: "-9999px" }}>
-        <AdminPropertyPDF ref={pdfRef} property={property} />
       </div>
     </>
   );
