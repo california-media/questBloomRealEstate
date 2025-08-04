@@ -141,7 +141,7 @@ const Contact = () => {
       <div class="main-title text-center">
         <h2 class="title">Visit Our Office</h2>
         <p class="paragraph mt25">
-          Office 1004, 10th Floor, Bayswater, Business Bay, P.O. Box
+          Office 1702, 17th Floor, Bayswater, Business Bay, P.O. Box
           113225, Dubai, UAE
         </p>
       </div>
