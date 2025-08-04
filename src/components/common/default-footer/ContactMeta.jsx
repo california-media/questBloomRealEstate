@@ -56,7 +56,7 @@ Business Bay, Dubai, UAE`,
           {
             title: "We are located at",
             address: `Office 1702, 17th Floor,
-Lake Central Tower, Marasi Drive,
+Lake Central Tower, Marasi Drive,<br />
 Business Bay, Dubai, UAE`,
           },
         ]);
@@ -92,7 +92,10 @@ Business Bay, Dubai, UAE`,
             )}
             {contact.address && (
               <h6 className="info-mail">
-                <p className="text-white">{contact.address}</p>
+                <p
+                  className="text-white"
+                  dangerouslySetInnerHTML={{ __html: contact.address }}
+                />
               </h6>
             )}
           </div>
