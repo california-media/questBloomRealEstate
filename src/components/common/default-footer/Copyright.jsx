@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const Footer = () => {
   const [copyrightText, setCopyrightText] = useState(
-    "© Questbloom - All rights reserved"
+    "© Quest Bloom Real Estate LLC - All rights reserved"
   );
   const [loading, setLoading] = useState(false);
 

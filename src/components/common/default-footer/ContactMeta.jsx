@@ -33,7 +33,9 @@ const ContactMeta = () => {
               title: "We are located at",
               address:
                 response.data.data.address ||
-                "Office 1702, 17th Floor, Bayswater, Business Bay, P.O. Box 113225, Dubai, UAE",
+                `Office 1702, 17th Floor,
+Lake Central Tower, Marasi Drive,
+Business Bay, Dubai, UAE`,
             },
           ]);
         }
@@ -53,8 +55,9 @@ const ContactMeta = () => {
           },
           {
             title: "We are located at",
-            address:
-              "Office 1702, 17th Floor, Bayswater, Business Bay, P.O. Box 113225, Dubai, UAE",
+            address: `Office 1702, 17th Floor,
+Lake Central Tower, Marasi Drive,
+Business Bay, Dubai, UAE`,
           },
         ]);
       } finally {
