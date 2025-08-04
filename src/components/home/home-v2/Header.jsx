@@ -21,7 +21,7 @@ const Header = ({ menuItems, error }) => {
     whiteLogo: "/images/Questrealstatewhite.svg",
     normalLogo: "/images/QMC-logo.webp",
   });
-  const [hotline, setHotline] = useState("+971 (56) 406 5672");
+  const [hotline, setHotline] = useState("+971 4 529 9247");
 
   // Fetch theme images on component mount
   useEffect(() => {

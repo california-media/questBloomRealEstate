@@ -17,16 +17,16 @@ const ContactMeta = () => {
           setContactInfo([
             {
               title: "Total Free Customer Care",
-              phone: response.data.data.hotline || "+971 (56) 406 5672",
+              phone: response.data.data.hotline || "+971 4 529 9247",
               phoneLink: `tel:${
                 response.data.data.hotline?.replace(/\D/g, "") || "971564065672"
               }`,
             },
             {
               title: "Need Live Support?",
-              mail: response.data.data.email || "Info@questbloom.ae",
+              mail: response.data.data.email || "info@questrealestate.ae",
               mailLink: `mailto:${
-                response.data.data.email || "Info@questbloom.ae"
+                response.data.data.email || "info@questrealestate.ae"
               }`,
             },
             {
@@ -45,13 +45,13 @@ Business Bay, Dubai, UAE`,
         setContactInfo([
           {
             title: "Total Free Customer Care",
-            phone: "+971 (56) 406 5672",
+            phone: "+971 4 529 9247",
             phoneLink: "tel:+9710564065672",
           },
           {
             title: "Need Live Support?",
-            mail: "Info@questbloom.ae",
-            mailLink: "mailto:Info@questbloom.ae",
+            mail: "info@questrealestate.ae",
+            mailLink: "mailto:info@questrealestate.ae",
           },
           {
             title: "We are located at",

@@ -18,7 +18,7 @@ const ContactInfo = () => {
             {
               id: 1,
               title: "Total Free Customer Care",
-              phone: response.data.data.hotline || "+971 (56) 406 5672",
+              phone: response.data.data.hotline || "+971 4 529 9247",
               phoneHref: `tel:${
                 response.data.data.hotline?.replace(/\D/g, "") || "971564065672"
               }`,
@@ -26,9 +26,9 @@ const ContactInfo = () => {
             {
               id: 2,
               title: "Need Live Support?",
-              email: response.data.data.email || "Info@questbloom.ae",
+              email: response.data.data.email || "info@questrealestate.ae",
               emailHref: `mailto:${
-                response.data.data.email || "Info@questbloom.ae"
+                response.data.data.email || "info@questrealestate.ae"
               }`,
             },
           ]);
@@ -40,14 +40,14 @@ const ContactInfo = () => {
           {
             id: 1,
             title: "Total Free Customer Care",
-            phone: "+971 (56) 406 5672",
+            phone: "+971 4 529 9247",
             phoneHref: "tel:+9710564065672",
           },
           {
             id: 2,
             title: "Need Live Support?",
-            email: "Info@questbloom.ae",
-            emailHref: "mailto:Info@questbloom.ae",
+            email: "info@questrealestate.ae",
+            emailHref: "mailto:info@questrealestate.ae",
           },
         ]);
       } finally {
