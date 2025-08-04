@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import "/public/css/about-us-sections.css";
 
 const metaInformation = {
-  title: "About | Quest Real Estate",
+  title: "About | Quest Bloom Real Estate LLC",
 };
 
 const About = () => {

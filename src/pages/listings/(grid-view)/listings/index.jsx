@@ -12,7 +12,7 @@ import MetaData from "@/components/common/MetaData";
 import { Link, useParams } from "react-router-dom";
 
 const metaInformation = {
-  title: "Off-Plan Listings",
+  title: "Rental and Resale Listings",
 };
 
 const ListingsFull3Col = () => {

@@ -33,7 +33,7 @@ const ContactMeta = () => {
               title: "We are located at",
               address:
                 response.data.data.address ||
-                "Office 1004, 10th Floor, Bayswater, Business Bay, P.O. Box 113225, Dubai, UAE",
+                "Office 1702, 17th Floor, Bayswater, Business Bay, P.O. Box 113225, Dubai, UAE",
             },
           ]);
         }

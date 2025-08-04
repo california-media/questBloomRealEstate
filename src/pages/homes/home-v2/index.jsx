@@ -105,8 +105,8 @@ const sections = [
 const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
   const [metaInformation, setMetaInformation] = useState({
-    title: "Quest Real Estate",
-    description: "Quest Real Estate",
+    title: "Quest Bloom  Real Estate LLC",
+    description: "Quest Bloom Real Estate LLC Home page",
   });
   const [pageSections, setPageSections] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -168,9 +168,9 @@ const Home_V2 = () => {
 
         if (response.data.success) {
           setMetaInformation({
-            title: response.data.data.site_title || "Quest Real Estate",
+            title: response.data.data.site_title || "Quest Bloom Real Estate LLC",
             description:
-              response.data.data.seo_description || "Quest Real Estate",
+              response.data.data.seo_description || "Quest Bloom Real Estate LLC",
           });
         }
       } catch (error) {

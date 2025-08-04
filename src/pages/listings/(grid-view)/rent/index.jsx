@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Off-Plan Listings",
+  title: "Rental Listings",
 };
 
 const Rent3Col = () => {

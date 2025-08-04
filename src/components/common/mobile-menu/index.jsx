@@ -50,7 +50,7 @@ const MobileMenu = (menuItems, error) => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">Welcome to Quest Real Estate</h4>
+            <h4 className="title">Welcome to Quest Bloom Real Estate </h4>
           </div>
           {/* End header */}
 

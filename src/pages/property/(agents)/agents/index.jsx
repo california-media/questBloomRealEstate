@@ -9,7 +9,7 @@ import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Agents | Quest Real Estate",
+  title: "Agents | Quest Bloom Real Bloom Estate LLC",
 };
 
 const Agents = () => {
@@ -64,11 +64,11 @@ const Agents = () => {
     <>
       <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
-      <DefaultHeader menuItems={menuItems} error={error}/>
+      <DefaultHeader menuItems={menuItems} error={error} />
       {/* End Main Header Nav */}
 
       {/* Mobile Nav  */}
-      <MobileMenu  menuItems={menuItems} error={error}/>
+      <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
 
       {/* Breadcumb Sections */}
