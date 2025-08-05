@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleMapEmbed from "./property-gallery/Map";
+import GoogleMapEmbed from "./admin-property-gallery/Map";
 
 const AdminPropertyAddress = ({ property, location }) => {
   return (
@@ -30,7 +30,7 @@ const AdminPropertyAddress = ({ property, location }) => {
 
       <div className="col-md-12" style={{ marginTop: "30px" }}>
         {property?.google_maps_link && (
-          <GoogleMapEmbed googleMapsLink={property.google_maps_link} />
+          <GoogleMapEmbed googleMapsLink={property?.google_maps_link} />
         )}
       </div>
       {/* End col */}

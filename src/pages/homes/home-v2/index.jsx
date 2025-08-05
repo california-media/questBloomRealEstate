@@ -57,7 +57,7 @@ const sections = [
     title: "Apartments",
     paragraph: "Modern apartments in prime locations with excellent facilities",
     params: {
-      unit_types: "Townhouse",
+      unit_types: "Apartments",
     },
     seeAll: "See All Apartments",
   },
@@ -123,7 +123,7 @@ const Home_V2 = () => {
         });
 
         setMenuItems(response.data || []);
-        console.log( "menu items",response.data);
+        console.log("menu items", response.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching menu items:", err);
@@ -168,9 +168,11 @@ const Home_V2 = () => {
 
         if (response.data.success) {
           setMetaInformation({
-            title: response.data.data.site_title || "Quest Bloom Real Estate LLC",
+            title:
+              response.data.data.site_title || "Quest Bloom Real Estate LLC",
             description:
-              response.data.data.seo_description || "Quest Bloom Real Estate LLC",
+              response.data.data.seo_description ||
+              "Quest Bloom Real Estate LLC",
           });
         }
       } catch (error) {

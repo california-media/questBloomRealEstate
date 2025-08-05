@@ -61,6 +61,8 @@ const AdminSingleV5 = () => {
   // Get the actual ID
   const id = extractId(prefixedId, currentPathPrefix);
   const [property, setProperty] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
   const [menuItems, setMenuItems] = useState([]);
@@ -147,7 +149,6 @@ const AdminSingleV5 = () => {
       });
     }
   }, [property]);
-
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -183,6 +184,45 @@ const AdminSingleV5 = () => {
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
                   <AdminOverView property={property} prefixedId={prefixedId} />
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2"
+                      onClick={() => setShowModal(true)}
+                    >
+                      Download PDF
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show"
+                    >
+                      <div className="modal-dialog  modal-dialog-centered modal-lg">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">Download PDF</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <AdminReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -203,7 +243,7 @@ const AdminSingleV5 = () => {
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30 mt30">Address</h4>
+                <h4 className="title fz17 mb30 ">Address</h4>
                 <div className="row">
                   <AdminPropertyAddress
                     property={property}
@@ -447,6 +487,9 @@ const AdminSingleV5 = () => {
         </div>
       </section>
       {/* End similar-items  */}
+      {showModal && (
+        <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>
+      )}
 
       {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">

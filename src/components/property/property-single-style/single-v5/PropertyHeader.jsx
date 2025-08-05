@@ -114,31 +114,31 @@ const PropertyHeader = ({ property, prefixedId }) => {
     });
   };
 
-  const handlePrintClick = (e) => {
-    e.preventDefault();
+  // const handlePrintClick = (e) => {
+  //   e.preventDefault();
 
-    if (!property?.brochure_url) {
-      toast.error("Brochure not available", { position: "bottom-right" });
-      return;
-    }
+  //   if (!property?.brochure_url) {
+  //     toast.error("Brochure not available", { position: "bottom-right" });
+  //     return;
+  //   }
 
-    // Convert Google Drive view link to direct download
-    const fileId = property.brochure_url.match(/\/file\/d\/([^\/]+)/)?.[1];
-    if (!fileId) {
-      toast.error("Invalid Google Drive link", { position: "bottom-right" });
-      return;
-    }
+  //   // Convert Google Drive view link to direct download
+  //   const fileId = property.brochure_url.match(/\/file\/d\/([^\/]+)/)?.[1];
+  //   if (!fileId) {
+  //     toast.error("Invalid Google Drive link", { position: "bottom-right" });
+  //     return;
+  //   }
 
-    const directDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+  //   const directDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-    const link = document.createElement("a");
-    link.href = directDownloadUrl;
-    link.download = `brochure-${property.title || "property"}.pdf`;
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  //   const link = document.createElement("a");
+  //   link.href = directDownloadUrl;
+  //   link.download = `brochure-${property.title || "property"}.pdf`;
+  //   link.target = "_blank";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     let favorites = [];
@@ -316,7 +316,7 @@ const PropertyHeader = ({ property, prefixedId }) => {
               </a>
 
               {/* Print Button */}
-              <a
+              {/* <a
                 className="icon d-none d-lg-block"
                 href="#"
                 onClick={handlePrintClick}
@@ -326,7 +326,7 @@ const PropertyHeader = ({ property, prefixedId }) => {
               </a>
               <a className="icon d-lg-none" href="#" onClick={handlePrintClick}>
                 <span className="flaticon-printer" />
-              </a>
+              </a> */}
             </div>
 
             <h3

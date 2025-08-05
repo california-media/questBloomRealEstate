@@ -41,6 +41,20 @@ const AdminPropertyPDF = ({ property }) => {
     }
     return embedUrl; // fallback if pattern doesn't match
   };
+  const renderHtmlToPdf = (htmlString) => {
+    if (!htmlString) return null;
+
+    // Simple tag replacements
+    const withLineBreaks = htmlString
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<p>/gi, "\n")
+      .replace(/<\/p>/gi, "\n\n");
+
+    // Remove remaining HTML tags
+    const plainText = withLineBreaks.replace(/<[^>]+>/g, "");
+
+    return <Text style={styles.descriptionText}>{plainText}</Text>;
+  };
 
   // For static image (using staticmap service)
   const getStaticOpenStreetMapUrl = (
@@ -435,6 +449,17 @@ const AdminPropertyPDF = ({ property }) => {
       fontSize: 10,
       marginTop: 20,
     },
+    coverPage: {
+      padding: 40,
+      position: "relative",
+    },
+    logoContainer: {
+      position: "absolute",
+      top: 40,
+      left: 40,
+      width: 150, // adjust as needed
+      height: 40, // adjust as needed
+    },
   });
 
   // Helper component for icons (using text symbols as react-pdf doesn't support icon libraries)
@@ -472,6 +497,9 @@ const AdminPropertyPDF = ({ property }) => {
     <Document>
       {/* Page 1 - Cover Page */}
       <Page size={[720, 540]} style={styles.coverPage}>
+        <View style={styles.logoContainer}>
+          <Image src="/images/Questrealstatewhite.svg" />
+        </View>
         <View style={styles.coverHeader}>
           <Text style={styles.propertyCode}>
             Property Code: {getPropertyCode()}
@@ -591,9 +619,7 @@ const AdminPropertyPDF = ({ property }) => {
 
         <View style={styles.description}>
           <Text style={styles.cardTitle}>Description</Text>
-          <Text style={styles.descriptionText}>
-            {property?.property_description}
-          </Text>
+          {renderHtmlToPdf(property?.property_description)}
         </View>
       </Page>
 
@@ -695,7 +721,12 @@ const AdminPropertyPDF = ({ property }) => {
               <Icon type="phone" color="black" />
               <View style={styles.contactText}>
                 <Text style={styles.contactLabel}>Phone</Text>
-                <Text style={styles.contactValue}>{property?.phone}</Text>
+                <Text style={styles.contactValue}>
+                  {" "}
+                  {property?.phone && property?.phone != "0"
+                    ? property?.phone
+                    : "N/A"}
+                </Text>
               </View>
             </View>
 

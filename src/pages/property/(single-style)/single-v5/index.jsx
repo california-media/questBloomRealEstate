@@ -20,7 +20,6 @@ import ScheduleTour from "@/components/property/property-single-style/sidebar/Sc
 import PropertyGallery from "@/components/property/property-single-style/single-v5/property-gallery";
 import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
 import WalkScore from "@/components/property/property-single-style/common/WalkScore";
-
 const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
 import { useLocation, useParams } from "react-router-dom";
@@ -44,7 +43,7 @@ const metaInformation = {
 const SingleV5 = () => {
   const params = useParams();
   const { id: prefixedId } = params;
-
+  const [showModal, setShowModal] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
   // Fetch menu items from API (same logic as MainMenu)
@@ -195,6 +194,46 @@ const SingleV5 = () => {
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
                   <OverView property={property} prefixedId={prefixedId} />
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2"
+                      onClick={() => setShowModal(true)}
+                    >
+                      Download PDF
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show"
+                    >
+                      <div className="modal-dialog  modal-dialog-centered modal-lg">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">Download PDF</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <ReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                              />
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -233,8 +272,6 @@ const SingleV5 = () => {
               </div>
               {/* End .ps-widget */}
 
-          
-
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Unit Plans</h4>
                 <div className="row">
@@ -258,7 +295,6 @@ const SingleV5 = () => {
 
             <div className="col-lg-6">
               <div className="column">
-              
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                   <div className="row">
@@ -268,7 +304,6 @@ const SingleV5 = () => {
                     />
                   </div>
                 </div>
-              
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
@@ -382,7 +417,8 @@ const SingleV5 = () => {
         </div>
       </section>
       {/* End similar-items  */}
-
+      {/* Modal backdrop */}
+      {showModal && <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>}
       {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
         <Footer />

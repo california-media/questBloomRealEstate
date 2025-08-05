@@ -3,12 +3,15 @@ import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import AdminPropertyPDF from "../single-v5/AdminPropertyPDF";
+import { pdf } from "@react-pdf/renderer";
 
 const isDev = import.meta.env.DEV;
 
-const ReviewBoxForm = ({ property, prefixedId }) => {
+const ReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
   const [enquiryText, setEnquiryText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [submitStatus, setSubmitStatus] = useState({
     success: null,
     message: "",
@@ -19,6 +22,21 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
     phone: "",
     enquiry: "",
   });
+  const handlePrintClick = async () => {
+    try {
+      const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${property.property_title}_brochure.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
 
   useEffect(() => {
     setEnquiryText(
@@ -154,7 +172,8 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
             data: emailResult,
           };
         }
-
+        ///print PDF if download form
+        if (downloadPDF) handlePrintClick();
         setSubmitStatus({
           success: true,
           message: "Enquiry submitted successfully!",
@@ -330,7 +349,7 @@ const ReviewBoxForm = ({ property, prefixedId }) => {
               </>
             ) : (
               <>
-                Submit Enquiry
+                {downloadPDF ? "Download PDF" : "Submit Enquiry"}
                 <i className="fal fa-arrow-right-long" />
               </>
             )}

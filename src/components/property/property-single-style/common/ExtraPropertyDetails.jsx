@@ -10,27 +10,6 @@ const ExtraPropertyDetails = ({ property }) => {
       .join(" ");
   };
 
-  // Helper function to format price
-  const formatPrice = (price) => {
-    if (!price || price === 0) return "N/A";
-    return `AED ${Math.round(price).toLocaleString()}`;
-  };
-
-  // Helper function to format date
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    } catch {
-      return "N/A";
-    }
-  };
-
   // Helper function to format area
   const formatArea = (area) => {
     if (!area || parseFloat(area) <= 0) return "N/A";
@@ -44,7 +23,6 @@ const ExtraPropertyDetails = ({ property }) => {
     if (value === null || value === undefined) return "N/A";
     return value ? "Yes" : "No";
   };
-
   return (
     <div className="row">
       {/* Contact Information Section */}
@@ -136,7 +114,9 @@ const ExtraPropertyDetails = ({ property }) => {
                     Phone
                   </small>
                   <div style={{ fontWeight: "500", fontSize: "16px" }}>
-                    {property?.phone || "N/A"}
+                    {property?.phone && property?.phone != "0"
+                      ? property?.phone
+                      : "N/A"}
                   </div>
                 </div>
               </div>

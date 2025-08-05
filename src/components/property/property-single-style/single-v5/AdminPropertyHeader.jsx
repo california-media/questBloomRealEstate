@@ -16,7 +16,6 @@ const styles = {
 };
 
 const AdminPropertyHeader = ({ property, prefixedId }) => {
-  const [isGenerating, setIsGenerating] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     typeof window !== "undefined" && localStorage.getItem("favourites")
       ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
@@ -34,24 +33,24 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
     });
   };
 
-  const handlePrintClick = async () => {
-    try {
-      setIsGenerating(true);
-      const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${property.property_title}_brochure.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+  // const handlePrintClick = async () => {
+  //   try {
+  //     setIsGenerating(true);
+  //     const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
+  //     const url = URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = `${property.property_title}_brochure.pdf`;
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //     URL.revokeObjectURL(url);
+  //   } catch (error) {
+  //     console.error("Error generating PDF:", error);
+  //   } finally {
+  //     setIsGenerating(false);
+  //   }
+  // };
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
@@ -300,7 +299,7 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
               </a>
 
               {/* Print Button */}
-              <a
+              {/* <a
                 className="icon d-none d-lg-block"
                 href="#"
                 onClick={handlePrintClick}
@@ -322,7 +321,7 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
                 ) : (
                   <span className="flaticon-printer" />
                 )}
-              </a>
+              </a> */}
             </div>
 
             <h3
