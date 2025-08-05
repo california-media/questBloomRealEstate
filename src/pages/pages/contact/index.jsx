@@ -93,8 +93,8 @@ const Contact = () => {
       {/* End Our Contact With Map */}
 
       {/* Start Our Contact Form */}
-      <section>
-        <div className="container">
+      <section className="pt-0 " >
+        <div className="container mt150">
           <div className="row d-flex align-items-end">
             <div className="col-lg-5 position-relative">
               <div className="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">

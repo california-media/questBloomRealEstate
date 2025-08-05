@@ -16,7 +16,7 @@ const ContactMeta = () => {
         if (response.data.success) {
           setContactInfo([
             {
-              title: "Total Free Customer Care",
+              title: "Customer Care",
               phone: response.data.data.hotline || "+971 4 529 9247",
               phoneLink: `tel:${
                 response.data.data.hotline?.replace(/\D/g, "") || "971564065672"
@@ -34,7 +34,7 @@ const ContactMeta = () => {
               address:
                 response.data.data.address ||
                 `Office 1702, 17th Floor,
-Lake Central Tower, Marasi Drive,
+Lake Central Tower, Marasi Drive,<br />
 Business Bay, Dubai, UAE`,
             },
           ]);
@@ -44,7 +44,7 @@ Business Bay, Dubai, UAE`,
         // Fallback to default values if API fails
         setContactInfo([
           {
-            title: "Total Free Customer Care",
+            title: "Customer Care",
             phone: "+971 4 529 9247",
             phoneLink: "tel:+9710564065672",
           },

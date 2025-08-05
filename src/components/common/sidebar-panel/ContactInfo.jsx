@@ -4,7 +4,7 @@ const ContactInfo = () => {
   const contactInfo = [
     {
       id: 1,
-      title: "Total Free Customer Care",
+      title: "Customer Care",
       phone: "+971 4 529 9247",
       phoneHref: "tel:+9710564065672",
     },

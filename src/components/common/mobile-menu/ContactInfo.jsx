@@ -17,7 +17,7 @@ const ContactInfo = () => {
           setContactInfo([
             {
               id: 1,
-              title: "Total Free Customer Care",
+              title: "Customer Care",
               phone: response.data.data.hotline || "+971 4 529 9247",
               phoneHref: `tel:${
                 response.data.data.hotline?.replace(/\D/g, "") || "971564065672"
@@ -39,7 +39,7 @@ const ContactInfo = () => {
         setContactInfo([
           {
             id: 1,
-            title: "Total Free Customer Care",
+            title: "Customer Care",
             phone: "+971 4 529 9247",
             phoneHref: "tel:+9710564065672",
           },

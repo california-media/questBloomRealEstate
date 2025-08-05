@@ -8,7 +8,7 @@ const ContactMeta = () => {
       link: "#", // Empty link value for the first object
     },
     {
-      text: "Total Free Customer Care",
+      text: "Customer Care",
       info: "+(0) 123 050 945 02",
       link: "tel:+012305094502",
     },
