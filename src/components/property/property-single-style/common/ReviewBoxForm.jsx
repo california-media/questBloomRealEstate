@@ -3,12 +3,12 @@ import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import AdminPropertyPDF from "../single-v5/AdminPropertyPDF";
 import { pdf } from "@react-pdf/renderer";
+import OffPlanPropertyPDF from "../single-v5/OffPlanPropertyPDF";
 
 const isDev = import.meta.env.DEV;
 
-const ReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
+const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
   const [enquiryText, setEnquiryText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -24,11 +24,17 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
   });
   const handlePrintClick = async () => {
     try {
-      const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
+      const blob = await pdf(
+        <OffPlanPropertyPDF
+          property={property}
+          qbc_email={contactInfo?.email}
+          qbc_phone={contactInfo?.hotline}
+        />
+      ).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${property.property_title}_brochure.pdf`;
+      link.download = `${property.name}_brochure.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -336,7 +342,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
           <button
             type="submit"
             className="ud-btn btn-white2"
-            disabled={isSubmitting}
+            onClick={() => handlePrintClick()}
           >
             {isSubmitting ? (
               <>

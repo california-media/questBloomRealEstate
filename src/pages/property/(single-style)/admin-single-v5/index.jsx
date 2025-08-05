@@ -67,9 +67,28 @@ const AdminSingleV5 = () => {
   const [metaInformation, setMetaInformation] = useState({});
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
+  
   const { adminDetailedListings, setAdminDetailedListings } =
-    usePropertyStore();
+  usePropertyStore();
+  const [contactInfo, setContactInfo] = useState({});
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        // Fetch all needed configuration at once
+        const response = await adminApi.get(
+          "/theme-options/general?keys=hotline,email"
+        );
+        setContactInfo(response.data.data);
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
   // Fetch menu items from API (same logic as MainMenu)
+
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -216,6 +235,7 @@ const AdminSingleV5 = () => {
                                 property={property}
                                 prefixedId={prefixedId}
                                 downloadPDF={true}
+                                contactInfo={contactInfo}
                               />
                             </div>
                           </div>

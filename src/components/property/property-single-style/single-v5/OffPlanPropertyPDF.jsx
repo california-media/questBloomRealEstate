@@ -424,49 +424,57 @@ const Icon = ({ type, size = 14, color = "#fff", ...props }) => {
     </Svg>
   );
 };
+function cleanPropertyOverview(overviewText) {
+  if (!overviewText) return "";
 
-const getGoogleMapsRedirectUrl = (embedUrl) => {
-  const match = embedUrl?.match(/!2d([-.\d]+)!3d([-.\d]+)/);
-  if (match) {
-    const longitude = match[1];
-    const latitude = match[2];
+  // Remove section headers (lines starting with #####)
+  const withoutHeaders = overviewText.replace(/^##### .*$/gm, "");
+
+  // Combine multiple newlines into single spaces
+  const singleSpaced = withoutHeaders
+    .replace(/\n\s*\n/g, "\n")
+    .replace(/\n/g, " ");
+
+  // Trim whitespace and clean up any remaining artifacts
+
+  return (
+    <Text style={styles.descriptionText}>
+      {singleSpaced
+        .replace(/\s+/g, " ")
+        .replace(/\s\./g, ".")
+        .replace(/\s,/g, ",")
+        .trim()}
+    </Text>
+  );
+}
+
+const getGoogleMapsRedirectUrl = (coordinates) => {
+  if (coordinates) {
+    const [latitude, longitude] = coordinates.split(", ");
     return `https://www.google.com/maps?q=${latitude},${longitude}`;
   }
-  return embedUrl; // fallback if pattern doesn't match
-};
-const renderHtmlToPdf = (htmlString) => {
-  if (!htmlString) return null;
-
-  // Simple tag replacements
-  const withLineBreaks = htmlString
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<p>/gi, "\n")
-    .replace(/<\/p>/gi, "\n\n");
-
-  // Remove remaining HTML tags
-  const plainText = withLineBreaks.replace(/<[^>]+>/g, "");
-
-  return <Text style={styles.descriptionText}>{plainText}</Text>;
+  return null;
 };
 
 // For static image (using staticmap service)
 const getStaticOpenStreetMapUrl = (
-  embedUrl,
+  coordinates,
   zoom = 14,
   width = 600,
   height = 300
 ) => {
-  const match = embedUrl?.match(/!2d([-.\d]+)!3d([-.\d]+)/);
-  if (match) {
-    const lon = match[1];
-    const lat = match[2];
-    return `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=${width}&height=${height}&center=lonlat:${lon},${lat}&zoom=${zoom}&scale=3&format=png&marker=lonlat:${lon},${lat};type:material;color:%23ff0000;size:large&apiKey=c43591606adf464db4c5dc378424a6a0`;
+  if (coordinates) {
+    const [latitude, longitude] = coordinates.split(", ");
+    return `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=${width}&height=${height}&center=lonlat:${longitude},${latitude}&zoom=${zoom}&scale=3&format=png&marker=lonlat:${longitude},${latitude};type:material;color:%23ff0000;size:large&apiKey=c43591606adf464db4c5dc378424a6a0`;
   }
+  return null;
 };
+
 const capitalizeFirstLetter = (str) => {
   if (!str || typeof str !== "string") return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
 const formatPrice = (price) => {
   return new Intl.NumberFormat("en-AE", {
     style: "currency",
@@ -475,10 +483,32 @@ const formatPrice = (price) => {
   }).format(price || 0);
 };
 
-const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
+const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
   const getPropertyCode = () => {
-    const prefix = property?.rent_duration ? "qr" : "qb";
-    return `${prefix}-${property?.id}`;
+    return `op-${property?.id}`;
+  };
+
+  const getPropertyType = () => {
+    return property?.unit_blocks?.[0]?.unit_type || "Apartments";
+  };
+
+  const getBedroomOptions = () => {
+    if (!property?.unit_blocks) return "N/A";
+    const bedrooms = property.unit_blocks
+      .map((block) => block.name.split(" ")[0])
+      .join(", ");
+    return bedrooms;
+  };
+
+  const getMinArea = () => {
+    if (!property?.unit_blocks?.[0]) return "N/A";
+    const minAreaM2 = property.unit_blocks[0].units_area_from_m2;
+    return minAreaM2 ? Math.round(parseFloat(minAreaM2) * 10.764) : "N/A"; // Convert m2 to sqft
+  };
+
+  const getCompletionYear = () => {
+    if (!property?.completion_datetime) return "N/A";
+    return new Date(property.completion_datetime).getFullYear();
   };
 
   const ContactFooter = () => (
@@ -515,13 +545,11 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
         </View>
 
         <View style={styles.coverTitle}>
-          <Text style={styles.mainTitle}>{property?.property_title}</Text>
-          <Text style={styles.propertyType}>
-            {property?.property_type?.name}
-          </Text>
+          <Text style={styles.mainTitle}>{property?.name}</Text>
+          <Text style={styles.propertyType}>{getPropertyType()}</Text>
           <View style={styles.locationRow}>
             <Icon type="location" />
-            <Text style={styles.locationText}>{property?.location_area}</Text>
+            <Text style={styles.locationText}>{property?.area}</Text>
           </View>
         </View>
 
@@ -530,33 +558,30 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             <View style={styles.statCircle}>
               <Icon type="bed" size={30} />
             </View>
-            <Text style={styles.statNumber}>{property?.bedrooms}</Text>
-            <Text style={styles.statLabel}>Bedrooms</Text>
+            <Text style={styles.statNumber}>{getBedroomOptions()}</Text>
+            <Text style={styles.statLabel}>Options</Text>
           </View>
           <View style={styles.statItem}>
             <View style={styles.statCircle}>
               <Icon type="bath" size={30} />
             </View>
-            <Text style={styles.statNumber}>{property?.bathrooms}</Text>
+            <Text style={styles.statNumber}>-</Text>
             <Text style={styles.statLabel}>Bathrooms</Text>
           </View>
           <View style={styles.statItem}>
             <View style={styles.statCircle}>
               <Icon type="area" size={30} />
             </View>
-            <Text style={styles.statNumber}>{property?.area}</Text>
+            <Text style={styles.statNumber}>{getMinArea()}</Text>
             <Text style={styles.statLabel}>Sq Ft</Text>
           </View>
         </View>
 
         <View style={styles.priceSection}>
           <Text style={styles.priceText}>
-            {formatPrice(property?.price)}
-            {property?.rent_duration && `/${property.rent_duration}`}
+            {formatPrice(property?.min_price)}
           </Text>
-          <Text style={styles.priceLabel}>
-            {property?.rent_duration ? "Rental Price" : "Sale Price"}
-          </Text>
+          <Text style={styles.priceLabel}>Starting Price</Text>
         </View>
         <ContactFooter />
       </Page>
@@ -569,46 +594,46 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             <Text style={styles.cardTitle}>Basic Information</Text>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Property Type:</Text>
-              <Text style={styles.infoValue}>
-                {property?.property_type?.name}
-              </Text>
+              <Text style={styles.infoValue}>{getPropertyType()}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Usage:</Text>
-              <Text style={styles.infoValue}>{property?.usage}</Text>
+              <Text style={styles.infoLabel}>Developer:</Text>
+              <Text style={styles.infoValue}>{property?.developer}</Text>
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Furnishing:</Text>
-              <Text style={styles.infoValue}>{property?.furnishing}</Text>
+              <Text style={styles.infoValue}>
+                {property?.furnishing === "No"
+                  ? "Unfurnished"
+                  : property?.furnishing}
+              </Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Ownership:</Text>
-              <Text style={styles.infoValue}>{property?.ownership}</Text>
+              <Text style={styles.infoLabel}>Status:</Text>
+              <Text style={styles.infoValue}>{property?.status}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Year Built:</Text>
-              <Text style={styles.infoValue}>{property?.year_built}</Text>
+              <Text style={styles.infoLabel}>Completion:</Text>
+              <Text style={styles.infoValue}>{getCompletionYear()}</Text>
             </View>
           </View>
 
           <View style={styles.blueCard}>
             <Text style={styles.cardTitle}>Space Details</Text>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Total Area:</Text>
-              <Text style={styles.infoValue}>{property?.area} sq ft</Text>
+              <Text style={styles.infoLabel}>Starting Area:</Text>
+              <Text style={styles.infoValue}>{getMinArea()} sq ft</Text>
             </View>
-            {property?.balcony_size && (
-              <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Balcony Size:</Text>
-                <Text style={styles.infoValue}>
-                  {property?.balcony_size} sq ft
-                </Text>
-              </View>
-            )}
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Parking:</Text>
+              <Text style={styles.infoLabel}>Unit Types:</Text>
               <Text style={styles.infoValue}>
-                {property?.parking_available ? "Available" : "Not Available"}
+                {property?.unit_blocks?.length || 0} Options
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Total Units:</Text>
+              <Text style={styles.infoValue}>
+                {property?.buildings?.[0]?.[0]?.Description || "Multiple Units"}
               </Text>
             </View>
           </View>
@@ -616,7 +641,7 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
 
         <View style={styles.description}>
           <Text style={styles.cardTitle}>Description</Text>
-          {renderHtmlToPdf(property?.property_description)}
+          {cleanPropertyOverview(property?.overview)}
         </View>
         <ContactFooter />
       </Page>
@@ -626,9 +651,9 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
         <Text style={styles.pageTitle}>Amenities & Features</Text>
 
         <View style={styles.amenitiesGrid}>
-          {property?.amenities?.map((amenity) => (
-            <View key={amenity.id} style={styles.amenityCard}>
-              <Text style={styles.amenityText}>{amenity.title}</Text>
+          {property?.facilities?.map((facility, index) => (
+            <View key={index} style={styles.amenityCard}>
+              <Text style={styles.amenityText}>{facility.name}</Text>
             </View>
           ))}
         </View>
@@ -638,46 +663,46 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
           <View style={styles.highlightsGrid}>
             <View style={styles.highlightItem}>
               <Icon type="star" color="yellow" />
-
               <Text style={styles.highlightText}>
-                Prime {property?.location_area} Location
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-
-              <Text style={styles.highlightText}>
-                Modern {property?.property_type?.name}
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-
-              <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(property?.furnishing)} Property
+                Prime {property?.area} Location
               </Text>
             </View>
             <View style={styles.highlightItem}>
               <Icon type="star" color="yellow" />
               <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(property?.ownership)} Ownership
+                Modern {getPropertyType()}
               </Text>
             </View>
-            {property?.year_built && (
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                {capitalizeFirstLetter(
+                  property?.furnishing === "No"
+                    ? "Unfurnished"
+                    : property?.furnishing
+                )}{" "}
+                Property
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                By {property?.developer} Developer
+              </Text>
+            </View>
+            {getCompletionYear() !== "N/A" && (
               <View style={styles.highlightItem}>
                 <Icon type="star" color="yellow" />
-
                 <Text style={styles.highlightText}>
-                  Built in {property?.year_built}
+                  Completion in {getCompletionYear()}
                 </Text>
               </View>
             )}
-            {property?.retail_centers && (
+            {property?.payment_plans?.length > 0 && (
               <View style={styles.highlightItem}>
                 <Icon type="star" color="yellow" />
-
                 <Text style={styles.highlightText}>
-                  {property?.retail_centers} Nearby Retail Centers
+                  Flexible Payment Plans Available
                 </Text>
               </View>
             )}
@@ -692,16 +717,17 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
 
         <View>
           {/* Add the map image */}
-          <Image
-            // style={styles.mapImage}
-            src={getStaticOpenStreetMapUrl(property?.google_maps_link)}
-          />
-          <Link
-            src={getGoogleMapsRedirectUrl(property?.google_maps_link)}
-            style={styles.mapLink}
-          >
-            View on Google Maps
-          </Link>
+          {property?.coordinates && (
+            <>
+              <Image src={getStaticOpenStreetMapUrl(property?.coordinates)} />
+              <Link
+                src={getGoogleMapsRedirectUrl(property?.coordinates)}
+                style={styles.mapLink}
+              >
+                View on Google Maps
+              </Link>
+            </>
+          )}
         </View>
         <ContactFooter />
       </Page>
@@ -711,6 +737,15 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
           <View style={styles.contactCard}>
             <Text style={styles.cardTitle}>Get In Touch</Text>
 
+            {/* <View style={styles.contactItem}>
+              <Icon type="person" color="black" />
+              <View style={styles.contactText}>
+                <Text style={styles.contactLabel}>Developer</Text>
+                <Text style={styles.contactValue}>
+                  {property?.developer_data?.name || "N/A"}
+                </Text>
+              </View>
+            </View> */}
             <View style={styles.contactItem}>
               <Icon type="phone" color="black" />
               <View style={styles.contactText}>
@@ -718,7 +753,6 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
                 <Text style={styles.contactValue}>{qbc_phone || "N/A"}</Text>
               </View>
             </View>
-
             <View style={styles.contactItem}>
               <Icon type="email" color="black" />
               <View style={styles.contactText}>
@@ -731,10 +765,8 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
               <Icon type="location" color="black" />
               <View style={styles.contactText}>
                 <Text style={styles.contactLabel}>Location</Text>
-                <Text style={styles.contactValue}>{property?.location}</Text>
-                <Text style={styles.contactLabel}>
-                  {property?.location_area}
-                </Text>
+                <Text style={styles.contactValue}>{property?.area}</Text>
+                <Text style={styles.contactLabel}>{property?.country}</Text>
               </View>
             </View>
           </View>
@@ -750,10 +782,9 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Price:</Text>
+              <Text style={styles.infoLabel}>Starting Price:</Text>
               <Text style={styles.priceHighlight}>
-                {formatPrice(property?.price)}
-                {property?.rent_duration && `/${property.rent_duration}`}
+                {formatPrice(property?.min_price)}
               </Text>
             </View>
 
@@ -762,12 +793,12 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
               <Text
                 style={[
                   styles.statusText,
-                  property?.is_available
+                  property?.status === "Presale"
                     ? styles.availableStatus
                     : styles.unavailableStatus,
                 ]}
               >
-                {property?.is_available ? "Available" : "Not Available"}
+                {property?.status}
               </Text>
             </View>
 
@@ -776,7 +807,7 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
                 Don't miss this opportunity!
               </Text>
               <Text style={styles.ctaText}>
-                Contact us today to schedule a viewing.
+                Contact us today to learn more about this project.
               </Text>
             </View>
           </View>
@@ -799,4 +830,4 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
   );
 };
 
-export default AdminPropertyPDF;
+export default OffPlanPropertyPDF;

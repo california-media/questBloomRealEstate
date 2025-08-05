@@ -8,7 +8,12 @@ import { pdf } from "@react-pdf/renderer";
 
 const isDev = import.meta.env.DEV;
 
-const AdminReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
+const AdminReviewBoxForm = ({
+  property,
+  prefixedId,
+  downloadPDF,
+  contactInfo,
+}) => {
   const [enquiryText, setEnquiryText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,10 +27,16 @@ const AdminReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
     phone: "",
     enquiry: "",
   });
+
   const handlePrintClick = async () => {
     try {
-      setIsGenerating(true);
-      const blob = await pdf(<AdminPropertyPDF property={property} />).toBlob();
+      const blob = await pdf(
+        <AdminPropertyPDF
+          property={property}
+          qbc_phone={contactInfo?.hotline}
+          qbc_email={contactInfo?.email}
+        />
+      ).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -36,8 +47,6 @@ const AdminReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error generating PDF:", error);
-    } finally {
-      setIsGenerating(false);
     }
   };
   useEffect(() => {
@@ -228,7 +237,7 @@ const AdminReviewBoxForm = ({ property, prefixedId, downloadPDF }) => {
     <form className="comments_form mt10" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-12">
-          <div className="mb-4">
+          <div className="mb-4 ">
             <label className="fw600 ff-heading mb-2">Name</label>
             <input
               type="text"

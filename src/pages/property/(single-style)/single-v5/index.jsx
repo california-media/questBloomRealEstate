@@ -46,6 +46,23 @@ const SingleV5 = () => {
   const [showModal, setShowModal] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
+  const [contactInfo, setContactInfo] = useState({});
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        // Fetch all needed configuration at once
+        const response = await adminApi.get(
+          "/theme-options/general?keys=hotline,email"
+        );
+        setContactInfo(response.data.data);
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
   // Fetch menu items from API (same logic as MainMenu)
   useEffect(() => {
     const fetchMenuItems = async () => {
@@ -226,10 +243,10 @@ const SingleV5 = () => {
                                 property={property}
                                 prefixedId={prefixedId}
                                 downloadPDF={true}
+                                contactInfo={contactInfo}
                               />
                             </div>
                           </div>
-                         
                         </div>
                       </div>
                     </div>
@@ -418,7 +435,9 @@ const SingleV5 = () => {
       </section>
       {/* End similar-items  */}
       {/* Modal backdrop */}
-      {showModal && <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>}
+      {showModal && (
+        <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>
+      )}
       {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
         <Footer />
