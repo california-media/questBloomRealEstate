@@ -340,8 +340,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
           )}
 
           <button
-            type="button"
-            onClick={() => handlePrintClick()}
+            type="submit"
             className="ud-btn btn-white2"
             disabled={property === null || isSubmitting}
           >

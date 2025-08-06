@@ -555,7 +555,9 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             <View style={styles.statCircle}>
               <Icon type="area" size={30} />
             </View>
-            <Text style={styles.statNumber}>{property?.area}</Text>
+            <Text style={styles.statNumber}>
+              {Math.round(parseFloat(property?.area))}
+            </Text>
             <Text style={styles.statLabel}>Sq Ft</Text>
           </View>
         </View>
