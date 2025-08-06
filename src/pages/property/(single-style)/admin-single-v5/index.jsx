@@ -67,9 +67,9 @@ const AdminSingleV5 = () => {
   const [metaInformation, setMetaInformation] = useState({});
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
-  
+
   const { adminDetailedListings, setAdminDetailedListings } =
-  usePropertyStore();
+    usePropertyStore();
   const [contactInfo, setContactInfo] = useState({});
 
   useEffect(() => {
@@ -217,9 +217,10 @@ const AdminSingleV5 = () => {
                     <div
                       style={{ display: "block" }}
                       tabIndex="-1"
-                      className=" modal fade show"
+                      className=" modal fade show "
+                      onClick={()=>setShowModal(false)} 
                     >
-                      <div className="modal-dialog  modal-dialog-centered modal-lg">
+                      <div className="modal-dialog  modal-dialog-centered modal-lg" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-content">
                           <div className="modal-header">
                             <h5 className="modal-title">Download PDF</h5>
@@ -508,7 +509,10 @@ const AdminSingleV5 = () => {
       </section>
       {/* End similar-items  */}
       {showModal && (
-        <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>
+        <div
+          style={{ zIndex: 10 }}
+          className="modal-backdrop fade show"
+        ></div>
       )}
 
       {/* Start Our Footer */}

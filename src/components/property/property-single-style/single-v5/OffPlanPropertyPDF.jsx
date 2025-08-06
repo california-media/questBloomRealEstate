@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import {
   Document,
   Page,
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
   // Gallery styles
   photoGrid: {
     flexDirection: "row",
+    justifyContent: "center",
     flexWrap: "wrap",
     gap: 10,
     marginBottom: 20,
@@ -221,7 +222,8 @@ const styles = StyleSheet.create({
 
   photo: {
     width: "30%",
-    height: 120,
+    objectFit: "cover",
+    height: 150,
     borderRadius: 8,
     border: "1px solid #e5e7eb",
   },
@@ -229,6 +231,7 @@ const styles = StyleSheet.create({
   // Amenities styles
   amenitiesGrid: {
     flexDirection: "row",
+    justifyContent: "center",
     flexWrap: "wrap",
     gap: 12,
     marginBottom: 20,
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     alignItems: "center",
-    width: "20%",
+    width: "30%",
     minHeight: 40,
   },
 
@@ -249,6 +252,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#111827",
     textAlign: "center",
+  },
+
+  amenityPhoto: {
+    marginTop: 9,
+    marginBottom: 3,
+    objectFit: "cover",
+    height: 100,
+    borderRadius: 8,
+    border: "1px solid #e5e7eb",
   },
 
   highlightsCard: {
@@ -393,6 +405,243 @@ const styles = StyleSheet.create({
   footerItem: {
     fontSize: 10,
     color: "#6b7280",
+  },
+  // New styles for additional sections
+  buildingSection: {
+    marginBottom: 25,
+    backgroundColor: "#f9fafb",
+    borderRadius: 8,
+    padding: 15,
+  },
+  buildingHeader: {
+    marginBottom: 15,
+    borderBottom: "1px solid #e5e7eb",
+    paddingBottom: 10,
+  },
+  buildingName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#1f2937",
+    marginBottom: 5,
+  },
+  buildingCompletion: {
+    fontSize: 12,
+    color: "#6b7280",
+    fontStyle: "italic",
+  },
+  buildingContent: {
+    flexDirection: "row",
+    gap: 15,
+  },
+  buildingImageContainer: {
+    flex: 1,
+  },
+  buildingImage: {
+    width: "100%",
+    height: 150,
+    objectFit: "cover",
+    borderRadius: 6,
+  },
+  buildingInfo: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  buildingDescription: {
+    fontSize: 12,
+    color: "#374151",
+    lineHeight: 1.4,
+  },
+  imageGallery: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    marginBottom: 20,
+  },
+  galleryImageContainer: {
+    width: "48%",
+    height: 160,
+  },
+  galleryImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 8,
+  },
+  lobbyContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  lobbyImageContainer: {
+    width: "80%",
+    marginBottom: 15,
+  },
+  lobbyImage: {
+    width: "100%",
+    height: 300,
+    objectFit: "cover",
+    borderRadius: 8,
+  },
+  masterPlanContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  masterPlanImageContainer: {
+    width: "100%",
+    marginBottom: 15,
+  },
+  masterPlanImage: {
+    width: "100%",
+    height: 350,
+    objectFit: "contain",
+    borderRadius: 8,
+  },
+  paymentPlansContainer: {
+    gap: 20,
+    marginBottom: 20,
+  },
+  paymentPlanCard: {
+    backgroundColor: "#f8fafc",
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 15,
+    border: "1px solid #e2e8f0",
+  },
+  paymentPlanTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 15,
+    textAlign: "center",
+    backgroundColor: "#2563eb",
+    color: "#ffffff",
+    padding: 8,
+    borderRadius: 6,
+  },
+  paymentSteps: {
+    gap: 12,
+  },
+  paymentStep: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 12,
+    borderRadius: 8,
+    border: "1px solid #e2e8f0",
+  },
+  paymentStepNumber: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#2563eb",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 15,
+  },
+  stepNumberText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  paymentStepDetails: {
+    flex: 1,
+  },
+  paymentPercent: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#2563eb",
+    marginBottom: 2,
+  },
+  paymentTime: {
+    fontSize: 12,
+    color: "#64748b",
+  },
+  postHandoverNote: {
+    fontSize: 10,
+    color: "#64748b",
+    fontStyle: "italic",
+    textAlign: "center",
+    marginTop: 10,
+    backgroundColor: "#fef9c3",
+    padding: 8,
+    borderRadius: 6,
+  },
+  // Unit Plans styles
+  unitPlansContainer: {
+    gap: 20,
+    marginBottom: 20,
+  },
+  unitPlanCard: {
+    backgroundColor: "#f8fafc",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    border: "1px solid #e2e8f0",
+  },
+  unitPlanHeader: {
+    marginBottom: 15,
+    paddingBottom: 10,
+    borderBottom: "1px solid #e2e8f0",
+  },
+  unitPlanName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 3,
+  },
+  unitPlanType: {
+    fontSize: 12,
+    color: "#64748b",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+  },
+  unitPlanContent: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 15,
+  },
+  unitPlanImageContainer: {
+    width: "50%",
+  },
+  unitPlanImage: {
+    width: "100%",
+    height: 320,
+    objectFit: "contain",
+    borderRadius: 8,
+  },
+  unitPlanDetails: {
+    width: "50%",
+    justifyContent: "start",
+  },
+  unitPlanInfoGrid: {
+    gap: 12,
+  },
+  unitPlanInfoItem: {
+    backgroundColor: "#ffffff",
+    padding: 10,
+    borderRadius: 6,
+    border: "1px solid #e2e8f0",
+  },
+  unitPlanInfoLabel: {
+    fontSize: 11,
+    color: "#64748b",
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  unitPlanInfoValue: {
+    fontSize: 13,
+    color: "#1e293b",
+    fontWeight: "bold",
+  },
+  unitPlanPriceHighlight: {
+    backgroundColor: "#2563eb",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  unitPlanStartingPrice: {
+    color: "#ffffff",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 const Icon = ({ type, size = 14, color = "#fff", ...props }) => {
@@ -589,6 +838,25 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
       {/* Page 2 - Property Photos & Details */}
       <Page size={[720, 540]} style={styles.contentPage}>
         {/* Property Details */}
+        <Text style={styles.pageTitle}>Property Gallery </Text>
+
+        {/* Photo Grid */}
+        {property?.architecture && property?.architecture.length > 0 && (
+          <View style={styles.photoGrid}>
+            {property.architecture.map((photo, index) => (
+              <Image key={index} src={photo.url} style={styles.photo} />
+            ))}
+          </View>
+        )}
+
+        <ContactFooter />
+      </Page>
+
+      <Page size={[720, 540]} style={styles.contentPage}>
+        {/* Property Details */}
+        <Text style={styles.pageTitle}>Property Details</Text>
+
+        {/* Photo Grid */}
         <View style={styles.twoColumnGrid}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Basic Information</Text>
@@ -643,6 +911,7 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
           <Text style={styles.cardTitle}>Description</Text>
           {cleanPropertyOverview(property?.overview)}
         </View>
+
         <ContactFooter />
       </Page>
 
@@ -654,62 +923,353 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
           {property?.facilities?.map((facility, index) => (
             <View key={index} style={styles.amenityCard}>
               <Text style={styles.amenityText}>{facility.name}</Text>
+              <Image src={facility.image.url} style={styles.amenityPhoto} />
             </View>
           ))}
         </View>
 
-        <View style={styles.highlightsCard}>
-          <Text style={styles.highlightsTitle}>Key Highlights</Text>
-          <View style={styles.highlightsGrid}>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                Prime {property?.area} Location
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                Modern {getPropertyType()}
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(
-                  property?.furnishing === "No"
-                    ? "Unfurnished"
-                    : property?.furnishing
-                )}{" "}
-                Property
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                By {property?.developer} Developer
-              </Text>
-            </View>
-            {getCompletionYear() !== "N/A" && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-                <Text style={styles.highlightText}>
-                  Completion in {getCompletionYear()}
-                </Text>
-              </View>
-            )}
-            {property?.payment_plans?.length > 0 && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-                <Text style={styles.highlightText}>
-                  Flexible Payment Plans Available
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
         <ContactFooter />
       </Page>
+
+      {/* Page 9 - Unit Plans */}
+      {property?.unit_blocks && property.unit_blocks.length > 0 && (
+        <>
+          <Page size={[720, 540]} style={styles.contentPage}>
+            <Text style={styles.pageTitle}>Unit Plans & Layouts</Text>
+            <View style={styles.unitPlansContainer}>
+              <View style={styles.unitPlanCard}>
+                <View style={styles.unitPlanHeader}>
+                  <Text style={styles.unitPlanName}>
+                    {property.unit_blocks[0].name}
+                  </Text>
+                  <Text style={styles.unitPlanType}>
+                    {property.unit_blocks[0].unit_type}
+                  </Text>
+                </View>
+
+                <View style={styles.unitPlanContent}>
+                  {property.unit_blocks[0].typical_unit_image_url &&
+                    JSON.parse(
+                      property.unit_blocks[0].typical_unit_image_url
+                    )[0]?.url && (
+                      <View style={styles.unitPlanImageContainer}>
+                        <Image
+                          src={
+                            JSON.parse(
+                              property.unit_blocks[0].typical_unit_image_url
+                            )[0].url
+                          }
+                          style={styles.unitPlanImage}
+                        />
+                      </View>
+                    )}
+
+                  <View style={styles.unitPlanDetails}>
+                    <View style={styles.unitPlanInfoGrid}>
+                      <View style={styles.unitPlanInfoItem}>
+                        <Text style={styles.unitPlanInfoLabel}>Area Range</Text>
+                        <Text style={styles.unitPlanInfoValue}>
+                          {property.unit_blocks[0].units_area_from_m2 &&
+                          property.unit_blocks[0].units_area_to_m2
+                            ? `${Math.round(
+                                parseFloat(
+                                  property.unit_blocks[0].units_area_from_m2
+                                ) * 10.764
+                              )} - ${Math.round(
+                                parseFloat(
+                                  property.unit_blocks[0].units_area_to_m2
+                                ) * 10.764
+                              )} sq ft`
+                            : property.unit_blocks[0].units_area_from_m2
+                            ? Math.round(
+                                parseFloat(
+                                  property.unit_blocks[0].units_area_from_m2
+                                ) * 10.764
+                              )
+                            : property.unit_blocks[0].units_area_to_m2
+                            ? Math.round(
+                                parseFloat(
+                                  property.unit_blocks[0].units_area_to_m2
+                                ) * 10.764
+                              )
+                            : "N/A"}
+                        </Text>
+                      </View>
+
+                      <View style={styles.unitPlanInfoItem}>
+                        <Text style={styles.unitPlanInfoLabel}>
+                          Price Range
+                        </Text>
+                        <Text style={styles.unitPlanInfoValue}>
+                          {formatPrice(
+                            property.unit_blocks[0].units_price_from
+                          ) || "N/A"}{" "}
+                          -{" "}
+                          {formatPrice(
+                            property.unit_blocks[0].units_price_to
+                          ) || "N/A"}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.unitPlanPriceHighlight}>
+                      <Text style={styles.unitPlanStartingPrice}>
+                        Starting from{" "}
+                        {formatPrice(property.unit_blocks[0].units_price_from)}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            <ContactFooter />
+          </Page>
+          {property.unit_blocks.slice(1).map((unit, unitIndex) => (
+            <Page key={unitIndex} size={[720, 540]} style={styles.contentPage}>
+              <View style={styles.unitPlansContainer}>
+                <View style={styles.unitPlanCard}>
+                  <View style={styles.unitPlanHeader}>
+                    <Text style={styles.unitPlanName}>{unit.name}</Text>
+                    <Text style={styles.unitPlanType}>{unit.unit_type}</Text>
+                  </View>
+
+                  <View style={styles.unitPlanContent}>
+                    {unit.typical_unit_image_url &&
+                      JSON.parse(unit.typical_unit_image_url)[0]?.url && (
+                        <View style={styles.unitPlanImageContainer}>
+                          <Image
+                            src={JSON.parse(unit.typical_unit_image_url)[0].url}
+                            style={styles.unitPlanImage}
+                          />
+                        </View>
+                      )}
+
+                    <View style={styles.unitPlanDetails}>
+                      <View style={styles.unitPlanInfoGrid}>
+                        <View style={styles.unitPlanInfoItem}>
+                          <Text style={styles.unitPlanInfoLabel}>
+                            Area Range
+                          </Text>
+                          <Text style={styles.unitPlanInfoValue}>
+                            {unit.units_area_from_m2 && unit.units_area_to_m2
+                              ? `${Math.round(
+                                  parseFloat(unit.units_area_from_m2) * 10.764
+                                )} - ${Math.round(
+                                  parseFloat(unit.units_area_to_m2) * 10.764
+                                )} sq ft`
+                              : unit.units_area_from_m2
+                              ? Math.round(
+                                  parseFloat(unit.units_area_from_m2) * 10.764
+                                )
+                              : unit.units_area_to_m2
+                              ? Math.round(
+                                  parseFloat(unit.units_area_to_m2) * 10.764
+                                )
+                              : "N/A"}
+                          </Text>
+                        </View>
+
+                        <View style={styles.unitPlanInfoItem}>
+                          <Text style={styles.unitPlanInfoLabel}>
+                            Price Range
+                          </Text>
+                          <Text style={styles.unitPlanInfoValue}>
+                            {formatPrice(unit.units_price_from) || "N/A"} -{" "}
+                            {formatPrice(unit.units_price_to) || "N/A"}
+                          </Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.unitPlanPriceHighlight}>
+                        <Text style={styles.unitPlanStartingPrice}>
+                          Starting from {formatPrice(unit.units_price_from)}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <ContactFooter />
+            </Page>
+          ))}
+        </>
+      )}
+
+      {/* Page 5 - Building Details */}
+      <Page size={[720, 540]} style={styles.contentPage}>
+        <Text style={styles.pageTitle}>Building Details</Text>
+
+        {property?.buildings?.[0]?.map((building, index) => (
+          <View key={index} style={styles.buildingSection}>
+            <View style={styles.buildingHeader}>
+              <Text style={styles.buildingName}>{building?.Name}</Text>
+              <Text style={styles.buildingCompletion}>
+                {building?.Completion_date
+                  ? `Completion: ${new Date(
+                      building.Completion_date
+                    ).toLocaleDateString()}`
+                  : "Completion: TBA"}
+              </Text>
+            </View>
+
+            <View style={styles.buildingContent}>
+              {building?.Building_image?.[0]?.url && (
+                <View style={styles.buildingImageContainer}>
+                  <Image
+                    src={building.Building_image[0].url}
+                    style={styles.buildingImage}
+                  />
+                </View>
+              )}
+
+              <View style={styles.buildingInfo}>
+                <Text style={styles.buildingDescription}>
+                  {building?.Description}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ))}
+
+        <ContactFooter />
+      </Page>
+
+      {/* Page 6 - Interior Images */}
+      {property?.interior && property.interior.length > 0 && (
+        <Page size={[720, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Interior Design</Text>
+
+          <View style={styles.imageGallery}>
+            {property.interior.slice(0, 4).map((image, index) => (
+              <View key={index} style={styles.galleryImageContainer}>
+                <Image src={image.url} style={styles.galleryImage} />
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter />
+        </Page>
+      )}
+
+      {/* Page 7 - Lobby Images */}
+      {property?.lobby && property.lobby.length > 0 && (
+        <Page size={[720, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Lobby</Text>
+
+          <View style={styles.lobbyContainer}>
+            {property.lobby.map((image, index) => (
+              <View key={index} style={styles.lobbyImageContainer}>
+                <Image src={image.url} style={styles.lobbyImage} />
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter />
+        </Page>
+      )}
+
+      {/* Page 8 - Master Plan */}
+      {property?.master_plan && property.master_plan.length > 0 && (
+        <Page size={[720, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Master Plan</Text>
+
+          <View style={styles.masterPlanContainer}>
+            {property.master_plan.map((image, index) => (
+              <View key={index} style={styles.masterPlanImageContainer}>
+                <Image src={image.url} style={styles.masterPlanImage} />
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter />
+        </Page>
+      )}
+
+      {/* Page 9 - Payment Plans */}
+      {property?.payment_plans && property.payment_plans.length > 0 && (
+        <>
+          <Page size={[720, 540]} style={styles.contentPage}>
+            <Text style={styles.pageTitle}>Payment Plans</Text>
+
+            <View style={styles.paymentPlansContainer}>
+              <View style={styles.paymentPlanCard}>
+                <Text style={styles.paymentPlanTitle}>
+                  {property.payment_plans[0].Plan_name}
+                </Text>
+
+                <View style={styles.paymentSteps}>
+                  {property.payment_plans[0].Payments.map(
+                    (payment, paymentIndex) => (
+                      <View key={paymentIndex} style={styles.paymentStep}>
+                        <View style={styles.paymentStepNumber}>
+                          <Text style={styles.stepNumberText}>
+                            {payment[0].Order}
+                          </Text>
+                        </View>
+                        <View style={styles.paymentStepDetails}>
+                          <Text style={styles.paymentPercent}>
+                            {payment[0].Percent_of_payment}%
+                          </Text>
+                          <Text style={styles.paymentTime}>
+                            {payment[0].Payment_time}
+                          </Text>
+                        </View>
+                      </View>
+                    )
+                  )}
+                </View>
+
+                {property.payment_plans[0].months_after_handover > 0 && (
+                  <Text style={styles.postHandoverNote}>
+                    *Includes {property.payment_plans[0].months_after_handover}{" "}
+                    months post-handover payment
+                  </Text>
+                )}
+              </View>
+            </View>
+
+            <ContactFooter />
+          </Page>
+          {property.payment_plans.slice(1).map((plan, planIndex) => (
+            <Page key={planIndex} size={[720, 540]} style={styles.contentPage}>
+              <View style={styles.paymentPlansContainer}>
+                <View style={styles.paymentPlanCard}>
+                  <Text style={styles.paymentPlanTitle}>{plan.Plan_name}</Text>
+                  <View style={styles.paymentSteps}>
+                    {plan.Payments.map((payment, paymentIndex) => (
+                      <View key={paymentIndex} style={styles.paymentStep}>
+                        <View style={styles.paymentStepNumber}>
+                          <Text style={styles.stepNumberText}>
+                            {payment[0].Order}
+                          </Text>
+                        </View>
+                        <View style={styles.paymentStepDetails}>
+                          <Text style={styles.paymentPercent}>
+                            {payment[0].Percent_of_payment}%
+                          </Text>
+                          <Text style={styles.paymentTime}>
+                            {payment[0].Payment_time}
+                          </Text>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+
+                  {plan.months_after_handover > 0 && (
+                    <Text style={styles.postHandoverNote}>
+                      *Includes {plan.months_after_handover} months
+                      post-handover payment
+                    </Text>
+                  )}
+                </View>
+              </View>
+
+              <ContactFooter />
+            </Page>
+          ))}
+        </>
+      )}
 
       {/* Page 4 - Location & Contact */}
       <Page size={[720, 540]} style={styles.contentPage}>
@@ -732,20 +1292,12 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
         <ContactFooter />
       </Page>
 
+      {/* Final Page - Contact & Summary */}
       <Page size={[720, 540]} style={styles.contentPage}>
         <View style={styles.twoColumnGrid}>
           <View style={styles.contactCard}>
             <Text style={styles.cardTitle}>Get In Touch</Text>
 
-            {/* <View style={styles.contactItem}>
-              <Icon type="person" color="black" />
-              <View style={styles.contactText}>
-                <Text style={styles.contactLabel}>Developer</Text>
-                <Text style={styles.contactValue}>
-                  {property?.developer_data?.name || "N/A"}
-                </Text>
-              </View>
-            </View> */}
             <View style={styles.contactItem}>
               <Icon type="phone" color="black" />
               <View style={styles.contactText}>
@@ -810,6 +1362,56 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
                 Contact us today to learn more about this project.
               </Text>
             </View>
+          </View>
+        </View>
+        <View style={styles.highlightsCard}>
+          <Text style={styles.highlightsTitle}>Key Highlights</Text>
+          <View style={styles.highlightsGrid}>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                Prime {property?.area} Location
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                Modern {getPropertyType()}
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                {capitalizeFirstLetter(
+                  property?.furnishing === "No"
+                    ? "Unfurnished"
+                    : property?.furnishing
+                )}{" "}
+                Property
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                By {property?.developer} Developer
+              </Text>
+            </View>
+            {getCompletionYear() !== "N/A" && (
+              <View style={styles.highlightItem}>
+                <Icon type="star" color="yellow" />
+                <Text style={styles.highlightText}>
+                  Completion in {getCompletionYear()}
+                </Text>
+              </View>
+            )}
+            {property?.payment_plans?.length > 0 && (
+              <View style={styles.highlightItem}>
+                <Icon type="star" color="yellow" />
+                <Text style={styles.highlightText}>
+                  Flexible Payment Plans Available
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <Text style={styles.footerDateTime}>

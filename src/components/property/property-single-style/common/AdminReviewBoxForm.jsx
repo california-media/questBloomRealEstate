@@ -1,4 +1,3 @@
-import adminApi from "@/api/adminApi";
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
@@ -56,7 +55,6 @@ const AdminReviewBoxForm = ({
       }`
     );
   }, [property]);
-
   const validateForm = (formData) => {
     const newErrors = {};
     let isValid = true;
@@ -349,19 +347,23 @@ const AdminReviewBoxForm = ({
           )}
 
           <button
-            type="submit"
+            type="button"
+            onClick={() => handlePrintClick()}
             className="ud-btn btn-white2"
-            disabled={isSubmitting}
+            disabled={property === null || isSubmitting}
           >
             {isSubmitting ? (
-              <>
+              <div className="d-flex align-items-center gap-2">
                 <span
                   className="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                 ></span>
                 <span className="visually-hidden">Loading...</span>
-              </>
+                <span>
+                  {downloadPDF ? "Downloading PDF" : "Submitting Enquiry"}
+                </span>
+              </div>
             ) : (
               <>
                 {downloadPDF ? "Download PDF" : "Submit Enquiry"}

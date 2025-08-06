@@ -340,19 +340,23 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
           )}
 
           <button
-            type="submit"
-            className="ud-btn btn-white2"
+            type="button"
             onClick={() => handlePrintClick()}
+            className="ud-btn btn-white2"
+            disabled={property === null || isSubmitting}
           >
             {isSubmitting ? (
-              <>
+              <div className="d-flex align-items-center gap-2">
                 <span
                   className="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                 ></span>
                 <span className="visually-hidden">Loading...</span>
-              </>
+                <span>
+                  {downloadPDF ? "Downloading PDF" : "Submitting Enquiry"}
+                </span>
+              </div>
             ) : (
               <>
                 {downloadPDF ? "Download PDF" : "Submit Enquiry"}

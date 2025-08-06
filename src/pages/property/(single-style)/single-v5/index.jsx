@@ -226,8 +226,9 @@ const SingleV5 = () => {
                       style={{ display: "block" }}
                       tabIndex="-1"
                       className=" modal fade show"
+                       onClick={()=>setShowModal(false)} 
                     >
-                      <div className="modal-dialog  modal-dialog-centered modal-lg">
+                      <div className="modal-dialog  modal-dialog-centered modal-lg" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-content">
                           <div className="modal-header">
                             <h5 className="modal-title">Download PDF</h5>

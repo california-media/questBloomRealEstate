@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import {
   Document,
   Page,
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
 
   // Gallery styles
   photoGrid: {
+    justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
@@ -221,7 +222,8 @@ const styles = StyleSheet.create({
 
   photo: {
     width: "30%",
-    height: 120,
+    height: 150,
+    objectFit: "cover",
     borderRadius: 8,
     border: "1px solid #e5e7eb",
   },
@@ -229,6 +231,7 @@ const styles = StyleSheet.create({
   // Amenities styles
   amenitiesGrid: {
     flexDirection: "row",
+    justifyContent: "center",
     flexWrap: "wrap",
     gap: 12,
     marginBottom: 20,
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     alignItems: "center",
-    width: "20%",
+    width: "30%",
     minHeight: 40,
   },
 
@@ -251,6 +254,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
+  amenityPhoto: {
+    marginTop: 9,
+    marginBottom: 3,
+    objectFit: "cover",
+    height: 100,
+    borderRadius: 8,
+    border: "1px solid #e5e7eb",
+  },
   highlightsCard: {
     backgroundColor: "#2563eb",
     padding: 20,
@@ -564,6 +575,27 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
       {/* Page 2 - Property Photos & Details */}
       <Page size={[720, 540]} style={styles.contentPage}>
         {/* Property Details */}
+        <Text style={styles.pageTitle}>Property Gallery</Text>
+
+        {/* Photo Grid */}
+        {property?.photos && property.photos.length > 0 && (
+          <View style={styles.photoGrid}>
+            {property.photos.map((photo, index) => (
+              <Image
+                key={index}
+                src={`${adminBaseUrl}/api/images${photo}?format=jpeg`}
+                style={styles.photo}
+              />
+            ))}
+          </View>
+        )}
+
+        <ContactFooter />
+      </Page>
+      <Page size={[720, 540]} style={styles.contentPage}>
+        {/* Property Details */}
+        <Text style={styles.pageTitle}>Property Details</Text>
+
         <View style={styles.twoColumnGrid}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Basic Information</Text>
@@ -579,15 +611,21 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Furnishing:</Text>
-              <Text style={styles.infoValue}>{property?.furnishing}</Text>
+              <Text style={styles.infoValue}>
+                {capitalizeFirstLetter(property?.furnishing || "N/A")}
+              </Text>
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Ownership:</Text>
-              <Text style={styles.infoValue}>{property?.ownership}</Text>
+              <Text style={styles.infoValue}>
+                {capitalizeFirstLetter(property?.ownership || "N/A")}
+              </Text>
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Year Built:</Text>
-              <Text style={styles.infoValue}>{property?.year_built}</Text>
+              <Text style={styles.infoValue}>
+                {property?.year_built || "N/A"}
+              </Text>
             </View>
           </View>
 
@@ -595,13 +633,15 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
             <Text style={styles.cardTitle}>Space Details</Text>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Total Area:</Text>
-              <Text style={styles.infoValue}>{property?.area} sq ft</Text>
+              <Text style={styles.infoValue}>
+                {property?.area || "N/A"} sq ft
+              </Text>
             </View>
             {property?.balcony_size && (
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Balcony Size:</Text>
                 <Text style={styles.infoValue}>
-                  {property?.balcony_size} sq ft
+                  {property?.balcony_size || "N/A"} sq ft
                 </Text>
               </View>
             )}
@@ -616,93 +656,54 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
 
         <View style={styles.description}>
           <Text style={styles.cardTitle}>Description</Text>
-          {renderHtmlToPdf(property?.property_description)}
+          {renderHtmlToPdf(property?.property_description) || "N/A"}
         </View>
         <ContactFooter />
       </Page>
 
       {/* Page 3 - Amenities & Features */}
-      <Page size={[720, 540]} style={styles.contentPage}>
-        <Text style={styles.pageTitle}>Amenities & Features</Text>
+      {property?.amenities && property?.amenities.length > 0 && (
+        <Page size={[720, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Amenities & Features</Text>
 
-        <View style={styles.amenitiesGrid}>
-          {property?.amenities?.map((amenity) => (
-            <View key={amenity.id} style={styles.amenityCard}>
-              <Text style={styles.amenityText}>{amenity.title}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.highlightsCard}>
-          <Text style={styles.highlightsTitle}>Key Highlights</Text>
-          <View style={styles.highlightsGrid}>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-
-              <Text style={styles.highlightText}>
-                Prime {property?.location_area} Location
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-
-              <Text style={styles.highlightText}>
-                Modern {property?.property_type?.name}
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-
-              <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(property?.furnishing)} Property
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(property?.ownership)} Ownership
-              </Text>
-            </View>
-            {property?.year_built && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-
-                <Text style={styles.highlightText}>
-                  Built in {property?.year_built}
-                </Text>
+          <View style={styles.amenitiesGrid}>
+            {property?.amenities?.map((amenity) => (
+              <View key={amenity.id} style={styles.amenityCard}>
+                <Text style={styles.amenityText}>{amenity.title}</Text>
+                {amenity?.image_url && (
+                  <Image src={amenity.image_url} style={styles.amenityPhoto} />
+                )}
               </View>
-            )}
-            {property?.retail_centers && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-
-                <Text style={styles.highlightText}>
-                  {property?.retail_centers} Nearby Retail Centers
-                </Text>
-              </View>
-            )}
+            ))}
           </View>
-        </View>
-        <ContactFooter />
-      </Page>
+
+          <ContactFooter />
+        </Page>
+      )}
 
       {/* Page 4 - Location & Contact */}
       <Page size={[720, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Location & Contact</Text>
-
         <View>
-          {/* Add the map image */}
-          <Image
-            // style={styles.mapImage}
-            src={getStaticOpenStreetMapUrl(property?.google_maps_link)}
-          />
-          <Link
-            src={getGoogleMapsRedirectUrl(property?.google_maps_link)}
-            style={styles.mapLink}
-          >
-            View on Google Maps
-          </Link>
+          {property?.google_maps_link ? (
+            <>
+              <Image
+                // style={styles.mapImage}
+                src={getStaticOpenStreetMapUrl(property?.google_maps_link)}
+              />
+
+              <Link
+                src={getGoogleMapsRedirectUrl(property?.google_maps_link)}
+                style={styles.mapLink}
+              >
+                View on Google Maps
+              </Link>
+            </>
+          ) : (
+            <Text style={styles.descriptionText}>No Map Data Available</Text>
+          )}
         </View>
+
         <ContactFooter />
       </Page>
 
@@ -779,6 +780,56 @@ const AdminPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
                 Contact us today to schedule a viewing.
               </Text>
             </View>
+          </View>
+        </View>
+        <View style={styles.highlightsCard}>
+          <Text style={styles.highlightsTitle}>Key Highlights</Text>
+          <View style={styles.highlightsGrid}>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                Prime {property?.location_area} Location
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                Modern {property?.property_type?.name}
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+
+              <Text style={styles.highlightText}>
+                {capitalizeFirstLetter(property?.furnishing)} Property
+              </Text>
+            </View>
+            <View style={styles.highlightItem}>
+              <Icon type="star" color="yellow" />
+              <Text style={styles.highlightText}>
+                {capitalizeFirstLetter(property?.ownership)} Ownership
+              </Text>
+            </View>
+            {property?.year_built && (
+              <View style={styles.highlightItem}>
+                <Icon type="star" color="yellow" />
+
+                <Text style={styles.highlightText}>
+                  Built in {property?.year_built}
+                </Text>
+              </View>
+            )}
+            {property?.retail_centers && (
+              <View style={styles.highlightItem}>
+                <Icon type="star" color="yellow" />
+
+                <Text style={styles.highlightText}>
+                  {property?.retail_centers} Nearby Retail Centers
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <Text style={styles.footerDateTime}>
