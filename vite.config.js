@@ -13,7 +13,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
       "/crm": {
-        target: "https://crm.questrealestate.ae", // Your backend server
+        target: "https://questrealestatecrm.com", // Your backend server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/crm/, ""),
       },

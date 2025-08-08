@@ -187,7 +187,7 @@ const AdminReviewBoxForm = ({
           };
         }
         ///print PDF if download form
-        if (downloadPDF) handlePrintClick();
+        if (downloadPDF) await handlePrintClick();
         setSubmitStatus({
           success: true,
           message: "Enquiry submitted successfully!",
@@ -348,7 +348,6 @@ const AdminReviewBoxForm = ({
 
           <button
             type="submit"
-        
             className="ud-btn btn-white2"
             disabled={property === null || isSubmitting}
           >
@@ -361,7 +360,7 @@ const AdminReviewBoxForm = ({
                 ></span>
                 <span className="visually-hidden">Loading...</span>
                 <span>
-                  {downloadPDF ? "Downloading PDF" : "Submitting Enquiry"}
+                  {downloadPDF ? "Generating PDF" : "Submitting Enquiry"}
                 </span>
               </div>
             ) : (

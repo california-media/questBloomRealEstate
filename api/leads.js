@@ -69,7 +69,7 @@ export default async function handler(request, response) {
 
     // Send to CRM API
     const crmResponse = await fetch(
-      "https://crm.questrealestate.ae/api/leads",
+      "https://questrealestatecrm.com/api/leads",
       {
         method: "POST",
         headers: {
