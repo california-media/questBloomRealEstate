@@ -479,6 +479,7 @@ const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 const formatPrice = (price) => {
+  if (!price) return "N/A";
   return new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",

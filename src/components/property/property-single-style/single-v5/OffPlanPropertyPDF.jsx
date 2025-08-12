@@ -725,6 +725,7 @@ const capitalizeFirstLetter = (str) => {
 };
 
 const formatPrice = (price) => {
+  if (!price) return "N/A";
   return new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",
@@ -744,6 +745,7 @@ const OffPlanPropertyPDF = ({ property, qbc_phone, qbc_email }) => {
   const getBedroomOptions = () => {
     if (!property?.unit_blocks) return "N/A";
     const bedrooms = property.unit_blocks
+      .filter((block) => block?.name)
       .map((block) => block.name.split(" ")[0])
       .join(", ");
     return bedrooms;
