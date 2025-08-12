@@ -123,7 +123,6 @@ const Home_V2 = () => {
         });
 
         setMenuItems(response.data || []);
-        console.log("menu items", response.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching menu items:", err);

@@ -94,7 +94,7 @@ const Contact = () => {
 
       {/* Start Our Contact Form */}
       <section className="pt-0 " >
-        <div className="container mt150">
+        <div className="container mt150  contact-us-form-section ">
           <div className="row d-flex align-items-end">
             <div className="col-lg-5 position-relative">
               <div className="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
@@ -107,7 +107,7 @@ const Contact = () => {
             {/* End .col */}
 
             <div
-              className="col-lg-5 offset-lg-2"
+              className="col-lg-5 offset-lg-2 mt20"
               dangerouslySetInnerHTML={{
                 __html:
                   sections.find((section) => section.section_name === "Form")
@@ -130,7 +130,7 @@ const Contact = () => {
 
       {/* Visit our Office */}
       <section
-        className="pt0 pb90 pb10-md"
+        className="pt0 pb90 pt20 "
         dangerouslySetInnerHTML={{
           __html:
             sections.find((section) => section.section_name === "Office")

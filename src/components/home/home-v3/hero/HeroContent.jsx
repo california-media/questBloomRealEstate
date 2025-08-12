@@ -273,9 +273,9 @@ const HeroContent = ({
               {/* Mobile Layout - new implementation */}
               <div className="row d-flex justify-content-center gy-3 gx-1 d-md-none">
                 {/* Buy/Rent Toggle - full width on mobile */}
-                <div className="col-4 col-md-12">
+                <div className="col-5 col-md-12">
                   <div
-                    className="mt-1 d-flex justify-content-start h-90"
+                    className="mt-1 d-flex justify-content-center h-90"
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
                   >
                     {buyRentTabs.map((tab) => (
@@ -287,7 +287,7 @@ const HeroContent = ({
                           id="tab-element"
                           onClick={() => handleBuyRent(tab.id)}
                         >
-                          {tab.label}
+                          {tab.label }
                         </button>
                       </li>
                     ))}
@@ -320,8 +320,8 @@ const HeroContent = ({
                 </div>
 
                 {/* All/Ready/Off Tabs or Rent Duration - full width on mobile */}
-                <div className="col-8 col-md-12">
-                  <div className="mt-3 h-100 bootselect-multiselect">
+                <div className={`${buyRent === "rent" ? "col-12" : "col-9"} col-md-12`}>
+                  <div className="mt-3 h-80 bootselect-multiselect">
                     {buyRent === "buy" ? (
                       <div
                         className="bootselect-multiselect h-100 justify-content-center pl20  d-flex"

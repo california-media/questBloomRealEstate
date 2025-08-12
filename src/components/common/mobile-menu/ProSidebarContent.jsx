@@ -29,9 +29,8 @@ const ROUTE_TO_MENU_KEY = {
 };
 
 const ProSidebarContent = ({ menuItems, error }) => {
-  const { pathname } = useLocation();
-  const [topMenu, setTopMenu] = useState("");
-
+const { pathname } = useLocation();
+  const [topMenu, setTopMenu] = useState("home");
   // Set active menu based on current pathname (similar to MainMenu)
   useEffect(() => {
     const currentRoute = "/" + pathname.split("/")[1];
