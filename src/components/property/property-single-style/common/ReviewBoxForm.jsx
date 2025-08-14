@@ -29,6 +29,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
           property={property}
           qbc_email={contactInfo?.email}
           qbc_phone={contactInfo?.hotline}
+          qbc_copyright={contactInfo?.copyright}
         />
       ).toBlob();
       const url = URL.createObjectURL(blob);

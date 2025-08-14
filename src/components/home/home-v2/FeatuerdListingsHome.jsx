@@ -49,12 +49,12 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
 
   return (
     listings.length > 0 && (
-      <section className="pt20 pb0 pb0  bgc-white " key={index}>
-        <div className="container  ">
-          <div className=" " data-aos="fade-up">
-            <div className="col-12 d-flex justify-content-center">
+      <section className=" pb0 pb0  pt-0 bgc-white " key={index}>
+        <div className="container ">
+          <div className="   " data-aos="fade-up">
+            <div className="col-12  d-flex justify-content-center">
               <div
-                className="main-title2 text-center"
+                className="main-title2 text-center "
                 dangerouslySetInnerHTML={{
                   __html:
                     pageSections.find(
@@ -62,7 +62,7 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                         sec.section_name === `Section ${index + 1} Header`
                     )?.html_content ||
                     `
-  <h2 class="luxury-heading">
+  <h2 class="luxury-heading ">
     ${section.title}
     <span class="luxury-heading-decoration"></span>
   </h2>
@@ -73,8 +73,8 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                 {/* <LuxuryHeading>{section.title}</LuxuryHeading> */}
               </div>
             </div>
-            <div className="col-lg-12 mt-1 ms-lg-auto">
-              <div className="text-start text-lg-end mb-3">
+            <div className="col-lg-12 mt-0 ms-lg-auto">
+              <div className="text-start text-lg-end mb-2 ">
                 <Link
                   to="/off-plan"
                   className="ud-btn2 "

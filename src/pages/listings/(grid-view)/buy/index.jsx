@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Resale Listings",
+  title: "Quest Bloom  Real Estate LLC | Resale Listings",
 };
 
 const BuyFull3Col = () => {
@@ -77,7 +77,7 @@ const BuyFull3Col = () => {
 
       {/* Breadcumb Sections */}
       <section
-        className="breadcumb-section bgc-f7"
+        className="breadcumb-section bgc-f7 "
         dangerouslySetInnerHTML={{
           __html:
             sections.find((section) => section.section_name === "Buy Header")
@@ -86,7 +86,7 @@ const BuyFull3Col = () => {
           <div class="row">
             <div class="col-lg-12">
               <div class="breadcumb-style1">
-                <h2 class="title">UAE Homes for Sale</h2>
+                <h2 class="title">Property for Sale (UAE)</h2>
                 <div class="breadcumb-list">
                   <a href="/">Home</a>
                   <a href="#">For Buying</a>

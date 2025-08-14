@@ -200,7 +200,7 @@ const Home_V2 = () => {
       />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
-      <section className="pb15 pb30-md z-1 ">
+      <section className="pb-0 pt80 z-1 ">
         <div className="container custom-max-width" id="custom-max-width">
           <div className="row justify-content-center" data-aos="fade">
             <div className="col-lg-12">
