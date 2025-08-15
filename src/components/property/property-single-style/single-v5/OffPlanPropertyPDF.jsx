@@ -764,7 +764,6 @@ const getStaticOpenStreetMapUrl = (
   return null;
 };
 
-
 const capitalizeFirstLetter = (str) => {
   if (!str || typeof str !== "string") return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -874,15 +873,11 @@ const OffPlanPropertyPDF = ({
     property?.architecture && property.architecture.length > 0
       ? property.architecture[0].url
       : "";
-  console.log("HeroBackgroundImage", HeroBackgroundImage);
   return (
     <Document>
       {/* Page 1 - Cover Page */}
       <Page size={[920, 540]}>
-        <Image
-          src={HeroBackgroundImage + "awd"}
-          style={styles.coverBackgroundImage}
-        />
+        <Image src={HeroBackgroundImage} style={styles.coverBackgroundImage} />
         <Image
           src="/images/ltr-black-to-transparent.png"
           style={styles.gradientOverlay}
@@ -970,7 +965,7 @@ const OffPlanPropertyPDF = ({
                 }}
               >
                 <Image
-                  src="/images/QMC-logo.png"
+                  src="/images/Questrealstatewhite.png"
                   style={{
                     width: 110,
                     height: 30,
@@ -1168,7 +1163,7 @@ const OffPlanPropertyPDF = ({
                   src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
                   style={{
                     flex: 1,
-                    backgroundColor: "#a3e635", // Tailwind's lime-400
+                    backgroundColor: "#b5ec4f", // Tailwind's lime-400
                     borderRadius: 8,
                     paddingVertical: 10,
                     paddingHorizontal: 12,
@@ -1244,12 +1239,9 @@ const OffPlanPropertyPDF = ({
       </Page>
 
       {/* Page 2 - Property Photos & Details */}
-      <Page size={[920, 540]} style={styles.contentPage}>
-        {/* Property Details */}
+      {/* <Page size={[920, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Property Gallery </Text>
 
-        {/* Photo Grid */}
-        {/* Photo Grid */}
         {property?.architecture && property.architecture.length > 0 ? (
           <View style={styles.photoGrid}>
             {property.architecture.map((photo, index) => (
@@ -1282,7 +1274,7 @@ const OffPlanPropertyPDF = ({
           qbc_email={qbc_email}
           qbc_phone={qbc_phone}
         />
-      </Page>
+      </Page> */}
 
       <Page size={[920, 540]} style={styles.contentPage}>
         {/* Property Details */}
@@ -1478,7 +1470,7 @@ const OffPlanPropertyPDF = ({
               minWidth: 200,
             }}
           >
-            <Icon type="all" color="gray" size={20} />
+            <Icon type="all" color="black" size={20} />
             <View style={{ marginLeft: 12 }}>
               <Text
                 style={{
@@ -1526,10 +1518,11 @@ const OffPlanPropertyPDF = ({
                 justifyContent: "space-between",
                 alignItems: "stretch",
                 height: "100%",
+                gap: 2,
               }}
             >
               {/* Left column - single image */}
-              <View style={{ width: "49.5%", height: "100%" }}>
+              <View style={{ flex: 1, height: "100%" }}>
                 {chunk[0] && (
                   <Image
                     src={chunk[0].url}
@@ -1545,7 +1538,7 @@ const OffPlanPropertyPDF = ({
               {/* Right column - two stacked images */}
               <View
                 style={{
-                  width: "49.95%",
+                  flex: 1,
                   height: "100%",
                 }}
               >
@@ -1556,7 +1549,7 @@ const OffPlanPropertyPDF = ({
                       width: "100%",
                       height: "50%",
                       objectFit: "cover",
-                      marginBottom: 5,
+                      marginBottom: 2,
                     }}
                   />
                 )}
@@ -1596,38 +1589,33 @@ const OffPlanPropertyPDF = ({
 
       {/* Page 3 - Amenities & Features */}
 
-      {property?.facilities?.length > 0 &&
-        Array.from(
-          ///this chunks images into groups of three
-          { length: Math.ceil(property.facilities.length / 8) },
-          (_, i) => property.facilities.slice(i * 8, i * 8 + 8)
-        ).map((facilities, pageIndex) => (
-          <Page
-            key={`facilities-page-${pageIndex}`}
-            size={[920, 540]}
-            style={styles.contentPage}
-          >
-            <Text style={styles.pageTitle}>Facilities</Text>
+      {property?.facilities?.length > 0 && (
+        <Page
+          key="facilities-page"
+          size={[920, 540]}
+          style={styles.contentPage}
+        >
+          <Text style={styles.pageTitle}>Facilities</Text>
 
-            <View style={styles.amenitiesGrid}>
-              {facilities?.map((facility, index) => (
-                <View key={index} style={styles.amenityCard}>
-                  <Image src={facility.image.url} style={styles.amenityPhoto} />
-                  <Text style={styles.amenityText}>{facility.name}</Text>
-                  <Text style={styles.amenitySubText}>
-                    {facility.image_source}
-                  </Text>
-                </View>
-              ))}
-            </View>
-            {/* Footer */}
-            <ContactFooter
-              qbc_copyright={qbc_copyright}
-              qbc_email={qbc_email}
-              qbc_phone={qbc_phone}
-            />
-          </Page>
-        ))}
+          <View style={styles.amenitiesGrid}>
+            {property.facilities.slice(0, 8).map((facility, index) => (
+              <View key={index} style={styles.amenityCard}>
+                <Image src={facility.image.url} style={styles.amenityPhoto} />
+                <Text style={styles.amenityText}>{facility.name}</Text>
+                <Text style={styles.amenitySubText}>
+                  {facility.image_source}
+                </Text>
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter
+            qbc_copyright={qbc_copyright}
+            qbc_email={qbc_email}
+            qbc_phone={qbc_phone}
+          />
+        </Page>
+      )}
 
       {/* Unit Plans Pages - 3 per page layout */}
       {property?.unit_blocks && property.unit_blocks.length > 0 && (
@@ -1653,7 +1641,7 @@ const OffPlanPropertyPDF = ({
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "10px",
+                    gap: "15px",
                     flex: 1,
                   }}
                 >
@@ -1986,7 +1974,9 @@ const OffPlanPropertyPDF = ({
         property.master_plan.length > 0 &&
         property.master_plan.map((image, index) => (
           <Page key={index} size={[920, 540]} style={styles.contentPage}>
-            <Image src={image.url} style={styles.masterPlanImage} />
+            <View style={{ width: "100%", height: "100%" }}>
+              <Image src={image.url} style={styles.masterPlanImage} />
+            </View>
             <ContactFooter
               qbc_copyright={qbc_copyright}
               qbc_email={qbc_email}
@@ -2374,139 +2364,297 @@ const OffPlanPropertyPDF = ({
       </Page>
 
       {/* Final Page - Contact & Summary */}
-      <Page size={[920, 540]} style={styles.contentPage}>
-        <View style={styles.twoColumnGrid}>
-          <View style={styles.contactCard}>
-            <Text style={styles.cardTitle}>Get In Touch</Text>
-
-            <View style={styles.contactItem}>
-              <Icon type="phone" color="black" />
-              <View style={styles.contactText}>
-                <Text style={styles.contactLabel}>Phone</Text>
-                <Text style={styles.contactValue}>{qbc_phone || "N/A"}</Text>
-              </View>
-            </View>
-            <View style={styles.contactItem}>
-              <Icon type="email" color="black" />
-              <View style={styles.contactText}>
-                <Text style={styles.contactLabel}>Email</Text>
-                <Text style={styles.contactValue}>{qbc_email || "N/A"}</Text>
-              </View>
-            </View>
-
-            <View style={styles.contactItem}>
-              <Icon type="location" color="black" />
-              <View style={styles.contactText}>
-                <Text style={styles.contactLabel}>Location</Text>
-                <Text style={styles.contactValue}>{property?.area}</Text>
-                <Text style={styles.contactLabel}>{property?.country}</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.summaryCard}>
-            <Text style={styles.cardTitle}>Property Summary</Text>
-
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Property Code:</Text>
-              <Text style={[styles.infoValue, { color: "#2563eb" }]}>
-                {getPropertyCode()}
-              </Text>
-            </View>
-
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Starting Price:</Text>
-              <Text style={styles.priceHighlight}>
-                {formatPrice(property?.min_price)}
-              </Text>
-            </View>
-
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Status:</Text>
+      <Page size={[920, 540]}>
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#f3f4f6",
+            marginBottom: "30px",
+          }}
+        >
+          {/* Left Column - Two stacked sections */}
+          <View
+            style={{
+              flex: 1,
+              padding: 40,
+              paddingRight: 15,
+            }}
+          >
+            {/* Top Section - Call to Action */}
+            <View
+              style={{
+                backgroundColor: "white",
+                borderRadius: 16,
+                padding: 32,
+                marginBottom: 22,
+                flex: 1,
+              }}
+            >
               <Text
-                style={[
-                  styles.statusText,
-                  property?.status === "Presale"
-                    ? styles.availableStatus
-                    : styles.unavailableStatus,
-                ]}
+                style={{
+                  fontSize: 26,
+                  fontWeight: "bold",
+                  color: "#1f2937",
+                  lineHeight: 1.2,
+                  marginBottom: 8,
+                }}
               >
-                {property?.status}
+                Do you have any questions? Contact me.
               </Text>
             </View>
 
-            <View style={styles.callToAction}>
-              <Text style={styles.contactLabel}>
-                Don't miss this opportunity!
-              </Text>
-              <Text style={styles.ctaText}>
-                Contact us today to learn more about this project.
-              </Text>
+            {/* Bottom Section - Contact Information */}
+            <View
+              style={{
+                backgroundColor: "white",
+                borderRadius: 16,
+                padding: 26,
+                flex: 1,
+              }}
+            >
+              {/* Contact Profile */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 24,
+                }}
+              >
+                {/* Profile Image */}
+
+                <Image
+                  src="/images/questBloomTransparentSmall.png"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 80,
+                  }}
+                />
+
+                {/* Contact Details */}
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "#1f2937",
+                      marginBottom: 8,
+                    }}
+                  >
+                    Quest Real Estate LLC
+                  </Text>
+
+                  <View
+                    style={{
+                      marginBottom: 6,
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#6b7280",
+                        marginBottom: 2,
+                      }}
+                    >
+                      Phone
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "#1f2937",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {qbc_phone || "N/A"}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      marginBottom: 6,
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#6b7280",
+                        marginBottom: 2,
+                      }}
+                    >
+                      Email
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "#1f2937",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {qbc_email || "N/A"}
+                    </Text>
+                  </View>
+
+                  {/* <View>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#6b7280",
+                        marginBottom: 2,
+                      }}
+                    >
+                      Instagram
+                    </Text>
+                  </View> */}
+                </View>
+              </View>
+
+              {/* Action buttons */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                  gap: 8,
+                }}
+              >
+                {/* WhatsApp */}
+                <Link
+                  src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
+                  style={{
+                    flex: 1,
+                    backgroundColor: "black", // Tailwind's lime-400
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Image
+                    src="/images/whatsapp-icon-white.png"
+                    style={{
+                      width: 21,
+                      height: 21,
+                      marginRight: 6,
+                      padding: 3,
+                    }}
+                  />
+                  <Text
+                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
+                  >
+                    WhatsApp
+                  </Text>
+                </Link>
+
+                {/* Email */}
+                <Link
+                  src={`mailto:${qbc_email}`}
+                  style={{
+                    flex: 1,
+                    backgroundColor: "black",
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 9,
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Icon
+                    type={"email"}
+                    style={{ marginRight: 6 }}
+                    color="white"
+                  />
+                  <Text
+                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
+                  >
+                    Email
+                  </Text>
+                </Link>
+
+                {/* Phone */}
+                <Link
+                  src={`tel:${qbc_phone}`}
+                  style={{
+                    backgroundColor: "black",
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 40,
+                    textDecoration: "none",
+                  }}
+                >
+                  <Icon type={"phone"} color="white" fill={true} />
+                </Link>
+              </View>
+            </View>
+          </View>
+
+          {/* Right Column - Property Image */}
+          <View
+            style={{
+              flex: 1,
+              padding: 40,
+              paddingLeft: 0,
+            }}
+          >
+            <View
+              style={{
+                height: "100%",
+                borderRadius: 8,
+                overflow: "hidden",
+                position: "relative",
+              }}
+            >
+              <Image
+                src={HeroBackgroundImage}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
             </View>
           </View>
         </View>
-        <View style={styles.highlightsCard}>
-          <Text style={styles.highlightsTitle}>Key Highlights</Text>
-          <View style={styles.highlightsGrid}>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                Prime {property?.area} Location
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                Modern {getPropertyType()}
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                {capitalizeFirstLetter(
-                  property?.furnishing === "No"
-                    ? "Unfurnished"
-                    : property?.furnishing
-                )}{" "}
-                Property
-              </Text>
-            </View>
-            <View style={styles.highlightItem}>
-              <Icon type="star" color="yellow" />
-              <Text style={styles.highlightText}>
-                By {property?.developer} Developer
-              </Text>
-            </View>
-            {getCompletionYear() !== "N/A" && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-                <Text style={styles.highlightText}>
-                  Completion in {getCompletionYear()}
-                </Text>
-              </View>
-            )}
-            {property?.payment_plans?.length > 0 && (
-              <View style={styles.highlightItem}>
-                <Icon type="star" color="yellow" />
-                <Text style={styles.highlightText}>
-                  Flexible Payment Plans Available
-                </Text>
-              </View>
-            )}
-          </View>
+
+        {/* Footer with timestamp */}
+        <View
+          style={{
+            position: "absolute",
+            bottom: 28,
+            left: 40,
+            right: 40,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 10,
+              color: "#6b7280",
+              textAlign: "center",
+              marginBottom: 20,
+            }}
+          >
+            This brochure was generated on{" "}
+            {new Date().toLocaleString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })}
+            .
+          </Text>
         </View>
-        <Text style={styles.footerDateTime}>
-          This brochure was generated on{" "}
-          {new Date().toLocaleString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })}
-          .
-        </Text>
         <ContactFooter
           qbc_copyright={qbc_copyright}
           qbc_email={qbc_email}
