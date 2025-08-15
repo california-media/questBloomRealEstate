@@ -1521,6 +1521,89 @@ const OffPlanPropertyPDF = ({
         />
       </Page>
 
+      {/* Interior images */}
+
+      {property?.interior?.length > 0 &&
+        Array.from(
+          ///this chunks images into groups of three
+          { length: Math.ceil(property.interior.length / 3) },
+          (_, i) => property.interior.slice(i * 3, i * 3 + 3)
+        ).map((chunk, pageIndex) => (
+          <Page key={`interior-page-${pageIndex}`} size={[920, 540]}>
+            {/* Image grid - 2 columns */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "stretch",
+                height: "100%",
+              }}
+            >
+              {/* Left column - single image */}
+              <View style={{ width: "49.5%", height: "100%" }}>
+                {chunk[0] && (
+                  <Image
+                    src={chunk[0].url}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                )}
+              </View>
+
+              {/* Right column - two stacked images */}
+              <View
+                style={{
+                  width: "49.95%",
+                  height: "100%",
+                }}
+              >
+                {chunk[1] && (
+                  <Image
+                    src={chunk[1].url}
+                    style={{
+                      width: "100%",
+                      height: "50%",
+                      objectFit: "cover",
+                      marginBottom: 5,
+                    }}
+                  />
+                )}
+                {chunk[2] && (
+                  <Image
+                    src={chunk[2].url}
+                    style={{
+                      width: "100%",
+                      height: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                )}
+              </View>
+            </View>
+            {/* Title on each page */}
+            <Text
+              style={{
+                ...styles.pageTitle,
+                position: "absolute",
+                top: 30,
+                left: 30,
+                color: "white",
+              }}
+            >
+              Interior Images
+            </Text>
+
+            {/* Footer */}
+            <ContactFooter
+              qbc_copyright={qbc_copyright}
+              qbc_email={qbc_email}
+              qbc_phone={qbc_phone}
+            />
+          </Page>
+        ))}
       {/* Page 3 - Amenities & Features */}
       <Page size={[920, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Amenities & Features</Text>

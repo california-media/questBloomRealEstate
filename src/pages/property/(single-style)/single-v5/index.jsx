@@ -207,7 +207,7 @@ const SingleV5 = () => {
             <PropertyHeader property={property} prefixedId={prefixedId} />
           </div>
           {/* End .row */}
-          {/* {property && contactInfo && (
+          {property && contactInfo && (
             <PDFViewer style={{ width: "100%", height: "100vh" }}>
               <OffPlanPropertyPDF
                 property={property}
@@ -216,7 +216,7 @@ const SingleV5 = () => {
                 qbc_copyright={contactInfo?.copyright}
               />
             </PDFViewer>
-          )} */}
+          )}
           <div className="row mt50 mt30-lg">
             <div className="col-lg-6">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
