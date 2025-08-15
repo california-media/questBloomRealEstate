@@ -686,6 +686,14 @@ const Icon = ({ type, size = 14, color = "#fff", ...props }) => {
     area: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 2v6h6M16 13H8M16 17H8M10 9H8",
     all: "M7 2h10 M5 6h14 M3 10h18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z",
     units: "M3 3h18v18H3V3zM9 9v6M15 9v6M9 9h6M9 15h6",
+    "no-image": `
+      M2 2 L22 22
+      M10.41 10.41 a2 2 0 1 1 -2.83 -2.83
+      M13.5 13.5 L6 21
+      M18 12 L21 15
+      M3.59 3.59 A1.99 1.99 0 0 0 3 5 v14 a2 2 0 0 0 2 2 h14 c.55 0 1.052 -.22 1.41 -.59
+      M21 15 V5 a2 2 0 0 0 -2 -2 H9
+    `,
   };
 
   if (!iconMap[type]) return <Text>•</Text>;
@@ -967,20 +975,11 @@ const OffPlanPropertyPDF = ({
                 <Image
                   src="/images/Questrealstatewhite.png"
                   style={{
-                    width: 110,
-                    height: 30,
+                    width: 150,
+                    height: 70,
                     marginRight: 10,
                   }}
                 />
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 16,
-                    opacity: 0.8,
-                  }}
-                >
-                  Quest Real Estate LLC
-                </Text>
               </View>
             </View>
 
@@ -1163,7 +1162,7 @@ const OffPlanPropertyPDF = ({
                   src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
                   style={{
                     flex: 1,
-                    backgroundColor: "#b5ec4f", // Tailwind's lime-400
+                    backgroundColor: "#aee636", // Tailwind's lime-400
                     borderRadius: 8,
                     paddingVertical: 10,
                     paddingHorizontal: 12,
@@ -1495,97 +1494,74 @@ const OffPlanPropertyPDF = ({
         </View>
 
         <DescriptionRenderer text={property?.overview} />
-        <ContactFooter
-          qbc_copyright={qbc_copyright}
-          qbc_email={qbc_email}
-          qbc_phone={qbc_phone}
-        />
+        <ContactFooter />
       </Page>
 
       {/* Interior images */}
 
-      {property?.interior?.length > 0 &&
-        Array.from(
-          ///this chunks images into groups of three
-          { length: Math.ceil(property.interior.length / 3) },
-          (_, i) => property.interior.slice(i * 3, i * 3 + 3)
-        ).map((chunk, pageIndex) => (
-          <Page key={`interior-page-${pageIndex}`} size={[920, 540]}>
-            {/* Image grid - 2 columns */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "stretch",
-                height: "100%",
-                gap: 2,
-              }}
-            >
-              {/* Left column - single image */}
-              <View style={{ flex: 1, height: "100%" }}>
-                {chunk[0] && (
-                  <Image
-                    src={chunk[0].url}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
-              </View>
-
-              {/* Right column - two stacked images */}
-              <View
+      {property?.interior?.length > 0 && (
+        <Page size={[920, 540]}>
+          {/* Image grid - 2 columns */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "stretch",
+              height: "100%",
+              gap: 2,
+            }}
+          >
+            {/* Left column - single image */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[0]?.url || ""}
                 style={{
-                  flex: 1,
+                  width: "100%",
                   height: "100%",
+                  objectFit: "cover",
                 }}
-              >
-                {chunk[1] && (
-                  <Image
-                    src={chunk[1].url}
-                    style={{
-                      width: "100%",
-                      height: "50%",
-                      objectFit: "cover",
-                      marginBottom: 2,
-                    }}
-                  />
-                )}
-                {chunk[2] && (
-                  <Image
-                    src={chunk[2].url}
-                    style={{
-                      width: "100%",
-                      height: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
-              </View>
+              />
             </View>
-            {/* Title on each page */}
-            <Text
-              style={{
-                ...styles.pageTitle,
-                position: "absolute",
-                top: 30,
-                left: 30,
-                color: "white",
-              }}
-            >
-              Interior Images
-            </Text>
 
-            {/* Footer */}
-            <ContactFooter
-              qbc_copyright={qbc_copyright}
-              qbc_email={qbc_email}
-              qbc_phone={qbc_phone}
-            />
-          </Page>
-        ))}
+            {/* Right column - two stacked images */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[1]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  marginBottom: 2,
+                }}
+              />
+              <Image
+                src={property.interior[2]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </View>
+          </View>
+
+          {/* Title on the page */}
+          <Text
+            style={{
+              ...styles.pageTitle,
+              position: "absolute",
+              top: 30,
+              left: 30,
+              color: "white",
+            }}
+          >
+            Interior Images
+          </Text>
+
+          {/* Footer */}
+          <ContactFooter />
+        </Page>
+      )}
 
       {/* Page 3 - Amenities & Features */}
 
@@ -1600,20 +1576,35 @@ const OffPlanPropertyPDF = ({
           <View style={styles.amenitiesGrid}>
             {property.facilities.slice(0, 8).map((facility, index) => (
               <View key={index} style={styles.amenityCard}>
-                <Image src={facility.image.url} style={styles.amenityPhoto} />
-                <Text style={styles.amenityText}>{facility.name}</Text>
+                {facility?.image?.url ? (
+                  <Image
+                    src={`${adminBaseUrl}/api/images${facility.image.url}?format=jpeg`}
+                    style={styles.amenityPhoto}
+                  />
+                ) : (
+                  <View
+                    style={[
+                      styles.amenityPhoto,
+                      {
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#f3f4f6",
+                      },
+                    ]}
+                  >
+                    <Icon type="no-image" size={24} color="#9ca3af" />
+                  </View>
+                )}
+
+                <Text style={styles.amenityText}>{facility.name || "N/A"}</Text>
                 <Text style={styles.amenitySubText}>
-                  {facility.image_source}
+                  {facility.image_source || " "}
                 </Text>
               </View>
             ))}
           </View>
 
-          <ContactFooter
-            qbc_copyright={qbc_copyright}
-            qbc_email={qbc_email}
-            qbc_phone={qbc_phone}
-          />
+          <ContactFooter />
         </Page>
       )}
 
@@ -1878,11 +1869,7 @@ const OffPlanPropertyPDF = ({
                 </View>
 
                 {/* Contact Footer */}
-                <ContactFooter
-                  qbc_copyright={qbc_copyright}
-                  qbc_email={qbc_email}
-                  qbc_phone={qbc_phone}
-                />
+                <ContactFooter />
               </Page>
             )
           )}
@@ -1925,9 +1912,7 @@ const OffPlanPropertyPDF = ({
         ))}
 
         <ContactFooter
-          qbc_copyright={qbc_copyright}
-          qbc_email={qbc_email}
-          qbc_phone={qbc_phone}
+      
         />
       </Page> */}
 
@@ -1945,9 +1930,7 @@ const OffPlanPropertyPDF = ({
           </View>
 
           <ContactFooter
-            qbc_copyright={qbc_copyright}
-            qbc_email={qbc_email}
-            qbc_phone={qbc_phone}
+        
           />
         </Page>
       )} */}
@@ -1962,9 +1945,7 @@ const OffPlanPropertyPDF = ({
           ))}
 
           <ContactFooter
-            qbc_copyright={qbc_copyright}
-            qbc_email={qbc_email}
-            qbc_phone={qbc_phone}
+     
           />
         </Page>
       )} */}
@@ -1977,11 +1958,7 @@ const OffPlanPropertyPDF = ({
             <View style={{ width: "100%", height: "100%" }}>
               <Image src={image.url} style={styles.masterPlanImage} />
             </View>
-            <ContactFooter
-              qbc_copyright={qbc_copyright}
-              qbc_email={qbc_email}
-              qbc_phone={qbc_phone}
-            />
+            <ContactFooter />
           </Page>
         ))}
 
@@ -2310,11 +2287,7 @@ const OffPlanPropertyPDF = ({
                 </View>
 
                 {/* Contact Footer */}
-                <ContactFooter
-                  qbc_copyright={qbc_copyright}
-                  qbc_email={qbc_email}
-                  qbc_phone={qbc_phone}
-                />
+                <ContactFooter />
               </Page>
             )
           )}
@@ -2352,15 +2325,14 @@ const OffPlanPropertyPDF = ({
             top: 40,
             left: 40,
             color: "white",
+            backgroundColor: "rgba(0,0,0,0.3)",
+            padding: 4,
+            borderRadius: 2,
           }}
         >
           Location
         </Text>
-        <ContactFooter
-          qbc_copyright={qbc_copyright}
-          qbc_email={qbc_email}
-          qbc_phone={qbc_phone}
-        />
+        <ContactFooter />
       </Page>
 
       {/* Final Page - Contact & Summary */}
@@ -2655,11 +2627,7 @@ const OffPlanPropertyPDF = ({
             .
           </Text>
         </View>
-        <ContactFooter
-          qbc_copyright={qbc_copyright}
-          qbc_email={qbc_email}
-          qbc_phone={qbc_phone}
-        />
+        <ContactFooter />
       </Page>
     </Document>
   );

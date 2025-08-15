@@ -29,6 +29,8 @@ import AdminProperytyDescriptions from "@/components/property/property-single-st
 import AdminPropertyDetails from "@/components/property/property-single-style/single-v5/AdminPropertyDetails";
 import AdminPropertyAddress from "@/components/property/property-single-style/single-v5/AdminPropertyAddress";
 import AdminPropertyFeaturesAminites from "@/components/property/property-single-style/common/AdminPropertyFeaturesAminites";
+import { PDFViewer } from "@react-pdf/renderer";
+import AdminPropertyPDF from "@/components/property/property-single-style/single-v5/AdminPropertyPDF";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -77,7 +79,7 @@ const AdminSingleV5 = () => {
       try {
         // Fetch all needed configuration at once
         const response = await adminApi.get(
-          "/theme-options/general?keys=hotline,email"
+          "/theme-options/general?keys=hotline,email,copyright"
         );
         setContactInfo(response.data.data);
       } catch (error) {
@@ -196,7 +198,16 @@ const AdminSingleV5 = () => {
             <AdminPropertyHeader property={property} prefixedId={prefixedId} />
           </div>
           {/* End .row */}
-
+          {/* {property && contactInfo && (
+            <PDFViewer style={{ width: "100%", height: "100vh" }}>
+              <AdminPropertyPDF
+                property={property}
+                qbc_email={contactInfo?.email}
+                qbc_phone={contactInfo?.hotline}
+                qbc_copyright={contactInfo?.copyright}
+              />
+            </PDFViewer>
+          )} */}
           <div className="row mt50 mt30-lg">
             <div className="col-lg-6">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -218,9 +229,12 @@ const AdminSingleV5 = () => {
                       style={{ display: "block" }}
                       tabIndex="-1"
                       className=" modal fade show "
-                      onClick={()=>setShowModal(false)} 
+                      onClick={() => setShowModal(false)}
                     >
-                      <div className="modal-dialog  modal-dialog-centered modal-lg" onClick={(e) => e.stopPropagation()}>
+                      <div
+                        className="modal-dialog  modal-dialog-centered modal-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <div className="modal-content">
                           <div className="modal-header">
                             <h5 className="modal-title">Download PDF</h5>
@@ -509,10 +523,7 @@ const AdminSingleV5 = () => {
       </section>
       {/* End similar-items  */}
       {showModal && (
-        <div
-          style={{ zIndex: 10 }}
-          className="modal-backdrop fade show"
-        ></div>
+        <div style={{ zIndex: 10 }} className="modal-backdrop fade show"></div>
       )}
 
       {/* Start Our Footer */}

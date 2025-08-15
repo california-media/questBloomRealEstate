@@ -23,6 +23,8 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
     enquiry: "",
   });
   const handlePrintClick = async () => {
+    if (!property || !contactInfo) return;
+
     try {
       const blob = await pdf(
         <OffPlanPropertyPDF

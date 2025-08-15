@@ -28,12 +28,14 @@ const AdminReviewBoxForm = ({
   });
 
   const handlePrintClick = async () => {
+    if (!property || !contactInfo) return;
     try {
       const blob = await pdf(
         <AdminPropertyPDF
           property={property}
           qbc_phone={contactInfo?.hotline}
           qbc_email={contactInfo?.email}
+          qbc_copyright={contactInfo?.copyright}
         />
       ).toBlob();
       const url = URL.createObjectURL(blob);
