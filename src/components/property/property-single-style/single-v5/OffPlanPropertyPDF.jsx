@@ -754,8 +754,8 @@ const getGoogleMapsRedirectUrl = (coordinates) => {
 const getStaticOpenStreetMapUrl = (
   coordinates,
   zoom = 14,
-  width = 600,
-  height = 300
+  width = 1200,
+  height = 600
 ) => {
   if (coordinates) {
     const [latitude, longitude] = coordinates.split(", ");
@@ -763,6 +763,7 @@ const getStaticOpenStreetMapUrl = (
   }
   return null;
 };
+
 
 const capitalizeFirstLetter = (str) => {
   if (!str || typeof str !== "string") return "";
@@ -1734,7 +1735,6 @@ const OffPlanPropertyPDF = ({
                               paddingHorizontal: "8px",
                               borderRadius: "4px",
                               flex: 1,
-
                             }}
                           >
                             <Text
@@ -1806,7 +1806,7 @@ const OffPlanPropertyPDF = ({
                             style={{
                               fontSize: "16px",
                               color: "#1a1a1a",
-                            width: "45%",
+                              width: "45%",
 
                               textAlign: "left",
 
@@ -2068,7 +2068,7 @@ const OffPlanPropertyPDF = ({
                                 width: "24px",
                                 height: "24px",
                                 marginRight: "8px",
-                                padding:2
+                                padding: 2,
                               }}
                             ></Image>
 
@@ -2332,23 +2332,40 @@ const OffPlanPropertyPDF = ({
       )}
 
       {/* Page 4 - Location & Contact */}
-      <Page size={[920, 540]} style={styles.contentPage}>
-        <Text style={styles.pageTitle}>Location & Contact</Text>
-
+      <Page size={[920, 540]}>
         <View>
           {/* Add the map image */}
           {property?.coordinates && (
             <>
-              <Image src={getStaticOpenStreetMapUrl(property?.coordinates)} />
+              <Image
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                src={getStaticOpenStreetMapUrl(property?.coordinates)}
+              />
               <Link
                 src={getGoogleMapsRedirectUrl(property?.coordinates)}
-                style={styles.mapLink}
+                style={{
+                  ...styles.mapLink,
+                  position: "absolute",
+                  bottom: 60,
+                  left: 40,
+                }}
               >
                 View on Google Maps
               </Link>
             </>
           )}
         </View>
+        <Text
+          style={{
+            ...styles.pageTitle,
+            position: "absolute",
+            top: 40,
+            left: 40,
+            color: "white",
+          }}
+        >
+          Location
+        </Text>
         <ContactFooter
           qbc_copyright={qbc_copyright}
           qbc_email={qbc_email}
