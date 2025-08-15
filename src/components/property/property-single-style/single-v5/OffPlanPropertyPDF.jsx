@@ -1607,7 +1607,6 @@ const OffPlanPropertyPDF = ({
           </Page>
         ))}
 
-        
       {/* Page 3 - Amenities & Features */}
 
       {property?.facilities?.length > 0 &&
@@ -1643,180 +1642,271 @@ const OffPlanPropertyPDF = ({
           </Page>
         ))}
 
-     
-      {/* Page 9 - Unit Plans */}
+      {/* Unit Plans Pages - 3 per page layout */}
       {property?.unit_blocks && property.unit_blocks.length > 0 && (
         <>
-          <Page size={[920, 540]} style={styles.contentPage}>
-            <Text style={styles.pageTitle}>Unit Plans & Layouts</Text>
-            <View style={styles.unitPlansContainer}>
-              <View style={styles.unitPlanCard}>
-                <View style={styles.unitPlanHeader}>
-                  <Text style={styles.unitPlanName}>
-                    {property.unit_blocks[0].name}
-                  </Text>
-                  <Text style={styles.unitPlanType}>
-                    {property.unit_blocks[0].unit_type}
-                  </Text>
-                </View>
+          {/* Calculate number of pages needed (3 units per page) */}
+          {Array.from(
+            { length: Math.ceil(property.unit_blocks.length / 3) },
+            (_, pageIndex) => (
+              <Page
+                key={pageIndex}
+                size={[920, 540]}
+                style={{
+                  padding: 40,
+                  backgroundColor: "#f5f5f5",
+                }}
+              >
+                {/* Page Title */}
+                <Text style={styles.pageTitle}>Typical units and prices</Text>
 
-                <View style={styles.unitPlanContent}>
-                  {property.unit_blocks[0].typical_unit_image_url &&
-                    JSON.parse(
-                      property.unit_blocks[0].typical_unit_image_url
-                    )[0]?.url && (
-                      <View style={styles.unitPlanImageContainer}>
-                        <Image
-                          src={
-                            JSON.parse(
-                              property.unit_blocks[0].typical_unit_image_url
-                            )[0].url
-                          }
-                          style={styles.unitPlanImage}
-                        />
-                      </View>
-                    )}
+                {/* Units Container - 3 columns */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: "20px",
+                    flex: 1,
+                  }}
+                >
+                  {property.unit_blocks
+                    .slice(pageIndex * 3, pageIndex * 3 + 3)
+                    .map((unit, unitIndex) => (
+                      <View
+                        key={unitIndex}
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: "12px",
+                          padding: "20px",
+                          flex: 1,
+                          maxWidth: "280px",
+                          shadowColor: "#000",
+                          shadowOffset: { width: 0, height: 2 },
+                          shadowOpacity: 0.1,
+                          shadowRadius: 8,
+                          elevation: 3,
+                          backgroundColor: "#f5f5f5",
+                        }}
+                      >
+                        {/* Unit Plan Image */}
+                        {unit.typical_unit_image_url &&
+                          JSON.parse(unit.typical_unit_image_url)?.[0]?.url && (
+                            <View
+                              style={{
+                                marginBottom: "15px",
+                                borderRadius: "8px",
+                                overflow: "hidden",
+                                position: "relative",
+                              }}
+                            >
+                              <Image
+                                src={
+                                  JSON.parse(unit.typical_unit_image_url)[0].url
+                                }
+                                style={{
+                                  width: "100%",
+                                  objectFit: "contain",
+                                }}
+                              />
+                            </View>
+                          )}
 
-                  <View style={styles.unitPlanDetails}>
-                    <View style={styles.unitPlanInfoGrid}>
-                      <View style={styles.unitPlanInfoItem}>
-                        <Text style={styles.unitPlanInfoLabel}>Area Range</Text>
-                        <Text style={styles.unitPlanInfoValue}>
-                          {property.unit_blocks[0].units_area_from_m2 &&
-                          property.unit_blocks[0].units_area_to_m2
-                            ? `${Math.round(
-                                parseFloat(
-                                  property.unit_blocks[0].units_area_from_m2
-                                ) * 10.764
-                              )} - ${Math.round(
-                                parseFloat(
-                                  property.unit_blocks[0].units_area_to_m2
-                                ) * 10.764
-                              )} sq ft`
-                            : property.unit_blocks[0].units_area_from_m2
-                            ? Math.round(
-                                parseFloat(
-                                  property.unit_blocks[0].units_area_from_m2
-                                ) * 10.764
-                              )
-                            : property.unit_blocks[0].units_area_to_m2
-                            ? Math.round(
-                                parseFloat(
-                                  property.unit_blocks[0].units_area_to_m2
-                                ) * 10.764
-                              )
-                            : "N/A"}
-                        </Text>
-                      </View>
-
-                      <View style={styles.unitPlanInfoItem}>
-                        <Text style={styles.unitPlanInfoLabel}>
-                          Price Range
-                        </Text>
-                        <Text style={styles.unitPlanInfoValue}>
-                          {formatPrice(
-                            property.unit_blocks[0].units_price_from
-                          ) || "N/A"}{" "}
-                          -{" "}
-                          {formatPrice(
-                            property.unit_blocks[0].units_price_to
-                          ) || "N/A"}
-                        </Text>
-                      </View>
-                    </View>
-
-                    <View style={styles.unitPlanPriceHighlight}>
-                      <Text style={styles.unitPlanStartingPrice}>
-                        Starting from{" "}
-                        {formatPrice(property.unit_blocks[0].units_price_from)}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-
-            <ContactFooter
-              qbc_copyright={qbc_copyright}
-              qbc_email={qbc_email}
-              qbc_phone={qbc_phone}
-            />
-          </Page>
-          {property.unit_blocks.slice(1).map((unit, unitIndex) => (
-            <Page key={unitIndex} size={[920, 540]} style={styles.contentPage}>
-              <View style={styles.unitPlansContainer}>
-                <View style={styles.unitPlanCard}>
-                  <View style={styles.unitPlanHeader}>
-                    <Text style={styles.unitPlanName}>{unit.name}</Text>
-                    <Text style={styles.unitPlanType}>{unit.unit_type}</Text>
-                  </View>
-
-                  <View style={styles.unitPlanContent}>
-                    {unit.typical_unit_image_url &&
-                      JSON.parse(unit.typical_unit_image_url)[0]?.url && (
-                        <View style={styles.unitPlanImageContainer}>
-                          <Image
-                            src={JSON.parse(unit.typical_unit_image_url)[0].url}
-                            style={styles.unitPlanImage}
-                          />
+                        {/* Unit Details */}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: "8px",
+                            marginBottom: "12px",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: "white",
+                              paddingVertical: "4px",
+                              paddingHorizontal: "8px",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: "10px",
+                                color: "#666",
+                              }}
+                            >
+                              {unit.unit_type || "Apartments"}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              backgroundColor: "white",
+                              paddingVertical: "4px",
+                              paddingHorizontal: "8px",
+                              borderRadius: "4px",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: "10px",
+                                color: "#666",
+                              }}
+                            >
+                              {unit?.name?.split(" - ")[0] || "Unit"}
+                            </Text>
+                          </View>
                         </View>
-                      )}
 
-                    <View style={styles.unitPlanDetails}>
-                      <View style={styles.unitPlanInfoGrid}>
-                        <View style={styles.unitPlanInfoItem}>
-                          <Text style={styles.unitPlanInfoLabel}>
-                            Area Range
+                        {/* Price Section */}
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            marginBottom: "5px",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "10px",
+                              color: "#999",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            FROM
                           </Text>
-                          <Text style={styles.unitPlanInfoValue}>
-                            {unit.units_area_from_m2 && unit.units_area_to_m2
+                          <Text
+                            style={{
+                              fontSize: "10px",
+                              color: "#999",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.5px",
+                              textAlign: "left",
+                              width: "40%",
+                            }}
+                          >
+                            TO
+                          </Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            marginBottom: "10px",
+                            gap: 3,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "16px",
+                              color: "#1a1a1a",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {formatPrice(unit.units_price_from) || "AED 0"}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: "16px",
+                              color: "#1a1a1a",
+                              width: "40%",
+
+                              textAlign: "left",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {formatPrice(unit.units_price_to) || "No info"}
+                          </Text>
+                        </View>
+
+                        {/* Area Section */}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "start",
+                          }}
+                        >
+                          {/* Area From */}
+                          <Text
+                            style={{
+                              fontSize: "11px",
+                              color: "#333",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {unit.units_area_from_m2
                               ? `${Math.round(
                                   parseFloat(unit.units_area_from_m2) * 10.764
-                                )} - ${Math.round(
-                                  parseFloat(unit.units_area_to_m2) * 10.764
-                                )} sq ft`
-                              : unit.units_area_from_m2
-                              ? Math.round(
-                                  parseFloat(unit.units_area_from_m2) * 10.764
-                                )
-                              : unit.units_area_to_m2
-                              ? Math.round(
-                                  parseFloat(unit.units_area_to_m2) * 10.764
-                                )
+                                )} sqft / ${Math.round(
+                                  parseFloat(unit.units_area_from_m2)
+                                )} m²`
                               : "N/A"}
                           </Text>
-                        </View>
 
-                        <View style={styles.unitPlanInfoItem}>
-                          <Text style={styles.unitPlanInfoLabel}>
-                            Price Range
-                          </Text>
-                          <Text style={styles.unitPlanInfoValue}>
-                            {formatPrice(unit.units_price_from) || "N/A"} -{" "}
-                            {formatPrice(unit.units_price_to) || "N/A"}
+                          {/* Area To */}
+                          <Text
+                            style={{
+                              fontSize: "11px",
+                              color: "#333",
+                              fontWeight: "bold",
+                              width: "40%",
+
+                              textAlign: "left",
+                            }}
+                          >
+                            {unit.units_area_to_m2
+                              ? `${Math.round(
+                                  parseFloat(unit.units_area_to_m2) * 10.764
+                                )} sqft / ${Math.round(
+                                  parseFloat(unit.units_area_to_m2)
+                                )} m²`
+                              : "No info"}
                           </Text>
                         </View>
                       </View>
+                    ))}
 
-                      <View style={styles.unitPlanPriceHighlight}>
-                        <Text style={styles.unitPlanStartingPrice}>
-                          Starting from {formatPrice(unit.units_price_from)}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
+                  {/* Fill empty spaces if less than 3 units on the last page */}
+                  {property.unit_blocks.slice(pageIndex * 3, pageIndex * 3 + 3)
+                    .length < 3 &&
+                    Array.from(
+                      {
+                        length:
+                          3 -
+                          property.unit_blocks.slice(
+                            pageIndex * 3,
+                            pageIndex * 3 + 3
+                          ).length,
+                      },
+                      (_, emptyIndex) => (
+                        <View
+                          key={`empty-${emptyIndex}`}
+                          style={{
+                            flex: 1,
+                            maxWidth: "280px",
+                          }}
+                        />
+                      )
+                    )}
                 </View>
-              </View>
-              <ContactFooter
-                qbc_copyright={qbc_copyright}
-                qbc_email={qbc_email}
-                qbc_phone={qbc_phone}
-              />
-            </Page>
-          ))}
+
+                {/* Contact Footer */}
+                <ContactFooter
+                  qbc_copyright={qbc_copyright}
+                  qbc_email={qbc_email}
+                  qbc_phone={qbc_phone}
+                />
+              </Page>
+            )
+          )}
         </>
       )}
-
       {/* Page 5 - Building Details */}
       <Page size={[920, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Building Details</Text>
