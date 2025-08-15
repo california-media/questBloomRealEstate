@@ -485,33 +485,19 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 8,
   },
-  lobbyContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  lobbyImageContainer: {
-    width: "80%",
-    marginBottom: 15,
-  },
+
   lobbyImage: {
-    width: "100%",
-    height: 300,
+    width: "80%",
     objectFit: "cover",
-    borderRadius: 8,
   },
   masterPlanContainer: {
     alignItems: "center",
     marginBottom: 20,
   },
-  masterPlanImageContainer: {
-    width: "100%",
-    marginBottom: 15,
-  },
+
   masterPlanImage: {
     width: "100%",
-    height: 350,
     objectFit: "contain",
-    borderRadius: 8,
   },
   paymentPlansContainer: {
     gap: 20,
@@ -1666,7 +1652,7 @@ const OffPlanPropertyPDF = ({
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "10px",
                     flex: 1,
                   }}
                 >
@@ -1676,9 +1662,8 @@ const OffPlanPropertyPDF = ({
                       <View
                         key={unitIndex}
                         style={{
-                          backgroundColor: "white",
                           borderRadius: "12px",
-                          padding: "20px",
+                          padding: "5px",
                           flex: 1,
                           maxWidth: "280px",
                           shadowColor: "#000",
@@ -1727,11 +1712,15 @@ const OffPlanPropertyPDF = ({
                               paddingVertical: "4px",
                               paddingHorizontal: "8px",
                               borderRadius: "4px",
+                              flex: 1,
                             }}
                           >
                             <Text
                               style={{
                                 fontSize: "10px",
+                                fontWeight: "bold",
+                                textAlign: "center",
+
                                 color: "#666",
                               }}
                             >
@@ -1744,12 +1733,16 @@ const OffPlanPropertyPDF = ({
                               paddingVertical: "4px",
                               paddingHorizontal: "8px",
                               borderRadius: "4px",
+                              flex: 1,
+
                             }}
                           >
                             <Text
                               style={{
                                 fontSize: "10px",
                                 color: "#666",
+                                fontWeight: "bold",
+                                textAlign: "center",
                               }}
                             >
                               {unit?.name?.split(" - ")[0] || "Unit"}
@@ -1784,7 +1777,7 @@ const OffPlanPropertyPDF = ({
                               textTransform: "uppercase",
                               letterSpacing: "0.5px",
                               textAlign: "left",
-                              width: "40%",
+                              width: "45%",
                             }}
                           >
                             TO
@@ -1813,7 +1806,7 @@ const OffPlanPropertyPDF = ({
                             style={{
                               fontSize: "16px",
                               color: "#1a1a1a",
-                              width: "40%",
+                            width: "45%",
 
                               textAlign: "left",
 
@@ -1855,7 +1848,7 @@ const OffPlanPropertyPDF = ({
                               fontSize: "11px",
                               color: "#333",
                               fontWeight: "bold",
-                              width: "40%",
+                              width: "45%",
 
                               textAlign: "left",
                             }}
@@ -1908,7 +1901,7 @@ const OffPlanPropertyPDF = ({
         </>
       )}
       {/* Page 5 - Building Details */}
-      <Page size={[920, 540]} style={styles.contentPage}>
+      {/* <Page size={[920, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Building Details</Text>
 
         {property?.buildings?.[0]?.map((building, index) => (
@@ -1948,10 +1941,10 @@ const OffPlanPropertyPDF = ({
           qbc_email={qbc_email}
           qbc_phone={qbc_phone}
         />
-      </Page>
+      </Page> */}
 
       {/* Page 6 - Interior Images */}
-      {property?.interior && property.interior.length > 0 && (
+      {/* {property?.interior && property.interior.length > 0 && (
         <Page size={[920, 540]} style={styles.contentPage}>
           <Text style={styles.pageTitle}>Interior Design</Text>
 
@@ -1969,20 +1962,16 @@ const OffPlanPropertyPDF = ({
             qbc_phone={qbc_phone}
           />
         </Page>
-      )}
+      )} */}
 
       {/* Page 7 - Lobby Images */}
-      {property?.lobby && property.lobby.length > 0 && (
+      {/* {property?.lobby && property.lobby.length > 0 && (
         <Page size={[920, 540]} style={styles.contentPage}>
           <Text style={styles.pageTitle}>Lobby</Text>
 
-          <View style={styles.lobbyContainer}>
-            {property.lobby.map((image, index) => (
-              <View key={index} style={styles.lobbyImageContainer}>
-                <Image src={image.url} style={styles.lobbyImage} />
-              </View>
-            ))}
-          </View>
+          {property.lobby.map((image, index) => (
+            <Image src={image.url} style={styles.lobbyImage} />
+          ))}
 
           <ContactFooter
             qbc_copyright={qbc_copyright}
@@ -1990,119 +1979,355 @@ const OffPlanPropertyPDF = ({
             qbc_phone={qbc_phone}
           />
         </Page>
-      )}
+      )} */}
 
       {/* Page 8 - Master Plan */}
-      {property?.master_plan && property.master_plan.length > 0 && (
-        <Page size={[920, 540]} style={styles.contentPage}>
-          <Text style={styles.pageTitle}>Master Plan</Text>
-
-          <View style={styles.masterPlanContainer}>
-            {property.master_plan.map((image, index) => (
-              <View key={index} style={styles.masterPlanImageContainer}>
-                <Image src={image.url} style={styles.masterPlanImage} />
-              </View>
-            ))}
-          </View>
-
-          <ContactFooter
-            qbc_copyright={qbc_copyright}
-            qbc_email={qbc_email}
-            qbc_phone={qbc_phone}
-          />
-        </Page>
-      )}
-
-      {/* Page 9 - Payment Plans */}
-      {property?.payment_plans && property.payment_plans.length > 0 && (
-        <>
-          <Page size={[920, 540]} style={styles.contentPage}>
-            <Text style={styles.pageTitle}>Payment Plans</Text>
-
-            <View style={styles.paymentPlansContainer}>
-              <View style={styles.paymentPlanCard}>
-                <Text style={styles.paymentPlanTitle}>
-                  {property.payment_plans[0].Plan_name}
-                </Text>
-
-                <View style={styles.paymentSteps}>
-                  {property.payment_plans[0].Payments.map(
-                    (payment, paymentIndex) => (
-                      <View key={paymentIndex} style={styles.paymentStep}>
-                        <View style={styles.paymentStepNumber}>
-                          <Text style={styles.stepNumberText}>
-                            {payment[0].Order}
-                          </Text>
-                        </View>
-                        <View style={styles.paymentStepDetails}>
-                          <Text style={styles.paymentPercent}>
-                            {payment[0].Percent_of_payment}%
-                          </Text>
-                          <Text style={styles.paymentTime}>
-                            {payment[0].Payment_time}
-                          </Text>
-                        </View>
-                      </View>
-                    )
-                  )}
-                </View>
-
-                {property.payment_plans[0].months_after_handover > 0 && (
-                  <Text style={styles.postHandoverNote}>
-                    *Includes {property.payment_plans[0].months_after_handover}{" "}
-                    months post-handover payment
-                  </Text>
-                )}
-              </View>
-            </View>
-
+      {property?.master_plan &&
+        property.master_plan.length > 0 &&
+        property.master_plan.map((image, index) => (
+          <Page key={index} size={[920, 540]} style={styles.contentPage}>
+            <Image src={image.url} style={styles.masterPlanImage} />
             <ContactFooter
               qbc_copyright={qbc_copyright}
               qbc_email={qbc_email}
               qbc_phone={qbc_phone}
             />
           </Page>
-          {property.payment_plans.slice(1).map((plan, planIndex) => (
-            <Page key={planIndex} size={[920, 540]} style={styles.contentPage}>
-              <View style={styles.paymentPlansContainer}>
-                <View style={styles.paymentPlanCard}>
-                  <Text style={styles.paymentPlanTitle}>{plan.Plan_name}</Text>
-                  <View style={styles.paymentSteps}>
-                    {plan.Payments.map((payment, paymentIndex) => (
-                      <View key={paymentIndex} style={styles.paymentStep}>
-                        <View style={styles.paymentStepNumber}>
-                          <Text style={styles.stepNumberText}>
-                            {payment[0].Order}
-                          </Text>
+        ))}
+
+      {/* Page 9 - Payment Plans */}
+      {/* Payment Plans Pages - 4 per page (2x2 grid) */}
+      {property?.payment_plans && property.payment_plans.length > 0 && (
+        <>
+          {/* Calculate number of pages needed (4 plans per page) */}
+          {Array.from(
+            { length: Math.ceil(property.payment_plans.length / 4) },
+            (_, pageIndex) => (
+              <Page
+                key={`payment-plans-${pageIndex}`}
+                size={[920, 540]}
+                style={{
+                  padding: "40px",
+                  backgroundColor: "#f5f5f5",
+                }}
+              >
+                {/* Page Title */}
+                <Text
+                  style={{
+                    fontSize: "22px",
+                    color: "#1a1a1a",
+                    marginBottom: "30px",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Payment plan
+                </Text>
+
+                {/* Payment Plans Grid - 2x2 layout */}
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    gap: "20px",
+                  }}
+                >
+                  {/* First Row - 2 columns */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: "20px",
+                      height: "45%",
+                    }}
+                  >
+                    {property.payment_plans
+                      .slice(pageIndex * 4, pageIndex * 4 + 2)
+                      .map((plan, planIndex) => (
+                        <View
+                          key={planIndex}
+                          style={{
+                            flex: 1,
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            padding: "20px",
+                          }}
+                        >
+                          {/* Payment Plan Header */}
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {/* Yellow icon circle */}
+
+                            <Image
+                              src={"/images/pie-chart.png"}
+                              style={{
+                                width: "24px",
+                                height: "24px",
+                                marginRight: "8px",
+                                padding:2
+                              }}
+                            ></Image>
+
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#1a1a1a",
+                              }}
+                            >
+                              {plan.Plan_name || "Payment Plan"}
+                            </Text>
+                          </View>
+
+                          {/* Payment Steps */}
+                          <View
+                            style={{
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {plan.Payments?.map((payment, paymentIndex) => (
+                              <View
+                                key={paymentIndex}
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  paddingVertical: "6px",
+                                  borderBottom:
+                                    paymentIndex < plan.Payments.length - 1
+                                      ? "1px solid #e0e0e0"
+                                      : "none",
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#1a1a1a",
+                                  }}
+                                >
+                                  {payment[0]?.Percent_of_payment}%{" "}
+                                  <Text style={{ color: "#999" }}>payment</Text>
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#666",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {payment[0]?.Payment_time}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+
+                          {/* Condition for unit resale */}
+                          <View
+                            style={{
+                              paddingTop: "10px",
+                              borderTop: "1px solid #e0e0e0",
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#999",
+                                }}
+                              >
+                                Condition for the unit resale
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#1a1a1a",
+                                }}
+                              >
+                                Not specified
+                              </Text>
+                            </View>
+                          </View>
                         </View>
-                        <View style={styles.paymentStepDetails}>
-                          <Text style={styles.paymentPercent}>
-                            {payment[0].Percent_of_payment}%
-                          </Text>
-                          <Text style={styles.paymentTime}>
-                            {payment[0].Payment_time}
-                          </Text>
-                        </View>
-                      </View>
-                    ))}
+                      ))}
+
+                    {/* Fill empty space if only 1 plan in first row */}
+                    {property.payment_plans.slice(
+                      pageIndex * 4,
+                      pageIndex * 4 + 2
+                    ).length < 2 && <View style={{ flex: 1 }} />}
                   </View>
 
-                  {plan.months_after_handover > 0 && (
-                    <Text style={styles.postHandoverNote}>
-                      *Includes {plan.months_after_handover} months
-                      post-handover payment
-                    </Text>
-                  )}
-                </View>
-              </View>
+                  {/* Second Row - 2 columns */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: "20px",
+                      height: "45%",
+                    }}
+                  >
+                    {property.payment_plans
+                      .slice(pageIndex * 4 + 2, pageIndex * 4 + 4)
+                      .map((plan, planIndex) => (
+                        <View
+                          key={planIndex + 2}
+                          style={{
+                            flex: 1,
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            padding: "20px",
+                          }}
+                        >
+                          {/* Payment Plan Header */}
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {/* Yellow icon circle */}
+                            <View
+                              style={{
+                                width: "24px",
+                                height: "24px",
+                                backgroundColor: "#ffd700",
+                                borderRadius: "12px",
+                                marginRight: "8px",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: "12px",
+                                  color: "white",
+                                }}
+                              >
+                                ✓
+                              </Text>
+                            </View>
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#1a1a1a",
+                              }}
+                            >
+                              {plan.Plan_name || "Payment Plan"}
+                            </Text>
+                          </View>
 
-              <ContactFooter
-                qbc_copyright={qbc_copyright}
-                qbc_email={qbc_email}
-                qbc_phone={qbc_phone}
-              />
-            </Page>
-          ))}
+                          {/* Payment Steps */}
+                          <View
+                            style={{
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {plan.Payments?.map((payment, paymentIndex) => (
+                              <View
+                                key={paymentIndex}
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  paddingVertical: "6px",
+                                  borderBottom:
+                                    paymentIndex < plan.Payments.length - 1
+                                      ? "1px solid #e0e0e0"
+                                      : "none",
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#1a1a1a",
+                                  }}
+                                >
+                                  {payment[0]?.Percent_of_payment}%{" "}
+                                  <Text style={{ color: "#999" }}>payment</Text>
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#666",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {payment[0]?.Payment_time}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+
+                          {/* Condition for unit resale */}
+                          <View
+                            style={{
+                              paddingTop: "10px",
+                              borderTop: "1px solid #e0e0e0",
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#999",
+                                }}
+                              >
+                                Condition for the unit resale
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#1a1a1a",
+                                }}
+                              >
+                                Not specified
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+
+                    {/* Fill empty spaces for remaining slots */}
+                    {Array.from(
+                      {
+                        length:
+                          2 -
+                          property.payment_plans.slice(
+                            pageIndex * 4 + 2,
+                            pageIndex * 4 + 4
+                          ).length,
+                      },
+                      (_, emptyIndex) => (
+                        <View key={`empty-${emptyIndex}`} style={{ flex: 1 }} />
+                      )
+                    )}
+                  </View>
+                </View>
+
+                {/* Contact Footer */}
+                <ContactFooter
+                  qbc_copyright={qbc_copyright}
+                  qbc_email={qbc_email}
+                  qbc_phone={qbc_phone}
+                />
+              </Page>
+            )
+          )}
         </>
       )}
 
