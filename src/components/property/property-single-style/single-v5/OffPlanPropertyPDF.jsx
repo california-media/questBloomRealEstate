@@ -248,36 +248,38 @@ const styles = StyleSheet.create({
   // Amenities styles
   amenitiesGrid: {
     flexDirection: "row",
-    justifyContent: "center",
     flexWrap: "wrap",
-    gap: 12,
-    marginBottom: 20,
+    gap: 7, // spacing between cards (both directions)
   },
 
   amenityCard: {
     backgroundColor: "white",
+    borderRadius: 5,
+    width: "24%", // ~4 per row with gap
+    boxSizing: "border-box",
+    marginBottom: 25,
+  },
+
+  amenityPhoto: {
+    objectFit: "cover",
+    height: 120,
+    borderRadius: 5,
     border: "1px solid #e5e7eb",
-    borderRadius: 8,
-    padding: 12,
-    alignItems: "center",
-    width: "30%",
-    minHeight: 40,
+    marginBottom: 8, // space between photo & text
   },
 
   amenityText: {
     fontSize: 10,
     fontWeight: "bold",
     color: "#111827",
-    textAlign: "center",
+    textAlign: "left",
+    marginBottom: 4,
   },
 
-  amenityPhoto: {
-    marginTop: 9,
-    marginBottom: 3,
-    objectFit: "cover",
-    height: 100,
-    borderRadius: 8,
-    border: "1px solid #e5e7eb",
+  amenitySubText: {
+    fontSize: 9,
+    color: "#6b7280", // gray-500
+    textAlign: "left",
   },
 
   highlightsCard: {
@@ -1604,26 +1606,44 @@ const OffPlanPropertyPDF = ({
             />
           </Page>
         ))}
+
+        
       {/* Page 3 - Amenities & Features */}
-      <Page size={[920, 540]} style={styles.contentPage}>
-        <Text style={styles.pageTitle}>Amenities & Features</Text>
 
-        <View style={styles.amenitiesGrid}>
-          {property?.facilities?.map((facility, index) => (
-            <View key={index} style={styles.amenityCard}>
-              <Text style={styles.amenityText}>{facility.name}</Text>
-              <Image src={facility.image.url} style={styles.amenityPhoto} />
+      {property?.facilities?.length > 0 &&
+        Array.from(
+          ///this chunks images into groups of three
+          { length: Math.ceil(property.facilities.length / 8) },
+          (_, i) => property.facilities.slice(i * 8, i * 8 + 8)
+        ).map((facilities, pageIndex) => (
+          <Page
+            key={`facilities-page-${pageIndex}`}
+            size={[920, 540]}
+            style={styles.contentPage}
+          >
+            <Text style={styles.pageTitle}>Facilities</Text>
+
+            <View style={styles.amenitiesGrid}>
+              {facilities?.map((facility, index) => (
+                <View key={index} style={styles.amenityCard}>
+                  <Image src={facility.image.url} style={styles.amenityPhoto} />
+                  <Text style={styles.amenityText}>{facility.name}</Text>
+                  <Text style={styles.amenitySubText}>
+                    {facility.image_source}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
+            {/* Footer */}
+            <ContactFooter
+              qbc_copyright={qbc_copyright}
+              qbc_email={qbc_email}
+              qbc_phone={qbc_phone}
+            />
+          </Page>
+        ))}
 
-        <ContactFooter
-          qbc_copyright={qbc_copyright}
-          qbc_email={qbc_email}
-          qbc_phone={qbc_phone}
-        />
-      </Page>
-
+     
       {/* Page 9 - Unit Plans */}
       {property?.unit_blocks && property.unit_blocks.length > 0 && (
         <>
