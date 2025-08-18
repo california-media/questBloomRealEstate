@@ -35,11 +35,37 @@ import usePropertyStore from "@/store/propertyStore";
 import adminApi from "@/api/adminApi";
 import OffPlanPropertyPDF from "@/components/property/property-single-style/single-v5/OffPlanPropertyPDF";
 import { PDFViewer } from "@react-pdf/renderer";
+import ImageTabs from "@/components/pages/about/ImageTabs";
+import { Heart, MapPin, Sparkles } from "lucide-react";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
 const metaInformation = {
   title: "Property Single V5 || Homez - Real Estate ReactJS Template",
+};
+
+const styles = {
+  textShadowDesktop: {
+    // Base style (no shadow by default)
+    textShadow: "none",
+    // Apply shadow only on desktop (≥ 992px)
+    "@media (minWidth: 992px)": {
+      textShadow: "0px 0px 7px rgba(0, 0, 0, 0.7)",
+    },
+  },
+  description: {
+    borderRadius: 8,
+  },
+  paragraph: {
+    lineHeight: 1.5,
+    textAlign: "justify",
+    marginBottom: 20,
+
+  },
+  sectionHeading: {
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
 };
 
 const SingleV5 = () => {
@@ -121,7 +147,11 @@ const SingleV5 = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [metaInformation, setMetaInformation] = useState({});
-
+  const [isFavorite, setIsFavorite] = useState(
+    typeof window !== "undefined" && localStorage.getItem("favourites")
+      ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
+      : false
+  );
   const {
     detailedListings,
     setDetailedListings,
@@ -178,6 +208,156 @@ const SingleV5 = () => {
       });
     }
   }, [property]);
+
+  // Helper function to format price
+  const formatPrice = (price) => {
+    if (!price) return "Ask for price";
+    return `${Math.round(price).toLocaleString()}`;
+  };
+
+  // Helper function to get price per sqft display
+  const getPricePerSqftDisplay = () => {
+    if (!property?.unit_blocks || property.unit_blocks.length === 0)
+      return null;
+
+    const validBlocks = property.unit_blocks.filter(
+      (block) =>
+        block.units_price_from_aed &&
+        block.units_area_from_m2 &&
+        parseFloat(block.units_area_from_m2) > 0
+    );
+    if (validBlocks.length === 0) return null;
+
+    const minPricePerSqft = Math.min(
+      ...validBlocks.map((block) => {
+        const priceAed = block.units_price_from_aed;
+        const areaM2 = parseFloat(block.units_area_from_m2);
+        const areaSqft = areaM2 * 10.764; // Convert m2 to sqft
+        return priceAed / areaSqft;
+      })
+    );
+
+    return isFinite(minPricePerSqft)
+      ? Math.floor(minPricePerSqft).toLocaleString()
+      : null;
+  };
+
+  // Get price range for display
+  const getPriceDisplay = () => {
+    if (property?.unit_blocks && property?.unit_blocks.length > 0) {
+      const prices = property?.unit_blocks
+        .filter((block) => block.units_price_from_aed)
+        .map((block) => block.units_price_from_aed);
+
+      if (prices.length > 0) {
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+
+        if (minPrice === maxPrice) {
+          return formatPrice(minPrice);
+        } else {
+          return `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`;
+        }
+      }
+    }
+    return "Ask for price";
+  };
+
+  const handleShareClick = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied to clipboard!", {
+      position: "bottom-right",
+      duration: 3000,
+    });
+  };
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    let favorites = [];
+    if (typeof window !== "undefined") {
+      favorites = localStorage.getItem("favourites")
+        ? JSON.parse(localStorage.getItem("favourites"))
+        : [];
+    }
+
+    if (isFavorite) {
+      // Remove from favorites
+      favorites = favorites.filter((id) => id !== prefixedId);
+      toast(
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="red">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>Removed from favorites!</span>
+        </div>,
+        {
+          position: "bottom-right",
+          duration: 2000,
+        }
+      );
+    } else {
+      // Add to favorites
+      favorites.push(prefixedId);
+      toast(
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="red">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>Added to favorites!</span>
+        </div>,
+        {
+          position: "bottom-right",
+          duration: 2000,
+        }
+      );
+    }
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("favourites", JSON.stringify(favorites));
+    }
+    setIsFavorite(!isFavorite);
+  };
+
+  const DescriptionRenderer = ({ text }) => {
+    // First remove any leading/trailing whitespace
+    const trimmedText = text.trim();
+
+    // Split the text into sections, handling the initial heading
+    const sections = trimmedText
+      .split(/(?:^|\n)#####\s+/)
+      .filter((section) => section.trim());
+
+    return (
+      <div style={styles.description} >
+        {sections.map((section, index) => {
+          // For the very first section if it's not a heading (unlikely in this case)
+          if (index === 0 && !trimmedText.startsWith("#####")) {
+            return (
+              <p key={index} style={styles.paragraph}>
+                {section.trim()}
+              </p>
+            );
+          }
+
+          // Find the first newline to separate heading from content
+          const firstNewline = section.indexOf("\n");
+          const heading =
+            firstNewline === -1 ? section : section.substring(0, firstNewline);
+          const content =
+            firstNewline === -1
+              ? ""
+              : section.substring(firstNewline + 1).trim();
+
+          return (
+            <div key={index}>
+              <p style={styles.sectionHeading} className="text-muted">{heading}</p>
+              {content ? <p className="text-secondary" style={styles.paragraph}>{content}</p> : null}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -189,40 +369,55 @@ const SingleV5 = () => {
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
 
-      {/* Property Slider Gallery */}
-      <section className="p-0 bgc-white">
-        <PropertyGallery
-          loading={loading}
-          architecture={property?.architecture}
-          coordinates={property?.coordinates}
-        />
-      </section>
-
-      {/* End Property Slider Gallery */}
-
       {/* Property All Single V4 */}
-      <section className="pt30 pb90 bgc-f7">
-        <div className="container">
-          <div className="row sp-v5-property-details">
-            <PropertyHeader property={property} prefixedId={prefixedId} />
-          </div>
-          {/* End .row */}
-          {/* {property && contactInfo && (
-            <PDFViewer style={{ width: "100%", height: "100vh" }}>
-              <OffPlanPropertyPDF
-                property={property}
-                qbc_email={contactInfo?.email}
-                qbc_phone={contactInfo?.hotline}
-                qbc_copyright={contactInfo?.copyright}
-              />
-            </PDFViewer>
-          )} */}
-          <div className="row mt50 mt30-lg">
+      <section className="pt30  pb90 bgc-f7 ">
+        <div
+          className="container-fluid  mx-auto"
+          style={{ maxWidth: "1600px" }}
+        >
+          <div className="row  justify-content-center ">
+            {/* dummy */}
+            <div className="col-lg-2"></div>
             <div className="col-lg-6">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2  mb30 overflow-hidden position-relative">
+                <PropertyGallery
+                  loading={loading}
+                  architecture={property?.architecture}
+                  coordinates={property?.coordinates}
+                />
+                <div className="row sp-v5-property-details ">
+                  <PropertyHeader property={property} prefixedId={prefixedId} />
+                </div>
+              </div>
+
+              <div className="ps-widget    mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb20">Visualisations</h4>
+                <div className="row">
+                  <ImageTabs
+                    architecture={property?.architecture}
+                    lobby={property?.lobby}
+                  />
+                </div>
+              </div>
+              {/* <div className="ps-widget    mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb20">Project Video</h4>
+                <div className="row"></div>
+              </div> */}
+
+              <div className="ps-widget    mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb20">Overview</h4>
+                <div className="row">
+                  {property?.overview ? (
+                    <DescriptionRenderer text={property?.overview} />
+                  ) : (
+                    <p className="mb30 text-secondary">No Description</p>
+                  )}
+                </div>
+              </div>
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
-                  <OverView property={property} prefixedId={prefixedId} />
+                  <AdminOverView property={property} prefixedId={prefixedId} />
                   <div className="row">
                     <button
                       type="button"
@@ -237,7 +432,244 @@ const SingleV5 = () => {
                     <div
                       style={{ display: "block" }}
                       tabIndex="-1"
-                      className=" modal fade show"
+                      className=" modal fade show "
+                      onClick={() => setShowModal(false)}
+                    >
+                      <div
+                        className="modal-dialog  modal-dialog-centered modal-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">Download PDF</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <AdminReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                                contactInfo={contactInfo}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div> */}
+              {/* End .ps-widget */}
+
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb30">Property Description</h4>
+                <AdminProperytyDescriptions property={property} />
+
+                <h4 className="title fz17 mb30 mt50">Property Details</h4>
+                <div className="row">
+                  <AdminPropertyDetails
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
+                </div>
+              </div> */}
+              {/* End .ps-widget */}
+
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb25 pl15">
+                  <span className="mr10 aspect-square p10 bg-danger rounded">
+                    <MapPin size={22} color="white" />
+                  </span>
+                  Location
+                </h4>
+                <div className="row">
+                  <PropertyAddress
+                    property={property}
+                    coordinates={property?.coordinates}
+                  />
+                </div>
+              </div>
+              {/* End .ps-widget */}
+
+              <div className="ps-widget  p10 overflow-hidden position-relative">
+                <h4 className="title  fz17">Facilities</h4>
+                <div className="row  justify-content-center">
+                  <PropertyFeaturesAminites facilities={property?.facilities} />
+                </div>
+              </div>
+              {/* End .ps-widget */}
+
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb30">Energy Class</h4>
+                <div className="row">
+                  <EnergyClass />
+                </div>
+              </div> */}
+              {/* End .ps-widget */}
+              {/* 
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb30">Unit Plans</h4>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="accordion-style1 style2">
+                      <FloorPlans property={property} />
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              {/* End .ps-widget */}
+
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
+                <h4 className="title fz17 mb30">Master Plan</h4>
+                <div className="row">
+                  <MasterPlan master_plan={property?.master_plan} />
+                </div>
+              </div> */}
+
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <div className="row">
+                  <div className="product_single_content mb50">
+                    <div className="mbp_pagination_comments">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="total_review d-flex align-items-center justify-content-between mb20">
+                            <h6 className="fz17 mb15">Property Images</h6>
+                          </div>
+                        </div>
+
+                        <AdminInteriorImages interior={property?.photos} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+            {/* End .col-8 */}
+
+            <div className="col-lg-4 ">
+              <div className="col-lg-4"></div>
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz19 mb7">{property?.name}</h4>
+
+                <div className=" mb25 d-md-flex align-items-center">
+                  <p
+                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {property?.area}, {property?.country}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h4
+                    className="price mb-0 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h4>
+                  <h3 className="price mb-0 d-lg-none">
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h3>
+                  <div className="single-property-content">
+                    <div className="property-action text-lg-end">
+                      <div className="d-flex  align-items-center justify-content-lg-end">
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                            className="pb5"
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleShareClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleShareClick}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {(() => {
+                  const pricePerSqft = getPricePerSqftDisplay();
+                  return pricePerSqft ? (
+                    <>
+                      <p
+                        className="text space fz13 d-none d-lg-block"
+                        style={styles.textShadowDesktop}
+                      >
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                      <p className="text space fz13 d-lg-none">
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                    </>
+                  ) : null;
+                })()}
+                <div className="row mt20">
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2 luxury-heading w-100"
+                      onClick={() => setShowModal(true)}
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        border: "none",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      <Sparkles
+                        strokeWidth={1.5}
+                        fill="white"
+                        className="mr10"
+                      />
+                      AI Presentation
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show "
                       onClick={() => setShowModal(false)}
                     >
                       <div
@@ -269,40 +701,47 @@ const SingleV5 = () => {
                   )}
                 </div>
               </div>
-              {/* End .ps-widget */}
-
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Property Description</h4>
-                <ProperytyDescriptions property={property} />
-                {/* End property description */}
-
-                <h4 className="title fz17 mb30 mt50">Property Details</h4>
+                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                 <div className="row">
-                  <PropertyDetails
+                  <ReviewBoxForm
                     property={property}
                     prefixedId={prefixedId}
+                    downloadPDF={true}
+                    contactInfo={contactInfo}
                   />
                 </div>
               </div>
-              {/* End .ps-widget */}
+            </div>
+          </div>
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30 mt30">Address</h4>
-                <div className="row">
-                  <PropertyAddress
-                    property={property}
-                    coordinates={property?.coordinates}
-                  />
-                </div>
-              </div>
-              {/* End .ps-widget */}
+          {/* End .row */}
+        </div>
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
-                <div className="row">
-                  <PropertyFeaturesAminites facilities={property?.facilities} />
-                </div>
-              </div>
+        {/* End .container */}
+      </section>
+      {/* End Property All Single V4  */}
+
+      {/* Property Slider Gallery */}
+
+      {/* End Property Slider Gallery */}
+
+      {/* Property All Single V4 */}
+      <section className="pt30 pb90 bgc-f7">
+        <div className="container">
+          {/* End .row */}
+          {/* {property && contactInfo && (
+            <PDFViewer style={{ width: "100%", height: "100vh" }}>
+              <OffPlanPropertyPDF
+                property={property}
+                qbc_email={contactInfo?.email}
+                qbc_phone={contactInfo?.hotline}
+                qbc_copyright={contactInfo?.copyright}
+              />
+            </PDFViewer>
+          )} */}
+          <div className="row mt50 mt30-lg">
+            <div className="col-lg-6">
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -329,16 +768,6 @@ const SingleV5 = () => {
             <div className="col-lg-6">
               <div className="column">
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Submit an Enquiry</h4>
-                  <div className="row">
-                    <ReviewBoxForm
-                      property={property}
-                      prefixedId={prefixedId}
-                    />
-                  </div>
-                </div>
-
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                   <div className="row">
                     <PropertyNearby map_points={property?.map_points} />
@@ -357,43 +786,12 @@ const SingleV5 = () => {
                 </div>
                 {/* End Walkscore */}
 
-                {property?.lobby?.[0]?.url && (
-                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                    <h4 className="title fz17 mb30">Lobby</h4>
-                    <div className="row">
-                      <Lobby lobby={property?.lobby} />
-                    </div>
-                  </div>
-                )}
                 {/* End .360° Virtual Tour */}
 
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
                   <div className="row">
                     <h4 className="title fz17 mb30 pl20">Building Details</h4>
                     <BuildingDetails buildings={property?.buildings} />
-                  </div>
-                </div>
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <div className="row">
-                    {/* <AllComments /> */}
-                    <div className="product_single_content mb50">
-                      <div className="mbp_pagination_comments">
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <div className="total_review d-flex align-items-center justify-content-between mb20">
-                              <h6 className="fz17 mb15">
-                                <i className="fas fa-couch fz18 pe-2" />
-                                Interior Images
-                              </h6>
-                            </div>
-                          </div>
-                          {/* End review filter */}
-
-                          <InteriorImages interior={property?.interior} />
-                          {/* End reviews */}
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 

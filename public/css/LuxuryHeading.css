@@ -52,7 +52,7 @@
   background-position: right center;
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(121, 118, 49, 0.4);
-  cursor: default;
+  cursor: pointer;
 }
 
 .luxury-heading-decoration {

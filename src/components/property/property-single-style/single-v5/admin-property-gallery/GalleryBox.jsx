@@ -1,27 +1,27 @@
 import { adminBaseUrl } from "@/api/adminApi";
-import { Navigation, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { ImageOff } from "lucide-react"; // Import the no-image icon from Lucide
+import { ImageOff } from "lucide-react";
 
-const GalleryBox = ({
-  photos = ["/images/listings/listing-single-slide4.jpg"],
-  loading = true,
-}) => {
+const GalleryBox = ({ photos = [], loading = true }) => {
   const isEmpty = photos.length === 0;
 
   return (
-    <>
+    <div className="position-relative">
       <Swiper
         spaceBetween={0}
-        modules={[Navigation, Pagination]}
-        navigation={{
-          nextEl: ".single-pro-slide-next__active",
-          prevEl: ".single-pro-slide-prev__active",
-        }}
+        modules={[Autoplay, Pagination]}
         slidesPerView={1}
-        loop={!isEmpty} // Disable loop if empty to prevent infinite empty slides
+        loop={!isEmpty}
         speed={1000}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
       >
         {isEmpty ? (
           <SwiperSlide>
@@ -32,12 +32,16 @@ const GalleryBox = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "gray",
+                backgroundColor: "#6c757d",
               }}
               className="item"
             >
               <div className="text-center p-4">
-                <ImageOff color="white" size={48} className="text-gray-400 mx-auto mb-3" />
+                <ImageOff
+                  color="white"
+                  size={48}
+                  className="text-secondary mx-auto mb-3"
+                />
                 <p className="text-white">No images available</p>
               </div>
             </div>
@@ -47,23 +51,40 @@ const GalleryBox = ({
             <SwiperSlide key={index}>
               <div
                 style={{
-                  aspectRatio: "3.2",
+                  aspectRatio: "2",
                   width: "100%",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  position: "relative",
                 }}
                 className="item"
               >
+                {/* Semi-transparent dark overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    zIndex: 10,
+                  }}
+                ></div>
+
                 {loading ? (
                   <div className="spinner-border mx-auto m-5" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 ) : (
                   <img
-                    className="w-100 h-100 cover"
+                    className="w-100 h-100 position-absolute top-0 start-0 object-fit-cover"
                     src={adminBaseUrl + imageUrl}
                     alt={`Image ${index + 1}`}
+                    style={{
+                      objectFit: "cover",
+                    }}
                   />
                 )}
               </div>
@@ -71,20 +92,7 @@ const GalleryBox = ({
           ))
         )}
       </Swiper>
-
-      <div className="rounded-arrow arrowY-center-position">
-        <button className="single-pro-slide-prev__active swiper_button _prev">
-          <i className="far fa-arrow-left-long" />
-        </button>
-        {/* End prev */}
-
-        <button className="single-pro-slide-next__active swiper_button _next">
-          <i className="far fa-arrow-right-long" />
-        </button>
-        {/* End Next */}
-      </div>
-      {/* End .col for navigation  */}
-    </>
+    </div>
   );
 };
 

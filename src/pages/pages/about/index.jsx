@@ -6,7 +6,6 @@ import MobileMenu from "@/components/common/mobile-menu";
 import Agents from "@/components/pages/about/Agents";
 
 import MetaData from "@/components/common/MetaData";
-import WealthManagementTabs from "@/components/pages/about/WealthManagementTabs";
 import adminApi from "@/api/adminApi";
 import { useEffect, useState } from "react";
 import "/public/css/about-us-sections.css";

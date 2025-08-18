@@ -773,13 +773,33 @@ const capitalizeFirstLetter = (str) => {
   if (!str || typeof str !== "string") return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
-const formatPrice = (price) => {
+const formatPrice = (price, rentDuration) => {
   if (!price) return "No info";
-  return new Intl.NumberFormat("en-AE", {
+
+  // Format the number as AED without decimals
+  const formattedPrice = new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",
     minimumFractionDigits: 0,
-  }).format(price || 0);
+  }).format(price);
+
+  // If rentDuration is provided, append it
+  if (rentDuration) {
+    switch (rentDuration) {
+      case "Monthly":
+        return `${formattedPrice} / month`;
+      case "Weekly":
+        return `${formattedPrice} / week`;
+      case "Yearly":
+        return `${formattedPrice} / year`;
+      case "Daily":
+        return `${formattedPrice} / day`;
+      default:
+        return formattedPrice; // fallback
+    }
+  }
+
+  return formattedPrice;
 };
 
 const AdminPropertyPDF = ({
@@ -1274,7 +1294,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {formatPrice(property?.price)}
+                {formatPrice(property?.price, property?.rent_duration)}
               </Text>
             </View>
           </View>
