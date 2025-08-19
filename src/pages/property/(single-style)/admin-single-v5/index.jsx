@@ -325,8 +325,8 @@ const AdminSingleV5 = () => {
                 <div className="row"></div>
               </div> */}
 
-              <div className="ps-widget    mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb20">Overview</h4>
+              <div className="ps-widget  mt40  mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb15">Overview</h4>
                 <div className="row">
                   {property?.property_description ? (
                     <p
@@ -408,7 +408,7 @@ const AdminSingleV5 = () => {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb25 pl15">
-                  <span className="mr10 aspect-square p10 bg-danger rounded">
+                  <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
                   </span>
                   Location

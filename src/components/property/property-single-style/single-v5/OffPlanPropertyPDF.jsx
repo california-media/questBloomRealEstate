@@ -1577,10 +1577,7 @@ const OffPlanPropertyPDF = ({
             {property.facilities.slice(0, 8).map((facility, index) => (
               <View key={index} style={styles.amenityCard}>
                 {facility?.image?.url ? (
-                  <Image
-                    src={`${adminBaseUrl}/api/images${facility.image.url}?format=jpeg`}
-                    style={styles.amenityPhoto}
-                  />
+                  <Image src={facility.image.url} style={styles.amenityPhoto} />
                 ) : (
                   <View
                     style={[
@@ -2337,140 +2334,141 @@ const OffPlanPropertyPDF = ({
 
       {/* Final Page - Contact & Summary */}
       <Page size={[920, 540]}>
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#f3f4f6",
-            marginBottom: "30px",
-          }}
-        >
-          {/* Left Column - Two stacked sections */}
+        <View style={{ height: "100%" }}>
           <View
             style={{
-              flex: 1,
-              padding: 40,
-              paddingRight: 15,
+              flexDirection: "row",
+              backgroundColor: "#f3f4f6",
+              marginBottom: "30px",
             }}
           >
-            {/* Top Section - Call to Action */}
+            {/* Left Column - Two stacked sections */}
             <View
               style={{
-                backgroundColor: "white",
-                borderRadius: 16,
-                padding: 32,
-                marginBottom: 22,
                 flex: 1,
+                padding: 40,
+                paddingRight: 15,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 26,
-                  fontWeight: "bold",
-                  color: "#1f2937",
-                  lineHeight: 1.2,
-                  marginBottom: 8,
-                }}
-              >
-                Do you have any questions? Contact me.
-              </Text>
-            </View>
-
-            {/* Bottom Section - Contact Information */}
-            <View
-              style={{
-                backgroundColor: "white",
-                borderRadius: 16,
-                padding: 26,
-                flex: 1,
-              }}
-            >
-              {/* Contact Profile */}
+              {/* Top Section - Call to Action */}
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 24,
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 32,
+                  marginBottom: 22,
+                  flex: 1,
                 }}
               >
-                {/* Profile Image */}
-
-                <Image
-                  src="/images/questBloomTransparentSmall.png"
+                <Text
                   style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 80,
+                    fontSize: 26,
+                    fontWeight: "bold",
+                    color: "#1f2937",
+                    lineHeight: 1.2,
+                    marginBottom: 8,
                   }}
-                />
+                >
+                  Do you have any questions? Contact me.
+                </Text>
+              </View>
 
-                {/* Contact Details */}
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "#1f2937",
-                      marginBottom: 8,
-                    }}
-                  >
-                    Quest Real Estate LLC
-                  </Text>
+              {/* Bottom Section - Contact Information */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 26,
+                  flex: 1,
+                }}
+              >
+                {/* Contact Profile */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 24,
+                  }}
+                >
+                  {/* Profile Image */}
 
-                  <View
+                  <Image
+                    src="/images/questBloomTransparentSmall.png"
                     style={{
-                      marginBottom: 6,
-                      justifyContent: "space-between",
-                      flexDirection: "row",
+                      width: 100,
+                      height: 100,
+                      borderRadius: 80,
                     }}
-                  >
+                  />
+
+                  {/* Contact Details */}
+                  <View style={{ flex: 1, marginLeft: 5 }}>
                     <Text
                       style={{
-                        fontSize: 12,
-                        color: "#6b7280",
-                        marginBottom: 2,
-                      }}
-                    >
-                      Phone
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
+                        fontSize: 20,
+                        fontWeight: "bold",
                         color: "#1f2937",
-                        fontWeight: "500",
+                        marginBottom: 8,
                       }}
                     >
-                      {qbc_phone || "N/A"}
+                      Quest Real Estate LLC
                     </Text>
-                  </View>
 
-                  <View
-                    style={{
-                      marginBottom: 6,
-                      justifyContent: "space-between",
-                      flexDirection: "row",
-                    }}
-                  >
-                    <Text
+                    <View
                       style={{
-                        fontSize: 12,
-                        color: "#6b7280",
-                        marginBottom: 2,
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
                       }}
                     >
-                      Email
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {qbc_email || "N/A"}
-                    </Text>
-                  </View>
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Phone
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_phone || "N/A"}
+                      </Text>
+                    </View>
 
-                  {/* <View>
+                    <View
+                      style={{
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Email
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_email || "N/A"}
+                      </Text>
+                    </View>
+
+                    {/* <View>
                     <Text
                       style={{
                         fontSize: 12,
@@ -2481,153 +2479,162 @@ const OffPlanPropertyPDF = ({
                       Instagram
                     </Text>
                   </View> */}
+                  </View>
+                </View>
+
+                {/* Action buttons */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 10,
+                    gap: 8,
+                  }}
+                >
+                  {/* WhatsApp */}
+                  <Link
+                    src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
+                    style={{
+                      flex: 1,
+                      backgroundColor: "black", // Tailwind's lime-400
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Image
+                      src="/images/whatsapp-icon-white.png"
+                      style={{
+                        width: 21,
+                        height: 21,
+                        marginRight: 6,
+                        padding: 3,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 12,
+                        fontWeight: "500",
+                      }}
+                    >
+                      WhatsApp
+                    </Text>
+                  </Link>
+
+                  {/* Email */}
+                  <Link
+                    src={`mailto:${qbc_email}`}
+                    style={{
+                      flex: 1,
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 9,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon
+                      type={"email"}
+                      style={{ marginRight: 6 }}
+                      color="white"
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 12,
+                        fontWeight: "500",
+                      }}
+                    >
+                      Email
+                    </Text>
+                  </Link>
+
+                  {/* Phone */}
+                  <Link
+                    src={`tel:${qbc_phone}`}
+                    style={{
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: 40,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon type={"phone"} color="white" fill={true} />
+                  </Link>
                 </View>
               </View>
+            </View>
 
-              {/* Action buttons */}
+            {/* Right Column - Property Image */}
+            <View
+              style={{
+                flex: 1,
+                padding: 40,
+                paddingLeft: 0,
+              }}
+            >
               <View
                 style={{
-                  flexDirection: "row",
-                  marginTop: 10,
-                  gap: 8,
+                  height: "100%",
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  position: "relative",
                 }}
               >
-                {/* WhatsApp */}
-                <Link
-                  src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
+                <Image
+                  src={HeroBackgroundImage}
                   style={{
-                    flex: 1,
-                    backgroundColor: "black", // Tailwind's lime-400
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 12,
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    textDecoration: "none",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
-                >
-                  <Image
-                    src="/images/whatsapp-icon-white.png"
-                    style={{
-                      width: 21,
-                      height: 21,
-                      marginRight: 6,
-                      padding: 3,
-                    }}
-                  />
-                  <Text
-                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
-                  >
-                    WhatsApp
-                  </Text>
-                </Link>
-
-                {/* Email */}
-                <Link
-                  src={`mailto:${qbc_email}`}
-                  style={{
-                    flex: 1,
-                    backgroundColor: "black",
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 9,
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    textDecoration: "none",
-                  }}
-                >
-                  <Icon
-                    type={"email"}
-                    style={{ marginRight: 6 }}
-                    color="white"
-                  />
-                  <Text
-                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
-                  >
-                    Email
-                  </Text>
-                </Link>
-
-                {/* Phone */}
-                <Link
-                  src={`tel:${qbc_phone}`}
-                  style={{
-                    backgroundColor: "black",
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 12,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: 40,
-                    textDecoration: "none",
-                  }}
-                >
-                  <Icon type={"phone"} color="white" fill={true} />
-                </Link>
+                />
               </View>
             </View>
           </View>
 
-          {/* Right Column - Property Image */}
+          {/* Footer with timestamp */}
           <View
             style={{
-              flex: 1,
-              padding: 40,
-              paddingLeft: 0,
+              position: "absolute",
+              bottom: 28,
+              left: 40,
+              right: 40,
             }}
           >
-            <View
+            <Text
               style={{
-                height: "100%",
-                borderRadius: 8,
-                overflow: "hidden",
-                position: "relative",
+                fontSize: 10,
+                color: "#6b7280",
+                textAlign: "center",
+                marginBottom: 20,
               }}
             >
-              <Image
-                src={HeroBackgroundImage}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </View>
+              This brochure was generated on{" "}
+              {new Date().toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
+              .
+            </Text>
           </View>
+          <ContactFooter />
         </View>
-
-        {/* Footer with timestamp */}
-        <View
-          style={{
-            position: "absolute",
-            bottom: 28,
-            left: 40,
-            right: 40,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 10,
-              color: "#6b7280",
-              textAlign: "center",
-              marginBottom: 20,
-            }}
-          >
-            This brochure was generated on{" "}
-            {new Date().toLocaleString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
-            .
-          </Text>
-        </View>
-        <ContactFooter />
       </Page>
     </Document>
   );

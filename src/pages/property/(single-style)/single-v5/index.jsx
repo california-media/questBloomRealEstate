@@ -157,7 +157,7 @@ const SingleV5 = () => {
     setDetailedListings,
     loading: storePropertiesLoading,
   } = usePropertyStore();
-
+  console.log(property)
   useEffect(() => {
     const fetchProperty = async () => {
       // First, check if the property already exists in the store
@@ -404,8 +404,8 @@ const SingleV5 = () => {
                 <div className="row"></div>
               </div> */}
 
-              <div className="ps-widget    mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb20">Overview</h4>
+              <div className="ps-widget  mt40  mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb15">Overview</h4>
                 <div className="row">
                   {property?.overview ? (
                     <DescriptionRenderer text={property?.overview} />
@@ -482,7 +482,7 @@ const SingleV5 = () => {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb25 pl15">
-                  <span className="mr10 aspect-square p10 bg-danger rounded">
+                  <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
                   </span>
                   Location
@@ -730,7 +730,7 @@ const SingleV5 = () => {
       <section className="pt30 pb90 bgc-f7">
         <div className="container">
           {/* End .row */}
-          {/* {property && contactInfo && (
+          {property && contactInfo && (
             <PDFViewer style={{ width: "100%", height: "100vh" }}>
               <OffPlanPropertyPDF
                 property={property}
@@ -739,7 +739,7 @@ const SingleV5 = () => {
                 qbc_copyright={contactInfo?.copyright}
               />
             </PDFViewer>
-          )} */}
+          )}
           <div className="row mt50 mt30-lg">
             <div className="col-lg-6">
               {/* End .ps-widget */}

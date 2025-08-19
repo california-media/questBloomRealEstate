@@ -1746,284 +1746,294 @@ const AdminPropertyPDF = ({
         <ContactFooter />
       </Page>
       <Page size={[920, 540]}>
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#f3f4f6",
-            marginBottom: "30px",
-          }}
-        >
-          {/* Left Column - Two stacked sections (EXACTLY as in new template) */}
+        <View style={{ height: "100%" }}>
           <View
             style={{
-              flex: 1,
-              padding: 40,
-              paddingRight: 15,
+              flexDirection: "row",
+              backgroundColor: "#f3f4f6",
+              marginBottom: "30px",
             }}
           >
-            {/* Top Section - Call to Action (unchanged) */}
+            {/* Left Column - Two stacked sections (EXACTLY as in new template) */}
             <View
               style={{
-                backgroundColor: "white",
-                borderRadius: 16,
-                padding: 32,
-                marginBottom: 22,
                 flex: 1,
+                padding: 40,
+                paddingRight: 15,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 26,
-                  fontWeight: "bold",
-                  color: "#1f2937",
-                  lineHeight: 1.2,
-                  marginBottom: 8,
-                }}
-              >
-                Do you have any questions? Contact me.
-              </Text>
-            </View>
-
-            {/* Bottom Section - Contact Information (unchanged) */}
-            <View
-              style={{
-                backgroundColor: "white",
-                borderRadius: 16,
-                padding: 26,
-                flex: 1,
-              }}
-            >
-              {/* Contact Profile (unchanged) */}
+              {/* Top Section - Call to Action (unchanged) */}
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 24,
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 32,
+                  marginBottom: 22,
+                  flex: 1,
                 }}
               >
-                <Image
-                  src="/images/questBloomTransparentSmall.png"
+                <Text
                   style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 80,
+                    fontSize: 26,
+                    fontWeight: "bold",
+                    color: "#1f2937",
+                    lineHeight: 1.2,
+                    marginBottom: 8,
                   }}
-                />
+                >
+                  Do you have any questions? Contact me.
+                </Text>
+              </View>
 
-                {/* Contact Details (unchanged) */}
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <Text
+              {/* Bottom Section - Contact Information (unchanged) */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 26,
+                  flex: 1,
+                }}
+              >
+                {/* Contact Profile (unchanged) */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 24,
+                  }}
+                >
+                  <Image
+                    src="/images/questBloomTransparentSmall.png"
                     style={{
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "#1f2937",
-                      marginBottom: 8,
+                      width: 100,
+                      height: 100,
+                      borderRadius: 80,
                     }}
-                  >
-                    Quest Real Estate LLC
-                  </Text>
+                  />
 
-                  <View
-                    style={{
-                      marginBottom: 6,
-                      justifyContent: "space-between",
-                      flexDirection: "row",
-                    }}
-                  >
+                  {/* Contact Details (unchanged) */}
+                  <View style={{ flex: 1, marginLeft: 5 }}>
                     <Text
                       style={{
-                        fontSize: 12,
-                        color: "#6b7280",
-                        marginBottom: 2,
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "#1f2937",
+                        marginBottom: 8,
                       }}
                     >
-                      Phone
+                      Quest Real Estate LLC
                     </Text>
+
+                    <View
+                      style={{
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Phone
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_phone || "N/A"}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Email
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_email || "N/A"}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                {/* Action buttons (unchanged) */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 10,
+                    gap: 8,
+                  }}
+                >
+                  {/* WhatsApp (unchanged) */}
+                  <Link
+                    src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`}
+                    style={{
+                      flex: 1,
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Image
+                      src="/images/whatsapp-icon-white.png"
+                      style={{
+                        width: 21,
+                        height: 21,
+                        marginRight: 6,
+                        padding: 3,
+                      }}
+                    />
                     <Text
                       style={{
-                        fontSize: 14,
-                        color: "#1f2937",
+                        color: "white",
+                        fontSize: 12,
                         fontWeight: "500",
                       }}
                     >
-                      {qbc_phone || "N/A"}
+                      WhatsApp
                     </Text>
-                  </View>
+                  </Link>
 
-                  <View
+                  {/* Email (unchanged) */}
+                  <Link
+                    src={`mailto:${qbc_email}`}
                     style={{
-                      marginBottom: 6,
-                      justifyContent: "space-between",
+                      flex: 1,
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 9,
+                      alignItems: "center",
                       flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
                     }}
                   >
+                    <Icon
+                      type={"email"}
+                      style={{ marginRight: 6 }}
+                      color="white"
+                    />
                     <Text
                       style={{
+                        color: "white",
                         fontSize: 12,
-                        color: "#6b7280",
-                        marginBottom: 2,
+                        fontWeight: "500",
                       }}
                     >
                       Email
                     </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {qbc_email || "N/A"}
-                    </Text>
-                  </View>
+                  </Link>
+
+                  {/* Phone (unchanged) */}
+                  <Link
+                    src={`tel:${qbc_phone}`}
+                    style={{
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: 40,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon type={"phone"} color="white" fill={true} />
+                  </Link>
                 </View>
               </View>
+            </View>
 
-              {/* Action buttons (unchanged) */}
+            {/* Right Column - Property Image (unchanged) */}
+            <View
+              style={{
+                flex: 1,
+                padding: 40,
+                paddingLeft: 0,
+              }}
+            >
               <View
                 style={{
-                  flexDirection: "row",
-                  marginTop: 10,
-                  gap: 8,
+                  height: "100%",
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  position: "relative",
                 }}
               >
-                {/* WhatsApp (unchanged) */}
-                <Link
-                  src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`}
+                <Image
+                  src={HeroBackgroundImage}
                   style={{
-                    flex: 1,
-                    backgroundColor: "black",
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 12,
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    textDecoration: "none",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center", // This centers the cropped area
                   }}
-                >
-                  <Image
-                    src="/images/whatsapp-icon-white.png"
-                    style={{
-                      width: 21,
-                      height: 21,
-                      marginRight: 6,
-                      padding: 3,
-                    }}
-                  />
-                  <Text
-                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
-                  >
-                    WhatsApp
-                  </Text>
-                </Link>
-
-                {/* Email (unchanged) */}
-                <Link
-                  src={`mailto:${qbc_email}`}
-                  style={{
-                    flex: 1,
-                    backgroundColor: "black",
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 9,
-                    alignItems: "center",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    textDecoration: "none",
-                  }}
-                >
-                  <Icon
-                    type={"email"}
-                    style={{ marginRight: 6 }}
-                    color="white"
-                  />
-                  <Text
-                    style={{ color: "white", fontSize: 12, fontWeight: "500" }}
-                  >
-                    Email
-                  </Text>
-                </Link>
-
-                {/* Phone (unchanged) */}
-                <Link
-                  src={`tel:${qbc_phone}`}
-                  style={{
-                    backgroundColor: "black",
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 12,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: 40,
-                    textDecoration: "none",
-                  }}
-                >
-                  <Icon type={"phone"} color="white" fill={true} />
-                </Link>
+                />
               </View>
             </View>
           </View>
 
-          {/* Right Column - Property Image (unchanged) */}
+          {/* Footer with timestamp (unchanged) */}
           <View
             style={{
-              flex: 1,
-              padding: 40,
-              paddingLeft: 0,
+              position: "absolute",
+              bottom: 28,
+              left: 40,
+              right: 40,
             }}
           >
-            <View
+            <Text
               style={{
-                height: "100%",
-                borderRadius: 8,
-                overflow: "hidden",
-                position: "relative",
+                fontSize: 10,
+                color: "#6b7280",
+                textAlign: "center",
+                marginBottom: 20,
               }}
             >
-              <Image
-                src={HeroBackgroundImage}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center", // This centers the cropped area
-                }}
-              />
-            </View>
+              This brochure was generated on{" "}
+              {new Date().toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
+              .
+            </Text>
           </View>
+          <ContactFooter />
         </View>
-
-        {/* Footer with timestamp (unchanged) */}
-        <View
-          style={{
-            position: "absolute",
-            bottom: 28,
-            left: 40,
-            right: 40,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 10,
-              color: "#6b7280",
-              textAlign: "center",
-              marginBottom: 20,
-            }}
-          >
-            This brochure was generated on{" "}
-            {new Date().toLocaleString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
-            .
-          </Text>
-        </View>
-        <ContactFooter />
       </Page>
     </Document>
   );
