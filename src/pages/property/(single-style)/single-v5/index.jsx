@@ -40,6 +40,7 @@ import { Heart, MapPin, Sparkles } from "lucide-react";
 import AdminPropertyPDF from "@/components/property/property-single-style/single-v5/AdminPropertyPDF";
 import Parkings from "@/components/property/property-single-style/common/Parkings";
 import YoutubeVideoEmbed from "@/components/property/property-single-style/single-v5/YoutubeVideoEmbed";
+import ProjectDetailsCard from "@/components/property/property-single-style/single-v5/ProjectDetailsCard";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -510,7 +511,7 @@ const SingleV5 = () => {
               {property?.video_url &&
                 !property.video_url.includes("v=null") && (
                   <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                    <h3 className="title">Video onboarding for agents</h3>
+                    <h3 className="title mb-3">Video onboarding for agents</h3>
                     <div className="row  justify-content-center">
                       <YoutubeVideoEmbed url={property.video_url} />
                     </div>
@@ -535,7 +536,7 @@ const SingleV5 = () => {
 
               {/* General plan */}
               <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                <h3 className="title">General plan</h3>
+                <h3 className="title mb-2">General plan</h3>
                 <div className="row justify-content-center">
                   <div className="col-md-12 rounded">
                     {property?.master_plan?.length > 0 ? (
@@ -568,7 +569,7 @@ const SingleV5 = () => {
               </div>
 
               <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                <h3 className="title">Payment Plans</h3>
+                <h3 className="title mb-2">Payment Plans</h3>
                 <div className="row  justify-content-center">
                   <PaymentPlans payment_plans={property?.payment_plans} />
                 </div>
@@ -579,7 +580,11 @@ const SingleV5 = () => {
                   <Parkings parkings={property?.parkings} />
                 </div>
               </div>
+              <div className="ps-widget mb20 p10 overflow-hidden position-relative">
+                <ProjectDetailsCard projectData={property} />
+              </div>
             </div>
+
             {/* End .col-8 */}
 
             <div className="col-lg-4 ">
