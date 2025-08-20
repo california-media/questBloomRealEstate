@@ -823,7 +823,7 @@ const getStaticOpenStreetMapUrl = (
 };
 
 const formatPrice = (price) => {
-  if (!price) return "N/A";
+  if (!price) return "No info";
   return new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",
@@ -846,9 +846,9 @@ const OffPlanPropertyPDF = ({
   };
 
   const getMinArea = () => {
-    if (!property?.unit_blocks?.[0]) return "N/A";
+    if (!property?.unit_blocks?.[0]) return "No info";
     const minAreaM2 = property.unit_blocks[0].units_area_from_m2;
-    return minAreaM2 ? Math.round(parseFloat(minAreaM2) * 10.764) : "N/A"; // Convert m2 to sqft
+    return minAreaM2 ? Math.round(parseFloat(minAreaM2) * 10.764) : "No info"; // Convert m2 to sqft
   };
 
   const getCompletionYear = () => {
@@ -1685,7 +1685,7 @@ const OffPlanPropertyPDF = ({
                   </View>
                 )}
 
-                <Text style={styles.amenityText}>{facility.name || "N/A"}</Text>
+                <Text style={styles.amenityText}>{facility.name || "No info"}</Text>
                 <Text style={styles.amenitySubText}>
                   {facility.image_source || " "}
                 </Text>
@@ -2227,7 +2227,7 @@ const OffPlanPropertyPDF = ({
                                 )} sqft / ${Math.round(
                                   parseFloat(unit.units_area_from_m2)
                                 )} m²`
-                              : "N/A"}
+                              : "No info"}
                           </Text>
 
                           {/* Area To */}

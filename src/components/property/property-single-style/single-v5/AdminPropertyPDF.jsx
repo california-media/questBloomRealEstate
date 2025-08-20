@@ -992,7 +992,7 @@ const AdminPropertyPDF = ({
                     marginBottom: 10,
                   }}
                 >
-                  {property?.property_title || "N/A"}
+                  {property?.property_title || "No info"}
                 </Text>
 
                 {/* Location */}
@@ -1003,7 +1003,7 @@ const AdminPropertyPDF = ({
                     opacity: 0.8,
                   }}
                 >
-                  {property?.location_area || "N/A"}
+                  {property?.location_area || "No info"}
                 </Text>
               </View>
 
@@ -1308,7 +1308,7 @@ const AdminPropertyPDF = ({
       <Page size={[920, 540]} style={styles.contentPage}>
         {/* Property Details */}
         <Text style={styles.pageTitle}>
-          {property?.property_title || "N/A"}
+          {property?.property_title || "No info"}
         </Text>
 
         {/* Basic Information Cards */}
@@ -1383,7 +1383,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {capitalizeFirstLetter(property?.furnishing || "N/A")}
+                {capitalizeFirstLetter(property?.furnishing || "No info")}
               </Text>
             </View>
           </View>
@@ -1417,7 +1417,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {property?.property_type?.name || "N/A"}
+                {property?.property_type?.name || "No info"}
               </Text>
             </View>
           </View>
@@ -1451,7 +1451,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {property?.area ? `${property.area} sq ft` : "N/A"}
+                {property?.area ? `${property.area} sq ft` : "No info"}
               </Text>
             </View>
           </View>
@@ -1487,7 +1487,7 @@ const AdminPropertyPDF = ({
                 >
                   {property?.balcony_size
                     ? `${property.balcony_size} sq ft`
-                    : "N/A"}
+                    : "No info"}
                 </Text>
               </View>
             </View>
@@ -1555,7 +1555,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {capitalizeFirstLetter(property?.usage) || "N/A"}
+                {capitalizeFirstLetter(property?.usage) || "No info"}
               </Text>
             </View>
           </View>
@@ -1589,7 +1589,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {capitalizeFirstLetter(property?.ownership || "N/A")}
+                {capitalizeFirstLetter(property?.ownership || "No info")}
               </Text>
             </View>
           </View>
@@ -1599,7 +1599,7 @@ const AdminPropertyPDF = ({
         <Text style={{ ...styles.sectionHeading, marginTop: 10 }}>
           Property Description
         </Text>
-        {renderHtmlToPdf(property?.property_description) || "N/A"}
+        {renderHtmlToPdf(property?.property_description) || "No info"}
 
         <ContactFooter />
       </Page>
@@ -1791,7 +1791,9 @@ const AdminPropertyPDF = ({
                     <Icon type="no-image" size={24} color="#9ca3af" />
                   </View>
                 )}
-                <Text style={styles.amenityText}>{amenity.title || "N/A"}</Text>
+                <Text style={styles.amenityText}>
+                  {amenity.title || "No info"}
+                </Text>
               </View>
             ))}
           </View>
