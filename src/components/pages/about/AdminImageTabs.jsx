@@ -1,5 +1,5 @@
 import { adminBaseUrl } from "@/api/adminApi";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ImageTabs = ({ photos }) => {
   const [activeTab, setActiveTab] = useState("architecture");
@@ -11,12 +11,21 @@ const ImageTabs = ({ photos }) => {
       label: "Architecture",
       images: photos || [],
     },
-    // {
-    //   id: "interior",
-    //   label: "Interior",
-    //   images: photos || [],
-    // },
   ].filter((tab) => tab.images.length > 0); // Only show tabs with images
+
+  useEffect(() => {
+    // Preload all images from all tabs
+    const preloadImages = () => {
+      tabs.forEach((tab) => {
+        tab.images.forEach((imagePath) => {
+          const img = new Image();
+          img.src = `${adminBaseUrl}${imagePath}`;
+        });
+      });
+    };
+
+    preloadImages();
+  }, [photos]); // Dependency: re-run when photos prop changes
 
   const handleTabChange = (tabId) => {
     if (activeTab !== tabId && !transitioning) {

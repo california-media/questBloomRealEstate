@@ -3159,10 +3159,11 @@ li {
 }
 
 .sp-v5-property-details {
-    margin-top: -250px;
+    margin-top: -255px;
     position: relative;
     z-index: 1;
 }
+
 .sp-v5-property-details .sp-lg-title,
 .sp-v5-property-details .text,
 .sp-v5-property-details .price,
@@ -3187,6 +3188,41 @@ li {
         margin-top: 0;
     }
 }
+
+
+
+.sp-v5-property-details-admin {
+    margin-top: -218px;
+    position: relative;
+    z-index: 1;
+}
+
+
+.sp-v5-property-details-admin  .sp-lg-title,
+.sp-v5-property-details-admin  .text,
+.sp-v5-property-details-admin  .price,
+.sp-v5-property-details-admin  a {
+    color: #ffffff;
+}
+@media (max-width: 1199.98px) {
+    .sp-v5-property-details-admin  .sp-lg-title,
+    .sp-v5-property-details-admin  .text,
+    .sp-v5-property-details-admin  .price,
+    .sp-v5-property-details-admin  a {
+        color: inherit;
+    }
+}
+.sp-v5-property-details-admin  .icon:hover {
+    background-color: #B0B88E;
+    border-color: #797631;
+    color: #ffffff;
+}
+@media (max-width: 1199.98px) {
+    .sp-v5-property-details-admin  {
+        margin-top: 0;
+    }
+}
+
 
 .tab-map-sp-v5 {
     position: relative;

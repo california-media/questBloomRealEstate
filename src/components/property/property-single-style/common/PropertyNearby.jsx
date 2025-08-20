@@ -1,3 +1,4 @@
+import { MapPin } from "lucide-react";
 import React from "react";
 
 const PropertyNearby = ({ map_points }) => {
@@ -16,27 +17,6 @@ const PropertyNearby = ({ map_points }) => {
   return (
     <div className="col-md-12">
       <div className="navtab-style1">
-        {/* <nav>
-          <div className="nav nav-tabs mb20" id="nav-tab2" role="tablist">
-            {tabsData.map((tab, index) => (
-              <button
-                key={index}
-                className={`nav-link fw600 ${index === 0 ? "active" : ""}`}
-                id={`nav-item${index + 1}-tab`}
-                data-bs-toggle="tab"
-                data-bs-target={`#nav-item${index + 1}`}
-                type="button"
-                role="tab"
-                aria-controls={`nav-item${index + 1}`}
-                aria-selected={index === 0 ? "true" : "false"}
-              >
-                {tab.title}
-              </button>
-            ))}
-          </div>
-        </nav> */}
-        {/* End nav tabs */}
-
         <div className="tab-content" id="nav-tabContent">
           {tabsData.map((tab, index) => (
             <div
@@ -52,14 +32,22 @@ const PropertyNearby = ({ map_points }) => {
                 tab.details.map((detail, detailIndex) => (
                   <div
                     key={detailIndex}
-                    className="nearby d-sm-flex align-items-center mb20"
+                    className="nearby d-sm-flex align-items-baseline mb20"
                   >
                     <div
                       style={{ justifyContent: "space-between", width: "100%" }}
                       className="details d-flex "
                     >
-                      <p className="dark-color fw600 mb-0">{detail.name}</p>
-                      <p className="text mb-0">Distance: {detail.distance}</p>
+                      <div className="d-flex align-items-center">
+                        <span
+                          className="mr15 d-flex justify-content-center align-items-center  rounded"
+                          style={{ width: "35px", aspectRatio: "1/1", background:"#65C466" }}
+                        >
+                          <MapPin size={22} color="white" />
+                        </span>
+                        <p className="dark-color fw600 mb-0">{detail.name}</p>
+                      </div>
+                      <p className="text text-muted mb-0"> {detail.distance}</p>
                     </div>
                   </div>
                 ))

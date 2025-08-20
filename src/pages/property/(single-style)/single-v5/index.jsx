@@ -37,6 +37,9 @@ import OffPlanPropertyPDF from "@/components/property/property-single-style/sing
 import { PDFViewer } from "@react-pdf/renderer";
 import ImageTabs from "@/components/pages/about/ImageTabs";
 import { Heart, MapPin, Sparkles } from "lucide-react";
+import AdminPropertyPDF from "@/components/property/property-single-style/single-v5/AdminPropertyPDF";
+import Parkings from "@/components/property/property-single-style/common/Parkings";
+import YoutubeVideoEmbed from "@/components/property/property-single-style/single-v5/YoutubeVideoEmbed";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -60,7 +63,6 @@ const styles = {
     lineHeight: 1.5,
     textAlign: "justify",
     marginBottom: 20,
-
   },
   sectionHeading: {
     fontWeight: "bold",
@@ -157,7 +159,6 @@ const SingleV5 = () => {
     setDetailedListings,
     loading: storePropertiesLoading,
   } = usePropertyStore();
-  console.log(property)
   useEffect(() => {
     const fetchProperty = async () => {
       // First, check if the property already exists in the store
@@ -328,7 +329,7 @@ const SingleV5 = () => {
       .filter((section) => section.trim());
 
     return (
-      <div style={styles.description} >
+      <div style={styles.description}>
         {sections.map((section, index) => {
           // For the very first section if it's not a heading (unlikely in this case)
           if (index === 0 && !trimmedText.startsWith("#####")) {
@@ -350,8 +351,14 @@ const SingleV5 = () => {
 
           return (
             <div key={index}>
-              <p style={styles.sectionHeading} className="text-muted">{heading}</p>
-              {content ? <p className="text-secondary" style={styles.paragraph}>{content}</p> : null}
+              <p style={styles.sectionHeading} className="text-muted">
+                {heading}
+              </p>
+              {content ? (
+                <p className="text-secondary" style={styles.paragraph}>
+                  {content}
+                </p>
+              ) : null}
             </div>
           );
         })}
@@ -385,17 +392,33 @@ const SingleV5 = () => {
                   architecture={property?.architecture}
                   coordinates={property?.coordinates}
                 />
-                <div className="row sp-v5-property-details ">
+                <div
+                  className={`row ${
+                    property?.completion_datetime
+                      ? "sp-v5-property-details"
+                      : "sp-v5-property-details-admin"
+                  }`}
+                >
                   <PropertyHeader property={property} prefixedId={prefixedId} />
                 </div>
               </div>
-
-              <div className="ps-widget    mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb20">Visualisations</h4>
+              {/* {property && contactInfo && (
+                <PDFViewer style={{ width: "100%", height: "100vh" }}>
+                  <OffPlanPropertyPDF
+                    property={property}
+                    qbc_email={contactInfo?.email}
+                    qbc_phone={contactInfo?.hotline}
+                    qbc_copyright={contactInfo?.copyright}
+                  />
+                </PDFViewer>
+              )} */}
+              <div className="ps-widget    mb40 overflow-hidden position-relative">
+                <h3 className="title  mb20">Visualisations</h3>
                 <div className="row">
                   <ImageTabs
                     architecture={property?.architecture}
                     lobby={property?.lobby}
+                    interior={property?.interior}
                   />
                 </div>
               </div>
@@ -403,9 +426,14 @@ const SingleV5 = () => {
                 <h4 className="title fz17 mb20">Project Video</h4>
                 <div className="row"></div>
               </div> */}
-
+              <div className="ps-widget mb30  overflow-hidden position-relative">
+                <h3 className="title">Typical units and prices</h3>
+                <div className="row  justify-content-center">
+                  <FloorPlans units={property?.unit_blocks} />
+                </div>
+              </div>
               <div className="ps-widget  mt40  mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb15">Overview</h4>
+                <h3 className="title  mb15">Overview</h3>
                 <div className="row">
                   {property?.overview ? (
                     <DescriptionRenderer text={property?.overview} />
@@ -479,8 +507,17 @@ const SingleV5 = () => {
                 </div>
               </div> */}
               {/* End .ps-widget */}
+              {property?.video_url &&
+                !property.video_url.includes("v=null") && (
+                  <div className="ps-widget mb30 p10 overflow-hidden position-relative">
+                    <h3 className="title">Video onboarding for agents</h3>
+                    <div className="row  justify-content-center">
+                      <YoutubeVideoEmbed url={property.video_url} />
+                    </div>
+                  </div>
+                )}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb40 overflow-hidden position-relative">
                 <h4 className="title fz17 mb25 pl15">
                   <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
@@ -496,58 +533,52 @@ const SingleV5 = () => {
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget  p10 overflow-hidden position-relative">
-                <h4 className="title  fz17">Facilities</h4>
+              {/* General plan */}
+              <div className="ps-widget mb30 p10 overflow-hidden position-relative">
+                <h3 className="title">General plan</h3>
+                <div className="row justify-content-center">
+                  <div className="col-md-12 rounded">
+                    {property?.master_plan?.length > 0 ? (
+                      property.master_plan.map((plan, index) => (
+                        <img
+                          key={index}
+                          src={plan.url}
+                          alt={`Master Plan ${index + 1}`}
+                          className="img-fluid rounded"
+                        />
+                      ))
+                    ) : (
+                      <p className="text-muted">No General plan available</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="ps-widget mb30 p10 overflow-hidden position-relative">
+                <h3 className="title">Buildings in project</h3>
+                <div className="row  justify-content-center">
+                  <BuildingDetails buildings={property?.buildings} />
+                </div>
+              </div>
+              <div className="ps-widget mb20 p10 overflow-hidden position-relative">
+                <h3 className="title">Facilities</h3>
                 <div className="row  justify-content-center">
                   <PropertyFeaturesAminites facilities={property?.facilities} />
                 </div>
               </div>
-              {/* End .ps-widget */}
 
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Energy Class</h4>
-                <div className="row">
-                  <EnergyClass />
+              <div className="ps-widget mb30 p10 overflow-hidden position-relative">
+                <h3 className="title">Payment Plans</h3>
+                <div className="row  justify-content-center">
+                  <PaymentPlans payment_plans={property?.payment_plans} />
                 </div>
-              </div> */}
-              {/* End .ps-widget */}
-              {/* 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Unit Plans</h4>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="accordion-style1 style2">
-                      <FloorPlans property={property} />
-                    </div>
-                  </div>
+              </div>
+              <div className="ps-widget mb20 p10 overflow-hidden position-relative">
+                <h3 className="title">Parkings</h3>
+                <div className="row  justify-content-center">
+                  <Parkings parkings={property?.parkings} />
                 </div>
-              </div> */}
-              {/* End .ps-widget */}
-
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Master Plan</h4>
-                <div className="row">
-                  <MasterPlan master_plan={property?.master_plan} />
-                </div>
-              </div> */}
-
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <div className="row">
-                  <div className="product_single_content mb50">
-                    <div className="mbp_pagination_comments">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div className="total_review d-flex align-items-center justify-content-between mb20">
-                            <h6 className="fz17 mb15">Property Images</h6>
-                          </div>
-                        </div>
-
-                        <AdminInteriorImages interior={property?.photos} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+              </div>
             </div>
             {/* End .col-8 */}
 
@@ -718,96 +749,6 @@ const SingleV5 = () => {
           {/* End .row */}
         </div>
 
-        {/* End .container */}
-      </section>
-      {/* End Property All Single V4  */}
-
-      {/* Property Slider Gallery */}
-
-      {/* End Property Slider Gallery */}
-
-      {/* Property All Single V4 */}
-      <section className="pt30 pb90 bgc-f7">
-        <div className="container">
-          {/* End .row */}
-          {property && contactInfo && (
-            <PDFViewer style={{ width: "100%", height: "100vh" }}>
-              <OffPlanPropertyPDF
-                property={property}
-                qbc_email={contactInfo?.email}
-                qbc_phone={contactInfo?.hotline}
-                qbc_copyright={contactInfo?.copyright}
-              />
-            </PDFViewer>
-          )}
-          <div className="row mt50 mt30-lg">
-            <div className="col-lg-6">
-              {/* End .ps-widget */}
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Unit Plans</h4>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="accordion-style1 style2">
-                      <FloorPlans property={property} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* End .ps-widget */}
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Master Plan</h4>
-                <div className="row">
-                  <MasterPlan master_plan={property?.master_plan} />
-                </div>
-              </div>
-            </div>
-            {/* End .col-8 */}
-
-            <div className="col-lg-6">
-              <div className="column">
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
-                  <div className="row">
-                    <PropertyNearby map_points={property?.map_points} />
-                  </div>
-                </div>
-                {/* End What&apos;s Nearby? */}
-
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Payment Plans</h4>
-                  <div className="row">
-                    <div className="col-md-12">
-                      {/* <WalkScore /> */}
-                      <PaymentPlans payment_plans={property?.payment_plans} />
-                    </div>
-                  </div>
-                </div>
-                {/* End Walkscore */}
-
-                {/* End .360° Virtual Tour */}
-
-                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
-                  <div className="row">
-                    <h4 className="title fz17 mb30 pl20">Building Details</h4>
-                    <BuildingDetails buildings={property?.buildings} />
-                  </div>
-                </div>
-
-                {/* End PropertyViews */}
-
-                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                  <h4 className="title fz17 mb30">Home Value</h4>
-                  <div className="row">
-                    <HomeValueChart />
-                  </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
-          {/* End .row */}
-        </div>
         {/* End .container */}
       </section>
       {/* End Property All Single V4  */}

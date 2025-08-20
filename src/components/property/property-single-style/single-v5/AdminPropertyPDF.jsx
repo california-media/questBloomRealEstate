@@ -759,16 +759,71 @@ const renderHtmlToPdf = (htmlString) => {
 const getStaticOpenStreetMapUrl = (
   embedUrl,
   zoom = 14,
-  width = 1200,
-  height = 600
+  width = 600,
+  height = 300,
+  mapType = "roadmap"
 ) => {
-  const match = embedUrl?.match(/!2d([-.\d]+)!3d([-.\d]+)/);
+  let lat, lon;
+
+  // Try multiple patterns to extract coordinates
+
+  // Pattern 1: !3d{lat}!4d{lng} or !2d{lng}!3d{lat} - most reliable for Google Maps embed URLs
+  let match = embedUrl?.match(/!3d([-\d.]+)!4d([-\d.]+)/);
   if (match) {
-    const lon = match[1];
-    const lat = match[2];
-    return `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=${width}&height=${height}&center=lonlat:${lon},${lat}&zoom=${zoom}&scale=3&format=png&marker=lonlat:${lon},${lat};type:material;color:%23ff0000;size:large&apiKey=c43591606adf464db4c5dc378424a6a0`;
+    lat = match[1];
+    lon = match[2];
+  } else {
+    // Pattern 2: !2d{lng}!3d{lat} (alternative order)
+    match = embedUrl?.match(/!2d([-\d.]+)!3d([-\d.]+)/);
+    if (match) {
+      lon = match[1];
+      lat = match[2];
+    } else {
+      // Pattern 3: @{lat},{lng},{zoom}z (direct coordinate format)
+      match = embedUrl?.match(/@([-\d.]+),([-\d.]+),(\d+z)/);
+      if (match) {
+        lat = match[1];
+        lon = match[2];
+      } else {
+        // Pattern 4: Extract from the coordinate string like "24°28'09.4"N 54°21'00.5"E"
+        const coordMatch = embedUrl?.match(
+          /2z([-\d.]+)%C2%B0([-\d.]+)'([-\d.]+)\.?\d*"N%20([-\d.]+)%C2%B0([-\d.]+)'([-\d.]+)\.?\d*"E/
+        );
+        if (coordMatch) {
+          // Convert degrees, minutes, seconds to decimal
+          const latDeg = parseFloat(coordMatch[1]);
+          const latMin = parseFloat(coordMatch[2]);
+          const latSec = parseFloat(coordMatch[3]);
+          const lonDeg = parseFloat(coordMatch[4]);
+          const lonMin = parseFloat(coordMatch[5]);
+          const lonSec = parseFloat(coordMatch[6]);
+
+          lat = latDeg + latMin / 60 + latSec / 3600;
+          lon = lonDeg + lonMin / 60 + lonSec / 3600;
+        }
+      }
+    }
   }
+
+  if (lat && lon) {
+    console.log("Extracted coordinates:", lat, lon);
+
+    // Validate coordinates are reasonable
+    if (Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+      console.log("Invalid coordinates detected:", lat, lon);
+      return null;
+    }
+
+    // Google Maps API key (replace with your own)
+    const apiKey = "AIzaSyDI7fHV-ZQ0zqsNNBohTDRruAhGTZH3tks";
+
+    return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&zoom=${zoom}&size=${width}x${height}&maptype=${mapType}&markers=color:red%7C${lat},${lon}&key=${apiKey}`;
+  }
+
+  console.log("Could not extract coordinates from URL:", embedUrl);
+  return null;
 };
+
 const capitalizeFirstLetter = (str) => {
   if (!str || typeof str !== "string") return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -966,8 +1021,8 @@ const AdminPropertyPDF = ({
                 <Image
                   src="/images/Questrealstatewhite.png"
                   style={{
-                    width: 110,
-                    height: 30,
+                    width: 180,
+                    height: 50,
                     marginRight: 10,
                   }}
                 />
@@ -1548,7 +1603,6 @@ const AdminPropertyPDF = ({
 
         <ContactFooter />
       </Page>
-
       {/* Interior Images */}
       {property?.photos?.length > 0 && (
         <Page size={[920, 540]}>
@@ -1653,43 +1707,7 @@ const AdminPropertyPDF = ({
         </Page>
       )}
 
-      {/* Amenities & Features */}
-      {property?.amenities && property?.amenities.length > 0 && (
-        <Page size={[920, 540]} style={styles.contentPage}>
-          <Text style={styles.pageTitle}>Amenities & Features</Text>
-
-          <View style={styles.amenitiesGrid}>
-            {property.amenities.slice(0, 8).map((amenity, index) => (
-              <View key={index} style={styles.amenityCard}>
-                {amenity?.image_url ? (
-                  <Image
-                    src={`${adminBaseUrl}/api/images${amenity.image_url}?format=jpeg`}
-                    style={styles.amenityPhoto}
-                  />
-                ) : (
-                  <View
-                    style={[
-                      styles.amenityPhoto,
-                      {
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#f3f4f6",
-                      },
-                    ]}
-                  >
-                    <Icon type="no-image" size={24} color="#9ca3af" />
-                  </View>
-                )}
-                <Text style={styles.amenityText}>{amenity.title || "N/A"}</Text>
-              </View>
-            ))}
-          </View>
-
-          <ContactFooter />
-        </Page>
-      )}
-
-      {/* Page 4 - Location & Contact */}
+      {/* Page 4 - Location  */}
       <Page size={[920, 540]}>
         <View>
           {/* Map rendering with old property structure */}
@@ -1745,6 +1763,43 @@ const AdminPropertyPDF = ({
 
         <ContactFooter />
       </Page>
+
+      {/* Amenities & Features */}
+      {property?.amenities && property?.amenities.length > 0 && (
+        <Page size={[920, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Amenities & Features</Text>
+
+          <View style={styles.amenitiesGrid}>
+            {property.amenities.slice(0, 8).map((amenity, index) => (
+              <View key={index} style={styles.amenityCard}>
+                {amenity?.image_url ? (
+                  <Image
+                    src={`${adminBaseUrl}/api/images${amenity.image_url}?format=jpeg`}
+                    style={styles.amenityPhoto}
+                  />
+                ) : (
+                  <View
+                    style={[
+                      styles.amenityPhoto,
+                      {
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#f3f4f6",
+                      },
+                    ]}
+                  >
+                    <Icon type="no-image" size={24} color="#9ca3af" />
+                  </View>
+                )}
+                <Text style={styles.amenityText}>{amenity.title || "N/A"}</Text>
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter />
+        </Page>
+      )}
+
       <Page size={[920, 540]}>
         <View style={{ height: "100%" }}>
           <View

@@ -306,16 +306,31 @@ const AdminSingleV5 = () => {
                   photos={property?.photos}
                   googleMapsLink={property?.google_maps_link}
                 />
-                <div className="row sp-v5-property-details ">
+                <div
+                  className={`row ${
+                    property?.year_built
+                      ? "sp-v5-property-details"
+                      : "sp-v5-property-details-admin"
+                  }`}
+                >
                   <AdminPropertyHeader
                     property={property}
                     prefixedId={prefixedId}
                   />
                 </div>
               </div>
-
-              <div className="ps-widget    mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb20">Visualisations</h4>
+              {/* {property && contactInfo && (
+                <PDFViewer style={{ width: "100%", height: "100vh" }}>
+                  <AdminPropertyPDF
+                    property={property}
+                    qbc_email={contactInfo?.email}
+                    qbc_phone={contactInfo?.hotline}
+                    qbc_copyright={contactInfo?.copyright}
+                  />
+                </PDFViewer>
+              )} */}
+              <div className="ps-widget    mb40 overflow-hidden position-relative">
+                <h3 className="title  mb20">Visualisations</h3>
                 <div className="row">
                   <AdminImageTabs photos={property?.photos} />
                 </div>
@@ -325,8 +340,8 @@ const AdminSingleV5 = () => {
                 <div className="row"></div>
               </div> */}
 
-              <div className="ps-widget  mt40  mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb15">Overview</h4>
+              <div className="ps-widget  mt40  mb40 overflow-hidden position-relative">
+                <h3 className="title  mb15">Overview</h3>
                 <div className="row">
                   {property?.property_description ? (
                     <p
@@ -423,7 +438,7 @@ const AdminSingleV5 = () => {
               {/* End .ps-widget */}
 
               <div className="ps-widget  p10 overflow-hidden position-relative">
-                <h4 className="title  fz17">Facilities</h4>
+                <h3 className="title  ">Facilities</h3>
                 <div className="row  justify-content-center">
                   <AdminPropertyFeaturesAminites
                     amenities={property?.amenities}
@@ -692,19 +707,6 @@ const AdminSingleV5 = () => {
       <section className="footer-style1 pt60 pb-0">
         <Footer />
       </section>
-
-      {/* End .row */}
-      {/* {property && contactInfo && (
-            <PDFViewer style={{ width: "100%", height: "100vh" }}>
-              <AdminPropertyPDF
-                property={property}
-                qbc_email={contactInfo?.email}
-                qbc_phone={contactInfo?.hotline}
-                qbc_copyright={contactInfo?.copyright}
-              />
-            </PDFViewer>
-          )} */}
-      {/* End Our Footer */}
 
       <div className="col-lg-3 ">
         <div className="column">

@@ -22,6 +22,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
     phone: "",
     enquiry: "",
   });
+
   const handlePrintClick = async () => {
     if (!property || !contactInfo) return;
 

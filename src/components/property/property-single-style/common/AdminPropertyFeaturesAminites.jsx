@@ -5,15 +5,6 @@ import { adminBaseUrl } from "@/api/adminApi";
 import { ImageIcon } from "lucide-react";
 
 const AdminPropertyFeaturesAminites = ({ amenities = [] }) => {
-  // Group amenities into columns of 2 for better image display
-  // const featuresAmenitiesData =
-  //   amenitiesData.length > 0
-  //     ? Array.from(
-  //         { length: Math.ceil(amenitiesData.length / 2) },
-  //         (_, colIndex) => amenitiesData.slice(colIndex * 2, (colIndex + 1) * 2)
-  //       )
-  //     : [];
-
   if (!amenities || amenities?.length === 0) {
     return (
       <div className="col-md-12">
@@ -28,18 +19,8 @@ const AdminPropertyFeaturesAminites = ({ amenities = [] }) => {
     <div className={`row w-100 align-items-center  `}>
       <div className="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-3 pl0 mt-0">
         {amenities.map((amenity, i) => (
-          <div className="col " key={i}>
-            {/* <img
-              src={adminBaseUrl + amenity.image_url}
-              className="card-img-top img-fluid rounded"
-              alt={amenity.title}
-              style={{
-                height: "200px",
-                aspectRatio: "1/1",
-                objectFit: "cover",
-              }}
-            /> */}
-            <div className="card border-0">
+          <div className="col d-flex flex-column" key={i}>
+            <div className="card border-0 flex-grow-1">
               {amenity.image_url ? (
                 <img
                   src={adminBaseUrl + amenity.image_url}
@@ -67,8 +48,8 @@ const AdminPropertyFeaturesAminites = ({ amenities = [] }) => {
                 </div>
               )}
 
-              <div className="facility-info flex-grow-1 pt10 pb25 p15">
-                <h6 className="mb-1 text-dark">{amenity.title}</h6>
+              <div className="facility-info flex-grow-1 pt10 pb15 p15">
+                <h6 className="mb-0 text-dark">{amenity.title}</h6>
                 <small className="text-muted">{amenity?.image_source}</small>
               </div>
             </div>

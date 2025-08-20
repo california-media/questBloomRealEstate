@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleMapEmbed from "./property-gallery/Map";
+import PropertyNearby from "../common/PropertyNearby";
 
 const PropertyAddress = ({ property, coordinates }) => {
   const coords = coordinates?.split(",")?.map(Number);
@@ -15,6 +16,9 @@ const PropertyAddress = ({ property, coordinates }) => {
         <p className="text mt20 pl20">
           {location?.charAt(0).toUpperCase() + location?.slice(1) || "N/A"}
         </p>
+        <div className="p20 pt0">
+          <PropertyNearby map_points={property?.map_points} />
+        </div>
       </div>
       {/* End col */}
     </>

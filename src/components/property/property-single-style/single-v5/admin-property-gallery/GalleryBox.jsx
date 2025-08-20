@@ -27,7 +27,7 @@ const GalleryBox = ({ photos = [], loading = true }) => {
           <SwiperSlide>
             <div
               style={{
-                aspectRatio: "3.2",
+                aspectRatio: "2",
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
