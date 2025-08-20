@@ -54,7 +54,7 @@ const AdminPropertyHeader = ({ property, prefixedId }) => {
     <>
       <div
         className="col-lg-8 w-100 "
-        style={{ padding: "50px", paddingTop: "30px", paddingLeft: "30px" }}
+        style={{ padding: "50px", paddingTop: "30px", paddingLeft: "30px"  }}
       >
         <div className="single-property-content mb30-md ">
           {getYearsUntilCompletion() && (
