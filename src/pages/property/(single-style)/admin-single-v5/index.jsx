@@ -277,7 +277,6 @@ const AdminSingleV5 = () => {
     }
     setIsFavorite(!isFavorite);
   };
-  console.log(property);
 
   return (
     <>
@@ -621,7 +620,9 @@ const AdminSingleV5 = () => {
                       >
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h5 className="modal-title">Download PDF</h5>
+                            <h5 className="modal-title">
+                              Generate AI Presentation
+                            </h5>
                             <button
                               type="button"
                               className="btn-close"

@@ -362,12 +362,14 @@ const AdminReviewBoxForm = ({
                 ></span>
                 <span className="visually-hidden">Loading...</span>
                 <span>
-                  {downloadPDF ? "Generating PDF" : "Submitting Enquiry"}
+                  {downloadPDF
+                    ? "Generating AI presentation"
+                    : "Submitting Enquiry"}
                 </span>
               </div>
             ) : (
               <>
-                {downloadPDF ? "Download PDF" : "Submit Enquiry"}
+                {downloadPDF ? "Generate AI presentation" : "Submit Enquiry"}
                 <i className="fal fa-arrow-right-long" />
               </>
             )}

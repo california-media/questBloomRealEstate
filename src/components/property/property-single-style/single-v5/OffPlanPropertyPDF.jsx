@@ -776,8 +776,8 @@ const getGoogleMapsRedirectUrl = (coordinates) => {
 const getStaticOpenStreetMapUrl = (
   coordinates,
   zoom = 14,
-  width = 600,
-  height = 300,
+  width = 1200,
+  height = 600,
   mapType = "roadmap",
   markerColor = "red"
 ) => {
@@ -815,7 +815,7 @@ const getStaticOpenStreetMapUrl = (
       : "roadmap";
 
     // Build the URL with .png extension
-    return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${validatedZoom}&size=${validatedWidth}x${validatedHeight}&maptype=${validatedMapType}&markers=color:${markerColor}%7C${latitude},${longitude}&key=${apiKey}&format=png`;
+    return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${validatedZoom}&scale=2&size=${validatedWidth}x${validatedHeight}&maptype=${validatedMapType}&markers=color:${markerColor}%7C${latitude},${longitude}&key=${apiKey}&format=png`;
   } catch (error) {
     console.error("Error generating Google Maps static URL:", error);
     return null;
@@ -1604,7 +1604,7 @@ const OffPlanPropertyPDF = ({
 
       {/* Page 4 - Location & Contact */}
       <Page size={[920, 540]}>
-        <View>
+        <View style={{ height: "100%", marginBottom: 0 }}>
           {/* Add the map image */}
           {property?.coordinates && (
             <>

@@ -817,7 +817,7 @@ const getStaticOpenStreetMapUrl = (
     // Google Maps API key (replace with your own)
     const apiKey = "AIzaSyDI7fHV-ZQ0zqsNNBohTDRruAhGTZH3tks";
 
-    return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&zoom=${zoom}&size=${width}x${height}&maptype=${mapType}&markers=color:red%7C${lat},${lon}&key=${apiKey}`;
+    return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&zoom=${zoom}&scale=2&size=${width}x${height}&maptype=${mapType}&markers=color:red%7C${lat},${lon}&key=${apiKey}`;
   }
 
   console.log("Could not extract coordinates from URL:", embedUrl);
@@ -1709,7 +1709,7 @@ const AdminPropertyPDF = ({
 
       {/* Page 4 - Location  */}
       <Page size={[920, 540]}>
-        <View>
+        <View style={{ height: "100%", marginBottom: 0 }}>
           {/* Map rendering with old property structure */}
           {property?.google_maps_link ? (
             <>
