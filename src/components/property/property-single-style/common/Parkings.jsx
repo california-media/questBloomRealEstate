@@ -23,7 +23,7 @@ const Parkings = ({ parkings = [] }) => {
               backgroundColor: "#ffffff",
             }}
           >
-            <div className="card-body" style={{ padding: "10px" }}>
+            <div className="card-body" style={{ padding: "15px" }}>
               {/* Header with Icon and Title */}
 
               {/* Payment Steps */}

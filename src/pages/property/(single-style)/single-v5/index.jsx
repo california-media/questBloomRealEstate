@@ -427,7 +427,7 @@ const SingleV5 = () => {
                 <h4 className="title fz17 mb20">Project Video</h4>
                 <div className="row"></div>
               </div> */}
-              <div className="ps-widget mb30  overflow-hidden position-relative">
+              <div className="ps-widget mb-0  overflow-hidden position-relative">
                 <h3 className="title">Typical units and prices</h3>
                 <div className="row  justify-content-center">
                   <FloorPlans units={property?.unit_blocks} />
@@ -518,7 +518,7 @@ const SingleV5 = () => {
                   </div>
                 )}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb40 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white  bdrs12 default-box-shadow2 pt30  mb40 overflow-hidden position-relative">
                 <h4 className="title fz17 mb25 pl15">
                   <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
