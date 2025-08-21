@@ -23,7 +23,7 @@ import WalkScore from "@/components/property/property-single-style/common/WalkSc
 const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
 import { useLocation, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "@/api/axios";
 import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
 import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
@@ -78,6 +78,8 @@ const SingleV5 = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
   const [contactInfo, setContactInfo] = useState({});
+  const [isSticky, setIsSticky] = useState(false);
+  const boxRef = useRef(null);
 
   useEffect(() => {
     const fetchContactInfo = async () => {
@@ -93,6 +95,16 @@ const SingleV5 = () => {
     };
 
     fetchContactInfo();
+
+    const handleScroll = () => {
+      if (!boxRef.current) return;
+      const { top } = boxRef.current.getBoundingClientRect();
+      // when box reaches 100px from top -> stick it
+      setIsSticky(window.scrollY > boxRef.current.offsetTop - 117);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   // Fetch menu items from API (same logic as MainMenu)
   useEffect(() => {
@@ -588,7 +600,7 @@ const SingleV5 = () => {
             {/* End .col-8 */}
 
             <div className="col-lg-4 ">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
                 <h4 className="title fz19 mb7">{property?.name}</h4>
 
                 <div className=" mb20  d-md-flex align-items-center">
@@ -736,7 +748,15 @@ const SingleV5 = () => {
                   )}
                 </div>
               </div>
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div ref={boxRef}></div>
+              <div
+                style={{
+                  position: isSticky ? "fixed" : "static",
+                  top: isSticky ? "117px" : "auto",
+                  width: isSticky ? "508.39px" : "auto", // prevent shrinking
+                }}
+                className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 "
+              >
                 <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                 <div className="row">
                   <ReviewBoxForm
