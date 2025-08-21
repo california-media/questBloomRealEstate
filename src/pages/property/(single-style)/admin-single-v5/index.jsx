@@ -90,7 +90,9 @@ const AdminSingleV5 = () => {
       : false
   );
   const [isSticky, setIsSticky] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
   const boxRef = useRef(null);
+  const bottomRef = useRef(null);
   const { adminDetailedListings, setAdminDetailedListings } =
     usePropertyStore();
   const [contactInfo, setContactInfo] = useState({});
@@ -112,15 +114,23 @@ const AdminSingleV5 = () => {
     const handleScroll = () => {
       if (!boxRef.current) return;
       const { top } = boxRef.current.getBoundingClientRect();
-      // when box reaches 100px from top -> stick it
+      // when box reaches 120px from top -> stick it
       setIsSticky(window.scrollY > boxRef.current.offsetTop - 120);
+
+      // end logic
+      if (bottomRef.current) {
+        const bottomTop =
+          bottomRef.current.getBoundingClientRect().top + window.scrollY;
+        const viewportBottom = window.scrollY + window.innerHeight;
+
+        setIsEnd(viewportBottom >= bottomTop);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   // Fetch menu items from API (same logic as MainMenu)
-
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -503,7 +513,181 @@ const AdminSingleV5 = () => {
             </div>
             {/* End .col-8 */}
 
-            <div className="col-lg-4 ">
+            <div
+              className={`col-lg-4 d-lg-block d-none position-relative`}
+              style={{ marginBottom: "27px" }}
+            >
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
+                <h4 className="title fz19 mb7">{property?.property_title}</h4>
+
+                <div className=" mb20 d-md-flex align-items-center">
+                  <p
+                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {property?.location || "Location"}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h4
+                    className="price mb-0 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h4>
+                  <h3 className="price mb-0 d-lg-none">
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h3>
+                  <div className="single-property-content">
+                    <div className="property-action text-lg-end">
+                      <div className="d-flex  align-items-center justify-content-lg-end">
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                            className="pb5"
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleShareClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleShareClick}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {(() => {
+                  const pricePerSqft = getPricePerSqftDisplay();
+                  return pricePerSqft ? (
+                    <>
+                      <p
+                        className="text space fz13 d-none d-lg-block"
+                        style={styles.textShadowDesktop}
+                      >
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                      <p className="text space fz13 d-lg-none">
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                    </>
+                  ) : null;
+                })()}
+                <div className="row mt20">
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2 luxury-heading w-100"
+                      onClick={() => setShowModal(true)}
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        border: "none",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      <Sparkles
+                        strokeWidth={1.5}
+                        fill="white"
+                        className="mr10"
+                      />
+                      AI Presentation
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show "
+                      onClick={() => setShowModal(false)}
+                    >
+                      <div
+                        className="modal-dialog  modal-dialog-centered modal-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">AI Presentation</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <AdminReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                                contactInfo={contactInfo}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div ref={boxRef}></div>
+              <div
+                className={`ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 `}
+                style={{
+                  position: isEnd ? "absolute" : isSticky ? "fixed" : "static",
+                  top: isSticky && !isEnd ? "120px" : "auto",
+                  bottom: isEnd ? "0" : "auto",
+                  width: isSticky ? "508.39px" : "auto", // prevent shrinking
+                }}
+              >
+                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <div className="row">
+                  <AdminReviewBoxForm
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* on mobile */}
+
+            <div className="col-lg-4 d-lg-none d-block">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
                 <h4 className="title fz19 mb7">{property?.property_title}</h4>
 
@@ -653,15 +837,7 @@ const AdminSingleV5 = () => {
                 </div>
               </div>
               <div
-                ref={boxRef}
-              ></div>
-              <div
                 className={`ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 `}
-                style={{
-                  position: isSticky ? "fixed" : "static",
-                  top: isSticky ? "120px" : "auto",
-                  width: isSticky ? "508.39px" : "auto", // prevent shrinking
-                }}
               >
                 <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                 <div className="row">
@@ -672,168 +848,6 @@ const AdminSingleV5 = () => {
                 </div>
               </div>
             </div>
-
-            {/* Mobile, non sticky */}
-            {/* <div className="col-lg-4 d-block d-lg-none ">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz19 mb7">{property?.property_title}</h4>
-
-                <div className=" mb20 d-md-flex align-items-center">
-                  <p
-                    className="text fz13 mb-0 pr10 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
-                    {property?.location || "Location"}
-                  </p>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <h4
-                    className="price mb-0 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h4>
-                  <h3 className="price mb-0 d-lg-none">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h3>
-                  <div className="single-property-content">
-                    <div className="property-action text-lg-end">
-                      <div className="d-flex  align-items-center justify-content-lg-end">
-                        <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                            className="pb5"
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 d-lg-none"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleShareClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                        <a
-                          className="icon mr10 d-lg-none"
-                          href="#"
-                          onClick={handleShareClick}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {(() => {
-                  const pricePerSqft = getPricePerSqftDisplay();
-                  return pricePerSqft ? (
-                    <>
-                      <p
-                        className="text space fz13 d-none d-lg-block"
-                        style={styles.textShadowDesktop}
-                      >
-                        Starting from AED {pricePerSqft} per sqft
-                      </p>
-                      <p className="text space fz13 d-lg-none">
-                        Starting from AED {pricePerSqft} per sqft
-                      </p>
-                    </>
-                  ) : null;
-                })()}
-                <div className="row mt20">
-                  <div className="row">
-                    <button
-                      type="button"
-                      className="ud-btn btn-white2 luxury-heading w-100"
-                      onClick={() => setShowModal(true)}
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: 400,
-                        border: "none",
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      <Sparkles
-                        strokeWidth={1.5}
-                        fill="white"
-                        className="mr10"
-                      />
-                      AI Presentation
-                      <i className="fal fa-arrow-right-long" />
-                    </button>
-                  </div>
-                  {showModal && (
-                    <div
-                      style={{ display: "block" }}
-                      tabIndex="-1"
-                      className=" modal fade show "
-                      onClick={() => setShowModal(false)}
-                    >
-                      <div
-                        className="modal-dialog  modal-dialog-centered modal-lg"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">AI Presentation</h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              onClick={() => setShowModal(false)}
-                            ></button>
-                          </div>
-                          <div className="modal-body  pb50 px-4">
-                            <div className="row">
-                              <AdminReviewBoxForm
-                                property={property}
-                                prefixedId={prefixedId}
-                                downloadPDF={true}
-                                contactInfo={contactInfo}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
-                <div className="row">
-                  <AdminReviewBoxForm
-                    property={property}
-                    prefixedId={prefixedId}
-                  />
-                </div>
-              </div>
-            </div> */}
           </div>
 
           {/* End .row */}
@@ -844,7 +858,7 @@ const AdminSingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt80 pb90">
+      <section className="similar-items pt80 pb90" ref={bottomRef}>
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
@@ -888,8 +902,8 @@ const AdminSingleV5 = () => {
         <Footer />
       </section>
 
-      <div className="col-lg-3 ">
-        <div className="column">
+      {/* <div className="col-lg-3 ">
+        <div className="column"> */}
           {/* <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
                   <h4 className="form-title mb5">Schedule a tour</h4>
                   <p className="text">Choose your preferred day</p>
@@ -897,12 +911,12 @@ const AdminSingleV5 = () => {
                 </div> */}
           {/* End .Schedule a tour */}
 
-          <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-            <h4 className="title fz17 mb30">Details</h4>
+          {/* <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+            <h4 className="title fz17 mb30">Details</h4> */}
             {/* <InfoWithForm /> */}
             {/* <SingleAgentInfo developer_data={property?.developer_data} /> */}
-            <ExtraPropertyDetails property={property} />
-          </div>
+            {/* <ExtraPropertyDetails property={property} />
+          </div> */}
 
           {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30 d-flex align-items-center">
@@ -1009,8 +1023,8 @@ const AdminSingleV5 = () => {
                     <HomeValueChart />
                   </div>
                 </div> */}
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </>
   );
 };

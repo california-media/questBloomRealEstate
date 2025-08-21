@@ -80,6 +80,8 @@ const SingleV5 = () => {
   const [contactInfo, setContactInfo] = useState({});
   const [isSticky, setIsSticky] = useState(false);
   const boxRef = useRef(null);
+  const bottomRef = useRef(null);
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     const fetchContactInfo = async () => {
@@ -99,8 +101,17 @@ const SingleV5 = () => {
     const handleScroll = () => {
       if (!boxRef.current) return;
       const { top } = boxRef.current.getBoundingClientRect();
-      // when box reaches 100px from top -> stick it
-      setIsSticky(window.scrollY > boxRef.current.offsetTop - 117);
+      // when box reaches 120px from top -> stick it
+      setIsSticky(window.scrollY > boxRef.current.offsetTop - 120);
+
+      // end logic
+      if (bottomRef.current) {
+        const bottomTop =
+          bottomRef.current.getBoundingClientRect().top + window.scrollY;
+        const viewportBottom = window.scrollY + window.innerHeight;
+
+        setIsEnd(viewportBottom >= bottomTop);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -599,7 +610,10 @@ const SingleV5 = () => {
 
             {/* End .col-8 */}
 
-            <div className="col-lg-4 ">
+            <div
+              className="col-lg-4 d-none d-lg-block position-relative"
+              style={{ marginBottom: "27px" }}
+            >
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
                 <h4 className="title fz19 mb7">{property?.name}</h4>
 
@@ -751,12 +765,175 @@ const SingleV5 = () => {
               <div ref={boxRef}></div>
               <div
                 style={{
-                  position: isSticky ? "fixed" : "static",
-                  top: isSticky ? "117px" : "auto",
+                  position: isEnd ? "absolute" : isSticky ? "fixed" : "static",
+                  top: isSticky && !isEnd ? "120px" : "auto",
+                  bottom: isEnd ? "0" : "auto",
                   width: isSticky ? "508.39px" : "auto", // prevent shrinking
                 }}
                 className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 "
               >
+                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <div className="row">
+                  <ReviewBoxForm
+                    property={property}
+                    prefixedId={prefixedId}
+                    downloadPDF={false}
+                    contactInfo={contactInfo}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* on mobile */}
+            <div className="col-lg-4 d-lg-none d-block ">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
+                <h4 className="title fz19 mb7">{property?.name}</h4>
+
+                <div className=" mb20  d-md-flex align-items-center">
+                  <p
+                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {property?.area}, {property?.country}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h4
+                    className="price mb-0 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h4>
+                  <h3 className="price mb-0 d-lg-none">
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h3>
+                  <div className="single-property-content">
+                    <div className="property-action text-lg-end">
+                      <div className="d-flex  align-items-center justify-content-lg-end">
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                            className="pb5"
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleShareClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleShareClick}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {(() => {
+                  const pricePerSqft = getPricePerSqftDisplay();
+                  return pricePerSqft ? (
+                    <>
+                      <p
+                        className="text space fz13 d-none d-lg-block"
+                        style={styles.textShadowDesktop}
+                      >
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                      <p className="text space fz13 d-lg-none">
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                    </>
+                  ) : null;
+                })()}
+                <div className="row mt20">
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2 luxury-heading w-100"
+                      onClick={() => setShowModal(true)}
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        border: "none",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      <Sparkles
+                        strokeWidth={1.5}
+                        fill="white"
+                        className="mr10"
+                      />
+                      AI Presentation
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show "
+                      onClick={() => setShowModal(false)}
+                    >
+                      <div
+                        className="modal-dialog  modal-dialog-centered modal-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">AI Presentation</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <ReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                                contactInfo={contactInfo}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
                 <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                 <div className="row">
                   <ReviewBoxForm
@@ -778,7 +955,7 @@ const SingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt80 pb90">
+      <section className="similar-items pt80 pb90" ref={bottomRef}>
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
