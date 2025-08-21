@@ -101,8 +101,8 @@ const SingleV5 = () => {
     const handleScroll = () => {
       if (!boxRef.current) return;
       const { top } = boxRef.current.getBoundingClientRect();
-      // when box reaches 120px from top -> stick it
-      setIsSticky(window.scrollY > boxRef.current.offsetTop - 120);
+      // when box reaches 120px from top -> stick it (after default header fix, +10 is working only)
+      setIsSticky(window.scrollY > boxRef.current.offsetTop + 10);
 
       // end logic
       if (bottomRef.current) {
