@@ -6,7 +6,14 @@ import {
   UserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+const formatCompletionDate = (dateString) => {
+  if (!dateString) return "No info";
 
+  const date = new Date(dateString);
+  const quarter = Math.ceil((date.getMonth() + 1) / 3);
+  const year = date.getFullYear();
+  return `Q${quarter} ${year}`;
+};
 const FeaturedListings = ({ data, colstyle }) => {
   const location = useLocation();
   const basePath = location.pathname.split("/")[1];
@@ -60,22 +67,19 @@ const FeaturedListings = ({ data, colstyle }) => {
                 </div>
 
                 <div className="list-price">
-                  {Number(listing.price.split("$")[1]) === 0
-                    ? "Ask for price"
-                    : "AED " +
-                      Number(listing.price.split("$")[1]).toLocaleString()}
+                  {listing?.sale_status || "No info"}
                 </div>
               </div>
-              <div className="list-content flex-grow-1  d-flex flex-column justify-content-between ">
-                <div>
+              <div className="list-content flex-grow-1 p-3  d-flex flex-column justify-content-between ">
+                <div >
                   <h6 className="list-title">
                     <Link to={`/${pathPrefix}/${getPrefixedId(listing)}`}>
                       {listing.title}
                     </Link>
                   </h6>
-                  <p className="list-text">{listing.location}</p>
+                  <p className="list-text mb-0">{listing.location}</p>
                 </div>
-                <div className="list-meta d-flex align-items-center r">
+                {/* <div className="list-meta d-flex align-items-center r">
                   <a href="#">
                     <UserIcon size={16} color="gray" className="mb-1" />{" "}
                     {listing.developer}
@@ -92,16 +96,25 @@ const FeaturedListings = ({ data, colstyle }) => {
                     <Clock size={16} color="gray" className="mb-1" />{" "}
                     {listing.yearBuilding}
                   </a>
-                </div>
-                <hr className="mt-2 mb-2" />
-                <div className="list-meta2 d-flex justify-content-between align-items-center">
+                </div> */}
+                <hr className="mt-1 mb-1 y" style={{ borderColor: "gray" }}  />
+                <div className="list-meta2 d-flex   justify-content-between align-items-center">
+                  <div >
+                 
+                    Price from{" "}
+                    <h6 className="fw-semibold pb-0 mb-0 ">
+                      {Number(listing.price.split("$")[1]) === 0
+                        ? "Ask for price"
+                        : "AED " +
+                          Number(listing.price.split("$")[1]).toLocaleString()}
+                    </h6>
+                  </div>
                   <div>
-                    <ChartNoAxesCombined
-                      className="mb-1"
-                      size={16}
-                      color="gray"
-                    />{" "}
-                    {listing.sale_status}
+                  
+                    Completion <h6 className="fw-semibold pb-0 mb-0 ">
+
+                      {formatCompletionDate(listing?.completion_datetime)}
+                    </h6>
                   </div>
                 </div>
               </div>

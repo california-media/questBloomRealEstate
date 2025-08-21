@@ -25,8 +25,10 @@ const PropertyHeader = ({ property, prefixedId }) => {
     const currentYear = new Date().getFullYear();
     const diff = completionYear - currentYear;
     return diff > 0
-      ? `${diff} years to completion`
-      : `Completed ${Math.abs(diff)} years ago`;
+      ? `${diff} year${diff === 1 ? "" : "s"} to completion`
+      : `Completed ${Math.abs(diff)} year${
+          Math.abs(diff) === 1 ? "" : "s"
+        } ago`;
   };
 
   // Get area range for price per sqft calculation
@@ -77,7 +79,7 @@ const PropertyHeader = ({ property, prefixedId }) => {
 
               {/* Mobile version */}
               <a
-                className="ff-heading bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm d-lg-none"
+                className="ff-heading bdrr1 fz15 pr10 mb10 ml10 ml0-sm bdrrn-sm d-lg-none"
                 href="#"
                 style={{
                   padding: "6px 12px",

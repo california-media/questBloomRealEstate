@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Quest Bloom  Real Estate LLC | Resale Listings",
+  title: "Quest Bloom Real Estate LLC | Resale Listings",
 };
 
 const BuyFull3Col = () => {

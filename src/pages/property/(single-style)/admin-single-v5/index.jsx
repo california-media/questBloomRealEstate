@@ -14,7 +14,7 @@ import AdminPropertyGallery from "@/components/property/property-single-style/si
 const isDev = import.meta.env.DEV;
 import MetaData from "@/components/common/MetaData";
 import { useLocation, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "@/api/axios";
 import SingleAgentInfo from "@/components/property/property-single-style/common/more-info/SingleAgentInfo";
 import FloorPlans from "@/components/property/property-single-style/common/FloorPlans";
@@ -89,7 +89,8 @@ const AdminSingleV5 = () => {
       ? JSON.parse(localStorage.getItem("favourites")).includes(prefixedId)
       : false
   );
-
+  const [isSticky, setIsSticky] = useState(false);
+  const boxRef = useRef(null);
   const { adminDetailedListings, setAdminDetailedListings } =
     usePropertyStore();
   const [contactInfo, setContactInfo] = useState({});
@@ -108,6 +109,15 @@ const AdminSingleV5 = () => {
     };
 
     fetchContactInfo();
+    const handleScroll = () => {
+      if (!boxRef.current) return;
+      const { top } = boxRef.current.getBoundingClientRect();
+      // when box reaches 100px from top -> stick it
+      setIsSticky(window.scrollY > boxRef.current.offsetTop - 120);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   // Fetch menu items from API (same logic as MainMenu)
 
@@ -295,10 +305,10 @@ const AdminSingleV5 = () => {
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
         >
-          <div className="row  justify-content-center ">
+          <div className="row  flex-wrap-reverse justify-content-center ">
             {/* dummy */}
             <div className="col-lg-2"></div>
-            <div className="col-lg-6">
+            <div className="col-lg-6 ">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2  mb30 overflow-hidden position-relative">
                 <AdminPropertyGallery
                   loading={loading}
@@ -494,11 +504,10 @@ const AdminSingleV5 = () => {
             {/* End .col-8 */}
 
             <div className="col-lg-4 ">
-              <div className="col-lg-4"></div>
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
                 <h4 className="title fz19 mb7">{property?.property_title}</h4>
 
-                <div className=" mb25 d-md-flex align-items-center">
+                <div className=" mb20 d-md-flex align-items-center">
                   <p
                     className="text fz13 mb-0 pr10 d-none d-lg-block"
                     style={styles.textShadowDesktop}
@@ -620,9 +629,7 @@ const AdminSingleV5 = () => {
                       >
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h5 className="modal-title">
-                              Generate AI Presentation
-                            </h5>
+                            <h5 className="modal-title">AI Presentation</h5>
                             <button
                               type="button"
                               className="btn-close"
@@ -645,7 +652,17 @@ const AdminSingleV5 = () => {
                   )}
                 </div>
               </div>
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              <div
+                ref={boxRef}
+              ></div>
+              <div
+                className={`ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 `}
+                style={{
+                  position: isSticky ? "fixed" : "static",
+                  top: isSticky ? "120px" : "auto",
+                  width: isSticky ? "508.39px" : "auto", // prevent shrinking
+                }}
+              >
                 <h4 className="title fz17 mb30">Submit an Enquiry</h4>
                 <div className="row">
                   <AdminReviewBoxForm
@@ -655,6 +672,168 @@ const AdminSingleV5 = () => {
                 </div>
               </div>
             </div>
+
+            {/* Mobile, non sticky */}
+            {/* <div className="col-lg-4 d-block d-lg-none ">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz19 mb7">{property?.property_title}</h4>
+
+                <div className=" mb20 d-md-flex align-items-center">
+                  <p
+                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {property?.location || "Location"}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h4
+                    className="price mb-0 d-none d-lg-block"
+                    style={styles.textShadowDesktop}
+                  >
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h4>
+                  <h3 className="price mb-0 d-lg-none">
+                    {getPriceDisplay() === "Ask for price"
+                      ? "Ask for price"
+                      : "AED " + getPriceDisplay()}
+                  </h3>
+                  <div className="single-property-content">
+                    <div className="property-action text-lg-end">
+                      <div className="d-flex  align-items-center justify-content-lg-end">
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                            className="pb5"
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleFavoriteClick}
+                        >
+                          <Heart
+                            fill={isFavorite ? "red" : "none"}
+                            color={isFavorite ? "red" : "currentColor"}
+                            size={20}
+                          />
+                        </a>
+
+                        <a
+                          className="icon mr10 d-none d-lg-block"
+                          href="#"
+                          onClick={handleShareClick}
+                          style={styles.textShadowDesktop}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                        <a
+                          className="icon mr10 d-lg-none"
+                          href="#"
+                          onClick={handleShareClick}
+                        >
+                          <span className="flaticon-share-1" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {(() => {
+                  const pricePerSqft = getPricePerSqftDisplay();
+                  return pricePerSqft ? (
+                    <>
+                      <p
+                        className="text space fz13 d-none d-lg-block"
+                        style={styles.textShadowDesktop}
+                      >
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                      <p className="text space fz13 d-lg-none">
+                        Starting from AED {pricePerSqft} per sqft
+                      </p>
+                    </>
+                  ) : null;
+                })()}
+                <div className="row mt20">
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="ud-btn btn-white2 luxury-heading w-100"
+                      onClick={() => setShowModal(true)}
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        border: "none",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      <Sparkles
+                        strokeWidth={1.5}
+                        fill="white"
+                        className="mr10"
+                      />
+                      AI Presentation
+                      <i className="fal fa-arrow-right-long" />
+                    </button>
+                  </div>
+                  {showModal && (
+                    <div
+                      style={{ display: "block" }}
+                      tabIndex="-1"
+                      className=" modal fade show "
+                      onClick={() => setShowModal(false)}
+                    >
+                      <div
+                        className="modal-dialog  modal-dialog-centered modal-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">AI Presentation</h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              onClick={() => setShowModal(false)}
+                            ></button>
+                          </div>
+                          <div className="modal-body  pb50 px-4">
+                            <div className="row">
+                              <AdminReviewBoxForm
+                                property={property}
+                                prefixedId={prefixedId}
+                                downloadPDF={true}
+                                contactInfo={contactInfo}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <div className="row">
+                  <AdminReviewBoxForm
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
+                </div>
+              </div>
+            </div> */}
           </div>
 
           {/* End .row */}

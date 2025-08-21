@@ -14,6 +14,15 @@ import mapApiDataToTemplateSingle from "@/utilis/mapApiDataToTemplateSingle";
 import LuxuryHeading from "./hero/LuxuryHeading";
 import usePropertyStore from "@/store/propertyStore";
 
+const formatCompletionDate = (dateString) => {
+  if (!dateString) return "No info";
+
+  const date = new Date(dateString);
+  const quarter = Math.ceil((date.getMonth() + 1) / 3);
+  const year = date.getFullYear();
+  return `Q${quarter} ${year}`;
+};
+
 const FeaturedListingsHome = ({ index, section, pageSections }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -160,22 +169,16 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                                       src={listing.image}
                                       alt="listing"
                                     />
-                                    {
+                                    {/* {
                                       <div className="sale-sticker-wrap">
                                         <div className="list-tag fz12">
                                           <span className="flaticon-electricity me-2" />
                                           FEATURED
                                         </div>
                                       </div>
-                                    }
+                                    } */}
                                     <div className="list-price">
-                                      {"AED " +
-                                        (Number(listing.price.split("$")[1]) ===
-                                        0
-                                          ? "Ask for price"
-                                          : Number(
-                                              listing.price.split("$")[1]
-                                            ).toLocaleString())}
+                                      {listing?.sale_status || "No info"}
                                     </div>
                                   </div>
 
@@ -184,56 +187,37 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                                       <h6 className="list-title d-flex justify-self-start justify-content-start">
                                         {listing.title}
                                       </h6>
-                                      <p className="list-text d-flex justify-content-start">
+                                      <p className="list-text d-flex  mb-0 justify-content-start">
                                         {listing.location}
                                       </p>
                                     </div>
 
-                                    <div className="list-meta d-flex gap-0 align-items-center">
-                                      <span className="text-start">
-                                        <UserIcon
-                                          size={16}
-                                          color="gray"
-                                          className="mb-1"
-                                        />{" "}
-                                        {listing.developer}
-                                      </span>
-                                      <span className="text-start">
-                                        {listing.post_handover ? (
-                                          <Check
-                                            size={16}
-                                            color="gray"
-                                            className="m-1"
-                                          />
-                                        ) : (
-                                          <CircleDot
-                                            size={16}
-                                            color="gray"
-                                            className="m-1"
-                                          />
-                                        )}
-                                        {listing.post_handover
-                                          ? "Post Handover"
-                                          : "Pre Handover"}
-                                      </span>
-                                      <span className="text-start">
-                                        <Clock
-                                          size={16}
-                                          color="gray"
-                                          className="mb-1"
-                                        />{" "}
-                                        {listing.yearBuilding}
-                                      </span>
-                                    </div>
+                                    <hr
+                                      className="mt-1 mb-1"
+                                      style={{ borderColor: "gray" }}
+                                    />
 
-                                    <div className="list-meta2 d-flex justify-content-between align-items-center">
+                                    <div className="list-meta2 d-flex   justify-content-between align-items-center">
+                                      <div className=" text-start">
+                                        Price from{" "}
+                                        <h6 className="fw-semibold pb-0 mb-0 ">
+                                          {Number(
+                                            listing.price.split("$")[1]
+                                          ) === 0
+                                            ? "Ask for price"
+                                            : "AED " +
+                                              Number(
+                                                listing.price.split("$")[1]
+                                              ).toLocaleString()}
+                                        </h6>
+                                      </div>
                                       <div>
-                                        <ChartNoAxesCombined
-                                          className="mb-1"
-                                          size={16}
-                                          color="gray"
-                                        />{" "}
-                                        {listing.sale_status}
+                                        Completion{" "}
+                                        <h6 className="fw-semibold pb-0 mb-0 ">
+                                          {formatCompletionDate(
+                                            listing?.completion_datetime
+                                          )}
+                                        </h6>
                                       </div>
                                     </div>
                                   </div>

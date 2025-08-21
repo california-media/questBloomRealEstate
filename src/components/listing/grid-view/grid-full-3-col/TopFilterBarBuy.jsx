@@ -233,6 +233,21 @@ const TopFilterBar = ({
                 />
               </div>
             </li>
+            <li className="list-inline-item position-relative pt-1">
+              <button
+                type="button"
+                className="open-btn mb10 position-relative d-flex align-items-center justify-content-center "
+                style={{
+                  background: "#797631",
+                  width: "45px",
+                  height: "45px",
+                  maringBottom: 0,
+                }}
+                onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
+              >
+                <i className="flaticon-search mt-1 text-white" />
+              </button>
+            </li>
             {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
@@ -278,7 +293,7 @@ const TopFilterBar = ({
                 data-bs-toggle="modal"
                 data-bs-target="#advanceSeachModal"
               >
-                <i className="flaticon-settings me-2 mt-1" /> Advanced 
+                <i className="flaticon-settings me-2 mt-1" /> Advanced
                 {activeFilterCount > 0 && (
                   <span
                     className=" badge rounded-pill ms-2"

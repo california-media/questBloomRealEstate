@@ -8,8 +8,15 @@ import {
   SlashSquare,
   UserIcon,
 } from "lucide-react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+const formatCompletionDate = (dateString) => {
+  if (!dateString) return "No info";
 
+  const date = new Date(dateString);
+  const quarter = Math.ceil((date.getMonth() + 1) / 3);
+  const year = date.getFullYear();
+  return `Q${quarter} ${year}`;
+};
 const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
   return (
     <>
@@ -44,11 +51,7 @@ const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
               )}
 
               <div className="list-price">
-                {listing.price === "$0"
-                  ? "Ask for price"
-                  : `AED ${listing.price
-                      .slice(1)
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                {listing?.sale_status || "No info"}
               </div>
             </div>
 
@@ -63,47 +66,29 @@ const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
                     {listing.title}
                   </Link>
                 </h6>
-                <p className="list-text">{listing.location}</p>
+                <p className="list-text mb-0">{listing.location}</p>
               </div>
 
-              <div className="list-meta d-flex align-items-center">
-                <a href="#">
-                  <UserIcon size={16} color="gray" className="mb-1 me-1" />
-                  {listing.developer}
-                </a>
-                <a href="#">
-                  {listing.post_handover ? (
-                    <Check size={16} color="gray" className="m-1 me-1"  />
-                  ) : (
-                    <CircleDot size={16} color="gray" className="m-1 me-1" />
-                  )}
-                  {listing.post_handover ? "Post Handover" : "Pre Handover"}
-                </a>
-                <a href="#">
-                  <Clock size={16} color="gray" className="mb-1 me-1" />
-                  {listing.yearBuilding}
-                </a>
-              </div>
-
-              <hr className="mt-2 mb-2" />
+              <hr className="mt-1 mb-1" style={{ borderColor: "gray" }} />
 
               <div className="list-meta2 d-flex justify-content-between align-items-center">
-                <span>
-                  <ChartNoAxesCombined
-                    size={16}
-                    color="gray"
-                    className="mb-1 me-1"
-                  />
-                  {listing.sale_status}
-                </span>
-                <span>
-                  <SlashSquare size={16} color="gray" className="mb-1 me-1" />
-                  {listing.listing_prefix === "op" ? "Off-Plan" : "Resale"}
-                </span>
-                <span>
-                  <Scale3D size={16} color="gray" className="mb-1 me-1" />
-                  {listing.sqft} sqft.
-                </span>
+                <div>
+                  Price from{" "}
+                  <h6 className="fw-semibold pb-0 mb-0 ">
+                    {Number(listing.price.split("$")[1]) === 0
+                      ? "Ask for price"
+                      : "AED " +
+                        Number(listing.price.split("$")[1]).toLocaleString()}
+                  </h6>
+                </div>
+                <div>
+                  Completion{" "}
+                  <h6 className="fw-semibold pb-0 mb-0 ">
+                    {listing?.yearBuilding && listing.yearBuilding !== "N/A"
+                      ? listing.yearBuilding
+                      : formatCompletionDate(listing?.completion_datetime)}
+                  </h6>
+                </div>
               </div>
             </div>
           </div>

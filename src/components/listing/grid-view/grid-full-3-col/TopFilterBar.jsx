@@ -21,6 +21,7 @@ const customStyles = {
     };
   },
 };
+
 // const locationOptions = [
 //   { value: "All Cities", label: "All Cities" },
 //   { value: "California", label: "California" },
@@ -41,6 +42,8 @@ const TopFilterBar = ({
   locationOptions = [],
   saleStatuses,
   propertyTypes,
+  setPosthandover,
+  posthandover,
   activeFilterCount,
 }) => {
   // Local state with default from filterFunctions
@@ -62,45 +65,9 @@ const TopFilterBar = ({
   };
   return (
     <>
-      <div className="col-xl-9 d-none d-lg-block ">
+      <div className="col-xl-9 d-none d-lg-block">
         <div className="dropdown-lists">
           <ul className="p-0 text-center  text-xl-start ">
-            <li
-              className="list-inline-item position-relative"
-            >
-              <button
-                type="button"
-                className="open-btn mb15 dropdown-toggle"
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="outside"
-              >
-                {" "}
-                {filterFunctions?.listingStatus === "All"
-                  ? "All Status"
-                  : filterFunctions?.listingStatus}{" "}
-                <i className="fa fa-angle-down ms-2" />
-              </button>
-              <div className="dropdown-menu">
-                <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
-                  <h6 className="list-title">Listing Status</h6>
-                  <div className="radio-element">
-                    <ListingStatus
-                      setDataFetched={setDataFetched}
-                      filterFunctions={filterFunctions}
-                      saleStatuses={saleStatuses}
-                    />
-                  </div>
-                </div>
-                <div className="text-end mt10 pr10">
-                  <button
-                    type="button"
-                    className="done-btn ud-btn btn-thm drop_btn"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </li>
             {/* End li Listing Status */}
 
             {/* <li className="list-inline-item position-relative">
@@ -160,8 +127,8 @@ const TopFilterBar = ({
             </li> */}
             {/* End li Price */}
             <li
-              className="list-inline-item position-relative font-bold"
-              style={{ width: "180px" }}
+              className="list-inline-item position-relative font-bold "
+              style={{ width: "160px" }}
             >
               <Select
                 name="colors"
@@ -184,6 +151,7 @@ const TopFilterBar = ({
                 required
               />
             </li>
+
             <li
               className="list-inline-item position-relative font-bold"
               style={{ width: "190px" }}
@@ -240,6 +208,18 @@ const TopFilterBar = ({
                 />
               </div>
             </li>
+
+            <li className="list-inline-item position-relative pt-1">
+              <button
+                type="button"
+                className="open-btn mb10 position-relative d-flex align-items-center justify-content-center "
+                style={{ background: "#797631", width: "45px", height: "45px", maringBottom: 0 }}
+                onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
+              >
+                <i className="flaticon-search mt-1 text-white" />
+              </button>
+            </li>
+
             {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
@@ -274,10 +254,43 @@ const TopFilterBar = ({
               </div>
             </li> */}
             {/* End bed and bathroom check */}
-
+            <li className="list-inline-item position-relative">
+              <button
+                type="button"
+                className="open-btn mb15 dropdown-toggle "
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+              >
+                {" "}
+                {filterFunctions?.listingStatus === "All"
+                  ? "All Status"
+                  : filterFunctions?.listingStatus}{" "}
+                <i className="fa fa-angle-down ms-2" />
+              </button>
+              <div className="dropdown-menu">
+                <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
+                  <h6 className="list-title">Listing Status</h6>
+                  <div className="radio-element">
+                    <ListingStatus
+                      setDataFetched={setDataFetched}
+                      filterFunctions={filterFunctions}
+                      saleStatuses={saleStatuses}
+                    />
+                  </div>
+                </div>
+                <div className="text-end mt10 pr10">
+                  <button
+                    type="button"
+                    className="done-btn ud-btn btn-thm drop_btn"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </li>
             <li
-              className="list-inline-item position-relative"
-              style={{ width: "150px" }}
+              className="list-inline-item position-relative "
+              style={{ width: "135px" }}
             >
               <button
                 type="button"
@@ -301,13 +314,53 @@ const TopFilterBar = ({
                 )}
               </button>
             </li>
+            <li
+              className="list-inline-item position-relative "
+              style={{ width: "200px" }}
+            >
+              <button
+                type="button"
+                className="open-btn mb15 position-relative d-flex align-items-center"
+                style={{paddingLeft: "10px"}}
+              >
+                <div
+                  className="form-check form-switch custom-switch  d-flex justify-content-center align-items-center"
+                  style={{
+                    paddingLeft: 0,
+                    borderRadius: "50px",
+                    backgroundColor: "white",
+                    maringBottom: "0px",
+                  }}
+                >
+                  <input
+                    className="form-check-input ms-1 me-2 "
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    style={{
+                      maringBottom: "0px",
+                      border: "none",
+                    }}
+                    onChange={(e) =>
+                      setPosthandover(e.target.checked ? true : false)
+                    }
+                  />
+                  <label
+                    className="form-check-label "
+                    for="flexSwitchCheckDefault"
+                  >
+                    {posthandover ? "Post handover" : "Pre handover"}
+                  </label>
+                </div>
+              </button>
+            </li>
           </ul>
         </div>
       </div>
       {/* End .col-9 */}
 
       <div className="col-xl-3 mb-md-0 mb-3 mt-md-2 ">
-        <div className="page_control_shorting  d-flex align-items-center justify-content-center justify-content-sm-end">
+        <div className="page_control_shorting   d-flex align-items-center justify-content-center justify-content-sm-end">
           <div className="pcs_dropdown pr10 d-flex align-items-center">
             <span style={{ minWidth: "60px" }}>Sort by</span>
             <select
@@ -323,7 +376,7 @@ const TopFilterBar = ({
             </select>
           </div>
           <div
-            className={`pl15 pr15 bdrl1 bdrr1 d-none d-md-block  cursor ${
+            className={`pl15 pr15  bdrr1 d-none d-md-block  cursor ${
               !colstyle ? "menuActive" : "#"
             } `}
             onClick={() => setColstyle(false)}

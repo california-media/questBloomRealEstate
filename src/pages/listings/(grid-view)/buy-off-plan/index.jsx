@@ -12,7 +12,7 @@ import MetaData from "@/components/common/MetaData";
 import { Link, useParams } from "react-router-dom";
 
 const metaInformation = {
-  title: "Resale and Off-Plan Listings",
+  title: "Quest Bloom Real Estate LLC | Resale and Off-Plan Listings",
 };
 
 const BuyOffplan3Col = () => {

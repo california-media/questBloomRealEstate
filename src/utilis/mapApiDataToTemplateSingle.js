@@ -1,4 +1,7 @@
-export default function mapApiDataToTemplateSingle(apiData, listing_prefix= "op") {
+export default function mapApiDataToTemplateSingle(
+  apiData,
+  listing_prefix = "op"
+) {
   let imageUrl = "";
   try {
     const parsedImage = JSON.parse(apiData.cover_image_url);
@@ -10,7 +13,6 @@ export default function mapApiDataToTemplateSingle(apiData, listing_prefix= "op"
   const [lat, long] = apiData.coordinates
     .split(",")
     .map((coord) => parseFloat(coord.trim()));
-
   return {
     id: apiData.id,
     listing_prefix,
@@ -38,6 +40,7 @@ export default function mapApiDataToTemplateSingle(apiData, listing_prefix= "op"
     status: apiData.status,
     lat,
     long,
+    completion_datetime: apiData?.completion_datetime,
     features: [], // You may fill this manually or enhance the API if possible
   };
 }

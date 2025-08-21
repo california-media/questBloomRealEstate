@@ -63,6 +63,8 @@ export default function ProperteyFilteringBuy({ region }) {
 
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
+  const [posthandover, setPosthandover] = useState(false);
+
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -207,6 +209,9 @@ export default function ProperteyFilteringBuy({ region }) {
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
         }),
+      ...(isOffPlan && {
+        post_handover: posthandover,
+      }),
     };
     console.log(params);
     return params;
@@ -351,7 +356,8 @@ export default function ProperteyFilteringBuy({ region }) {
             value: type,
             label: type,
           })),
-        ].filter(   ///remove duplicates
+        ].filter(
+          ///remove duplicates
           (obj, index, self) =>
             index === self.findIndex((o) => o.value === obj.value)
         );
@@ -395,6 +401,7 @@ export default function ProperteyFilteringBuy({ region }) {
     listingStatus,
     priceRange,
     propertyId,
+    posthandover,
   ]);
 
   // Handle scroll events for infinite loading
@@ -493,6 +500,8 @@ export default function ProperteyFilteringBuy({ region }) {
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={offplanBuyLocationOptions}
             saleStatuses={saleStatuses}
+            setPosthandover={setPosthandover}
+            posthandover={posthandover}
             propertyTypes={propertyTypes}
           />
         </div>

@@ -14,7 +14,6 @@ const FeaturedListingsBuy = ({ data, colstyle }) => {
   const basePath = location.pathname.split("/")[1];
   const validPaths = ["off-plan", "buy", "rent", "listings"];
   const pathPrefix = validPaths.includes(basePath) ? basePath : "off-plan";
-
   return (
     <>
       {data.map((listing) => {
@@ -57,22 +56,19 @@ const FeaturedListingsBuy = ({ data, colstyle }) => {
                 </div>
 
                 <div className="list-price">
-                  {Number(listing.price.split("$")[1]) === 0
-                    ? "Ask for price"
-                    : "AED " +
-                      Number(listing.price.split("$")[1]).toLocaleString()}
+                  {listing?.sale_status || "No info"}
                 </div>
               </div>
-              <div className="list-content flex-grow-1  d-flex flex-column justify-content-between ">
+              <div className="list-content flex-grow-1 p-3  d-flex flex-column justify-content-between ">
                 <div>
                   <h6 className="list-title">
                     <Link to={`/${pathPrefix}/qb-${listing.id}`}>
                       {listing.title}
                     </Link>
                   </h6>
-                  <p className="list-text">{listing.location}</p>
+                  <p className="list-text mb-0">{listing.location}</p>
                 </div>
-                <div className="list-meta d-flex align-items-center r">
+                {/* <div className="list-meta d-flex align-items-center r">
                   <a href="#">
                     <Scale3D size={16} color="gray" className="mb-1" />{" "}
                     {listing.sqft + " sqft."}
@@ -89,16 +85,25 @@ const FeaturedListingsBuy = ({ data, colstyle }) => {
                     <Clock size={16} color="gray" className="mb-1" />{" "}
                     {listing.yearBuilding}
                   </a>
-                </div>
-                <hr className="mt-2 mb-2" />
-                <div className="list-meta2 d-flex justify-content-between align-items-center">
+                </div> */}
+                <hr className="mt-1 mb-1 bg-secondary" style={{ borderColor: "gray" }}  />
+                <div className="list-meta2 d-flex   justify-content-between align-items-center">
                   <div>
-                    <ChartNoAxesCombined
-                      className="mb-1"
-                      size={16}
-                      color="gray"
-                    />{" "}
-                    {listing.sale_status}
+                    Price from{" "}
+                    <h6 className="fw-semibold pb-0 mb-0 ">
+                      {Number(listing.price.split("$")[1]) === 0
+                        ? "Ask for price"
+                        : "AED " +
+                          Number(listing.price.split("$")[1]).toLocaleString()}
+                    </h6>
+                  </div>
+                  <div>
+                    Completion{" "}
+                    <h6 className="fw-semibold pb-0 mb-0 ">
+                      {listing?.yearBuilding && listing.yearBuilding !== "N/A"
+                        ? listing.yearBuilding
+                        : "No info"}
+                    </h6>
                   </div>
                 </div>
               </div>

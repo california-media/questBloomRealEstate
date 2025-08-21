@@ -17,6 +17,7 @@
   box-shadow: 0 8px 20px rgba(121, 118, 49, 0.3);
   text-shadow: .5px .5px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  margin-bottom: .5rem;
   overflow: hidden;
 }
 

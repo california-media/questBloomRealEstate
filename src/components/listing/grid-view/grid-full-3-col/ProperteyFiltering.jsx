@@ -39,7 +39,6 @@ export default function ProperteyFiltering({ region }) {
     listingStatus,
     locationOptions,
     propertyTypes,
-    facilityOptions,
     saleStatuses,
     setDataFetched,
     getActiveFilterCount,
@@ -65,6 +64,7 @@ export default function ProperteyFiltering({ region }) {
   } = usePropertyStore();
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
+  const [posthandover, setPosthandover] = useState(false);
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const routelocation = useLocation();
@@ -192,6 +192,7 @@ export default function ProperteyFiltering({ region }) {
       ...(listingStatus != "All" && { sale_status: listingStatus }),
       ...(region && { region }),
       ...(searchTerm != "" && { search_query: searchTerm }),
+      post_handover: posthandover,
     };
     console.log(params);
     return params;
@@ -262,6 +263,7 @@ export default function ProperteyFiltering({ region }) {
     categories,
     priceRange,
     propertyId,
+    posthandover
   ]);
 
   // Handle scroll events for infinite loading
@@ -351,6 +353,8 @@ export default function ProperteyFiltering({ region }) {
             setColstyle={setColstyle}
             filterFunctions={filterFunctions}
             setCurrentSortingOption={setCurrentSortingOption}
+            setPosthandover={setPosthandover}
+            posthandover={posthandover}
             locationOptions={locationOptions}
             saleStatuses={saleStatuses}
             propertyTypes={propertyTypes}

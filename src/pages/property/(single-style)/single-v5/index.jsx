@@ -383,7 +383,7 @@ const SingleV5 = () => {
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
         >
-          <div className="row  justify-content-center ">
+          <div className="row flex-wrap-reverse justify-content-center ">
             {/* dummy */}
             <div className="col-lg-2"></div>
             <div className="col-lg-6">
@@ -588,11 +588,10 @@ const SingleV5 = () => {
             {/* End .col-8 */}
 
             <div className="col-lg-4 ">
-              <div className="col-lg-4"></div>
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz19 mb7">{property?.name}</h4>
 
-                <div className=" mb25 d-md-flex align-items-center">
+                <div className=" mb20  d-md-flex align-items-center">
                   <p
                     className="text fz13 mb-0 pr10 d-none d-lg-block"
                     style={styles.textShadowDesktop}
@@ -714,7 +713,7 @@ const SingleV5 = () => {
                       >
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h5 className="modal-title">Generate AI Presentation</h5>
+                            <h5 className="modal-title">AI Presentation</h5>
                             <button
                               type="button"
                               className="btn-close"
@@ -743,7 +742,7 @@ const SingleV5 = () => {
                   <ReviewBoxForm
                     property={property}
                     prefixedId={prefixedId}
-                    downloadPDF={true}
+                    downloadPDF={false}
                     contactInfo={contactInfo}
                   />
                 </div>

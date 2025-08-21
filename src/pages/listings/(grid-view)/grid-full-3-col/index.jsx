@@ -11,7 +11,7 @@ import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Off-Plan Listings",
+  title: "Quest Bloom Real Estate LLC | Off-Plan Listings",
 };
 
 const GridFull3Col = () => {
