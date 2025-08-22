@@ -44,6 +44,8 @@ const TopFilterBar = ({
   propertyTypes,
   setPosthandover,
   posthandover,
+  selectedCities,
+  setSelectedCities,
   activeFilterCount,
 }) => {
   // Local state with default from filterFunctions
@@ -63,14 +65,37 @@ const TopFilterBar = ({
       filterFunctions?.handleSearchTerm(searchTerm);
     }
   };
+
+  const handleCityChange = (city) => {
+    setSelectedCities((prev) => {
+      if (prev.includes(city)) {
+        // Remove the city if it exists
+        return prev.filter((c) => c !== city);
+      } else {
+        // Add the city if it doesn't exist
+        return [...prev, city];
+      }
+    });
+  };
+
+  const requiredNames = [
+    "Palm Jumeirah",
+    "Dubai Marina",
+    "Dubai Islands",
+    "Meydan City",
+    "Dubai Creek Harbour",
+    "Dubai Maritime City",
+  ];
+
   return (
     <>
-      <div className="col-xl-9 d-none d-lg-block">
-        <div className="dropdown-lists">
-          <ul className="p-0 text-center  text-xl-start ">
-            {/* End li Listing Status */}
+      <div className="row">
+        <div className="col-xl-9 d-none d-lg-block">
+          <div className="dropdown-lists">
+            <ul className="p-0 text-center  text-xl-start ">
+              {/* End li Listing Status */}
 
-            {/* <li className="list-inline-item position-relative">
+              {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -96,9 +121,9 @@ const TopFilterBar = ({
                 </div>
               </div>
             </li> */}
-            {/* End li Property Type */}
+              {/* End li Property Type */}
 
-            {/* <li className="list-inline-item position-relative">
+              {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -125,102 +150,112 @@ const TopFilterBar = ({
                 </div>
               </div>
             </li> */}
-            {/* End li Price */}
-            <li
-              className="list-inline-item position-relative font-bold "
-              style={{ width: "160px" }}
-            >
-              <Select
-                name="colors"
-                styles={customStyles}
-                options={locationOptions}
-                className="select-custom filterSelect"
-                classNamePrefix="select"
-                value={{
-                  value: filterFunctions?.location,
-                  label:
-                    locationOptions.find(
-                      (option) => option.value === filterFunctions?.location
-                    )?.label || "All Locations",
-                }}
-                onChange={(e) => {
-                  setDataFetched(false);
-                  console.log(e.value);
-                  filterFunctions?.handlelocation(e.value);
-                }}
-                required
-              />
-            </li>
-
-            <li
-              className="list-inline-item position-relative font-bold"
-              style={{ width: "190px" }}
-            >
-              <Select
-                name="colors"
-                styles={customStyles}
-                options={propertyTypes}
-                className="select-custom filterSelect"
-                classNamePrefix="select"
-                value={{
-                  value: filterFunctions?.selectedPropertyType,
-                  label:
-                    propertyTypes.find(
-                      (option) =>
-                        option.value === filterFunctions?.selectedPropertyType
-                    )?.label || "All Property Types",
-                }}
-                onChange={(e) => {
-                  setDataFetched(false);
-                  console.log(e.value);
-                  filterFunctions?.handlepropertyType(e.value);
-                }}
-                required
-              />
-            </li>
-            <li
-              className="list-inline-item position-relative font-bold"
-              style={{ width: "190px" }}
-            >
-              <div className="form-style2 position-relative">
-                <Search
-                  size={18}
-                  className="position-absolute"
-                  style={{
-                    top: "50%",
-                    left: "14px",
-                    transform: "translateY(-50%)",
-                    color: "#888",
-                    pointerEvents: "none",
-                  }}
-                />
-                <input
-                  type="text"
-                  className="form-control border-none"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  style={{
-                    padding: "10px 10px 10px 40px",
-                    backgroundColor: "white",
-                  }}
-                />
-              </div>
-            </li>
-
-            <li className="list-inline-item position-relative pt-1">
-              <button
-                type="button"
-                className="open-btn mb10 position-relative d-flex align-items-center justify-content-center "
-                style={{ background: "#797631", width: "45px", height: "45px", maringBottom: 0 }}
-                onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
+              {/* End li Price */}
+              <li
+                className="list-inline-item position-relative font-bold "
+                style={{ width: "160px" }}
               >
-                <i className="flaticon-search mt-1 text-white" />
-              </button>
-            </li>
+                <Select
+                  name="colors"
+                  styles={customStyles}
+                  options={locationOptions}
+                  className="select-custom filterSelect"
+                  classNamePrefix="select"
+                  value={{
+                    value: filterFunctions?.location,
+                    label:
+                      locationOptions.find(
+                        (option) => option.value === filterFunctions?.location
+                      )?.label || "All Locations",
+                  }}
+                  onChange={(e) => {
+                    setDataFetched(false);
+                    console.log(e.value);
+                    filterFunctions?.handlelocation(e.value);
+                  }}
+                  required
+                />
+              </li>
 
-            {/* <li className="list-inline-item position-relative">
+              <li
+                className="list-inline-item position-relative font-bold"
+                style={{ width: "190px" }}
+              >
+                <Select
+                  name="colors"
+                  styles={customStyles}
+                  options={propertyTypes}
+                  className="select-custom filterSelect"
+                  classNamePrefix="select"
+                  value={{
+                    value: filterFunctions?.selectedPropertyType,
+                    label:
+                      propertyTypes.find(
+                        (option) =>
+                          option.value === filterFunctions?.selectedPropertyType
+                      )?.label || "All Property Types",
+                  }}
+                  onChange={(e) => {
+                    setDataFetched(false);
+                    console.log(e.value);
+                    filterFunctions?.handlepropertyType(e.value);
+                  }}
+                  required
+                />
+              </li>
+              <li
+                className="list-inline-item position-relative font-bold"
+                style={{ width: "190px" }}
+              >
+                <div className="form-style2 position-relative">
+                  <Search
+                    size={18}
+                    className="position-absolute"
+                    style={{
+                      top: "50%",
+                      left: "14px",
+                      transform: "translateY(-50%)",
+                      color: "#888",
+                      pointerEvents: "none",
+                    }}
+                  />
+                  <input
+                    type="text"
+                    className="form-control border-none"
+                    placeholder="Search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    style={{
+                      padding: "10px 10px 10px 40px",
+                      backgroundColor: "white",
+                    }}
+                  />
+                </div>
+              </li>
+
+              <li className="list-inline-item position-relative pt-1 ">
+                <button
+                  type="button"
+                  className="open-btn mb10 position-relative d-flex align-items-center border justify-content-center "
+                  style={{
+                    color: "#797631",
+                    width: "45px",
+                    height: "45px",
+                    maringBottom: 0,
+                  }}
+                  onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
+                >
+                  <i
+                    className="flaticon-search mt-1 "
+                    style={{
+                      color: "#797631",
+                    }}
+                  />
+                </button>
+              </li>
+
+              {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
                 className="open-btn mb15 dropdown-toggle"
@@ -253,83 +288,120 @@ const TopFilterBar = ({
                 </div>
               </div>
             </li> */}
-            {/* End bed and bathroom check */}
-            <li className="list-inline-item position-relative">
-              <button
-                type="button"
-                className="open-btn mb15 dropdown-toggle "
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="outside"
-              >
-                {" "}
-                {filterFunctions?.listingStatus === "All"
-                  ? "All Status"
-                  : filterFunctions?.listingStatus}{" "}
-                <i className="fa fa-angle-down ms-2" />
-              </button>
-              <div className="dropdown-menu">
-                <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
-                  <h6 className="list-title">Listing Status</h6>
-                  <div className="radio-element">
-                    <ListingStatus
-                      setDataFetched={setDataFetched}
-                      filterFunctions={filterFunctions}
-                      saleStatuses={saleStatuses}
-                    />
+              {/* End bed and bathroom check */}
+              <li className="list-inline-item position-relative">
+                <button
+                  type="button"
+                  className="open-btn mb15 dropdown-toggle "
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                >
+                  {" "}
+                  {filterFunctions?.listingStatus === "All"
+                    ? "All Status"
+                    : filterFunctions?.listingStatus}{" "}
+                  <i className="fa fa-angle-down ms-2" />
+                </button>
+                <div className="dropdown-menu">
+                  <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
+                    <h6 className="list-title">Listing Status</h6>
+                    <div className="radio-element">
+                      <ListingStatus
+                        setDataFetched={setDataFetched}
+                        filterFunctions={filterFunctions}
+                        saleStatuses={saleStatuses}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-end mt10 pr10">
+                    <button
+                      type="button"
+                      className="done-btn ud-btn btn-thm drop_btn"
+                    >
+                      Done
+                    </button>
                   </div>
                 </div>
-                <div className="text-end mt10 pr10">
-                  <button
-                    type="button"
-                    className="done-btn ud-btn btn-thm drop_btn"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li
-              className="list-inline-item position-relative "
-              style={{ width: "135px" }}
-            >
-              <button
-                type="button"
-                className="open-btn mb15 position-relative d-flex align-items-center"
-                data-bs-toggle="modal"
-                data-bs-target="#advanceSeachModal"
+              </li>
+              <li
+                className="list-inline-item position-relative "
+                style={{ width: "135px" }}
               >
-                <i className="flaticon-settings me-2 mt-1" /> Advanced
-                {activeFilterCount > 0 && (
-                  <span
-                    className=" badge rounded-pill ms-2"
-                    style={{
-                      backgroundColor: "#797631",
-                      color: "white",
-                      paddingTop: "0.4rem",
-                      fontSize: "0.8rem",
-                    }}
-                  >
-                    {activeFilterCount}
-                  </span>
-                )}
-              </button>
-            </li>
-            <li
-              className="list-inline-item position-relative "
-              style={{ width: "200px" }}
+                <button
+                  type="button"
+                  className="open-btn mb15 position-relative d-flex align-items-center"
+                  data-bs-toggle="modal"
+                  data-bs-target="#advanceSeachModal"
+                >
+                  <i className="flaticon-settings me-2 mt-1" /> Advanced
+                  {activeFilterCount > 0 && (
+                    <span
+                      className=" badge rounded-pill ms-2"
+                      style={{
+                        backgroundColor: "#797631",
+                        color: "white",
+                        paddingTop: "0.4rem",
+                        fontSize: "0.8rem",
+                      }}
+                    >
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* End .col-9 */}
+
+        <div className="col-xl-3 mb-md-0 mb-3 mt-md-2 ">
+          <div className="page_control_shorting   d-flex align-items-center justify-content-center justify-content-sm-end">
+            <div className="pcs_dropdown pr10 d-flex align-items-center">
+              <span style={{ minWidth: "60px" }}>Sort by</span>
+              <select
+                className="form-select"
+                onChange={(e) =>
+                  setCurrentSortingOption &&
+                  setCurrentSortingOption(e.target.value)
+                }
+              >
+                <option>Newest</option>
+                <option>Price Low</option>
+                <option>Price High</option>
+              </select>
+            </div>
+            <div
+              className={`pl15 pr15  bdrr1 d-none d-md-block  cursor ${
+                !colstyle ? "menuActive" : "#"
+              } `}
+              onClick={() => setColstyle(false)}
             >
-              <button
-                type="button"
-                className="open-btn mb15 position-relative d-flex align-items-center"
-                style={{paddingLeft: "10px"}}
+              Grid
+            </div>
+            <div
+              className={`pl15 d-none d-md-block  cursor ${
+                colstyle ? "menuActive" : "#"
+              }`}
+              onClick={() => setColstyle(true)}
+            >
+              List
+            </div>
+          </div>
+        </div>
+
+        <div className="col-xl-12 d-none d-lg-block">
+          <div className="dropdown-lists">
+            <ul className="p-0 text-center d-flex align-items-center text-xl-start ">
+              <li
+                className="list-inline-item position-relative "
+                style={{ paddingBottom: "0.75rem" }}
               >
                 <div
-                  className="form-check form-switch custom-switch  d-flex justify-content-center align-items-center"
+                  type="button"
+                  className="open-btn  position-relative d-flex gap-1  align-items-center form-check form-switch custom-switch "
                   style={{
-                    paddingLeft: 0,
-                    borderRadius: "50px",
-                    backgroundColor: "white",
-                    maringBottom: "0px",
+                    paddingTop: "0.4rem",
+                    paddingBottom: "0.4rem",
                   }}
                 >
                   <input
@@ -347,53 +419,50 @@ const TopFilterBar = ({
                   />
                   <label
                     className="form-check-label "
-                    for="flexSwitchCheckDefault"
+                    htmlFor="flexSwitchCheckDefault"
                   >
                     {posthandover ? "Post handover" : "Pre handover"}
                   </label>
                 </div>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {/* End .col-9 */}
-
-      <div className="col-xl-3 mb-md-0 mb-3 mt-md-2 ">
-        <div className="page_control_shorting   d-flex align-items-center justify-content-center justify-content-sm-end">
-          <div className="pcs_dropdown pr10 d-flex align-items-center">
-            <span style={{ minWidth: "60px" }}>Sort by</span>
-            <select
-              className="form-select"
-              onChange={(e) =>
-                setCurrentSortingOption &&
-                setCurrentSortingOption(e.target.value)
-              }
-            >
-              <option>Newest</option>
-              <option>Price Low</option>
-              <option>Price High</option>
-            </select>
-          </div>
-          <div
-            className={`pl15 pr15  bdrr1 d-none d-md-block  cursor ${
-              !colstyle ? "menuActive" : "#"
-            } `}
-            onClick={() => setColstyle(false)}
-          >
-            Grid
-          </div>
-          <div
-            className={`pl15 d-none d-md-block  cursor ${
-              colstyle ? "menuActive" : "#"
-            }`}
-            onClick={() => setColstyle(true)}
-          >
-            List
+              </li>
+              {locationOptions
+                .filter((location) => requiredNames.includes(location.label))
+                .map((city) => (
+                  <li
+                    key={city.value}
+                    className="list-inline-item position-relative m-0 text-center "
+                    style={{ paddingLeft: "5px", paddingRight: "5px" }}
+                  >
+                    <input
+                      type="checkbox"
+                      id={"check-" + city.value} // Added id attribute
+                      className="city-checkbox"
+                      name={"check-" + city.value}
+                      checked={selectedCities[city.value] || false}
+                      onChange={() => {
+                        handleCityChange(city.value);
+                      }}
+                    />
+                    <label
+                      htmlFor={"check-" + city.value}
+                      className="city-checkbox-label"
+                    >
+                      <div
+                        className={`open-btn open-btn-city mb-3 d-flex align-items-center justify-content-center ${
+                          selectedCities.includes(city.value) ? "selected" : ""
+                        }`}
+                        style={{ width: "100%" }}
+                      >
+                        {city.label}
+                      </div>
+                    </label>
+                  </li>
+                ))}
+            </ul>
           </div>
         </div>
+        {/* End .col-3 */}
       </div>
-      {/* End .col-3 */}
     </>
   );
 };

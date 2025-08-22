@@ -52,11 +52,11 @@ export default function ProperteyFiltering({ region }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const routelocation = useLocation();
-  const isOffPlan = routelocation.pathname.startsWith("/off-plan");
+
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [selectedCities, setSelectedCities] = useState([]);
 
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
@@ -163,6 +163,9 @@ export default function ProperteyFiltering({ region }) {
       ...(rentalLocation != "All Locations" && { areas: rentalLocation }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
+      ...(selectedCities.length !== 0 && {
+        location_areas: selectedCities.join(","),
+      }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...{ rentDuration },
       ...(squirefeet.length !== 0 &&
@@ -234,6 +237,7 @@ export default function ProperteyFiltering({ region }) {
     fetchInitialData();
   }, [
     searchTerm,
+    selectedCities,
     adminPropertyType,
     bathrooms,
     bedrooms,
@@ -330,7 +334,6 @@ export default function ProperteyFiltering({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-        <div className="row">
           <TopFilterBar
             activeFilterCount={getActiveFilterCount("rent")}
             setDataFetched={setDataFetched}
@@ -340,8 +343,10 @@ export default function ProperteyFiltering({ region }) {
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={rentalLocationOptions}
             propertyTypes={propertyTypes}
+            selectedCities={selectedCities}
+            setSelectedCities={setSelectedCities}
           />
-        </div>
+        
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

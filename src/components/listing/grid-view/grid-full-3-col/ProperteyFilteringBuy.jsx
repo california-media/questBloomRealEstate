@@ -49,7 +49,7 @@ export default function ProperteyFilteringBuy({ region }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const routelocation = useLocation();
+  const [selectedCities, setSelectedCities] = useState([]);
 
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -138,7 +138,6 @@ export default function ProperteyFilteringBuy({ region }) {
       setListings((prevListings) => sortListings(prevListings));
     }
   }, [currentSortingOption]);
-
   function getRequestParams(nextPage = 1) {
     const params = {
       page: nextPage,
@@ -155,6 +154,9 @@ export default function ProperteyFilteringBuy({ region }) {
       ...(propertyId != "" && { project_ids: propertyId }),
       ...(searchTerm != "" && { search_query: searchTerm }),
       ...(buyLocation != "All Locations" && { areas: buyLocation }),
+      ...(selectedCities.length !== 0 && {
+        location_areas: selectedCities.join(","),
+      }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
@@ -169,7 +171,6 @@ export default function ProperteyFilteringBuy({ region }) {
     console.log(params);
     return params;
   }
-
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
@@ -234,6 +235,7 @@ export default function ProperteyFilteringBuy({ region }) {
     squirefeet,
     yearBuild,
     priceRange,
+    selectedCities,
     propertyId,
   ]);
   // Handle scroll events for infinite loading
@@ -319,7 +321,6 @@ export default function ProperteyFilteringBuy({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-        <div className="row">
           <TopFilterBar
             activeFilterCount={getActiveFilterCount("buy")}
             setDataFetched={setDataFetched}
@@ -329,8 +330,10 @@ export default function ProperteyFilteringBuy({ region }) {
             setCurrentSortingOption={setCurrentSortingOption}
             locationOptions={buyLocationOptions}
             propertyTypes={propertyTypes}
+            selectedCities={selectedCities}
+            setSelectedCities={setSelectedCities}
           />
-        </div>
+      
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

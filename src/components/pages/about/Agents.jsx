@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const Agents = ({ sections }) => {
-  
   return (
     <>
       <Swiper
@@ -98,13 +97,13 @@ const Agents = ({ sections }) => {
     </p>
     <div class="divider"></div>
     <div class="social-links">
-      <a href="${agent.facebook}" class="social-link facebook" onclick="event.stopPropagation();">
+      <a target="_blank" href="${agent.facebook}" class="social-link facebook" onclick="event.stopPropagation();">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="${agent.instagram}" class="social-link instagram" onclick="event.stopPropagation();">
+      <a target="_blank" href="${agent.instagram}" class="social-link instagram" onclick="event.stopPropagation();">
         <i class="fab fa-instagram"></i>
       </a>
-      <a href="${agent.linkedin}" class="social-link linkedin" onclick="event.stopPropagation();">
+      <a target="_blank" href="${agent.linkedin}" class="social-link linkedin" onclick="event.stopPropagation();">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </div>

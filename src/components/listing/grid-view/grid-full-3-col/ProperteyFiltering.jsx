@@ -66,6 +66,7 @@ export default function ProperteyFiltering({ region }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
   const [colstyle, setColstyle] = useState(false);
+  const [selectedCities, setSelectedCities] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
@@ -178,7 +179,13 @@ export default function ProperteyFiltering({ region }) {
         isOffPlan && {
           completion_date_ranges: createCompletionDateRangesForYear(yearBuild),
         }),
-      ...(location != "All Locations" && { areas: location }),
+      ...(location !== "All Locations"
+        ? {
+            areas: [...selectedCities, location].join(","),
+          }
+        : {
+            areas: selectedCities.join(","),
+          }),
       ...(bedrooms != 0 && { unit_bedrooms: bedrooms }),
       ...(bathrooms != 0 && { unit_bathrooms: bathrooms }),
       ...(squirefeet.length !== 0 &&
@@ -263,7 +270,8 @@ export default function ProperteyFiltering({ region }) {
     categories,
     priceRange,
     propertyId,
-    posthandover
+    posthandover,
+    selectedCities,
   ]);
 
   // Handle scroll events for infinite loading
@@ -345,7 +353,6 @@ export default function ProperteyFiltering({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-        <div className="row">
           <TopFilterBar
             activeFilterCount={getActiveFilterCount("off-plan")}
             setDataFetched={setDataFetched}
@@ -358,8 +365,10 @@ export default function ProperteyFiltering({ region }) {
             locationOptions={locationOptions}
             saleStatuses={saleStatuses}
             propertyTypes={propertyTypes}
+            selectedCities={selectedCities}
+            setSelectedCities={setSelectedCities}
           />
-        </div>
+   
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

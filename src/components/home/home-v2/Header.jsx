@@ -1,6 +1,7 @@
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
+import "/public/css/home-header-links.css";
 
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -107,16 +108,33 @@ const Header = ({ menuItems, error }) => {
                     <i className="far fa-phone fz16 me-2"></i>{" "}
                     <span className="d-none d-xl-block">{hotline}</span>
                   </a>
-                  <a
-                    href="#"
-                    className="login-info d-flex align-items-center"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginSignupModal"
-                    role="button"
-                  >
-                    {/* <i className="far fa-user-circle fz16 me-2" />{" "} */}
-                    {/* <span className="d-none d-xl-block">Login / Register</span> */}
-                  </a>
+                  {/* Updated social links with better styling */}
+                  <div className="social-links-navbar">
+                    <a
+                      target="_blank"
+                      href={"https://www.facebook.com/questbloomrealestate"}
+                      className="social-link-navbar"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a
+                      target="_blank"
+                      href={"https://www.instagram.com/questbloomrealestate"}
+                      className="social-link-navbar"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <i className="fab fa-instagram"></i>
+                    </a>
+                    <a
+                      target="_blank"
+                      href={"https://www.tiktok.com/@questbloomrealestate"}
+                      className="social-link-navbar"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <i className="fab fa-tiktok"></i>
+                    </a>
+                  </div>
                   {/* <Link
                     className="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"

@@ -1,11 +1,12 @@
-import ListingStatus from "../../sidebar/ListingStatus";
 import React, { useEffect, useState } from "react";
+import ListingStatus from "../../sidebar/ListingStatus";
 // import PropertyType from "../../sidebar/PropertyType";
 // import PriceRange from "../../sidebar/PriceRange";
 // import Bedroom from "../../sidebar/Bedroom";
 // import Bathroom from "../../sidebar/Bathroom";
 import Select from "react-select";
 import { Search } from "lucide-react";
+
 const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => {
     return {
@@ -20,6 +21,7 @@ const customStyles = {
     };
   },
 };
+
 // const locationOptions = [
 //   { value: "All Cities", label: "All Cities" },
 //   { value: "California", label: "California" },
@@ -38,10 +40,13 @@ const TopFilterBar = ({
   colstyle,
   setColstyle,
   locationOptions = [],
+  saleStatuses,
   propertyTypes,
-  activeFilterCount,
+  setPosthandover,
+  posthandover,
   selectedCities,
   setSelectedCities,
+  activeFilterCount,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -60,13 +65,17 @@ const TopFilterBar = ({
       filterFunctions?.handleSearchTerm(searchTerm);
     }
   };
+
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
-      if (prev.includes(city)) {
+      // Check if city with this value already exists
+      const exists = prev.some((item) => item.value === city.value);
+
+      if (exists) {
         // Remove the city if it exists
-        return prev.filter((c) => c !== city);
+        return prev.filter((item) => item.value !== city.value);
       } else {
-        // Add the city if it doesn't exist
+        // Add the new city if it doesn't exist
         return [...prev, city];
       }
     });
@@ -79,44 +88,14 @@ const TopFilterBar = ({
     "Meydan City",
     "Dubai Creek Harbour",
     "Dubai Maritime City",
-  
   ];
+
   return (
     <>
       <div className="row">
         <div className="col-xl-9 d-none d-lg-block">
           <div className="dropdown-lists">
-            <ul className="p-0 text-center text-xl-start">
-              {/* <li className="list-inline-item position-relative">
-              <button
-                type="button"
-                className="open-btn mb15 dropdown-toggle"
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="outside"
-              >
-                For Sale <i className="fa fa-angle-down ms-2" />
-              </button>
-              <div className="dropdown-menu">
-                <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
-                  <h6 className="list-title">Listing Status</h6>
-                  <div className="radio-element">
-                    <ListingStatus
-                      setDataFetched={setDataFetched}
-                      filterFunctions={filterFunctions}
-                      saleStatuses={saleStatuses}
-                    />
-                  </div>
-                </div>
-                <div className="text-end mt10 pr10">
-                  <button
-                    type="button"
-                    className="done-btn ud-btn btn-thm drop_btn"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </li> */}
+            <ul className="p-0 text-center  text-xl-start ">
               {/* End li Listing Status */}
 
               {/* <li className="list-inline-item position-relative">
@@ -176,11 +155,10 @@ const TopFilterBar = ({
             </li> */}
               {/* End li Price */}
               <li
-                className="list-inline-item position-relative font-bold"
-                style={{ width: "200px" }}
+                className="list-inline-item position-relative font-bold "
+                style={{ width: "160px" }}
               >
                 <Select
-                  defaultValue={locationOptions[0] || null}
                   name="colors"
                   styles={customStyles}
                   options={locationOptions}
@@ -201,6 +179,7 @@ const TopFilterBar = ({
                   required
                 />
               </li>
+
               <li
                 className="list-inline-item position-relative font-bold"
                 style={{ width: "190px" }}
@@ -257,21 +236,28 @@ const TopFilterBar = ({
                   />
                 </div>
               </li>
-              <li className="list-inline-item position-relative pt-1">
+
+              <li className="list-inline-item position-relative pt-1 ">
                 <button
                   type="button"
-                  className="open-btn mb10 position-relative d-flex align-items-center justify-content-center "
+                  className="open-btn mb10 position-relative d-flex align-items-center border justify-content-center "
                   style={{
-                    background: "#797631",
+                    color: "#797631",
                     width: "45px",
                     height: "45px",
                     maringBottom: 0,
                   }}
                   onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
                 >
-                  <i className="flaticon-search mt-1 text-white" />
+                  <i
+                    className="flaticon-search mt-1 "
+                    style={{
+                      color: "#797631",
+                    }}
+                  />
                 </button>
               </li>
+
               {/* <li className="list-inline-item position-relative">
               <button
                 type="button"
@@ -306,10 +292,43 @@ const TopFilterBar = ({
               </div>
             </li> */}
               {/* End bed and bathroom check */}
-
+              <li className="list-inline-item position-relative">
+                <button
+                  type="button"
+                  className="open-btn mb15 dropdown-toggle "
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                >
+                  {" "}
+                  {filterFunctions?.listingStatus === "All"
+                    ? "All Status"
+                    : filterFunctions?.listingStatus}{" "}
+                  <i className="fa fa-angle-down ms-2" />
+                </button>
+                <div className="dropdown-menu">
+                  <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
+                    <h6 className="list-title">Listing Status</h6>
+                    <div className="radio-element">
+                      <ListingStatus
+                        setDataFetched={setDataFetched}
+                        filterFunctions={filterFunctions}
+                        saleStatuses={saleStatuses}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-end mt10 pr10">
+                    <button
+                      type="button"
+                      className="done-btn ud-btn btn-thm drop_btn"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              </li>
               <li
-                className="list-inline-item position-relative"
-                style={{ width: "150px" }}
+                className="list-inline-item position-relative "
+                style={{ width: "135px" }}
               >
                 <button
                   type="button"
@@ -338,8 +357,8 @@ const TopFilterBar = ({
         </div>
         {/* End .col-9 */}
 
-        <div className="col-xl-3 mb-md-0 mb-4">
-          <div className="page_control_shorting d-flex align-items-center justify-content-center justify-content-sm-end">
+        <div className="col-xl-3 mb-md-0 mb-3 mt-md-2 ">
+          <div className="page_control_shorting   d-flex align-items-center justify-content-center justify-content-sm-end">
             <div className="pcs_dropdown pr10 d-flex align-items-center">
               <span style={{ minWidth: "60px" }}>Sort by</span>
               <select
@@ -355,7 +374,7 @@ const TopFilterBar = ({
               </select>
             </div>
             <div
-              className={`pl15 pr15 bdrl1 bdrr1 d-none d-md-block  cursor ${
+              className={`pl15 pr15  bdrr1 d-none d-md-block  cursor ${
                 !colstyle ? "menuActive" : "#"
               } `}
               onClick={() => setColstyle(false)}
@@ -375,41 +394,82 @@ const TopFilterBar = ({
 
         <div className="col-xl-12 d-none d-lg-block">
           <div className="dropdown-lists">
-            <ul className="p-0 text-center text-xl-start">
-              {requiredNames.map((city) => (
-                <li
-                  key={city}
-                  className="list-inline-item position-relative m-0 text-center "
-                  style={{ paddingLeft: "5px", paddingRight: "5px" }}
+            <ul className="p-0 text-center d-flex align-items-center text-xl-start ">
+              <li
+                className="list-inline-item position-relative "
+                style={{ paddingBottom: "0.75rem" }}
+              >
+                <div
+                  type="button"
+                  className="open-btn  position-relative d-flex gap-1  align-items-center form-check form-switch custom-switch "
+                  style={{
+                    paddingTop: "0.4rem",
+                    paddingBottom: "0.4rem",
+                  }}
                 >
                   <input
+                    className="form-check-input ms-1 me-2 "
                     type="checkbox"
-                    id={"check-" + city} // Added id attribute
-                    className="city-checkbox"
-                    name={"check-" + city}
-                    checked={selectedCities[city] || false}
-                    onChange={() => {
-                      handleCityChange(city);
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    style={{
+                      maringBottom: "0px",
+                      border: "none",
                     }}
+                    onChange={(e) =>
+                      setPosthandover(e.target.checked ? true : false)
+                    }
                   />
                   <label
-                    htmlFor={"check-" + city}
-                    className="city-checkbox-label"
+                    className="form-check-label "
+                    htmlFor="flexSwitchCheckDefault"
                   >
-                    <div
-                      className={`open-btn open-btn-city mb-3 d-flex align-items-center justify-content-center ${
-                        selectedCities.includes(city) ? "selected" : ""
-                      }`}
-                      style={{ width: "100%" }}
-                    >
-                      {city}
-                    </div>
+                    {posthandover ? "Post handover" : "Pre handover"}
                   </label>
-                </li>
-              ))}
+                </div>
+              </li>
+              {locationOptions
+                .filter((location) => requiredNames.includes(location.label))
+                .map((city) => (
+                  <li
+                    key={city.value}
+                    className="list-inline-item position-relative m-0 text-center "
+                    style={{ paddingLeft: "5px", paddingRight: "5px" }}
+                  >
+                    <input
+                      type="checkbox"
+                      id={"check-" + city.value} // Added id attribute
+                      className="city-checkbox"
+                      name={"check-" + city.value}
+                      checked={
+                        selectedCities.find((c) => c.label === city.label) ||
+                        false
+                      }
+                      onChange={() => {
+                        handleCityChange(city);
+                      }}
+                    />
+                    <label
+                      htmlFor={"check-" + city.value}
+                      className="city-checkbox-label"
+                    >
+                      <div
+                        className={`open-btn open-btn-city mb-3 d-flex align-items-center justify-content-center ${
+                          selectedCities.find((c) => c.label === city.label)
+                            ? "selected"
+                            : ""
+                        }`}
+                        style={{ width: "100%" }}
+                      >
+                        {city.label}
+                      </div>
+                    </label>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
+        {/* End .col-3 */}
       </div>
     </>
   );

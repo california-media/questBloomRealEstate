@@ -41,7 +41,7 @@ const FeaturedListings = ({ data, colstyle }) => {
         return (
           <div
             className={`d-flex ${
-              colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
+              colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-3"
             }`}
             key={listing.id}
           >

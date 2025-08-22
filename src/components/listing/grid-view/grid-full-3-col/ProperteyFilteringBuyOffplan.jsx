@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ListingSidebar from "../../sidebar";
 import AdvanceFilterModal from "@/components/common/advance-filter-two"; ////using off-plan's advance filter
-import TopFilterBar from "./TopFilterBar"; ////using off-plan's topbar filter
+import TopFilterBarBuyOffplan from "./TopFilterBarBuyOffplan";
 import FeatuerdListingsBuyOffplan from "./FeatuerdListingsBuyOffplan";
 import usePropertyStore from "@/store/propertyStore";
 import { useLocation } from "react-router-dom";
@@ -64,6 +64,7 @@ export default function ProperteyFilteringBuy({ region }) {
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
+  const [selectedCities, setSelectedCities] = useState([]);
 
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -191,9 +192,9 @@ export default function ProperteyFilteringBuy({ region }) {
       }),
       ...(propertyId != "" && { project_ids: propertyId }),
       ...(searchTerm != "" && { search_query: searchTerm }),
-      ...(offplanBuyLocation != "All Locations" && {
-        areas: offplanBuyLocation,
-      }),
+      // ...(offplanBuyLocation != "All Locations" && {
+      //   areas: offplanBuyLocation,
+      // }),
       ...(yearBuild != 50000 &&
         isOffPlan && {
           completion_date_ranges: createCompletionDateRangesForYear(yearBuild),
@@ -205,6 +206,7 @@ export default function ProperteyFilteringBuy({ region }) {
           unit_area_from: squirefeet[0],
         }),
       ...(listingStatus != "All" && { sale_status: listingStatus }),
+
       ...(squirefeet.length !== 0 &&
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
@@ -212,6 +214,49 @@ export default function ProperteyFilteringBuy({ region }) {
       ...(isOffPlan && {
         post_handover: posthandover,
       }),
+
+      /*
+Logic for building payload:
+
+1. If isOffPlan is true:
+   - If offplanBuyLocation is a number:
+     → Create one property "areas" by joining all selectedCities.value with commas,
+       then append offplanBuyLocation to the end of that string.
+   - If offplanBuyLocation is not a number:
+     → Create one property "areas" by joining all selectedCities.value with commas.
+
+2. If isOffPlan is false:
+   - If offplanBuyLocation is a number:
+     → Create an object with only "location_area", which is a comma-joined string
+       of all selectedCities.label.
+   - If offplanBuyLocation is not a number:
+     → Create an object with "location_area" (joined selectedCities.label),
+       and also include "areas" set to offplanBuyLocation
+       (but only if it’s not "All Locations").
+*/
+
+      ...(isOffPlan
+        ? // ✅ Case: isOffPlan
+          typeof offplanBuyLocation === "number"
+          ? {
+              areas:
+                selectedCities.map((c) => c.value).join(",") +
+                (offplanBuyLocation ? `,${offplanBuyLocation}` : ""),
+            }
+          : {
+              areas: selectedCities.map((c) => c.value).join(","),
+            }
+        : // ✅ Case: NOT isOffPlan
+        typeof offplanBuyLocation === "number"
+        ? {
+            location_areas: selectedCities.map((c) => c.label).join(","),
+          }
+        : {
+            location_areas: selectedCities.map((c) => c.label).join(","),
+            ...(offplanBuyLocation !== "All Locations" && {
+              areas: offplanBuyLocation,
+            }),
+          }),
     };
     console.log(params);
     return params;
@@ -402,6 +447,7 @@ export default function ProperteyFilteringBuy({ region }) {
     priceRange,
     propertyId,
     posthandover,
+    selectedCities,
   ]);
 
   // Handle scroll events for infinite loading
@@ -490,21 +536,21 @@ export default function ProperteyFilteringBuy({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-        <div className="row">
-          <TopFilterBar
-            activeFilterCount={getActiveFilterCount("off-plan")}
-            setDataFetched={setDataFetched}
-            colstyle={colstyle}
-            setColstyle={setColstyle}
-            filterFunctions={filterFunctions}
-            setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={offplanBuyLocationOptions}
-            saleStatuses={saleStatuses}
-            setPosthandover={setPosthandover}
-            posthandover={posthandover}
-            propertyTypes={propertyTypes}
-          />
-        </div>
+        <TopFilterBarBuyOffplan
+          activeFilterCount={getActiveFilterCount("off-plan")}
+          setDataFetched={setDataFetched}
+          colstyle={colstyle}
+          setColstyle={setColstyle}
+          filterFunctions={filterFunctions}
+          setCurrentSortingOption={setCurrentSortingOption}
+          locationOptions={offplanBuyLocationOptions}
+          saleStatuses={saleStatuses}
+          setPosthandover={setPosthandover}
+          posthandover={posthandover}
+          propertyTypes={propertyTypes}
+          selectedCities={selectedCities}
+          setSelectedCities={setSelectedCities}
+        />
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

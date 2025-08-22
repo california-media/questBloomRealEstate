@@ -472,49 +472,77 @@ const Home_V2 = () => {
       </section> */}
       {/* End Our Partners */}
       {/* Our CTA */}
-      <section
-        className="our-cta2 p0 px20"
-        dangerouslySetInnerHTML={{
-          __html:
-            pageSections.find(
-              (section) => section.id === "Home Page Call to Action"
-            )?.html_content ||
-            `<div class="cta-banner2 bgc-thm maxw1600 mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
-  <div
-    class="cta-style2 d-none d-lg-block"
-    data-aos="fade-left"
-    data-aos-delay="300"
-  >
-    <img
-      style="width: 35%; border-radius: 30px;"
-      src="/images/cta-image.jpg"
-      alt="element"
-    />
-  </div>
-  <div class="container">
-    <div class="row">
-      <div
-        class="col-lg-7 col-xl-5"
-        data-aos="fade-up"
-        data-aos-delay="500"
-      >
-        <div class="cta-style2">
-          <h2 class="cta-title">
-            Buying a Property With Questbloom
-          </h2>
-          <p class="cta-text">Browse through more properties.</p>
-          <a href="/off-plan" class="ud-btn btn-dark mt10">
-            Let's Get Started
-            <i class="fal fa-arrow-right-long"></i>
-          </a>
+      <section className="our-cta2 p0 px20 d-lg-none d-block">
+        <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-lg-7 col-xl-5"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                <div className="cta-style2">
+                  <h2 className="cta-title">
+                    Buying a Property With Questbloom
+                  </h2>
+                  <p className="cta-text">Browse through more properties.</p>
+                  <a href="/off-plan" className="ud-btn btn-dark mt10">
+                    Let's Get Started{" "}
+                    <i className="fal fa-arrow-right-long"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="cta-style2 d-none d-lg-block"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <img
+              style={{ width: "35%", borderRadius: "30px" }}
+              src="/images/cta-image.jpg"
+              alt="element"
+            />
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-`,
-        }}
-      ></section>
+      </section>
+      {/* mobile CTA */}
+      <section className="our-cta2 p0 px20 d-lg-block d-none">
+        <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt15 pb15 justify-content-between align-items-center  bdrs12 position-relative overflow-hidden">
+          <div className="container d-flex justify-content-center pl60  ">
+            <div className="row ">
+              <div className="col-lg-10 col-12" data-aos="fade-up" data-aos-delay="500">
+                <div className="cta-style2">
+                  <h2 className="cta-title">
+                    Buying a Property With Questbloom
+                  </h2>
+                  <p className="cta-text">Browse through more properties.</p>
+                  <a href="/off-plan" className="ud-btn btn-dark mt10">
+                    Let's Get Started{" "}
+                    <i className="fal fa-arrow-right-long"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="cta-style2 d-none  text-end d-lg-block  "
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <img
+              style={{
+                width: "80%",
+                borderRadius: "30px",
+                marginRight: "40px",
+              }}
+              src="/images/cta-image.jpg"
+              alt="element"
+            />
+          </div>
+        </div>
+      </section>
       {/* End Our CTA */}
       {/* Start Our Footer */}
       <section className="footer-style1 at-home2 pb-0">

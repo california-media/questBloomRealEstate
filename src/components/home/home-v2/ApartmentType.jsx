@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay } from "swiper";
 import "swiper/swiper-bundle.min.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import usePropertyStore from "@/store/propertyStore";
 import appertments from "@/data/apartmentTypes2";
 import appertmentsTypes from "@/data/apartmentType";
@@ -29,6 +29,9 @@ const ApartmentType = () => {
   const [apartmentType, setApartmentType] = useState([]);
   const [loading, setLoading] = useState(true);
   // Function to fetch counts for each property type
+  const navigate = useNavigate();
+
+  const { handlePropertyType } = usePropertyStore();
   const fetchPropertyTypeData = async () => {
     setLoading(true);
     const newPropertyTypes = await api.get("/unit-types");
@@ -96,7 +99,20 @@ const ApartmentType = () => {
       {apartmentType.map((type) => (
         <SwiperSlide key={type.id}>
           <div className="item">
-            <Link to="#">
+            <Link
+              to="/off-plan"
+              onClick={(e) => {
+                e.preventDefault();
+
+                type.title && handlePropertyType(type.title);
+
+                navigate("/off-plan", {
+                  state: {
+                    hasFilters: true,
+                  },
+                });
+              }}
+            >
               <div className="iconbox-style4">
                 <span className={`icon ${type.icon}`} />
                 <div className="iconbox-content">

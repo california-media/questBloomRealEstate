@@ -53,10 +53,33 @@ const Footer = () => {
           </div>
           {/* End .col-lg-5 */}
 
-          <div className="col-lg-7">
+          <div className="col-lg-3">
             <div className="footer-widget mb-4 mb-lg-5">
               <div className="row justify-content-between ">
                 <MenuWidget />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="footer-widget mb-4 mb-lg-5">
+              <div className="row justify-content-between ">
+                <div className="col-auto">
+                  <div className="contact-info">
+                    <h6 className="text-white mt-0 mb25">We are located at</h6>
+
+                    {
+                      <p
+                        className="info-title"
+                        dangerouslySetInnerHTML={{
+                          __html: `Office 1702, 17th Floor,
+Lake Central Tower, Marasi Drive,<br />
+Business Bay, Dubai, UAE`,
+                        }}
+                      />
+                    }
+                  </div>
+                </div>
               </div>
             </div>
           </div>
