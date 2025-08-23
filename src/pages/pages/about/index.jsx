@@ -198,7 +198,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* Our About Area */}
 
       <ScrollRevealSection/>
-      <section className="contact-info-section  pt-0 pb50">
+      <section className="contact-info-section  pt-0 pb30">
         <div className="accordion-section">
           <div className="container-fluid">
             <div className="row justify-content-center">
@@ -281,7 +281,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       <section className="pt0 pb0">
         <div
           className="hero-parallax"
-          style={{ backgroundImage: "url('/images/background/team.webp')" }}
+          style={{ backgroundImage: "url('/images/about/Aquarise-Exterior-4.jpg')" }}
         >
           <div className="parallax-dark-overlay" id="parallaxBg"></div>
           <div className="about-us-hero-content">
@@ -329,7 +329,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Funfact */}
       {/* Exclusive Agents */}
 
-      <section className="pb90">
+      <section className="pb70 pt80">
         <div className="container">
           <div
             className="row  justify-content-center mb30"

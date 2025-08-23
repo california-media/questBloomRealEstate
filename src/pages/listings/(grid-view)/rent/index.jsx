@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Quest Bloom Real Estate LLC | Rental Listings",
+  title: "Quest Bloom Real Estate LLC | Rent",
 };
 
 const Rent3Col = () => {
@@ -86,7 +86,7 @@ const Rent3Col = () => {
           <div class="row">
             <div class="col-lg-12">
               <div class="breadcumb-style1">
-                <h2 class="title">UAE Homes for Rent</h2>
+                <h2 class="title">Properties for Rent (UAE)</h2>
                 <div class="breadcumb-list">
                   <a href="/">Home</a>
                   <a href="#">For Renting</a>

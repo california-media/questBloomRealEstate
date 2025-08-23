@@ -11,7 +11,7 @@ import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
 
 const metaInformation = {
-  title: "Quest Bloom Real Estate LLC | Off-Plan Listings",
+  title: "Quest Bloom Real Estate LLC | Off-Plan",
 };
 
 const GridFull3Col = () => {
@@ -88,7 +88,7 @@ const GridFull3Col = () => {
   <div class="row">
     <div class="col-lg-12">
       <div class="breadcumb-style1">
-        <h2 class="title">Off-Plan Homes for Sale in UAE</h2>
+        <h2 class="title">Properties in UAE (Off-Plan)</h2>
         <div class="breadcumb-list">
           <a href="/">Home</a>
           <a href="#">For Buying</a>

@@ -61,6 +61,10 @@ export default function ProperteyFilteringBuy({ region }) {
     saleStatuses,
   } = usePropertyStore();
 
+  const extraLocation = offplanBuyLocationOptions.find(
+    (loc) => loc.value === offplanBuyLocation
+  );
+
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
@@ -239,9 +243,10 @@ Logic for building payload:
         ? // ✅ Case: isOffPlan
           typeof offplanBuyLocation === "number"
           ? {
-              areas:
-                selectedCities.map((c) => c.value).join(",") +
-                (offplanBuyLocation ? `,${offplanBuyLocation}` : ""),
+              areas: [
+                ...selectedCities.map((c) => c.value),
+                offplanBuyLocation,
+              ].join(","),
             }
           : {
               areas: selectedCities.map((c) => c.value).join(","),
@@ -249,7 +254,10 @@ Logic for building payload:
         : // ✅ Case: NOT isOffPlan
         typeof offplanBuyLocation === "number"
         ? {
-            location_areas: selectedCities.map((c) => c.label).join(","),
+            location_areas: [
+              ...selectedCities.map((c) => c.label),
+              ...(extraLocation ? [extraLocation.label] : []),
+            ].join(","),
           }
         : {
             location_areas: selectedCities.map((c) => c.label).join(","),

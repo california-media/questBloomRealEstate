@@ -79,7 +79,6 @@ const TopFilterBar = ({
     "Meydan City",
     "Dubai Creek Harbour",
     "Dubai Maritime City",
-  
   ];
   return (
     <>
@@ -257,19 +256,24 @@ const TopFilterBar = ({
                   />
                 </div>
               </li>
-              <li className="list-inline-item position-relative pt-1">
+              <li className="list-inline-item position-relative pt-1 ">
                 <button
                   type="button"
-                  className="open-btn mb10 position-relative d-flex align-items-center justify-content-center "
+                  className="open-btn mb10 position-relative d-flex align-items-center border justify-content-center "
                   style={{
-                    background: "#797631",
+                    color: "#797631",
                     width: "45px",
                     height: "45px",
                     maringBottom: 0,
                   }}
                   onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
                 >
-                  <i className="flaticon-search mt-1 text-white" />
+                  <i
+                    className="flaticon-search mt-1 "
+                    style={{
+                      color: "#797631",
+                    }}
+                  />
                 </button>
               </li>
               {/* <li className="list-inline-item position-relative">
