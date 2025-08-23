@@ -403,6 +403,7 @@
           opacity: 1;
           transform: scale(1);
         }
+      
 
         .plus-line-horizontal {
           stroke-dasharray: 14;
@@ -430,15 +431,15 @@
           line-height: 1.1;
         }
 
+        .accordion-header.expanded .accordion-title{
+         color: #797631;
+
+       }
 
         .accordion-header.hovered {
             margin-left: 100px;
         }
 
-         .accordion-header.expanded .accordion-title{
-          color: #797631;
-
-        }
          .accordion-header.expanded {
           color: #797631;
             margin-left: 100px;
@@ -451,7 +452,7 @@
         .accordion-content {
           overflow: hidden;
           transition: all 0.4s ease-in-out;
-          margin-left: 150px;
+          /* margin-left: 150px; */
           
           max-height: 0;
           opacity: 0;
@@ -517,4 +518,23 @@
           .accordion-content.expanded {
             padding-bottom: 32px;
           }
+
+            .accordion-icon.mobile-visible {
+          opacity: 1;
+          transform: scale(1);
+        }
+
+
+
+
+            .accordion-header.hovered {
+            margin-left: 0px;
+        }
+
+         .accordion-header.expanded {
+            margin-left: 0px;
+
+        }
+     
+
         }

@@ -181,6 +181,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                       fontWeight: 200,
                       textTransform: "uppercase",
                       color: "#FFFFFF",
+                      paddingBottom: "30px",
                     }}
                   >
                     WHO WE ARE
@@ -218,7 +219,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                         onMouseLeave={() => setHoveredIndex(null)}
                       >
                         <div
-                          className={`accordion-icon ${
+                          className={`accordion-icon mobile-visible ${
                             hoveredIndex === index || activeIndex === index ? "visible" : ""
                           } ${activeIndex === index ? "minus" : ""}`}
                         >
@@ -254,10 +255,10 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                         }`}
                       >
                         <div className="content-wrapper">
-                          <div className="icon-container">
+                          <div className="icon-container ">
                             <img
                               src={item.hasImage}
-                              className="icon-placeholder"
+                              className="icon-placeholder d-none d-lg-block"
                             ></img>
                           </div>
 
