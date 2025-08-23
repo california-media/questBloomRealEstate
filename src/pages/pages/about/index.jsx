@@ -250,7 +250,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                           </svg>
                         </div>
 
-                        <h2 className="accordion-title">{item.title}</h2>
+                        <h2 className="accordion-title " style={{ fontFamily: '"Raleway", Sans-serif',}}>{item.title}</h2>
                       </div>
 
                       <div

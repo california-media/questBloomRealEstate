@@ -17,20 +17,29 @@ const ScrollRevealSection = () => {
   const progress = useMotionValue(0);
 
   // Check if section is in view
-  const isInView = useInView(sectionRef, {
-    amount: 1, // Section must be 100% in view
-  });
+  // 1. Fully in view
+  const fullyInView = useInView(sectionRef, { amount: 1 });
+
+  // 2. Any part in view (we’ll refine to bottom check manually below)
+  const partlyInView = useInView(sectionRef, { amount: 0 });
+
+  // Combine
+  const isInView = fullyInView || partlyInView;
 
   // Transform values based on progress
-  const imageWidth = useTransform(progress, [0, 1], ["700px", "1800px"]);
+  const imageWidth = useTransform(
+    progress,
+    [0, 0.5, 1],
+    ["400px", "700px", "1600px"]
+  );
 
-  const textOpacity = useTransform(progress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const textOpacity = useTransform(progress, [0, 0.5, 0.7, 1], [1, 1, 0, 0]);
   const progressBarHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     let ticking = false;
     let startScrollY = 0;
-    const scrollDistance = window.innerHeight * 1.5; // Distance to complete animation
+    const scrollDistance = window.innerHeight; // Distance to complete animation
 
     const handleScroll = (e) => {
       if (!ticking) {
@@ -41,7 +50,7 @@ const ScrollRevealSection = () => {
             // Start hijacking when section comes into view
             setIsScrollHijacked(true);
             startScrollY = currentScrollY;
-            document.body.style.overflow = "hidden";
+            // document.body.style.overflow = "hidden";
           }
 
           if (isScrollHijacked) {
@@ -95,7 +104,7 @@ const ScrollRevealSection = () => {
 
       <section
         ref={sectionRef}
-        className="scroll-reveal-section py-5"
+        className="scroll-reveal-section py-5 pt100"
         style={{ height: "80vh", position: "relative" }}
       >
         <div className="container-fluid h-100 d-flex align-items-center justify-content-center position-relative">
@@ -105,31 +114,30 @@ const ScrollRevealSection = () => {
             style={{
               position: "absolute",
               left: "15%",
+              opacity: textOpacity,
             }}
           >
             <h3>
-              <span className="highlight">50</span>
+              <span className="highlight">Luxury</span>
               <br />
-              years of
+              Living
               <br />
-              INCREDIBLE
-              <br />
-              LEGACY
+              Redefined
             </h3>
             <p>
-              Building dreams and creating lasting impressions through
-              innovative architecture and sustainable development.
+              Questbloom Real Estate sets a new standard of sophistication in
+              Dubai’s property market.
             </p>
             <p>
-              Our commitment to excellence spans five decades of transformative
-              projects across multiple continents.
+              From waterfront villas to skyline apartments, we deliver homes
+              that match your lifestyle and aspirations.
             </p>
           </motion.div>
 
           {/* Center image */}
 
           <motion.img
-            style={{ width: imageWidth, height: "1000px", objectFit: "cover" }}
+            style={{ width: imageWidth, height: "1100px", objectFit: "cover" }}
             src="/images/background/aboutus-cover.jfif"
             alt="Sobha Group Development"
             className="reveal-image "
@@ -138,24 +146,21 @@ const ScrollRevealSection = () => {
           {/* Right text */}
           <motion.div
             className="reveal-text-right"
-            style={{ opacity: 1 - textOpacity, position: "absolute", right: "15%" }}
+            style={{ opacity: textOpacity, position: "absolute", right: "15%" }}
           >
             <h3>
-              Founded in <span className="highlight">1976</span>
+              Built on
               <br />
-              by visionary
+              <span className="highlight">Trust</span>
               <br />
-              entrepreneur
-              <br />
-              <span className="highlight">P.N.C Menon</span>
+              and Integrity
             </h3>
             <p>
-              A multinational, multi-product group with developments and
-              investments in the UAE, India, and UK.
+              More than agents, we are your partners, committed to guiding you
+              with expertise and care.
             </p>
             <p>
-              From humble beginnings to becoming a global leader in luxury real
-              estate and construction.
+              Seamless journeys, lasting relationships, and exceptional results.
             </p>
           </motion.div>
         </div>
