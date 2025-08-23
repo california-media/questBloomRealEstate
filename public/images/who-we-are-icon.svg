@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="116.071" height="169.059" viewBox="0 0 116.071 169.059">
+  <defs>
+    <clipPath id="clip-path-who-we-are">
+      <rect width="116.071" height="169.059" fill="none" stroke="#c7a386" stroke-width="2"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#clip-path-who-we-are)">
+    <!-- Silhouette of two people (a team) -->
+    <path d="M45.5,120.5c0-5.523,4.477-10,10-10s10,4.477,10,10" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    <path d="M25.5,120.5c0-5.523,4.477-10,10-10s10,4.477,10,10" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    <path d="M35.5,60.5v50 M55.5,60.5v50" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    
+    <!-- Head of person 1 -->
+    <circle cx="15.5" cy="50.5" r="5" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-width="2"/>
+    
+    <!-- Head of person 2 -->
+    <circle cx="55.5" cy="50.5" r="5" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-width="2"/>
+    
+    <!-- Connecting line between people, symbolizing teamwork -->
+    <path d="M45.5,75.5h-20" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    
+    <!-- Decorative elements to match the "vision" icon's style -->
+    <path d="M90.5,30.5h20v15h-20z" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-width="2"/>
+    <path d="M10.5,160.5s10-5,15-5,15,5,15,5" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    <path d="M100.5,80.5s-5,10-5,15,5,15,5,15" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+    
+    <!-- Grounding line at the bottom, similar to the original -->
+    <path d="M10.5,170.5h80" transform="translate(-20 -40)" fill="none" stroke="#c7a386" stroke-linecap="round" stroke-width="2"/>
+  </g>
+</svg>

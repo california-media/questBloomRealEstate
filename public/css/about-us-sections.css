@@ -35,7 +35,7 @@
             font-size: 4.5rem;
             font-weight: 600;
             color: white;
-            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
             letter-spacing: -0.02em;
             line-height: 1.1;
             background: linear-gradient(135deg, #ffffff, #f0f0f0);
@@ -361,5 +361,160 @@
     -ms-transform: scale(1.1) rotate(-1deg);
     transform: scale(1.1) rotate(-1deg);
 }
-    
-       
+      .accordion-section {
+          background-color: white;
+          width: 100%;
+        }
+
+        .accordion-container {
+          max-width: 1640px;
+        }
+
+        .accordion-item {
+          border-bottom: 1px solid #e5e5e5;
+        }
+
+        .accordion-item:last-child {
+          border-bottom: none;
+        }
+
+        .accordion-header {
+          position: relative;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding: 38px 0;
+          transition: all 0.2s ease-in-out;
+        }
+
+        .accordion-icon {
+          width: 64px;
+          height: 64px;
+          margin-right: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transform: scale(0.75);
+          transition: all 0.3s ease-in-out;
+        }
+
+        .accordion-icon.visible {
+          opacity: 1;
+          transform: scale(1);
+        }
+
+        .plus-line-horizontal {
+          stroke-dasharray: 14;
+          stroke-dashoffset: 0;
+          transition: stroke-dashoffset 0.4s ease-in-out;
+        }
+
+        .plus-line-vertical {
+          stroke-dasharray: 14;
+          stroke-dashoffset: 0;
+          transition: stroke-dashoffset 0.4s ease-in-out;
+        }
+
+        .accordion-icon.minus .plus-line-vertical {
+          stroke-dashoffset: 14;
+        }
+
+        .accordion-title {
+          font-size: 6rem;
+          font-weight: 200;
+          margin: 0;
+          transition: all 0.4s;
+          letter-spacing: 0.02em;
+          color: #d1d5db;
+          line-height: 1.1;
+        }
+
+
+        .accordion-header.hovered {
+            margin-left: 100px;
+        }
+
+         .accordion-header.expanded .accordion-title{
+          color: #797631;
+
+        }
+         .accordion-header.expanded {
+          color: #797631;
+            margin-left: 100px;
+
+        }
+        .accordion-header.hovered .accordion-title {
+          color: #797631;
+        }
+
+        .accordion-content {
+          overflow: hidden;
+          transition: all 0.4s ease-in-out;
+          margin-left: 150px;
+          
+          max-height: 0;
+          opacity: 0;
+          padding-bottom: 0;
+        }
+
+        .accordion-content.expanded {
+          max-height: 400px;
+          opacity: 1;
+          padding-bottom: 48px;
+          margin-bottom: 30px;
+          margin-top: 30px;
+        }
+
+        .content-wrapper {
+          display: flex;
+          align-items: flex-start;
+          gap: 32px;
+          padding-left: 32px;
+        }
+
+        .icon-container {
+        
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          margin-top: 8px;
+        }
+
+        .icon-placeholder {
+            margin-right: 3rem;
+          border-radius: 4px;
+        }
+
+        .content-text {
+          font-size: 18px;
+          color: #374151;
+          line-height: 1.7;
+          margin: 0;
+          flex: 1;
+        }
+
+        @media (max-width: 768px) {
+          .accordion-title {
+            font-size: 3rem;
+          }
+          
+          .accordion-header {
+            padding: 32px 0;
+          }
+          
+          .accordion-icon {
+            margin-right: 16px;
+          }
+          
+          .content-wrapper {
+            gap: 16px;
+            padding-left: 16px;
+          }
+          
+          .accordion-content.expanded {
+            padding-bottom: 32px;
+          }
+        }

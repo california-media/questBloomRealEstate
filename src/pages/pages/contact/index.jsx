@@ -93,7 +93,7 @@ const Contact = () => {
       {/* End Our Contact With Map */}
 
       {/* Start Our Contact Form */}
-      <section className="pt-0 " >
+      <section className="pt-0  pb50">
         <div className="container mt150  contact-us-form-section ">
           <div className="row d-flex align-items-end">
             <div className="col-lg-5 position-relative">
@@ -107,21 +107,19 @@ const Contact = () => {
             {/* End .col */}
 
             <div
-              className="col-lg-5 offset-lg-2 mt20"
-              dangerouslySetInnerHTML={{
-                __html:
-                  sections.find((section) => section.section_name === "Form")
-                    ?.html_content ||
-                  ` <h2 class="mb30 text-capitalize">
+              className="col-lg-5 offset-lg-2 mt20  "
+              style={{ height: "250px" }}
+            >
+              <h2 className="mb30 text-capitalize">
                 We’d love to hear <br className="d-none d-lg-block" />
                 from you.
               </h2>
-              <p class="text">
+              <p className="text">
                 Let us know how we can help! Fill out our contact form and we
                 will get back to you as soon as possible.
-              </p>`,
-              }}
-            ></div>
+              </p>
+            </div>
+
             {/* End .col */}
           </div>
         </div>
@@ -129,29 +127,92 @@ const Contact = () => {
       {/* End Our Contact Form */}
 
       {/* Visit our Office */}
-      <section
-        className="pt0 pb90 pt20 "
-        dangerouslySetInnerHTML={{
-          __html:
-            sections.find((section) => section.section_name === "Office")
-              ?.html_content ||
-            `<div class="container">
-  <div class="row">
-    <div class="col-lg-6 m-auto" data-aos="fade-up" data-aos-delay="300">
-      <div class="main-title text-center">
-        <h2 class="title">Visit Our Office</h2>
-        <p class="paragraph mt25">
-          Office 1702, 17th Floor,
-Lake Central Tower, Marasi Drive,
-Business Bay, Dubai, UAE
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-`,
-        }}
-      ></section>
+      <section className="pt0 pb90  ">
+        <div className="container">
+          <div className="row align-items-center gx-5">
+            <div
+              className="col-lg-7 "
+              data-aos="fade-right"
+              data-aos-delay="300"
+            >
+              <div className="container ">
+                <div className="row">
+                  <div
+                    className="col-lg-12 m-auto"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                  >
+                    <div className="main-title text-start">
+                      <h2 className="title">Visit Our Office</h2>
+                      <p className="paragraph mt25">
+                        Office 1702, 17th Floor,
+                        <br />
+                        Lake Central Tower, Marasi Drive,
+                        <br />
+                        Business Bay, Dubai, UAE
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-5" data-aos="fade-left" data-aos-delay="300">
+              <div className="contact-card">
+                <div className="card-header">
+                  <img
+                    src="https://admin.questrealestate.ae/storage/media/uploaded_images/img_688383f964e0b.svg"
+                    alt="Quest Real Estate"
+                    className="logo"
+                  />
+                </div>
+
+                <div className="card-body">
+                  <h4 className="text-start text-white">Contact Us</h4>
+
+                  <div className="contact-item">
+                    <i className="fas fa-phone"></i>
+                    <span>+971 4 529 9247</span>
+                  </div>
+
+                  <a href="tel:+97145299247" className="whatsapp-btn">
+                    <i className="fab fa-whatsapp"></i>
+                    WhatsApp
+                  </a>
+
+                  <div className="divider"></div>
+
+                  <p className="follow-text text-white">Follow us on:</p>
+                  <div className="social-links">
+                    <a href="#" className="social-link facebook">
+                      <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" className="social-link instagram">
+                      <i className="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" className="social-link linkedin">
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" className="social-link youtube">
+                      <i className="fab fa-youtube"></i>
+                    </a>
+                  </div>
+
+                  <div className="divider"></div>
+
+                  <p className="valuation-text">
+                    Do you need a property valuation?
+                  </p>
+                  <a href="tel:+97145299247" className="speak-btn">
+                    <i className="fas fa-phone"></i>
+                    Speak with us
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* End Visit our Office */}
 
       {/* Our CTA */}
