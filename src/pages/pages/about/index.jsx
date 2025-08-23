@@ -7,9 +7,10 @@ import Agents from "@/components/pages/about/Agents";
 
 import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "/public/css/about-us-sections.css";
-import { Helmet } from "react-helmet-async";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import ScrollRevealSection from "@/components/ScrollRevealSection";
 
 const metaInformation = {
   title: "About | Quest Bloom Real Estate LLC",
@@ -196,6 +197,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
 
+      <ScrollRevealSection/>
       <section className="contact-info-section  pt-0 pb50">
         <div className="accordion-section">
           <div className="container-fluid">
@@ -220,7 +222,9 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                       >
                         <div
                           className={`accordion-icon mobile-visible ${
-                            hoveredIndex === index || activeIndex === index ? "visible" : ""
+                            hoveredIndex === index || activeIndex === index
+                              ? "visible"
+                              : ""
                           } ${activeIndex === index ? "minus" : ""}`}
                         >
                           <svg
