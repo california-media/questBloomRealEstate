@@ -71,7 +71,7 @@ const FeaturedListings = ({ data, colstyle }) => {
                 </div>
               </div>
               <div className="list-content flex-grow-1 p-3  d-flex flex-column justify-content-between ">
-                <div >
+                <div>
                   <h6 className="list-title">
                     <Link to={`/${pathPrefix}/${getPrefixedId(listing)}`}>
                       {listing.title}
@@ -97,10 +97,9 @@ const FeaturedListings = ({ data, colstyle }) => {
                     {listing.yearBuilding}
                   </a>
                 </div> */}
-                <hr className="mt-1 mb-1 y" style={{ borderColor: "gray" }}  />
+                <hr className="mt-1 mb-1 y" style={{ borderColor: "gray" }} />
                 <div className="list-meta2 d-flex   justify-content-between align-items-center">
-                  <div >
-                 
+                  <div>
                     Price from{" "}
                     <h6 className="fw-semibold pb-0 mb-0 ">
                       {Number(listing.price.split("$")[1]) === 0
@@ -110,9 +109,8 @@ const FeaturedListings = ({ data, colstyle }) => {
                     </h6>
                   </div>
                   <div>
-                  
-                    Completion <h6 className="fw-semibold pb-0 mb-0 ">
-
+                    Completion{" "}
+                    <h6 className="fw-semibold pb-0 mb-0 ">
                       {formatCompletionDate(listing?.completion_datetime)}
                     </h6>
                   </div>

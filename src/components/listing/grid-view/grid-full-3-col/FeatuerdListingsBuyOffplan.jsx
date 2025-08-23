@@ -23,7 +23,7 @@ const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
       {data.map((listing) => (
         <div
           className={`d-flex ${
-            colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
+            colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-3"
           }`}
           key={listing.listing_prefix + String(listing.id)}
         >
