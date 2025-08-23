@@ -41,6 +41,7 @@ import AdminPropertyPDF from "@/components/property/property-single-style/single
 import Parkings from "@/components/property/property-single-style/common/Parkings";
 import YoutubeVideoEmbed from "@/components/property/property-single-style/single-v5/YoutubeVideoEmbed";
 import ProjectDetailsCard from "@/components/property/property-single-style/single-v5/ProjectDetailsCard";
+import toast from "react-hot-toast";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -651,6 +652,7 @@ const SingleV5 = () => {
                           <Heart
                             fill={isFavorite ? "red" : "none"}
                             color={isFavorite ? "red" : "currentColor"}
+                            strokeWidth={1}
                             size={20}
                             className="pb5"
                           />
@@ -665,6 +667,7 @@ const SingleV5 = () => {
                             fill={isFavorite ? "red" : "none"}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
+                            strokeWidth={1}
                           />
                         </a>
 
@@ -821,6 +824,7 @@ const SingleV5 = () => {
                         >
                           <Heart
                             fill={isFavorite ? "red" : "none"}
+                            strokeWidth={1}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
                             className="pb5"
@@ -834,6 +838,7 @@ const SingleV5 = () => {
                         >
                           <Heart
                             fill={isFavorite ? "red" : "none"}
+                            strokeWidth={1}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
                           />

@@ -115,7 +115,7 @@ const AdminSingleV5 = () => {
       if (!boxRef.current) return;
       const { top } = boxRef.current.getBoundingClientRect();
       // when box reaches 120px from top -> stick it (after default header fix, +10 is working only)
-      setIsSticky(window.scrollY > boxRef.current.offsetTop +10);
+      setIsSticky(window.scrollY > boxRef.current.offsetTop + 10);
 
       // end logic
       if (bottomRef.current) {
@@ -553,6 +553,7 @@ const AdminSingleV5 = () => {
                         >
                           <Heart
                             fill={isFavorite ? "red" : "none"}
+                            strokeWidth={1}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
                             className="pb5"
@@ -566,6 +567,7 @@ const AdminSingleV5 = () => {
                         >
                           <Heart
                             fill={isFavorite ? "red" : "none"}
+                            strokeWidth={1}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
                           />
@@ -723,6 +725,7 @@ const AdminSingleV5 = () => {
                           style={styles.textShadowDesktop}
                         >
                           <Heart
+                            strokeWidth={1}
                             fill={isFavorite ? "red" : "none"}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
@@ -736,6 +739,7 @@ const AdminSingleV5 = () => {
                           onClick={handleFavoriteClick}
                         >
                           <Heart
+                            strokeWidth={1}
                             fill={isFavorite ? "red" : "none"}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
@@ -904,21 +908,21 @@ const AdminSingleV5 = () => {
 
       {/* <div className="col-lg-3 ">
         <div className="column"> */}
-          {/* <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
+      {/* <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
                   <h4 className="form-title mb5">Schedule a tour</h4>
                   <p className="text">Choose your preferred day</p>
                   <ScheduleTour />
                 </div> */}
-          {/* End .Schedule a tour */}
+      {/* End .Schedule a tour */}
 
-          {/* <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget  bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
             <h4 className="title fz17 mb30">Details</h4> */}
-            {/* <InfoWithForm /> */}
-            {/* <SingleAgentInfo developer_data={property?.developer_data} /> */}
-            {/* <ExtraPropertyDetails property={property} />
+      {/* <InfoWithForm /> */}
+      {/* <SingleAgentInfo developer_data={property?.developer_data} /> */}
+      {/* <ExtraPropertyDetails property={property} />
           </div> */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30 d-flex align-items-center">
                     <i className="fab fa-whatsapp text-success me-3 fs-4"></i>
                     WhatsApp Support
@@ -944,8 +948,8 @@ const AdminSingleV5 = () => {
                   </div>
                 </div> */}
 
-          {/* Email */}
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* Email */}
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30 d-flex align-items-center">
                     <i className="fas fa-envelope text-primary me-3 fs-4"></i>
                     Email Support
@@ -970,25 +974,25 @@ const AdminSingleV5 = () => {
                     </p>
                   </div>
                 </div> */}
-          {/* End Get More Information */}
+      {/* End Get More Information */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Mortgage Calculator</h4>
                   <div className="row">
                     <MortgageCalculator />
                   </div>
                 </div> */}
-          {/* End .Mortgage Calculator */}
+      {/* End .Mortgage Calculator */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                   <div className="row">
                     <PropertyNearby map_points={property?.map_points} />
                   </div>
                 </div> */}
-          {/* End What&apos;s Nearby? */}
+      {/* End What&apos;s Nearby? */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Payment Plans</h4>
                   <div className="row">
                     <div className="col-md-12">
@@ -996,9 +1000,9 @@ const AdminSingleV5 = () => {
                     </div>
                   </div>
                 </div> */}
-          {/* End Walkscore */}
+      {/* End Walkscore */}
 
-          {/* {property?.lobby?.[0]?.url && (
+      {/* {property?.lobby?.[0]?.url && (
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <h4 className="title fz17 mb30">Lobby</h4>
                     <div className="row">
@@ -1006,24 +1010,24 @@ const AdminSingleV5 = () => {
                     </div>
                   </div>
                 )} */}
-          {/* End .360° Virtual Tour */}
+      {/* End .360° Virtual Tour */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 pt30 mb30 overflow-hidden position-relative">
                   <div className="row">
                     <h4 className="title fz17 mb30 pl20">Building Details</h4>
                     <BuildingDetails buildings={property?.buildings} />
                   </div>
                 </div> */}
 
-          {/* End PropertyViews */}
+      {/* End PropertyViews */}
 
-          {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+      {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                   <h4 className="title fz17 mb30">Home Value</h4>
                   <div className="row">
                     <HomeValueChart />
                   </div>
                 </div> */}
-        {/* </div>
+      {/* </div>
       </div> */}
     </>
   );
