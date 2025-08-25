@@ -42,6 +42,7 @@ import Parkings from "@/components/property/property-single-style/common/Parking
 import YoutubeVideoEmbed from "@/components/property/property-single-style/single-v5/YoutubeVideoEmbed";
 import ProjectDetailsCard from "@/components/property/property-single-style/single-v5/ProjectDetailsCard";
 import toast from "react-hot-toast";
+import SocialLinksNavbar from "@/pages/homes/home-v2/SocialLinksNavbar";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -400,7 +401,7 @@ const SingleV5 = () => {
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
-
+      <SocialLinksNavbar />
       {/* Property All Single V4 */}
       <section className="pt30  pb90 bgc-f7 ">
         <div

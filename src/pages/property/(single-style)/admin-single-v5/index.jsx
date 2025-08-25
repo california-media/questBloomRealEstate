@@ -36,6 +36,7 @@ import AdminPropertyPDF from "@/components/property/property-single-style/single
 import { Sparkles } from "lucide-react";
 import AdminImageTabs from "@/components/pages/about/AdminImageTabs";
 import toast from "react-hot-toast";
+import SocialLinksNavbar from "@/pages/homes/home-v2/SocialLinksNavbar";
 // import SingleReview from "@/components/property/property-single-style/common/reviews/SingleReview";
 // import BuildingDetails from "@/components/property/property-single-style/common/BuildingDetails";
 
@@ -308,6 +309,7 @@ const AdminSingleV5 = () => {
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
+      <SocialLinksNavbar />
 
       {/* Property All Single V4 */}
       <section className="pt30  pb90 bgc-f7 ">
