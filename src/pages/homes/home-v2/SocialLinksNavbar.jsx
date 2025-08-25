@@ -27,6 +27,14 @@ const SocialLinksNavbar = () => {
       >
         <i className="fab fa-tiktok"></i>
       </a>
+      <a
+        target="_blank"
+        href={`https://wa.me/${"+971 4 529 9247".replace(/\D/g, "")}`}
+        className="social-link-navbar"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <i className="fab fa-whatsapp"></i>
+      </a>
     </div>
   );
 };

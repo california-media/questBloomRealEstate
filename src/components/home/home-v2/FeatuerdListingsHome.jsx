@@ -145,7 +145,7 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                       ) : (
                         listings.slice(0, 6).map((listing, index) => (
                           <div
-                            className="col-sm-6 col-lg-4"
+                            className="col-sm-6 col-lg-4 "
                             key={listing.id || index}
                             style={{ height: "90%" }}
                           >
@@ -153,7 +153,7 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                               to={`/off-plan/op-${listing.id}`}
                               className="w-100"
                             >
-                              <div className="h-100 w-100">
+                              <div className="h-100 w-100 ">
                                 <div
                                   className="listing-style1 w-100 d-flex flex-column"
                                   style={{
@@ -162,7 +162,7 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
                                     borderRadius: "8px",
                                   }}
                                 >
-                                  <div className="list-thumb">
+                                  <div className="list-thumb ">
                                     <img
                                       className="w-100 cover"
                                       style={{ height: "230px" }}

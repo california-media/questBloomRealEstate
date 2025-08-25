@@ -10,6 +10,7 @@ import adminApi from "@/api/adminApi";
 
 import MetaData from "@/components/common/MetaData";
 import { Link, useParams } from "react-router-dom";
+import SocialLinksNavbar from "@/pages/homes/home-v2/SocialLinksNavbar";
 
 const metaInformation = {
   title: "Quest Bloom Real Estate LLC | Buy and Off-Plan",
@@ -73,6 +74,7 @@ const BuyOffplan3Col = () => {
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
+      <SocialLinksNavbar/>
 
       {/* Breadcumb Sections */}
       <section

@@ -8,6 +8,7 @@ import Office from "@/components/pages/contact/Office";
 import MetaData from "@/components/common/MetaData";
 import adminApi from "@/api/adminApi";
 import { useEffect, useState } from "react";
+import SocialLinksNavbar from "@/pages/homes/home-v2/SocialLinksNavbar";
 
 const metaInformation = {
   title: "Contact | Quest Bloom Real Estate LLC",
@@ -73,6 +74,7 @@ const Contact = () => {
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
+      <SocialLinksNavbar />
 
       {/* Our Contact With Map */}
       <section

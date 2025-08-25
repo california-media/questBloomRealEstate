@@ -12,6 +12,7 @@ import "/public/css/about-us-sections.css";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import ScrollRevealSection from "@/components/ScrollRevealSection";
 import ScrollRevealSectionMobile from "@/components/ScrollRevealSectionMobile";
+import SocialLinksNavbar from "@/pages/homes/home-v2/SocialLinksNavbar";
 
 const metaInformation = {
   title: "About | Quest Bloom Real Estate LLC",
@@ -110,6 +111,9 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Main Header Nav */}
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
+
+      <SocialLinksNavbar />
+
       {/* End Mobile Nav  */}
       {/* Breadcrumb Sections */}
       <section className="p-0">
