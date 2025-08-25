@@ -357,7 +357,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
                 ></span>
                 <span className="visually-hidden">Loading...</span>
                 <span>
-                  {downloadPDF ? "Donloading PDF" : "Submitting Enquiry"}
+                  {downloadPDF ? "Downloading PDF" : "Submitting Enquiry"}
                 </span>
               </div>
             ) : (
