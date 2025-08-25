@@ -66,7 +66,7 @@ const FeaturedListingsBuy = ({ data, colstyle }) => {
                       {listing.title}
                     </Link>
                   </h6>
-                  <p className="list-text mb-0">{listing.location}</p>
+                  <p className="list-text mb-1">{listing.location}</p>
                 </div>
                 {/* <div className="list-meta d-flex align-items-center r">
                   <a href="#">

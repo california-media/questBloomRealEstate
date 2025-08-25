@@ -50,6 +50,7 @@ export default function ProperteyFilteringBuy({ region }) {
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [isNew, setIsNew] = useState(false);
 
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -167,6 +168,7 @@ export default function ProperteyFilteringBuy({ region }) {
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
         }),
+      is_new: isNew,
     };
     console.log(params);
     return params;
@@ -237,6 +239,7 @@ export default function ProperteyFilteringBuy({ region }) {
     priceRange,
     selectedCities,
     propertyId,
+    isNew,
   ]);
   // Handle scroll events for infinite loading
   // Handle scroll events for infinite loading
@@ -321,19 +324,21 @@ export default function ProperteyFilteringBuy({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-          <TopFilterBar
-            activeFilterCount={getActiveFilterCount("buy")}
-            setDataFetched={setDataFetched}
-            colstyle={colstyle}
-            setColstyle={setColstyle}
-            filterFunctions={filterFunctions}
-            setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={buyLocationOptions}
-            propertyTypes={propertyTypes}
-            selectedCities={selectedCities}
-            setSelectedCities={setSelectedCities}
-          />
-      
+        <TopFilterBar
+          activeFilterCount={getActiveFilterCount("buy")}
+          setDataFetched={setDataFetched}
+          colstyle={colstyle}
+          setColstyle={setColstyle}
+          filterFunctions={filterFunctions}
+          setCurrentSortingOption={setCurrentSortingOption}
+          locationOptions={buyLocationOptions}
+          propertyTypes={propertyTypes}
+          selectedCities={selectedCities}
+          isNew={isNew}
+          setIsNew={setIsNew}
+          setSelectedCities={setSelectedCities}
+        />
+
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

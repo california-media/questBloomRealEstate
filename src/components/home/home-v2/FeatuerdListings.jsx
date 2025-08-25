@@ -136,8 +136,8 @@ const FeaturedListings = ({ params }) => {
                               />
                             )}
                             {listing.post_handover
-                              ? "Post Handover"
-                              : "Pre Handover"}
+                              ? "Post-Handover"
+                              : "Pre-Handover"}
                           </span>
                           <span className="text-start">
                             <Clock size={16} color="gray" className="mb-1" />{" "}

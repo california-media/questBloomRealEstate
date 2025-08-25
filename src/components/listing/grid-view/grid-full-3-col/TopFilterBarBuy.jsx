@@ -42,6 +42,8 @@ const TopFilterBar = ({
   activeFilterCount,
   selectedCities,
   setSelectedCities,
+  setIsNew,
+  isNew,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -380,7 +382,38 @@ const TopFilterBar = ({
 
         <div className="col-xl-12 d-none d-lg-block">
           <div className="dropdown-lists">
-            <ul className="p-0 text-center text-xl-start">
+            <ul className="p-0 text-center text-xl-start ">
+              <li
+                className="list-inline-item position-relative "
+                style={{ paddingBottom: "0.75rem" }}
+              >
+                <div
+                  type="button"
+                  className="open-btn  position-relative d-flex gap-1  align-items-center form-check form-switch custom-switch "
+                  style={{
+                    paddingTop: "0.4rem",
+                    paddingBottom: "0.4rem",
+                  }}
+                >
+                  <input
+                    className="form-check-input ms-1 me-2 "
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    style={{
+                      maringBottom: "0px",
+                      border: "none",
+                    }}
+                    onChange={(e) => setIsNew(e.target.checked ? true : false)}
+                  />
+                  <label
+                    className="form-check-label "
+                    htmlFor="flexSwitchCheckDefault"
+                  >
+                    {isNew ? "New" : "Pre-owned"}
+                  </label>
+                </div>
+              </li>
               {requiredNames.map((city) => (
                 <li
                   key={city}

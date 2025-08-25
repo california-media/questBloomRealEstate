@@ -67,7 +67,7 @@ const FeaturedListings = ({ data, colstyle }) => {
                       {listing.title}
                     </Link>
                   </h6>
-                  <p className="list-text mb-0">{listing.location}</p>
+                  <p className="list-text mb-1">{listing.location}</p>
                 </div>
              
                 <hr className="mt-1 mb-1 bg-secondary"  style={{ borderColor: "gray" }} />

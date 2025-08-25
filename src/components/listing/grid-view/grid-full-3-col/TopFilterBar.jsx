@@ -421,7 +421,7 @@ const TopFilterBar = ({
                     className="form-check-label "
                     htmlFor="flexSwitchCheckDefault"
                   >
-                    {posthandover ? "Post handover" : "Pre handover"}
+                    {posthandover ? "Post-handover" : "Pre-handover"}
                   </label>
                 </div>
               </li>
