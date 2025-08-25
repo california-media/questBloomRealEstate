@@ -7,7 +7,7 @@ import {
   inView,
 } from "framer-motion";
 
-const ScrollRevealSection = () => {
+const ScrollRevealSectionMobile = () => {
   const sectionRef = useRef(null);
   const [isScrollHijacked, setIsScrollHijacked] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -32,9 +32,6 @@ const ScrollRevealSection = () => {
     [0, 0.5, 1],
     ["400px", "700px", "1600px"]
   );
-
-  const textOpacity = useTransform(progress, [0, 0.5, 0.75, 1], [1, 1, 0, 0]);
-  const progressBarHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     let ticking = false;
@@ -103,20 +100,12 @@ const ScrollRevealSection = () => {
       {/* Add some content before the section for testing */}
 
       <section
-        ref={sectionRef}
-        className="scroll-reveal-section py-5 pt100 d-none d-lg-block"
-        style={{ height: "80vh", position: "relative" }}
+        className="scroll-reveal-section pb-0 pt40 d-block d-lg-none"
+        style={{ position: "relative" }}
       >
-        <div className="container-fluid h-100 d-flex align-items-center justify-content-center position-relative">
+        <div className="container-fluid bg-dnger  h-100 p-0 d-flex align-items-center justify-content-center position-relative">
           {/* Left text */}
-          <motion.div
-            className="reveal-text-left"
-            style={{
-              position: "absolute",
-              left: "15%",
-              opacity: textOpacity,
-            }}
-          >
+          <motion.div className="reveal-text-left">
             <h3>
               <span className="highlight">Luxury</span>
               <br />
@@ -137,17 +126,14 @@ const ScrollRevealSection = () => {
           {/* Center image */}
 
           <motion.img
-            style={{ width: imageWidth, height: "1100px", objectFit: "cover" }}
+            style={{ height: "1100px", width:"800px", objectFit: "cover" }}
             src="/images/background/aboutus-cover.jfif"
             alt="Sobha Group Development"
             className="reveal-image "
           />
 
           {/* Right text */}
-          <motion.div
-            className="reveal-text-right"
-            style={{ opacity: textOpacity, position: "absolute", right: "15%" }}
-          >
+          <motion.div className="reveal-text-right mt-4">
             <h3>
               Built on
               <br />
@@ -169,4 +155,4 @@ const ScrollRevealSection = () => {
   );
 };
 
-export default ScrollRevealSection;
+export default ScrollRevealSectionMobile;

@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import "/public/css/about-us-sections.css";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import ScrollRevealSection from "@/components/ScrollRevealSection";
+import ScrollRevealSectionMobile from "@/components/ScrollRevealSectionMobile";
 
 const metaInformation = {
   title: "About | Quest Bloom Real Estate LLC",
@@ -78,19 +79,22 @@ const About = () => {
 At Questbloom Real Estate, we’re more than just agents – we’re your partners in finding the perfect home tailored to your lifestyle. With a keen eye for detail and a commitment to excellence, we navigate the Dubai real estate landscape to bring you exclusive opportunities that resonate with your aspirations.
 
 Discover a new standard of luxury living with Questbloom Real Estate, where every home tells a story of opulence and elegance. Let us guide you on your journey to finding the home of your dreams in the dynamic city of Dubai.`,
-      hasImage: "/images/mission-icon.svg",
+      hasImage: "/images/background/team.webp",
+      isIcon: false,
     },
     {
       title: "Our Vision",
       content:
         "At Questbloom Real Estate, our vision is to redefine the standard of excellence in Dubai's real estate market. We aim to be the premier choice for clients seeking unparalleled service, expertise, and personalized attention. Our vision encompasses creating lasting relationships built on trust, transparency, and integrity. We strive to exceed expectations by consistently delivering exceptional results and guiding clients towards their dream homes. With a forward-thinking approach and a commitment to innovation, we envision a future where every client's real estate journey is seamless, rewarding, and unforgettable. Experience our vision come to life at Questbloom Real Estate – where your dreams become reality.",
       hasImage: "/images/vision-icon.svg",
+      isIcon: true,
     },
     {
       title: "Our Mission",
       content:
         "At Questbloom Real Estate, our mission is to guide you on your journey to finding the perfect home in Dubai. We prioritize unparalleled service, expertise, and personalized attention for every client. Our goal is to redefine the real estate experience by putting your needs first and foremost. With a commitment to excellence, we strive to be your trusted partner in navigating the dynamic Dubai real estate market. Whether you're in search of a luxurious waterfront villa, a chic urban apartment, or a serene beachfront retreat, we're here to make your dreams come true. Experience the difference with Questbloom Real Estate – where our mission is to guide you every step of the way towards your dream home in Dubai.",
       hasImage: "/images/mission-icon.svg",
+      isIcon: true,
     },
   ];
 
@@ -110,11 +114,10 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* Breadcrumb Sections */}
       <section className="p-0">
         <div
-          className="hover-scale-rotate"
+          className="about-us-video"
           style={{
             display: "flex",
             alignItems: "center",
-            height: "450px",
             position: "relative",
             overflow: "hidden",
           }}
@@ -175,11 +178,10 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
               <div className="col-lg-12">
                 <div className="breadcumb-style1 mt60">
                   <h2
-                    className="title text-white text-center"
+                    className=" about-us-video-text title text-white text-center"
                     style={{
                       fontFamily: '"Raleway", Sans-serif',
-                      fontSize: "64px",
-                      fontWeight: 200,
+
                       textTransform: "uppercase",
                       color: "#FFFFFF",
                       paddingBottom: "30px",
@@ -197,16 +199,14 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
 
-      <ScrollRevealSection/>
+      <ScrollRevealSection />
+      <ScrollRevealSectionMobile />
       <section className="contact-info-section  pt-0 pb30">
         <div className="accordion-section">
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-12">
-                <div
-                  className="accordion-container mx-auto"
-                  style={{ padding: "64px 32px" }}
-                >
+                <div className="accordion-container mx-auto">
                   {accordionItems.map((item, index) => (
                     <div key={index} className="accordion-item">
                       <div
@@ -250,7 +250,12 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                           </svg>
                         </div>
 
-                        <h2 className="accordion-title " style={{ fontFamily: '"Raleway", Sans-serif',}}>{item.title}</h2>
+                        <h2
+                          className="accordion-title "
+                          style={{ fontFamily: '"Raleway", Sans-serif' }}
+                        >
+                          {item.title}
+                        </h2>
                       </div>
 
                       <div
@@ -262,7 +267,9 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                           <div className="icon-container ">
                             <img
                               src={item.hasImage}
-                              className="icon-placeholder d-none d-lg-block"
+                              className={`icon-placeholder ${
+                                item.isIcon ? "is-icon" : ""
+                              }`}
                             ></img>
                           </div>
 
@@ -281,7 +288,9 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       <section className="pt0 pb0">
         <div
           className="hero-parallax"
-          style={{ backgroundImage: "url('/images/about/Aquarise-Exterior-4.jpg')" }}
+          style={{
+            backgroundImage: "url('/images/about/Aquarise-Exterior-4.jpg')",
+          }}
         >
           <div className="parallax-dark-overlay" id="parallaxBg"></div>
           <div className="about-us-hero-content">
@@ -371,46 +380,42 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
           <div className="container">
             <div className="row">
               <div
-                className="col-md-6 col-lg-5 pl30-md pl15-xs"
+                className="col-md-6 col-lg-5 px-md-0 px-5 "
                 data-aos="fade-left"
                 data-aos-delay="300"
               >
                 <div>
-                  <div className="mb30">
+                  <div className="mb20">
                     <h2 className="title text-capitalize">Why Choose Us?</h2>
                   </div>
 
                   <div className="why-chose-list style2">
                     <div className="list-one d-flex align-items-start mb30">
-                      <span className="list-icon flex-shrink-0 flaticon-security"></span>
-                      <div className="list-content flex-grow-1 ml20">
-                        <h6 className="mb-1">Personalized Property Guidance</h6>
+                      <div className="list-content flex-grow-1 ">
                         <p className="text mb-0 fz15">
-                          From luxury waterfront villas to cozy apartments, we
-                          help you find a home that truly fits your lifestyle.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="list-one d-flex align-items-start mb30">
-                      <span className="list-icon flex-shrink-0 flaticon-keywording"></span>
-                      <div className="list-content flex-grow-1 ml20">
-                        <h6 className="mb-1">Unmatched Market Expertise</h6>
-                        <p className="text mb-0 fz15">
-                          Our team knows Dubai’s real estate inside out,
-                          offering insights and smarter opportunities at every
-                          step.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="list-one d-flex align-items-start mb30">
-                      <span className="list-icon flex-shrink-0 flaticon-investment"></span>
-                      <div className="list-content flex-grow-1 ml20">
-                        <h6 className="mb-1">Trust, Integrity & Excellence</h6>
-                        <p className="text mb-0 fz15">
-                          Built on honesty and transparency, we focus on lasting
-                          relationships and exceeding expectations.
+                          Choosing a real estate partner in Dubai is a big
+                          decision, and here’s why Questbloom Real Estate should
+                          be your top choice. We don’t just sell properties; we
+                          offer unmatched expertise, personalized service, and
+                          genuine care for your needs. Our team knows Dubai’s
+                          real estate inside out, so you can trust us to provide
+                          valuable insights and guidance every step of the way.
+                          <br />
+                          <br />
+                          But it’s not just about expertise – it’s about
+                          integrity. We believe in transparency and honesty,
+                          building relationships based on trust and respect.
+                          Plus, our diverse portfolio ensures there’s something
+                          for everyone, whether you’re looking for a luxury
+                          waterfront villa or a cozy urban apartment.
+                          <br />
+                          <br />
+                          At Questbloom Real Estate, your satisfaction is our
+                          priority. We go above and beyond to exceed your
+                          expectations and make your real estate journey in
+                          Dubai as smooth and enjoyable as possible. Choose
+                          Questbloom Real Estate and let us help you find your
+                          dream home in the dazzling city of Dubai.
                         </p>
                       </div>
                     </div>
