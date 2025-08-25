@@ -79,12 +79,12 @@ const TopFilterBar = ({
   };
 
   const requiredNames = [
+    "Dubai Islands",
     "Palm Jumeirah",
     "Dubai Marina",
-    "Dubai Islands",
-    "Meydan City",
-    "Dubai Creek Harbour",
     "Dubai Maritime City",
+    "Dubai Creek Harbour",
+    "Meydan City",
   ];
 
   return (
@@ -425,8 +425,11 @@ const TopFilterBar = ({
                   </label>
                 </div>
               </li>
-              {locationOptions
-                .filter((location) => requiredNames.includes(location.label))
+              {requiredNames
+                .map((name) =>
+                  locationOptions.find((location) => location.label === name)
+                )
+                .filter(Boolean) // remove nulls in case some names aren't found
                 .map((city) => (
                   <li
                     key={city.value}

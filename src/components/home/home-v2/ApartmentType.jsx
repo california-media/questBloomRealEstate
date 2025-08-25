@@ -36,34 +36,58 @@ const ApartmentType = () => {
     setLoading(true);
     const newPropertyTypes = await api.get("/unit-types");
 
-    const propertData = await Promise.all(
-      newPropertyTypes.data
-        .filter((pt) => pt !== "All Property Types")
-        .map(async (pt, index) => {
-          try {
-            const { data } = await api.get("/properties", {
-              params: { unit_types: pt, per_page: 1 },
-            });
-            return {
-              id: index + 1,
-              icon: icons[index % icons.length],
-              title: pt,
-              count: data.pagination?.total || 0,
-            };
-          } catch (error) {
-            console.error(`Failed to fetch count for ${pt}:`, error);
-            return {
-              id: index + 1,
-              icon: icons[index % icons.length],
-              title: pt,
-              count: 0,
-            };
+    // Normalize Chalet/Chalets -> Chalets
+    const normalizedTypes = newPropertyTypes.data
+      .filter((pt) => pt !== "All Property Types" && pt !== "Cabins")
+      .map((pt) => (pt === "Chalet" || pt === "Chalets" ? "Chalets" : pt));
+
+    // Remove duplicates caused by normalization (so "Chalets" only once)
+    const uniqueTypes = [...new Set(normalizedTypes)];
+
+    const propertyData = await Promise.all(
+      uniqueTypes.map(async (pt, index) => {
+        try {
+          // collect counts for this type (handles "Chalets" merged case)
+          const relevantTypes = newPropertyTypes.data.filter(
+            (t) =>
+              (pt === "Chalets" && (t === "Chalet" || t === "Chalets")) ||
+              t === pt
+          );
+
+          let totalCount = 0;
+          for (const type of relevantTypes) {
+            try {
+              const { data } = await api.get("/properties", {
+                params: { unit_types: type, per_page: 1 },
+              });
+              totalCount += data.pagination?.total || 0;
+            } catch (err) {
+              console.error(`Failed to fetch count for ${type}:`, err);
+            }
           }
-        })
+
+          return {
+            id: index + 1,
+            icon: icons[index % icons.length],
+            title: pt,
+            count: totalCount,
+          };
+        } catch (error) {
+          console.error(`Failed to fetch count for ${pt}:`, error);
+          return {
+            id: index + 1,
+            icon: icons[index % icons.length],
+            title: pt,
+            count: 0,
+          };
+        }
+      })
     );
+
     setLoading(false);
-    return propertData;
+    return propertyData;
   };
+
   useEffect(() => {
     fetchPropertyTypeData().then((data) => {
       setApartmentType(data);
@@ -71,7 +95,7 @@ const ApartmentType = () => {
   }, []);
   return loading ? (
     <div className="row">
-      <div className="spinner-border mx-auto m-5" role="status">
+      <div className="spinner-border mx-auto m-5 mb70" role="status">
         <span className="visually-hidden">Loading...</span>
       </div>
     </div>
@@ -96,34 +120,36 @@ const ApartmentType = () => {
       }}
       autoplay={{ delay: 3000 }} // Set the desired delay for autoplay
     >
-      {apartmentType.map((type) => (
-        <SwiperSlide key={type.id}>
-          <div className="item">
-            <Link
-              to="/off-plan"
-              onClick={(e) => {
-                e.preventDefault();
+      {apartmentType
+        .filter((type) => type.count > 0)
+        .map((type) => (
+          <SwiperSlide key={type.id}>
+            <div className="item">
+              <Link
+                to="/off-plan"
+                onClick={(e) => {
+                  e.preventDefault();
 
-                type.title && handlePropertyType(type.title);
+                  type.title && handlePropertyType(type.title);
 
-                navigate("/off-plan", {
-                  state: {
-                    hasFilters: true,
-                  },
-                });
-              }}
-            >
-              <div className="iconbox-style4">
-                <span className={`icon ${type.icon}`} />
-                <div className="iconbox-content">
-                  <h6 className="title">{type.title}</h6>
-                  <p className="text mb-0">{`${type.count} Properties`}</p>
+                  navigate("/off-plan", {
+                    state: {
+                      hasFilters: true,
+                    },
+                  });
+                }}
+              >
+                <div className="iconbox-style4">
+                  <span className={`icon ${type.icon}`} />
+                  <div className="iconbox-content">
+                    <h6 className="title">{type.title}</h6>
+                    <p className="text mb-0">{`${type.count} Properties`}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          </div>
-        </SwiperSlide>
-      ))}
+              </Link>
+            </div>
+          </SwiperSlide>
+        ))}
     </Swiper>
   );
 };

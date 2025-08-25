@@ -75,14 +75,15 @@ const TopFilterBar = ({
     });
   };
 
-  const requiredNames = [
-    "Palm Jumeirah",
-    "Dubai Marina",
-    "Dubai Islands",
-    "Meydan City",
-    "Dubai Creek Harbour",
-    "Dubai Maritime City",
-  ];
+const requiredNames = [
+  "Dubai Islands",
+  "Palm Jumeirah",
+  "Dubai Marina",
+  "Dubai Maritime City",
+  "Dubai Creek Harbour",
+  "Meydan City",
+];
+
   return (
     <>
       <div className="row">

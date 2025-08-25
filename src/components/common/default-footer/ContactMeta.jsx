@@ -29,14 +29,7 @@ const ContactMeta = () => {
                 response.data.data.email || "info@questrealestate.ae"
               }`,
             },
-            {
-              title: "We are located at",
-              address:
-                response.data.data.address ||
-                `Office 1702, 17th Floor,
-Lake Central Tower, Marasi Drive,<br />
-Business Bay, Dubai, UAE`,
-            },
+        
           ]);
         }
       } catch (error) {

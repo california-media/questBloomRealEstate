@@ -109,32 +109,7 @@ const Header = ({ menuItems, error }) => {
                     <span className="d-none d-xl-block">{hotline}</span>
                   </a>
                   {/* Updated social links with better styling */}
-                  <div className="social-links-navbar">
-                    <a
-                      target="_blank"
-                      href={"https://www.facebook.com/questbloomrealestate"}
-                      className="social-link-navbar"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a
-                      target="_blank"
-                      href={"https://www.instagram.com/questbloomrealestate"}
-                      className="social-link-navbar"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                    <a
-                      target="_blank"
-                      href={"https://www.tiktok.com/@questbloomrealestate"}
-                      className="social-link-navbar"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <i className="fab fa-tiktok"></i>
-                    </a>
-                  </div>
+                  
                   {/* <Link
                     className="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"

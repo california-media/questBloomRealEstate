@@ -34,10 +34,10 @@ const Footer = () => {
       <div className="container">
         <div className="row gx-5 ">
           <div className="col-lg-5">
-            <div className="footer-widget mb-4 mb-lg-5">
+            <div className="footer-widget mb-1  mb-lg-1">
               <Link className="header-logo logo1" to="/">
                 <img
-                  className="mb40"
+                  className="mb30"
                   style={{ height: "50px" }}
                   src={adminBaseUrl + logos.whiteLogo}
                   alt="Header Logo"
@@ -71,10 +71,11 @@ const Footer = () => {
                     {
                       <p
                         className="info-title"
+                        style={{ lineHeight: "27px" }}
                         dangerouslySetInnerHTML={{
                           __html: `Office 1702, 17th Floor,
-Lake Central Tower, Marasi Drive,<br />
-Business Bay, Dubai, UAE`,
+Lake Central Tower<br /> Marasi Drive,
+Business Bay<br /> Dubai, United Arab Emirates`,
                         }}
                       />
                     }

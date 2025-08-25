@@ -17,6 +17,7 @@ import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
 import Hero from "@/components/home/home-v3/hero";
 import adminApi from "@/api/adminApi";
 import AnimatedText from "@/components/home/home-v2/hero/AnimatedText";
+import SocialLinksNavbar from "./SocialLinksNavbar";
 
 const metaInformation = {
   title: "Home",
@@ -190,7 +191,10 @@ const Home_V2 = () => {
       {/* End Main Header Nav */}
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
-      {/* End Mobile Nav  */}
+
+
+      <SocialLinksNavbar/>
+              {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
       <AutoCarouselHero
         HeroTitle={

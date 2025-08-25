@@ -51,7 +51,7 @@ const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
               )}
 
               <div className="list-price">
-                {listing?.sale_status || "No info"}
+                {listing.listing_prefix === "op" ? "Off-Plan" : "For Sale"}
               </div>
             </div>
 
