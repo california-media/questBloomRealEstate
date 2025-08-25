@@ -177,7 +177,14 @@ const Contact = () => {
                     <span>+971 4 529 9247</span>
                   </div>
 
-                  <a href="tel:+97145299247" className="whatsapp-btn">
+                  <a
+                    href={`https://wa.me/${"+971 52 246 0540".replace(
+                      /\D/g,
+                      ""
+                    )}`}
+                    className="whatsapp-btn"
+                    target="_blank"
+                  >
                     <i className="fab fa-whatsapp"></i>
                     WhatsApp
                   </a>
@@ -186,17 +193,33 @@ const Contact = () => {
 
                   <p className="follow-text text-white">Follow us on:</p>
                   <div className="social-links">
-                    <a href="#" className="social-link facebook">
+                    <a
+                      href={"https://www.facebook.com/questbloomrealestate"}
+                      target="_blank"
+                      className="social-link facebook"
+                    >
                       <i className="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" className="social-link instagram">
+                    <a
+                      href={"https://www.instagram.com/questbloomrealestate"}
+                      target="_blank"
+                      className="social-link instagram"
+                    >
                       <i className="fab fa-instagram"></i>
                     </a>
-                    <a href="#" className="social-link linkedin">
+                    <a
+                      href="https://www.linkedin.com/company/questbloom-real-estate/?originalSubdomain=ae"
+                      target="_blank"
+                      className="social-link linkedin"
+                    >
                       <i className="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" className="social-link youtube">
-                      <i className="fab fa-youtube"></i>
+                    <a
+                      href="https://www.tiktok.com/@questbloomrealestate"
+                      target="_blank"
+                      className="social-link youtube"
+                    >
+                      <i className="fab fa-tiktok"></i>
                     </a>
                   </div>
 

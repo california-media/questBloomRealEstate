@@ -1205,7 +1205,7 @@ const AdminPropertyPDF = ({
               >
                 {/* WhatsApp */}
                 <Link
-                  src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`}
+                  src={`https://wa.me/${"+971 52 246 0540".replace(/\D/g, "")}`}
                   style={{
                     flex: 1,
                     backgroundColor: "#aee636",

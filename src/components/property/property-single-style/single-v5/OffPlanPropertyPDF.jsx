@@ -1195,7 +1195,7 @@ const OffPlanPropertyPDF = ({
               >
                 {/* WhatsApp */}
                 <Link
-                  src={`https://wa.me/${qbc_phone.replace(/\D/g, "")}`} // removes spaces, +, etc.
+                  src={`https://wa.me/${"+971 52 246 0540".replace(/\D/g, "")}`} // removes spaces, +, etc.
                   style={{
                     flex: 1,
                     backgroundColor: "#aee636", // Tailwind's lime-400
@@ -1685,7 +1685,9 @@ const OffPlanPropertyPDF = ({
                   </View>
                 )}
 
-                <Text style={styles.amenityText}>{facility.name || "No info"}</Text>
+                <Text style={styles.amenityText}>
+                  {facility.name || "No info"}
+                </Text>
                 <Text style={styles.amenitySubText}>
                   {facility.image_source || " "}
                 </Text>
