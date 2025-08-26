@@ -65,6 +65,21 @@ export default function ProperteyFilteringBuy({ region }) {
     (loc) => loc.value === offplanBuyLocation
   );
 
+  const [modalOpen, setModalOpen] = useState(false);
+  useEffect(() => {
+    const modal = document.getElementById("advanceSeachModal");
+    const handleModalClose = () => {
+      // Your function to run when modal closes
+      setModalOpen(false);
+    };
+
+    modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+    // Cleanup
+    return () => {
+      modal.removeEventListener("hidden.bs.modal", handleModalClose);
+    };
+  }, []);
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
@@ -539,7 +554,10 @@ Logic for building payload:
             aria-labelledby="advanceSeachModalLabel"
             aria-hidden="true"
           >
-            <AdvanceFilterModal filterFunctions={filterFunctions} />
+            <AdvanceFilterModal
+              filterFunctions={filterFunctions}
+              modalOpen={modalOpen}
+            />
           </div>
         </div>
         {/* <!-- Advance Feature Modal End --> */}
@@ -558,6 +576,7 @@ Logic for building payload:
           propertyTypes={propertyTypes}
           selectedCities={selectedCities}
           setSelectedCities={setSelectedCities}
+          setModalOpen={setModalOpen}
         />
         {/* End TopFilterBar */}
         {searchTerm && (

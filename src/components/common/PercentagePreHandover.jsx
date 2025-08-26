@@ -14,10 +14,10 @@ const PercentagePreHandover = ({
     setPercentage({ value });
     setPercentagePreHandover(value);
   };
-
   useEffect(() => {
     setPercentage({ value: percentagePreHandover });
   }, [percentagePreHandover]);
+
   return (
     <>
       <div className="range-wrapper">

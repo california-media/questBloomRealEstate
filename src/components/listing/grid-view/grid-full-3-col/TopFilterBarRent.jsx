@@ -43,6 +43,7 @@ const TopFilterBar = ({
   selectedCities,
   setSelectedCities,
   localSearch,
+  setModalOpen,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -322,6 +323,9 @@ const TopFilterBar = ({
                   className="open-btn mb15 position-relative d-flex align-items-center"
                   data-bs-toggle="modal"
                   data-bs-target="#advanceSeachModal"
+                  onClick={() => {
+                    setModalOpen(true);
+                  }}
                 >
                   <i className="flaticon-settings me-2 mt-1" /> Advanced
                   {activeFilterCount > 0 && (

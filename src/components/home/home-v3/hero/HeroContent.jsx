@@ -52,13 +52,13 @@ const HeroContent = ({
                 {/* Buy/Rent Toggle */}
                 <div className="col-md-1 col-4 col-lg-2 ">
                   <div
-                    className="mt-1  d-flex justify-content-center h-90 "
+                    className="mt-1  d-flex justify-content-center h-100 "
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
                   >
                     {buyRentTabs.map((tab) => (
                       <li className="nav-item " key={tab.id}>
                         <button
-                          className={`nav-link flex-1 ${
+                          className={`nav-link flex-1 h-100 ${
                             buyRent === tab.id ? "active" : ""
                           }`}
                           id="tab-element"
@@ -382,7 +382,7 @@ const HeroContent = ({
                   <div className="mt-3 h-80 bootselect-multiselect">
                     {buyRent === "buy" ? (
                       <div
-                        className="bootselect-multiselect h-100 justify-content-center pl20  d-flex"
+                        className="bootselect-multiselect h-80 justify-content-center pl20  d-flex"
                         style={{
                           backgroundColor: "#f7f7f7",
                           borderRadius: "12px",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
@@ -10,6 +10,11 @@ const PriceRange = ({ setPriceRange, priceRange = [] }) => {
     setPrice({ value });
     setPriceRange([value.min, value.max]);
   };
+  useEffect(() => {
+    if (priceRange.length > 0) {
+      setPrice({ value: { min: priceRange[0], max: priceRange[1] } });
+    }
+  }, [priceRange]);
 
   return (
     <>

@@ -99,12 +99,11 @@ const usePropertyStore = create((set, get) => ({
 
   handleListingStatus: (status) =>
     set((state) => ({
-      listingStatus: state.listingStatus === status ? "All" : status,
+      listingStatus: status,
     })),
 
   // Reset all filters function
   resetAllFilters: () => {
-    console.log("resetting all filters");
     return set({
       selectedPropertyType: "All Property Types",
       priceRange: [0, 10000000],

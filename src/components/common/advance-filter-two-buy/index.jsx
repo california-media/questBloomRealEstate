@@ -13,6 +13,7 @@ const AdvanceFilterModal = ({
   searchTerm,
   loading,
   setDataFetched,
+  modalOpen,
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -39,7 +40,7 @@ const AdvanceFilterModal = ({
   const [bathroomCount, setBathroomCount] = useState(0);
   const [amenities, setAmenities] = useState([]);
 
-  useEffect(() => {
+  function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
@@ -67,6 +68,15 @@ const AdvanceFilterModal = ({
 
     if (Array.isArray(filterFunctions.categories))
       setAmenities(filterFunctions.categories);
+  }
+
+  useEffect(() => {
+    if (!modalOpen) {
+      setFromStore();
+    }
+  }, [modalOpen]);
+  useEffect(() => {
+    setFromStore();
   }, [
     filterFunctions?.selectedPropertyType,
     filterFunctions?.priceRange,

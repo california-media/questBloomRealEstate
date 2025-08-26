@@ -44,6 +44,7 @@ const TopFilterBar = ({
   setSelectedCities,
   setIsNew,
   isNew,
+  setModalOpen,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -75,14 +76,14 @@ const TopFilterBar = ({
     });
   };
 
-const requiredNames = [
-  "Dubai Islands",
-  "Palm Jumeirah",
-  "Dubai Marina",
-  "Dubai Maritime City",
-  "Dubai Creek Harbour",
-  "Meydan City",
-];
+  const requiredNames = [
+    "Dubai Islands",
+    "Palm Jumeirah",
+    "Dubai Marina",
+    "Dubai Maritime City",
+    "Dubai Creek Harbour",
+    "Meydan City",
+  ];
 
   return (
     <>
@@ -324,6 +325,9 @@ const requiredNames = [
                   className="open-btn mb15 position-relative d-flex align-items-center"
                   data-bs-toggle="modal"
                   data-bs-target="#advanceSeachModal"
+                  onClick={() => {
+                    setModalOpen(true);
+                  }}
                 >
                   <i className="flaticon-settings me-2 mt-1" /> Advanced
                   {activeFilterCount > 0 && (

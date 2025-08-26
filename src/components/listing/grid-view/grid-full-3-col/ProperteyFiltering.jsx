@@ -62,6 +62,22 @@ export default function ProperteyFiltering({ region }) {
     searchTerm,
     handleSearchTerm,
   } = usePropertyStore();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  useEffect(() => {
+    const modal = document.getElementById("advanceSeachModal");
+    const handleModalClose = () => {
+      // Your function to run when modal closes
+      setModalOpen(false);
+    };
+
+    modal.addEventListener("hidden.bs.modal", handleModalClose);
+
+    // Cleanup
+    return () => {
+      modal.removeEventListener("hidden.bs.modal", handleModalClose);
+    };
+  }, []);
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
@@ -353,7 +369,10 @@ export default function ProperteyFiltering({ region }) {
             aria-labelledby="advanceSeachModalLabel"
             aria-hidden="true"
           >
-            <AdvanceFilterModal filterFunctions={filterFunctions} />
+            <AdvanceFilterModal
+              filterFunctions={filterFunctions}
+              modalOpen={modalOpen}
+            />
           </div>
         </div>
         {/* <!-- Advance Feature Modal End --> */}
@@ -374,6 +393,7 @@ export default function ProperteyFiltering({ region }) {
           setSelectedCities={setSelectedCities}
           searchTerm={localSearchTerm}
           setSearchTerm={setLocalSearchTerm}
+          setModalOpen={setModalOpen}
         />
 
         {/* End TopFilterBar */}

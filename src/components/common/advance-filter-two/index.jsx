@@ -8,7 +8,7 @@ import DropdownSelect from "../DropdownSelect";
 import PercentagePreHandover from "../PercentagePreHandover";
 import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
 
-const AdvanceFilterModal = ({ filterFunctions }) => {
+const AdvanceFilterModal = ({ filterFunctions, modalOpen }) => {
   ///local state befrore actually applying filter
 
   const [propertyType, setPropertyType] = useState("All Property Types");
@@ -18,11 +18,13 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
   const [squareFeet, setSquareFeet] = useState([0, 0]);
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
-  const [percentagePreHandover, setPercentagePreHandover] = useState(0);
+  const [percentagePreHandover, setPercentagePreHandover] = useState(
+    filterFunctions?.percentagePreHandover || 0
+  );
   const [yearBuild, setYearBuild] = useState(50000);
   const [amenities, setAmenities] = useState([]);
 
-  useEffect(() => {
+  function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
@@ -35,9 +37,9 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
 
     if (filterFunctions.location) setLocation(filterFunctions.location);
 
-
-    if (filterFunctions.percentagePreHandover)
+    if (filterFunctions.percentagePreHandover !== undefined) {
       setPercentagePreHandover(filterFunctions.percentagePreHandover);
+    }
 
     if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
 
@@ -53,6 +55,15 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
 
     if (Array.isArray(filterFunctions.categories))
       setAmenities(filterFunctions.categories);
+  }
+
+  useEffect(() => {
+    if (!modalOpen) {
+      setFromStore();
+    }
+  }, [modalOpen]);
+  useEffect(() => {
+    setFromStore();
   }, [
     filterFunctions?.selectedPropertyType,
     filterFunctions?.priceRange,

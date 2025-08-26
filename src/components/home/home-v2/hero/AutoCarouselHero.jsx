@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Hero from "@/components/home/home-v3/hero";
 import adminApi, { adminBaseUrl } from "@/api/adminApi";
 
-const AutoCarouselHero = ({HeroTitle}) => {
+const AutoCarouselHero = ({ HeroTitle }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +63,7 @@ const AutoCarouselHero = ({HeroTitle}) => {
 
   return (
     <section className="home-banner-style3 p0">
-      <div className="home-style3">
+      <div className="home-style3 ">
         {/* Carousel Background */}
         <div className="carousel-container">
           {images.map((image, index) => (
@@ -78,10 +78,10 @@ const AutoCarouselHero = ({HeroTitle}) => {
         </div>
 
         {/* Content */}
-        <div className="container">
+        <div className="container ">
           <div className="row justify-content-center">
             <div className="col-xl-10">
-              <Hero  HeroTitle={HeroTitle}/>
+              <Hero HeroTitle={HeroTitle} />
             </div>
           </div>
         </div>
@@ -103,11 +103,7 @@ const AutoCarouselHero = ({HeroTitle}) => {
           height: 760px;
           position: relative;
         }
-        @media (max-width: 991.98px) {
-          .home-banner-style3 .home-style3 {
-            height: 1250px;
-          }
-        }
+       
 
         .carousel-container {
           position: absolute;
@@ -140,6 +136,14 @@ const AutoCarouselHero = ({HeroTitle}) => {
         .container {
           position: relative;
           z-index: 10;
+        }
+
+         @media (max-width: 991.98px) {
+          .home-banner-style3 .home-style3 {
+            height: 1000px;
+          }
+
+          
         }
       `}</style>
     </section>

@@ -14,6 +14,7 @@ const AdvanceFilterModal = ({
   searchTerm,
   loading,
   setDataFetched,
+  modalOpen,
 }) => {
   const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
   const customStyles = {
@@ -42,7 +43,7 @@ const AdvanceFilterModal = ({
   const [rentDuration, setRentDuration] = useState("Monthly");
   const [amenities, setAmenities] = useState([]);
 
-  useEffect(() => {
+  function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
@@ -73,6 +74,15 @@ const AdvanceFilterModal = ({
 
     if (Array.isArray(filterFunctions.categories))
       setAmenities(filterFunctions.categories);
+  }
+
+  useEffect(() => {
+    if (!modalOpen) {
+      setFromStore();
+    }
+  }, [modalOpen]);
+  useEffect(() => {
+    setFromStore();
   }, [
     filterFunctions?.selectedPropertyType,
     filterFunctions?.priceRange,

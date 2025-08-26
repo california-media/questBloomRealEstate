@@ -11,21 +11,14 @@ import SelectDropdown from "./SelectDropdown";
 
 const AdvanceFilterModal = ({
   filterFunctions,
-  propertyTypes,
-  locationOptions,
-  facilityOptions,
-  loading,
+
   saleStatuses,
 
   setDataFetched,
   buyRent,
   allReadyOff,
   modalOpen,
-  handleAllReadyOff,
-  handleBuyRent,
 }) => {
-  const navigate = useNavigate();
-
   ///local state befrore actually applying filter
 
   const [propertyType, setPropertyType] = useState("All Property Types");
@@ -37,15 +30,19 @@ const AdvanceFilterModal = ({
   const [bathroomCount, setBathroomCount] = useState(0);
   const [amenities, setAmenities] = useState([]);
   const [yearBuild, setYearBuild] = useState(50000);
-  const [percentagePreHandover, setPercentagePreHandover] = useState(0);
+  const [saleStatus, setSaleStatus] = useState("All");
+  const [percentagePreHandover, setPercentagePreHandover] = useState(
+    filterFunctions?.percentagePreHandover || 0
+  );
 
   function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
       setPropertyType(filterFunctions.selectedPropertyType);
-    if (filterFunctions.percentagePreHandover)
+    if (filterFunctions.percentagePreHandover !== undefined) {
       setPercentagePreHandover(filterFunctions.percentagePreHandover);
+    }
 
     if (filterFunctions.priceRange) setPriceRange(filterFunctions.priceRange);
 
@@ -61,6 +58,8 @@ const AdvanceFilterModal = ({
           : filterFunctions.squirefeet
       );
     if (filterFunctions.yearBuild) setYearBuild(filterFunctions.yearBuild);
+    if (filterFunctions.listingStatus)
+      setSaleStatus(filterFunctions.listingStatus);
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
@@ -71,7 +70,6 @@ const AdvanceFilterModal = ({
     if (Array.isArray(filterFunctions.categories))
       setAmenities(filterFunctions.categories);
   }
-
   useEffect(() => {
     if (!modalOpen) {
       setFromStore();
@@ -90,6 +88,7 @@ const AdvanceFilterModal = ({
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
     filterFunctions?.yearBuild,
+    filterFunctions?.listingStatus,
     filterFunctions?.percentagePreHandover,
   ]);
   ///ONLY for home page advance filter to reset local state
@@ -119,6 +118,8 @@ const AdvanceFilterModal = ({
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
     filterFunctions?.handleYearBuild(yearBuild);
+    console.log("setting ", filterFunctions?.listingStatus);
+    filterFunctions?.handlelistingStatus(saleStatus);
     filterFunctions?.handlePercentagePreHandover(percentagePreHandover);
 
     // let path = "";
@@ -162,7 +163,8 @@ const AdvanceFilterModal = ({
                 <div className="form-style2">
                   <SelectDropdown
                     saleStatuses={saleStatuses}
-                    filterFunctions={filterFunctions}
+                    saleStatus={saleStatus}
+                    setSaleStatus={setSaleStatus}
                   />
                 </div>
               </div>
@@ -338,6 +340,7 @@ const AdvanceFilterModal = ({
               setPriceRange([0, 10000000]);
               setPercentagePreHandover(0);
               setYearBuild(50000);
+              setSaleStatus("All");
             }}
           >
             <span className="flaticon-turn-back" />

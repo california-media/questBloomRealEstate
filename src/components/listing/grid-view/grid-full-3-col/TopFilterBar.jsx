@@ -49,9 +49,8 @@ const TopFilterBar = ({
   activeFilterCount,
   searchTerm,
   setSearchTerm,
+  setModalOpen,
 }) => {
-
-
   // Sync local state when filterFunctions.searchTerm changes
   useEffect(() => {
     if (filterFunctions?.searchTerm !== undefined) {
@@ -331,6 +330,9 @@ const TopFilterBar = ({
                   className="open-btn mb15 position-relative d-flex align-items-center"
                   data-bs-toggle="modal"
                   data-bs-target="#advanceSeachModal"
+                  onClick={() => {
+                    setModalOpen(true);
+                  }}
                 >
                   <i className="flaticon-settings me-2 mt-1" /> Advanced
                   {activeFilterCount > 0 && (
