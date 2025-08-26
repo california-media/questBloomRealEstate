@@ -103,8 +103,9 @@ const usePropertyStore = create((set, get) => ({
     })),
 
   // Reset all filters function
-  resetAllFilters: () =>
-    set({
+  resetAllFilters: () => {
+    console.log("resetting all filters");
+    return set({
       selectedPropertyType: "All Property Types",
       priceRange: [0, 10000000],
       location: "All Locations",
@@ -125,8 +126,8 @@ const usePropertyStore = create((set, get) => ({
       adminDetailedListings: [],
       searchTerm: "",
       adminPropertyType: "All Property Types",
-    }),
-
+    });
+  },
   // Check if data needs to be fetched
   shouldFetchData: () => {
     const state = get();

@@ -47,11 +47,10 @@ const TopFilterBar = ({
   selectedCities,
   setSelectedCities,
   activeFilterCount,
+  searchTerm,
+  setSearchTerm,
 }) => {
-  // Local state with default from filterFunctions
-  const [searchTerm, setSearchTerm] = useState(
-    filterFunctions?.searchTerm || ""
-  );
+
 
   // Sync local state when filterFunctions.searchTerm changes
   useEffect(() => {

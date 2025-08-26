@@ -10,7 +10,6 @@ import { Search } from "lucide-react";
 const HeroContent = ({
   propertyTypes,
   locationOptions,
-  saleStatuses,
   filterFunctions,
   buyRent,
   allReadyOff,
@@ -328,6 +327,43 @@ const HeroContent = ({
                   </div>
                 </div>
 
+                {/* Search - full width on mobile */}
+                <div className="col-12">
+                  <div className="  d-flex  h-100 w-100 ">
+                    <div
+                      style={{
+                        backgroundColor: "#f7f7f7",
+                        borderRadius: "12px",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Search
+                        size={18}
+                        style={{
+                          marginLeft: "20px",
+
+                          color: "#888",
+                          pointerEvents: "none",
+                        }}
+                      />
+                      <input
+                        id="home-page-hero-search"
+                        type="text"
+                        className=" w-100 border-none bg-transparent"
+                        placeholder="Project Search"
+                        onInput={(e) =>
+                          filterFunctions?.handleSearchTerm(e.target.value)
+                        }
+                        style={{
+                          padding: "13px 15px",
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
                 {/* Location Input - full width on mobile */}
                 <div className="col-12">
                   <div className="mt-3 bootselect-multiselect">
@@ -338,18 +374,6 @@ const HeroContent = ({
                       placeholder="Enter Location"
                       loading={loading}
                     />
-                  </div>
-                </div>
-
-                {/* Status Dropdown - full width on mobile */}
-                <div className="col-12">
-                  <div className="mt-3">
-                    <div className="bootselect-multiselect">
-                      <SelectDropdown
-                        saleStatuses={saleStatuses}
-                        filterFunctions={filterFunctions}
-                      />
-                    </div>
                   </div>
                 </div>
 
@@ -391,7 +415,6 @@ const HeroContent = ({
                     )}
                   </div>
                 </div>
-
                 {/* Property Type Dropdown - full width on mobile */}
                 <div className="col-12">
                   <div className="mt-3 bootselect-multiselect">
@@ -404,7 +427,6 @@ const HeroContent = ({
                     />
                   </div>
                 </div>
-
                 {/* Bedrooms and Bathrooms in one row on mobile */}
                 <div className="col-6">
                   <div className="mt-3 bootselect-multiselect">
@@ -419,7 +441,6 @@ const HeroContent = ({
                     />
                   </div>
                 </div>
-
                 <div className="col-6">
                   <div className="mt-3 bootselect-multiselect">
                     <DropdownSelect
@@ -433,7 +454,6 @@ const HeroContent = ({
                     />
                   </div>
                 </div>
-
                 {/* Price Range - full width on mobile */}
                 <div className="col-12 mt-3">
                   <button
@@ -462,7 +482,6 @@ const HeroContent = ({
                     </div>
                   </div>
                 </div>
-
                 {/* Search and Advanced buttons - full width on mobile */}
                 <div className="col-12 mt-3 d-flex justify-content-between">
                   <button

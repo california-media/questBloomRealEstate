@@ -68,6 +68,8 @@ export default function ProperteyFiltering({ region }) {
   const [colstyle, setColstyle] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
+
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
   const [listings, setListings] = useState([]);
@@ -305,6 +307,9 @@ export default function ProperteyFiltering({ region }) {
         }
       }
     };
+
+    //search bar back to current state
+    setLocalSearchTerm(searchTerm);
     fetchMoreData();
   }, [inView, initialLoading]);
   return (
@@ -353,22 +358,24 @@ export default function ProperteyFiltering({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-          <TopFilterBar
-            activeFilterCount={getActiveFilterCount("off-plan")}
-            setDataFetched={setDataFetched}
-            colstyle={colstyle}
-            setColstyle={setColstyle}
-            filterFunctions={filterFunctions}
-            setCurrentSortingOption={setCurrentSortingOption}
-            setPosthandover={setPosthandover}
-            posthandover={posthandover}
-            locationOptions={locationOptions}
-            saleStatuses={saleStatuses}
-            propertyTypes={propertyTypes}
-            selectedCities={selectedCities}
-            setSelectedCities={setSelectedCities}
-          />
-   
+        <TopFilterBar
+          activeFilterCount={getActiveFilterCount("off-plan")}
+          setDataFetched={setDataFetched}
+          colstyle={colstyle}
+          setColstyle={setColstyle}
+          filterFunctions={filterFunctions}
+          setCurrentSortingOption={setCurrentSortingOption}
+          setPosthandover={setPosthandover}
+          posthandover={posthandover}
+          locationOptions={locationOptions}
+          saleStatuses={saleStatuses}
+          propertyTypes={propertyTypes}
+          selectedCities={selectedCities}
+          setSelectedCities={setSelectedCities}
+          searchTerm={localSearchTerm}
+          setSearchTerm={setLocalSearchTerm}
+        />
+
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">
