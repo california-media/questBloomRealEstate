@@ -52,7 +52,7 @@ const HeroContent = ({
                 {/* Buy/Rent Toggle */}
                 <div className="col-md-1 col-4 col-lg-2 ">
                   <div
-                    className="mt-1  d-flex justify-content-center h-100 "
+                    className="  d-flex justify-content-center h-100 "
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
                   >
                     {buyRentTabs.map((tab) => (
