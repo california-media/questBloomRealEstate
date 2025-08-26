@@ -116,95 +116,96 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
       {/* End Mobile Nav  */}
       {/* Breadcrumb Sections */}
-      <section className="p-0">
-        <div
-          className="about-us-video"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          {/* Dark overlay */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.3)",
-              zIndex: 1,
-            }}
-          ></div>
+      <section
+        className="p-0"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find((section) => section.section_name === `Cover`)
+              ?.html_content ||
+            `<div
+  class="about-us-video"
+  style="
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  "
+>
+  <div
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    "
+  ></div>
 
-          {/* Background video */}
-          <div
-            // className="about-us-cover-image"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
-              zIndex: 0,
-            }}
+  <div
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    "
+  >
+    <iframe
+      src="https://www.youtube.com/embed/Sp_HFUgpKmQ?autoplay=1&mute=1&loop=1&playlist=Sp_HFUgpKmQ&controls=0&rel=0&playsinline=1&modestbranding=1&vq=hd1080"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      style="
+        width: 1905px;
+        height: 1071.56px;
+        object-fit: cover;
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      "
+    ></iframe>
+  </div>
+
+  <div
+    class="container"
+    style="
+      position: relative;
+      z-index: 2;
+    "
+  >
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcumb-style1 mt60">
+          <h2
+            class="about-us-video-text title text-white text-center"
+            style="
+              font-family: 'Raleway', Sans-serif;
+              text-transform: uppercase;
+              color: #ffffff;
+              padding-bottom: 30px;
+            "
           >
-            <iframe
-              src="https://www.youtube.com/embed/Sp_HFUgpKmQ?autoplay=1&mute=1&loop=1&playlist=Sp_HFUgpKmQ&controls=0&rel=0&playsinline=1&modestbranding=1&vq=hd1080"
-              frameBorder="0"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              style={{
-                width: "1905px",
-                height: "1071.56px",
-                objectFit: "cover",
-                pointerEvents: "none", // so clicks pass through,
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            ></iframe>
-          </div>
-
-          {/* Content */}
-          <div
-            className="container"
-            style={{
-              position: "relative",
-              zIndex: 2,
-            }}
-          >
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="breadcumb-style1 mt60">
-                  <h2
-                    className=" about-us-video-text title text-white text-center"
-                    style={{
-                      fontFamily: '"Raleway", Sans-serif',
-
-                      textTransform: "uppercase",
-                      color: "#FFFFFF",
-                      paddingBottom: "30px",
-                    }}
-                  >
-                    WHO WE ARE
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </div>
+            WHO WE ARE
+          </h2>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</div>`,
+        }}
+      ></section>
 
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
 
-      <ScrollRevealSection />
-      <ScrollRevealSectionMobile />
+      <ScrollRevealSection sections={sections} />
+      <ScrollRevealSectionMobile sections={sections} />
       <section className="contact-info-section  pt-0 pb30 pb60-md">
         <div className="accordion-section">
           <div className="container-fluid">
@@ -257,9 +258,15 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                         <h2
                           className="accordion-title "
                           style={{ fontFamily: '"Raleway", Sans-serif' }}
-                        >
-                          {item.title}
-                        </h2>
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              sections.find(
+                                (section) =>
+                                  section.section_name ===
+                                  `About Us Accordion ${index + 1} Title`
+                              )?.html_content || `${item.title}`,
+                          }}
+                        ></h2>
                       </div>
 
                       <div
@@ -270,14 +277,30 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
                         <div className="content-wrapper">
                           <div className="icon-container ">
                             <img
-                              src={item.hasImage}
+                              src={
+                                sections.find(
+                                  (section) =>
+                                    section.section_name ===
+                                    `About Us Accordion ${index + 1} Image`
+                                )?.html_content || `${item.hasImage}`
+                              }
                               className={`icon-placeholder ${
                                 item.isIcon ? "is-icon" : ""
                               }`}
                             ></img>
                           </div>
 
-                          <p className="content-text">{item.content}</p>
+                          <p
+                            className="content-text"
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                sections.find(
+                                  (section) =>
+                                    section.section_name ===
+                                    `About Us Accordion ${index + 1} Text`
+                                )?.html_content || `${item.content}`,
+                            }}
+                          ></p>
                         </div>
                       </div>
                     </div>
@@ -289,42 +312,48 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
         </div>
       </section>
 
-      <section className="pt0 pb0">
+      <section
+        className="pt0 pb0"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find(
+              (section) => section.section_name === `Parallax Section`
+            )?.html_content ||
+            `<div
+  class="hero-parallax"
+  style="background-image: url('/images/about/Aquarise-Exterior-4.jpg');"
+>
+  <div class="parallax-dark-overlay" id="parallaxBg"></div>
+  <div class="about-us-hero-content">
+    <div class="container">
+      <div class="row align-items-center min-vh-90 ">
         <div
-          className="hero-parallax"
-          style={{
-            backgroundImage: "url('/images/about/Aquarise-Exterior-4.jpg')",
-          }}
+          class="col-lg-7 hero-text-container "
+          data-aos="fade-bottom"
+          data-aos-delay="300"
         >
-          <div className="parallax-dark-overlay" id="parallaxBg"></div>
-          <div className="about-us-hero-content">
-            <div className="container">
-              <div className="row align-items-center min-vh-90 ">
-                <div
-                  className="col-lg-7 hero-text-container "
-                  data-aos="fade-bottom"
-                  data-aos-delay="300"
-                >
-                  <h1 className="about-us-hero-title ">Our Strengths</h1>
-                  <p className="about-us-hero-subtitle">
-                    At Questbloom Real Estate, we combine market expertise,
-                    personalized service, and a commitment to excellence. Guided
-                    by trust and transparency, we help you achieve your real
-                    estate goals – from luxury waterfront living to city
-                    apartments.
-                  </p>
-                  <a href="/contact">
-                    <button className="btn-contact-us">
-                      Contact Us
-                      <i className="fas fa-arrow-right ms-2"></i>
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h1 class="about-us-hero-title ">Our Strengths</h1>
+          <p class="about-us-hero-subtitle">
+            At Questbloom Real Estate, we combine market expertise,
+            personalized service, and a commitment to excellence. Guided
+            by trust and transparency, we help you achieve your real
+            estate goals – from luxury waterfront living to city
+            apartments.
+          </p>
+          <a href="/contact">
+            <button class="btn-contact-us">
+              Contact Us
+              <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+          </a>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</div>
+`,
+        }}
+      ></section>
 
       {/* End About Banner */}
       {/* Funfact */}
@@ -379,90 +408,95 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       </section>
       {/* Exclusive Agents */}
       {/* Abut intro */}
-      <section className="pt30 pb30">
-        <div className="bgc-thm-light mx-auto maxw1600 pt20 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-md-6 col-lg-5 px-md-0 px-3  "
-                data-aos="fade-left"
-                data-aos-delay="300"
-              >
-                <div>
-                  <div className="mb20">
-                    <h2 className="title text-capitalize">Why Choose Us?</h2>
-                  </div>
+      <section
+        className="pt30 pb30"
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find(
+              (section) => section.section_name === "Learn Mored awd"
+            )?.html_content ||
+            `<div class="bgc-thm-light mx-auto maxw1600 pt60 pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-md-6 col-lg-5 px-md-0 px-3"
+        data-aos="fade-left"
+        data-aos-delay="300"
+      >
+        <div>
+          <div class="mb20">
+            <h2 class="title text-capitalize">Why Choose Us?</h2>
+          </div>
 
-                  <div className="why-chose-list style2">
-                    <div className="list-one d-flex align-items-start mb30">
-                      <div className="list-content flex-grow-1 ">
-                        <p className="text mb-0 fz15">
-                          Choosing a real estate partner in Dubai is a big
-                          decision, and here’s why Questbloom Real Estate should
-                          be your top choice. We don’t just sell properties; we
-                          offer unmatched expertise, personalized service, and
-                          genuine care for your needs. Our team knows Dubai’s
-                          real estate inside out, so you can trust us to provide
-                          valuable insights and guidance every step of the way.
-                          <br />
-                          <br />
-                          But it’s not just about expertise – it’s about
-                          integrity. We believe in transparency and honesty,
-                          building relationships based on trust and respect.
-                          Plus, our diverse portfolio ensures there’s something
-                          for everyone, whether you’re looking for a luxury
-                          waterfront villa or a cozy urban apartment.
-                          <br />
-                          <br />
-                          At Questbloom Real Estate, your satisfaction is our
-                          priority. We go above and beyond to exceed your
-                          expectations and make your real estate journey in
-                          Dubai as smooth and enjoyable as possible. Choose
-                          Questbloom Real Estate and let us help you find your
-                          dream home in the dazzling city of Dubai.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <a href="/off-plan" className="ud-btn btn-dark">
-                  Learn More
-                  <i className="fal fa-arrow-right-long"></i>
-                </a>
+          <div class="why-chose-list style2">
+            <div class="list-one d-flex align-items-start mb30">
+              <div class="list-content flex-grow-1">
+                <p class="text mb-0 fz15">
+                  Choosing a real estate partner in Dubai is a big
+                  decision, and here’s why Questbloom Real Estate should
+                  be your top choice. We don’t just sell properties; we
+                  offer unmatched expertise, personalized service, and
+                  genuine care for your needs. Our team knows Dubai’s
+                  real estate inside out, so you can trust us to provide
+                  valuable insights and guidance every step of the way.
+                  <br /><br />
+                  But it’s not just about expertise – it’s about
+                  integrity. We believe in transparency and honesty,
+                  building relationships based on trust and respect.
+                  Plus, our diverse portfolio ensures there’s something
+                  for everyone, whether you’re looking for a luxury
+                  waterfront villa or a cozy urban apartment.
+                  <br /><br />
+                  At Questbloom Real Estate, your satisfaction is our
+                  priority. We go above and beyond to exceed your
+                  expectations and make your real estate journey in
+                  Dubai as smooth and enjoyable as possible. Choose
+                  Questbloom Real Estate and let us help you find your
+                  dream home in the dazzling city of Dubai.
+                </p>
               </div>
             </div>
           </div>
-
-          {/* Right-side background image */}
-          <div
-            className="d-none d-md-block"
-            style={{
-              height: "100%",
-              width: "42%",
-              position: "absolute",
-              right: 0,
-              top: 0,
-              bottom: 0,
-              overflow: "hidden",
-            }}
-          >
-            <div
-              className="d-none d-md-block about-cta-image"
-              style={{
-                backgroundImage: "url('/images/background/about-dubai.jpg')",
-                backgroundSize: "cover",
-                backgroundPosition: "right",
-                height: "100%",
-                width: "100%",
-                right: 0,
-                top: 0,
-                bottom: 0,
-              }}
-            ></div>
-          </div>
         </div>
-      </section>
+
+        <a href="/off-plan" class="ud-btn btn-dark">
+          Learn More
+          <i class="fal fa-arrow-right-long"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-none d-md-block"
+    style="
+      height: 100%;
+      width: 42%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      overflow: hidden;
+    "
+  >
+    <div
+      class="d-none d-md-block about-cta-image"
+      style="
+        background-image: url('/images/background/about-dubai.jpg');
+        background-size: cover;
+        background-position: right;
+        height: 100%;
+        width: 100%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      "
+    ></div>
+  </div>
+</div>
+`,
+        }}
+      ></section>
       {/* Abut intro */}
       {/* Our Partners */}
       {/* <section className="our-partners">

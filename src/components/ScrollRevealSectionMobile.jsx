@@ -7,7 +7,7 @@ import {
   inView,
 } from "framer-motion";
 
-const ScrollRevealSectionMobile = () => {
+const ScrollRevealSectionMobile = ({ sections }) => {
   const sectionRef = useRef(null);
   const [isScrollHijacked, setIsScrollHijacked] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -105,9 +105,16 @@ const ScrollRevealSectionMobile = () => {
       >
         <div className="container-fluid bg-dnger  h-100 p-0 d-flex align-items-center justify-content-center position-relative">
           {/* Left text */}
-          <motion.div className="reveal-text-left">
-            <h3>
-              <span className="highlight">Luxury</span>
+          <motion.div
+            className="reveal-text-left"
+            dangerouslySetInnerHTML={{
+              __html:
+                sections.find(
+                  (section) =>
+                    section.section_name === `About Us Main Left Text`
+                )?.html_content ||
+                `<h3>
+              <span class="highlight">Luxury</span>
               <br />
               Living
               <br />
@@ -120,24 +127,36 @@ const ScrollRevealSectionMobile = () => {
             <p>
               From waterfront villas to skyline apartments, we deliver homes
               that match your lifestyle and aspirations.
-            </p>
-          </motion.div>
+            </p>`,
+            }}
+          ></motion.div>
 
           {/* Center image */}
 
           <motion.img
-            style={{ height: "1100px", width:"800px", objectFit: "cover" }}
-            src="/images/background/aboutus-cover.jfif"
+            style={{ height: "1100px", width: "800px", objectFit: "cover" }}
+            src={
+              sections.find(
+                (section) => section.section_name === `About Us Main Image`
+              )?.html_content || "/images/background/aboutus-cover.jfif"
+            }
             alt="Sobha Group Development"
             className="reveal-image "
           />
 
           {/* Right text */}
-          <motion.div className="reveal-text-right mt-4">
-            <h3>
+          <motion.div
+            className="reveal-text-right mt-4"
+            dangerouslySetInnerHTML={{
+              __html:
+                sections.find(
+                  (section) =>
+                    section.section_name === `About Us Main Right Text`
+                )?.html_content ||
+                `  <h3>
               Built on
               <br />
-              <span className="highlight">Trust</span>
+              <span class="highlight">Trust</span>
               <br />
               and Integrity
             </h3>
@@ -147,8 +166,9 @@ const ScrollRevealSectionMobile = () => {
             </p>
             <p>
               Seamless journeys, lasting relationships, and exceptional results.
-            </p>
-          </motion.div>
+            </p>`,
+            }}
+          ></motion.div>
         </div>
       </section>
     </>

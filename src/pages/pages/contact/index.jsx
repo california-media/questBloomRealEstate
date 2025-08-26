@@ -111,16 +111,23 @@ const Contact = () => {
             <div
               className="col-lg-5 offset-lg-2 mt20  "
               style={{ height: "250px" }}
-            >
-              <h2 className="mb30 text-capitalize">
-                We’d love to hear <br className="d-none d-lg-block" />
-                from you.
-              </h2>
-              <p className="text">
-                Let us know how we can help! Fill out our contact form and we
-                will get back to you as soon as possible.
-              </p>
-            </div>
+              dangerouslySetInnerHTML={{
+                __html:
+                  sections.find(
+                    (section) =>
+                      section.section_name === "Contact Right Section"
+                  )?.html_content ||
+                  `<h2 class="mb30 text-capitalize">
+  We’d love to hear <br class="d-none d-lg-block" />
+  from you.
+</h2>
+<p class="text">
+  Let us know how we can help! Fill out our contact form and we
+  will get back to you as soon as possible.
+</p>
+`,
+              }}
+            ></div>
 
             {/* End .col */}
           </div>
@@ -129,115 +136,119 @@ const Contact = () => {
       {/* End Our Contact Form */}
 
       {/* Visit our Office */}
-      <section className="pt0 pb90  ">
-        <div className="container">
-          <div className="row align-items-center gx-5">
-            <div
-              className="col-lg-7 "
-              data-aos="fade-right"
-              data-aos-delay="300"
-            >
-              <div className="container ">
-                <div className="row">
-                  <div
-                    className="col-lg-12 m-auto"
-                    data-aos="fade-up"
-                    data-aos-delay="300"
-                  >
-                    <div className="main-title text-start">
-                      <h2 className="title">Visit Our Office</h2>
-                      <p className="paragraph mt25">
-                        Office 1702, 17th Floor,
-                        <br />
-                        Lake Central Tower, Marasi Drive,
-                        <br />
-                        Business Bay, Dubai, UAE
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-5" data-aos="fade-left" data-aos-delay="300">
-              <div className="contact-card">
-                <div className="card-header">
-                  <img
-                    src="https://admin.questrealestate.ae/storage/media/uploaded_images/img_688383f964e0b.svg"
-                    alt="Quest Real Estate"
-                    className="logo"
-                  />
-                </div>
-
-                <div className="card-body">
-                  <h4 className="text-start text-white">Contact Us</h4>
-
-                  <div className="contact-item">
-                    <i className="fas fa-phone"></i>
-                    <span>+971 4 529 9247</span>
-                  </div>
-
-                  <a
-                    href={`https://wa.me/${"+971 52 246 0540".replace(
-                      /\D/g,
-                      ""
-                    )}`}
-                    className="whatsapp-btn"
-                    target="_blank"
-                  >
-                    <i className="fab fa-whatsapp"></i>
-                    WhatsApp
-                  </a>
-
-                  <div className="divider"></div>
-
-                  <p className="follow-text text-white">Follow us on:</p>
-                  <div className="social-links">
-                    <a
-                      href={"https://www.facebook.com/questbloomrealestate"}
-                      target="_blank"
-                      className="social-link facebook"
-                    >
-                      <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a
-                      href={"https://www.instagram.com/questbloomrealestate"}
-                      target="_blank"
-                      className="social-link instagram"
-                    >
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/company/questbloom-real-estate/?originalSubdomain=ae"
-                      target="_blank"
-                      className="social-link linkedin"
-                    >
-                      <i className="fab fa-linkedin-in"></i>
-                    </a>
-                    <a
-                      href="https://www.tiktok.com/@questbloomrealestate"
-                      target="_blank"
-                      className="social-link youtube"
-                    >
-                      <i className="fab fa-tiktok"></i>
-                    </a>
-                  </div>
-
-                  <div className="divider"></div>
-
-                  <p className="valuation-text">
-                    Do you need a property valuation?
-                  </p>
-                  <a href="tel:+97145299247" className="speak-btn">
-                    <i className="fas fa-phone"></i>
-                    Speak with us
-                  </a>
-                </div>
-              </div>
+      <section
+        className="pt0 pb90  "
+        dangerouslySetInnerHTML={{
+          __html:
+            sections.find((section) => section.section_name === "Office")
+              ?.html_content ||
+            `<div class="container">
+  <div class="row align-items-center gx-5">
+    <div
+      class="col-lg-7"
+      data-aos="fade-right"
+      data-aos-delay="300"
+    >
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-lg-12 m-auto"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="main-title text-start">
+              <h2 class="title">Visit Our Office</h2>
+              <p class="paragraph mt25">
+                Office 1702, 17th Floor,
+                <br />
+                Lake Central Tower, Marasi Drive,
+                <br />
+                Business Bay, Dubai, UAE
+              </p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+
+    <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
+      <div class="contact-card">
+        <div class="card-header">
+          <img
+            src="https://admin.questrealestate.ae/storage/media/uploaded_images/img_688383f964e0b.svg"
+            alt="Quest Real Estate"
+            class="logo"
+          />
+        </div>
+
+        <div class="card-body">
+          <h4 class="text-start text-white">Contact Us</h4>
+
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <span>+971 4 529 9247</span>
+          </div>
+
+          <a
+            href="https://wa.me/971522460540"
+            class="whatsapp-btn"
+            target="_blank"
+          >
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp
+          </a>
+
+          <div class="divider"></div>
+
+          <p class="follow-text text-white">Follow us on:</p>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/questbloomrealestate"
+              target="_blank"
+              class="social-link facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/questbloomrealestate"
+              target="_blank"
+              class="social-link instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/company/questbloom-real-estate/?originalSubdomain=ae"
+              target="_blank"
+              class="social-link linkedin"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.tiktok.com/@questbloomrealestate"
+              target="_blank"
+              class="social-link youtube"
+            >
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="valuation-text">
+            Do you need a property valuation?
+          </p>
+          <a href="tel:+97145299247" class="speak-btn">
+            <i class="fas fa-phone"></i>
+            Speak with us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`,
+        }}
+      ></section>
       {/* End Visit our Office */}
 
       {/* Our CTA */}
