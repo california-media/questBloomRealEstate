@@ -7,6 +7,7 @@ import Bathroom from "./Bathroom";
 import DropdownSelect from "../DropdownSelect";
 import PercentagePreHandover from "../PercentagePreHandover";
 import DropdownSelectYearBuild from "../DropdownSelectYearBuild";
+import SelectDropdown from "./SelectDropdown";
 
 const AdvanceFilterModal = ({
   filterFunctions,
@@ -14,6 +15,8 @@ const AdvanceFilterModal = ({
   locationOptions,
   facilityOptions,
   loading,
+  saleStatuses,
+
   setDataFetched,
   buyRent,
   allReadyOff,
@@ -32,15 +35,17 @@ const AdvanceFilterModal = ({
   const [squareFeet, setSquareFeet] = useState([0, 0]);
   const [bedroomCount, setBedroomCount] = useState(0);
   const [bathroomCount, setBathroomCount] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
   const [amenities, setAmenities] = useState([]);
   const [yearBuild, setYearBuild] = useState(50000);
+  const [percentagePreHandover, setPercentagePreHandover] = useState(0);
 
   function setFromStore() {
     if (!filterFunctions) return;
 
     if (filterFunctions.selectedPropertyType)
       setPropertyType(filterFunctions.selectedPropertyType);
+    if (filterFunctions.percentagePreHandover)
+      setPercentagePreHandover(filterFunctions.percentagePreHandover);
 
     if (filterFunctions.priceRange) setPriceRange(filterFunctions.priceRange);
 
@@ -59,9 +64,6 @@ const AdvanceFilterModal = ({
 
     if (filterFunctions.bedrooms !== undefined)
       setBedroomCount(filterFunctions.bedrooms);
-    if (filterFunctions.searchTerm !== undefined) {
-      setSearchTerm(filterFunctions.searchTerm);
-    }
 
     if (filterFunctions.bathrooms !== undefined)
       setBathroomCount(filterFunctions.bathrooms);
@@ -87,10 +89,9 @@ const AdvanceFilterModal = ({
     filterFunctions?.bedrooms,
     filterFunctions?.bathrooms,
     filterFunctions?.categories,
-    filterFunctions?.searchTerm,
     filterFunctions?.yearBuild,
+    filterFunctions?.percentagePreHandover,
   ]);
-
   ///ONLY for home page advance filter to reset local state
   // useEffect(() => {
   //   const modal = document.getElementById("advanceSeachModal");
@@ -117,8 +118,8 @@ const AdvanceFilterModal = ({
     filterFunctions?.handleBathrooms(bathroomCount);
     filterFunctions?.handlecategories(amenities);
     filterFunctions?.handlepriceRange(priceRange);
-    filterFunctions?.handleSearchTerm(searchTerm);
     filterFunctions?.handleYearBuild(yearBuild);
+    filterFunctions?.handlePercentagePreHandover(percentagePreHandover);
 
     // let path = "";
 
@@ -157,18 +158,11 @@ const AdvanceFilterModal = ({
           <div className="row">
             <div className="col-sm-12">
               <div className="widget-wrapper">
-                <h6 className="list-title">Search Property</h6>
+                <h6 className="list-title">Listing Status</h6>
                 <div className="form-style2">
-                  <input
-                    type="text"
-                    className="form-control border-none"
-                    placeholder="Search"
-                    value={searchTerm}
-                    onInput={(e) => setSearchTerm(e.target.value)}
-                    style={{
-                      padding: "13px 15px",
-                      backgroundColor: "ButtonFace",
-                    }}
+                  <SelectDropdown
+                    saleStatuses={saleStatuses}
+                    filterFunctions={filterFunctions}
                   />
                 </div>
               </div>
@@ -285,11 +279,9 @@ const AdvanceFilterModal = ({
                           {/* Range Slider Desktop Version */}
                           <div className="range-slider-style1 mb10 mt20">
                             <PercentagePreHandover
-                              percentagePreHandover={
-                                filterFunctions?.percentagePreHandover
-                              }
+                              percentagePreHandover={percentagePreHandover}
                               setPercentagePreHandover={
-                                filterFunctions?.handlePercentagePreHandover
+                                setPercentagePreHandover
                               }
                             />
                           </div>
@@ -344,7 +336,7 @@ const AdvanceFilterModal = ({
               setPropertyType("All Property Types");
               setDataFetched(false);
               setPriceRange([0, 10000000]);
-              setSearchTerm("");
+              setPercentagePreHandover(0);
               setYearBuild(50000);
             }}
           >

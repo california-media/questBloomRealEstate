@@ -311,9 +311,9 @@ const Hero = ({ HeroTitle }) => {
           activeFilterCount={getHomeFilterCount(
             buyRent === "rent"
               ? "rent"
-              : allReadyOff === "off"
-              ? "off-plan"
-              : "buy"
+              : allReadyOff === "ready"
+              ? "buy"
+              : "off-plan"
           )}
           setModalOpen={setModalOpen}
           buyRent={buyRent}
@@ -321,7 +321,6 @@ const Hero = ({ HeroTitle }) => {
           handleAllReadyOff={handleAllReadyOff}
           handleBuyRent={handleBuyRent}
           loading={loading}
-          saleStatuses={saleStatuses}
           locationOptions={
             buyRent === "rent"
               ? rentalLocationOptions
@@ -361,6 +360,7 @@ const Hero = ({ HeroTitle }) => {
         >
           <AdvanceFilterModal
             modalOpen={modalOpen}
+            saleStatuses={saleStatuses}
             buyRent={buyRent}
             allReadyOff={allReadyOff}
             handleAllReadyOff={handleAllReadyOff}

@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
 const PercentagePreHandover = ({
   setPercentagePreHandover,
-  percentagePreHandover = 0,
+  percentagePreHandover,
 }) => {
   const [percentage, setPercentage] = useState({
     value: percentagePreHandover,
   });
-
   // percentage handler
   const handleOnChange = (value) => {
     setPercentage({ value });
     setPercentagePreHandover(value);
   };
 
+  useEffect(() => {
+    setPercentage({ value: percentagePreHandover });
+  }, [percentagePreHandover]);
   return (
     <>
       <div className="range-wrapper">

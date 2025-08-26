@@ -42,6 +42,7 @@ const TopFilterBar = ({
   activeFilterCount,
   selectedCities,
   setSelectedCities,
+  localSearch,
 }) => {
   // Local state with default from filterFunctions
   const [searchTerm, setSearchTerm] = useState(
@@ -246,8 +247,8 @@ const TopFilterBar = ({
                   <input
                     type="text"
                     className="form-control border-none"
-                    placeholder="Search"
-                    value={searchTerm}
+                    placeholder="Project Search"
+                    value={localSearch}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                     style={{

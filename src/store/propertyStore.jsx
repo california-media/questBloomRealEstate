@@ -79,8 +79,7 @@ const usePropertyStore = create((set, get) => ({
   handleRentalLocation: (rentalLocation) => set({ rentalLocation }),
   handleBuyLocation: (buyLocation) => set({ buyLocation }),
   handleAllLocation: (allLocation) => set({ allLocation }),
-  handleOffplanBuyLocation: (offplanBuyLocation) =>
-    set({ offplanBuyLocation }),
+  handleOffplanBuyLocation: (offplanBuyLocation) => set({ offplanBuyLocation }),
   handleSearchTerm: (searchTerm) => set({ searchTerm }),
   handlePercentagePreHandover: (percentage) =>
     set({ percentagePreHandover: percentage }),
@@ -233,7 +232,7 @@ const usePropertyStore = create((set, get) => ({
     // Default values for comparison
     const defaults = {
       squirefeet: [0, 0],
-      searchTerm: "",
+      listingStatus: "All",
       propertyId: "",
       yearBuild: 50000,
       percentagePreHandover: 0,
@@ -248,7 +247,7 @@ const usePropertyStore = create((set, get) => ({
           JSON.stringify(defaults.squirefeet)
         )
           count++;
-        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.listingStatus !== defaults.listingStatus) count++;
         if (state.propertyId !== defaults.propertyId) count++;
         break;
 
@@ -258,7 +257,7 @@ const usePropertyStore = create((set, get) => ({
           JSON.stringify(defaults.squirefeet)
         )
           count++;
-        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.listingStatus !== defaults.listingStatus) count++;
         if (state.propertyId !== defaults.propertyId) count++;
         if (state.yearBuild !== defaults.yearBuild) count++;
         if (state.percentagePreHandover !== defaults.percentagePreHandover)
@@ -271,14 +270,13 @@ const usePropertyStore = create((set, get) => ({
           JSON.stringify(defaults.squirefeet)
         )
           count++;
-        if (state.searchTerm !== defaults.searchTerm) count++;
+        if (state.listingStatus !== defaults.listingStatus) count++;
         if (state.propertyId !== defaults.propertyId) count++;
         break;
 
       default:
         return 0;
     }
-
     return count;
   },
 }));

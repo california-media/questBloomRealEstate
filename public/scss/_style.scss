@@ -10707,3 +10707,9 @@ input:focus-visible {
   color: #666;
   font-style: italic;
 }
+
+#home-page-hero-search:focus{
+     outline: none;
+  box-shadow: none;
+  border: none;
+}

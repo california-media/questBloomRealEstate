@@ -4,6 +4,7 @@ import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 
 import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFilteringBuy";
+import ProperteyFilteringBuyOffplan from "@/components/listing/grid-view/grid-full-3-col/ProperteyFilteringBuyOffplan";
 
 import React, { useEffect, useState } from "react";
 
@@ -75,7 +76,7 @@ const BuyFull3Col = () => {
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
-      <SocialLinksNavbar/>
+      <SocialLinksNavbar />
 
       {/* Breadcumb Sections */}
       <section
@@ -111,7 +112,7 @@ const BuyFull3Col = () => {
       {/* End Breadcumb Sections */}
 
       {/* Property Filtering */}
-      <ProperteyFiltering />
+      <ProperteyFilteringBuyOffplan />
       {/* Property Filtering */}
 
       {/* Start Our Footer */}

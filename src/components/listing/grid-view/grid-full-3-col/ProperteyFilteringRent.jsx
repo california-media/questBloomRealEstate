@@ -233,7 +233,7 @@ export default function ProperteyFiltering({ region }) {
         setInitialLoading(false);
       }
     }
-
+    ///reset search text
     fetchInitialData();
   }, [
     searchTerm,
@@ -334,19 +334,19 @@ export default function ProperteyFiltering({ region }) {
         </div>
         {/* <!-- Advance Feature Modal End --> */}
 
-          <TopFilterBar
-            activeFilterCount={getActiveFilterCount("rent")}
-            setDataFetched={setDataFetched}
-            colstyle={colstyle}
-            setColstyle={setColstyle}
-            filterFunctions={filterFunctions}
-            setCurrentSortingOption={setCurrentSortingOption}
-            locationOptions={rentalLocationOptions}
-            propertyTypes={propertyTypes}
-            selectedCities={selectedCities}
-            setSelectedCities={setSelectedCities}
-          />
-        
+        <TopFilterBar
+          activeFilterCount={getActiveFilterCount("rent")}
+          setDataFetched={setDataFetched}
+          colstyle={colstyle}
+          setColstyle={setColstyle}
+          filterFunctions={filterFunctions}
+          setCurrentSortingOption={setCurrentSortingOption}
+          locationOptions={rentalLocationOptions}
+          propertyTypes={propertyTypes}
+          selectedCities={selectedCities}
+          setSelectedCities={setSelectedCities}
+        />
+
         {/* End TopFilterBar */}
         {searchTerm && (
           <p className="mb30">

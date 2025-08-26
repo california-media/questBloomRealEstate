@@ -222,7 +222,7 @@ const TopFilterBar = ({
                 <input
                   type="text"
                   className="form-control border-none"
-                  placeholder="Search"
+                  placeholder="Project Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={handleKeyDown}

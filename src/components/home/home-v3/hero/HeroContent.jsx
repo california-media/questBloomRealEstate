@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SelectDropdown from "./SelectDropdown";
 import PercentagePreHandover from "@/components/common/PercentagePreHandover";
 import PriceRange from "@/components/common/advance-filter-two/PriceRange";
-
+import { Search } from "lucide-react";
 const HeroContent = ({
   propertyTypes,
   locationOptions,
@@ -71,9 +71,55 @@ const HeroContent = ({
                     ))}
                   </div>
                 </div>
+                {/* Status Dropdown */}
+                {/* <div className="col-4">
+                  <div className="mt-3 mt-md-0">
+                    <div className="bootselect-multiselect">
+                      <SelectDropdown
+                        saleStatuses={saleStatuses}
+                        filterFunctions={filterFunctions}
+                      />
+                    </div>
+                  </div>
+                </div> */}
+                <div className="col-4">
+                  <div className="  d-flex  h-100 w-100 ">
+                    <div
+                      style={{
+                        backgroundColor: "#f7f7f7",
+                        borderRadius: "12px",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Search
+                        size={18}
+                        style={{
+                          marginLeft: "20px",
 
+                          color: "#888",
+                          pointerEvents: "none",
+                        }}
+                      />
+                      <input
+                        id="home-page-hero-search"
+                        type="text"
+                        className=" w-100 border-none bg-transparent"
+                        placeholder="Project Search"
+                        onInput={(e) =>
+                          filterFunctions?.handleSearchTerm(e.target.value)
+                        }
+                        style={{
+                          padding: "13px 15px",
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
                 {/* Location Input */}
-                <div className="col-md-5 col-lg-4 ">
+                <div className="col-md-5 col-lg-3 ">
                   <div className="mt-3 mt-md-0 bootselect-multiselect">
                     <DropdownSelectLocation
                       options={locationOptions}
@@ -82,18 +128,6 @@ const HeroContent = ({
                       placeholder="Enter Location"
                       loading={loading}
                     />
-                  </div>
-                </div>
-
-                {/* Status Dropdown */}
-                <div className="col-3">
-                  <div className="mt-3 mt-md-0">
-                    <div className="bootselect-multiselect">
-                      <SelectDropdown
-                        saleStatuses={saleStatuses}
-                        filterFunctions={filterFunctions}
-                      />
-                    </div>
                   </div>
                 </div>
 
@@ -273,7 +307,7 @@ const HeroContent = ({
               {/* Mobile Layout - new implementation */}
               <div className="row d-flex justify-content-center gy-3 gx-1 d-md-none">
                 {/* Buy/Rent Toggle - full width on mobile */}
-                <div className="col-5 col-md-12">
+                <div className="col-8 col-md-12">
                   <div
                     className="mt-1 d-flex justify-content-center h-90"
                     style={{ backgroundColor: "#f7f7f7", borderRadius: "12px" }}
@@ -287,7 +321,7 @@ const HeroContent = ({
                           id="tab-element"
                           onClick={() => handleBuyRent(tab.id)}
                         >
-                          {tab.label }
+                          {tab.label}
                         </button>
                       </li>
                     ))}
@@ -320,7 +354,7 @@ const HeroContent = ({
                 </div>
 
                 {/* All/Ready/Off Tabs or Rent Duration - full width on mobile */}
-                <div className={`${buyRent === "rent" ? "col-12" : "col-9"} col-md-12`}>
+                <div className={`col-12`}>
                   <div className="mt-3 h-80 bootselect-multiselect">
                     {buyRent === "buy" ? (
                       <div

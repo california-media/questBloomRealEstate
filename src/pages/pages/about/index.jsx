@@ -205,7 +205,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
       <ScrollRevealSection />
       <ScrollRevealSectionMobile />
-      <section className="contact-info-section  pt-0 pb30">
+      <section className="contact-info-section  pt-0 pb30 pb60-md">
         <div className="accordion-section">
           <div className="container-fluid">
             <div className="row justify-content-center">
@@ -380,11 +380,11 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* Exclusive Agents */}
       {/* Abut intro */}
       <section className="pt30 pb30">
-        <div className="bgc-thm-light mx-auto maxw1600 pt100 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
+        <div className="bgc-thm-light mx-auto maxw1600 pt20 pt60-lg pb90 pb60-lg bdrs24 position-relative overflow-hidden mx20-lg">
           <div className="container">
             <div className="row">
               <div
-                className="col-md-6 col-lg-5 px-md-0 px-5 "
+                className="col-md-6 col-lg-5 px-md-0 px-3  "
                 data-aos="fade-left"
                 data-aos-delay="300"
               >

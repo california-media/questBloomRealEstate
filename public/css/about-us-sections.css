@@ -300,14 +300,24 @@
         /* Responsive Design */
         @media (max-width: 768px) {
            .about-us-hero-title {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
              .hero-parallax {
             height: 60vh;
              }
             .about-us-hero-subtitle {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
+
+              .social-links {
+       
+            margin-bottom: 15px;
+        }
+
+           .divider {
+   
+            margin: 20px 0;
+        }
             
             .section-title {
                 font-size: 1.5rem;
@@ -329,7 +339,8 @@
                 margin-top: -40px;
             }
             .btn-contact-us{
-                font-size: 1rem;
+                font-size: 0.8rem;
+                      padding: 10px 35px;
             }
           
         }
@@ -515,16 +526,25 @@
 
         @media (max-width: 768px) {
           .accordion-title {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
           }
           
           .accordion-header {
-            padding: 32px 0;
+            padding: 12px 0;
           }
           
-          .accordion-icon {
-            margin-right: 16px;
-          }
+       
+           .accordion-icon {
+          width: 24px;
+          height: 24px;
+       margin-right: 16px;
+      
+        }
+
+          .content-text {
+          font-size: 13px;
+        
+        }
           
             .icon-placeholder.is-icon {
           width: 50%;
@@ -536,7 +556,7 @@
           }
 
             .icon-container {
-              margin-bottom: 2rem;
+              margin-bottom: 1rem;
         }
 
           
@@ -550,7 +570,7 @@
           transform: scale(1);
         }
  .accordion-container {
-           padding: 30px 32px ;
+           padding: 0px ;
         }
 
 
@@ -676,7 +696,10 @@
     padding: 20px;
     text-align: center;
   }
-
+  .reveal-text-left h3,
+.reveal-text-right h3 {
+  font-size: 27px;
+}
   .reveal-image {
     max-height: 400px;            /* control height */
     object-fit: cover;
