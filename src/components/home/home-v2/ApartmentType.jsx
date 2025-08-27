@@ -142,7 +142,7 @@ const ApartmentType = () => {
                 <div className="iconbox-style4">
                   <span className={`icon ${type.icon}`} />
                   <div className="iconbox-content">
-                    <h6 className="title">{type.title}</h6>
+                    <h6 className="title ">{type.title}</h6>
                     <p className="text mb-0">{`${type.count} Properties`}</p>
                   </div>
                 </div>

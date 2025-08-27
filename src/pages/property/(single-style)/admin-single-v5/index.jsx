@@ -317,7 +317,7 @@ const AdminSingleV5 = () => {
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
         >
-          <div className="row  flex-wrap-reverse justify-content-center ">
+          <div className="row   justify-content-center ">
             {/* dummy */}
             <div className="col-lg-2"></div>
             <div className="col-lg-6 ">
@@ -330,7 +330,7 @@ const AdminSingleV5 = () => {
                 <div
                   className={`row ${
                     property?.year_built
-                      ? "sp-v5-property-details"
+                      ? "sp-v5-property-details" ///this is designed to deal with extra height when completion date is present
                       : "sp-v5-property-details-admin"
                   }`}
                 >

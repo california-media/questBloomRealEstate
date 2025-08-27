@@ -22,7 +22,7 @@ const MobileMenu = (menuItems, error) => {
               </a>
               <Link className="mobile_logo" to="/">
                 <img
-                  style={{ height: "50px" }}
+                  style={{ height: "40px" }}
                   src="/images/QMC-logo.webp"
                   alt="Header Logo"
                 />

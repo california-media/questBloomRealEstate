@@ -408,7 +408,7 @@ const SingleV5 = () => {
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
         >
-          <div className="row flex-wrap-reverse justify-content-center ">
+          <div className="row  justify-content-center ">
             {/* dummy */}
             <div className="col-lg-2"></div>
             <div className="col-lg-6">

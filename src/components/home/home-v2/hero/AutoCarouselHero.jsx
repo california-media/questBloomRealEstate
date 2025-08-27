@@ -80,7 +80,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
         {/* Content */}
         <div className="container ">
           <div className="row justify-content-center">
-            <div className="col-xl-10">
+            <div className="col-xl-10 px-2">
               <Hero HeroTitle={HeroTitle} />
             </div>
           </div>
@@ -140,7 +140,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
 
          @media (max-width: 991.98px) {
           .home-banner-style3 .home-style3 {
-            height: 1000px;
+            height: 860px;
           }
 
           

@@ -53,7 +53,7 @@ const PropertyHeader = ({ property, prefixedId }) => {
   return (
     <>
       <div
-        className="col-lg-8"
+        className="col-lg-8 pb-1 pb-md-4"
         style={{ padding: "50px", paddingTop: "30px", paddingLeft: "30px" }}
       >
         <div className="single-property-content mb30-md">

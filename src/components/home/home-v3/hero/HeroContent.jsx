@@ -38,7 +38,7 @@ const HeroContent = ({
   return (
     <div className="advance-style3 mb30 mx-auto animate-up-2 ">
       <div
-        className="tab-content bg-white bg-opacity-50 backdrop-blur"
+        className="tab-content px-2 pb-4 bg-white bg-opacity-50 backdrop-blur"
         id="backdrop-blur"
       >
         {buyRentTabs.map((tab) => (
@@ -304,7 +304,7 @@ const HeroContent = ({
               </div>
 
               {/* Mobile Layout - new implementation */}
-              <div className="row d-flex justify-content-center gy-3 gx-1 d-md-none">
+              <div className="row d-flex justify-content-center gy-2 gx-1 d-md-none">
                 {/* Buy/Rent Toggle - full width on mobile */}
                 <div className="col-8 col-md-12">
                   <div
@@ -318,6 +318,9 @@ const HeroContent = ({
                             buyRent === tab.id ? "active" : ""
                           }`}
                           id="tab-element"
+                          style={{
+                            fontSize: "0.8rem",
+                          }}
                           onClick={() => handleBuyRent(tab.id)}
                         >
                           {tab.label}
@@ -366,7 +369,7 @@ const HeroContent = ({
                 </div>
                 {/* Location Input - full width on mobile */}
                 <div className="col-12">
-                  <div className="mt-3 bootselect-multiselect">
+                  <div className=" bootselect-multiselect">
                     <DropdownSelectLocation
                       options={locationOptions}
                       value={filterFunctions?.location}
@@ -379,7 +382,7 @@ const HeroContent = ({
 
                 {/* All/Ready/Off Tabs or Rent Duration - full width on mobile */}
                 <div className={`col-12`}>
-                  <div className="mt-3 h-80 bootselect-multiselect">
+                  <div className=" h-80 bootselect-multiselect">
                     {buyRent === "buy" ? (
                       <div
                         className="bootselect-multiselect h-80 justify-content-center pl20  d-flex"
@@ -395,6 +398,9 @@ const HeroContent = ({
                                 allReadyOff === tab.id ? "active" : ""
                               }`}
                               id="tab-element"
+                              style={{
+                                fontSize: "0.8rem",
+                              }}
                               onClick={() => handleAllReadyOff(tab.id)}
                             >
                               {tab.label}
@@ -417,7 +423,7 @@ const HeroContent = ({
                 </div>
                 {/* Property Type Dropdown - full width on mobile */}
                 <div className="col-12">
-                  <div className="mt-3 bootselect-multiselect">
+                  <div className=" bootselect-multiselect">
                     <DropdownSelect
                       options={propertyTypesStrings}
                       value={filterFunctions?.selectedPropertyType}
@@ -429,7 +435,7 @@ const HeroContent = ({
                 </div>
                 {/* Bedrooms and Bathrooms in one row on mobile */}
                 <div className="col-6">
-                  <div className="mt-3 bootselect-multiselect">
+                  <div className=" bootselect-multiselect">
                     <DropdownSelect
                       options={["0", "1", "2", "3", "4", "5+"]}
                       value={filterFunctions?.bedrooms?.toString()}
@@ -442,7 +448,7 @@ const HeroContent = ({
                   </div>
                 </div>
                 <div className="col-6">
-                  <div className="mt-3 bootselect-multiselect">
+                  <div className=" bootselect-multiselect">
                     <DropdownSelect
                       options={["0", "1", "2", "3", "4", "5+"]}
                       value={filterFunctions?.bathrooms?.toString()}
@@ -455,7 +461,7 @@ const HeroContent = ({
                   </div>
                 </div>
                 {/* Price Range - full width on mobile */}
-                <div className="col-12 mt-3">
+                <div className="col-12 ">
                   <button
                     type="button"
                     className="d-flex justify-content-between align-items-center border-none w-100 fw-light"
@@ -483,21 +489,22 @@ const HeroContent = ({
                   </div>
                 </div>
                 {/* Search and Advanced buttons - full width on mobile */}
-                <div className="col-12 mt-3 d-flex justify-content-between">
+                <div className="col-12 d-flex justify-content-between">
                   <button
                     className="advance-search-btn"
                     style={{
-                      padding: "15px 13px",
+                      padding: "7px 7px",
                       borderRadius: "12px",
                       backgroundColor: "#f7f7f7",
                       width: "48%",
+                      fontSize: "0.8rem",
                     }}
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#advanceSeachModal"
                     onClick={() => setModalOpen(true)}
                   >
-                    <span className="flaticon-settings" /> Advanced
+                    <span className="flaticon-settings " /> Advanced
                     {activeFilterCount > 0 && (
                       <span
                         className="badge rounded-pill ms-2"
@@ -513,7 +520,11 @@ const HeroContent = ({
                     )}
                   </button>
                   <button
-                    style={{ paddingTop: "2px", width: "48%" }}
+                    style={{
+                      paddingTop: "2px",
+                      width: "48%",
+                      fontSize: "0.8rem",
+                    }}
                     className="advance-search-icon ud-btn btn-thm d-flex justify-content-center align-items-center"
                     type="button"
                     onClick={() => {

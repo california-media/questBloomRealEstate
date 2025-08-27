@@ -18,9 +18,7 @@ const GalleryBox = ({ imageUrls = [], loading = true }) => {
           delay: 4000,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
+       
       >
         {isEmpty ? (
           <SwiperSlide>

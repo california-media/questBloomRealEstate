@@ -20,6 +20,7 @@ const metaInformation = {
 
 const About = () => {
   const [sections, setSections] = useState([]);
+  const [agents, setAgents] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [error, setError] = useState(null);
 
@@ -51,11 +52,6 @@ const About = () => {
         ]);
       }
     };
-
-    fetchMenuItems();
-  }, []);
-
-  useEffect(() => {
     const fetchSections = async () => {
       try {
         const response = await adminApi.get("/pages/who-we-are/sections");
@@ -65,7 +61,26 @@ const About = () => {
       }
     };
 
+    const fetchAgents = async () => {
+      try {
+        const response = await adminApi.get("/agents", {
+          // You can add limit parameter if needed: params: { limit: 10 }
+        });
+
+        if (response.data.success) {
+          setAgents(response.data.data);
+        } else {
+          console.error("Error fetching agents");
+        }
+      } catch (err) {
+        console.error("Error fetching agents:", err);
+      }
+    };
+
+    fetchAgents();
+
     fetchSections();
+    fetchMenuItems();
   }, []);
 
   ////accordian
@@ -394,13 +409,13 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
           <div className="row">
             <div
-              className="col-lg-10 mx-auto  "
+              className="col-lg-11 mx-auto  "
               data-aos="fade-up"
               data-aos-delay="300"
             >
               <div className="property-city-slider ">
                 {/* Add this wrapper to center content */}
-                <Agents sections={sections} />
+                <Agents agents={agents} />
               </div>
             </div>
           </div>

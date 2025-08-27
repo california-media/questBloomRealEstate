@@ -3159,7 +3159,7 @@ li {
 }
 
 .sp-v5-property-details {
-    margin-top: -300px;
+    margin-top: -335px;
     position: relative;
     z-index: 1;
 }
@@ -3192,7 +3192,7 @@ li {
 
 
 .sp-v5-property-details-admin {
-    margin-top: -260px;
+    margin-top: -295px;
     position: relative;
     z-index: 1;
 }
@@ -6225,7 +6225,10 @@ textarea:focus {
     position: relative;
 }
 .team-style1 .team-img {
-    border-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
     overflow: hidden;
     position: relative;
 }
