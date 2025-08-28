@@ -25,11 +25,11 @@ const BuildingDetailsGrid = ({ buildings }) => {
   }
 
   return (
-    <div className="row w-100 align-items-center pt-2">
-      <div className="row row-cols-1 row-cols-md-2 g-3 pl0 mt-0">
+    <div className="row w-100 align-items-center p-0 justify-content-center pt-2">
+      <div className="row row-cols-1 row-cols-md-2 p-0 g-3 mt-0">
         {buildingList.map((building, index) => (
           <div
-            className="col d-flex flex-column m-0 mb-3"
+            className="col d-flex  flex-column m-0 mb-3"
             key={building.Building_ID || index}
           >
             <div className="card border-0 flex-grow-1 h-100">

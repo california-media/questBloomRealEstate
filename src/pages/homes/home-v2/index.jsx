@@ -191,10 +191,8 @@ const Home_V2 = () => {
       {/* End Main Header Nav */}
       {/* Mobile Nav  */}
       <MobileMenu menuItems={menuItems} error={error} />
-
-
-      <SocialLinksNavbar/>
-              {/* End Mobile Nav  */}
+      <SocialLinksNavbar />
+      {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
       <AutoCarouselHero
         HeroTitle={
@@ -516,7 +514,11 @@ const Home_V2 = () => {
         <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt15 pb15 justify-content-between align-items-center  bdrs12 position-relative overflow-hidden">
           <div className="container d-flex justify-content-center pl60  ">
             <div className="row ">
-              <div className="col-lg-10 col-12" data-aos="fade-up" data-aos-delay="500">
+              <div
+                className="col-lg-10 col-12"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
                 <div className="cta-style2">
                   <h2 className="cta-title">
                     Buying a Property With Questbloom

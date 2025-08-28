@@ -312,7 +312,7 @@ const AdminSingleV5 = () => {
       <SocialLinksNavbar />
 
       {/* Property All Single V4 */}
-      <section className="pt30  pb90 bgc-f7 ">
+      <section className="pt30 pb0-md pb90 bgc-f7 ">
         <div
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
@@ -334,10 +334,7 @@ const AdminSingleV5 = () => {
                       : "sp-v5-property-details-admin"
                   }`}
                 >
-                  <AdminPropertyHeader
-                    property={property}
-                    prefixedId={prefixedId}
-                  />
+                  <AdminPropertyHeader loading={loading} property={property} />
                 </div>
               </div>
               {/* {property && contactInfo && (
@@ -351,7 +348,9 @@ const AdminSingleV5 = () => {
                 </PDFViewer>
               )} */}
               <div className="ps-widget    mb40 overflow-hidden position-relative">
-                <h3 className="title  mb20">Visualisations</h3>
+                <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
+                  Visualisations
+                </h3>
                 <div className="row">
                   <AdminImageTabs photos={property?.photos} />
                 </div>
@@ -362,7 +361,8 @@ const AdminSingleV5 = () => {
               </div> */}
 
               <div className="ps-widget  mt40  mb40 overflow-hidden position-relative">
-                <h3 className="title  mb15">Overview</h3>
+                <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">Overview</h3>
+
                 <div className="row">
                   {property?.property_description ? (
                     <p
@@ -442,8 +442,14 @@ const AdminSingleV5 = () => {
               </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30  mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb25 pl15">
+              <div className="ps-widget bgc-white  bdrs12 default-box-shadow2 pt30 pt20-md  mb40 overflow-hidden position-relative">
+                <h4 className="title  mb20-md mb25 pl15 fs-6 fs-md-3 fs-lg-2 d-md-none d-block ">
+                  <span className="mr10 aspect-square py-1 px-2 bg-danger rounded">
+                    <MapPin size={15} color="white" />
+                  </span>
+                  Location
+                </h4>
+                <h4 className="title  mb25 pl15 fs-6 fs-md-3 fs-lg-2 d-md-block d-none">
                   <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
                   </span>
@@ -458,60 +464,15 @@ const AdminSingleV5 = () => {
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget  p10 overflow-hidden position-relative">
-                <h3 className="title  ">Facilities</h3>
-                <div className="row  justify-content-center">
+              <div className="ps-widget  mb20 overflow-hidden position-relative">
+                <h3 className="title mb0 fs-5 fs-md-3 fs-lg-2">Facilities</h3>
+                <div className="row  p-3 pt-0 pl-md-1 justify-content-center">
                   <AdminPropertyFeaturesAminites
                     amenities={property?.amenities}
                   />
                 </div>
               </div>
               {/* End .ps-widget */}
-
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Energy Class</h4>
-                <div className="row">
-                  <EnergyClass />
-                </div>
-              </div> */}
-              {/* End .ps-widget */}
-              {/* 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Unit Plans</h4>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="accordion-style1 style2">
-                      <FloorPlans property={property} />
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              {/* End .ps-widget */}
-
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Master Plan</h4>
-                <div className="row">
-                  <MasterPlan master_plan={property?.master_plan} />
-                </div>
-              </div> */}
-
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <div className="row">
-                  <div className="product_single_content mb50">
-                    <div className="mbp_pagination_comments">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div className="total_review d-flex align-items-center justify-content-between mb20">
-                            <h6 className="fz17 mb15">Property Images</h6>
-                          </div>
-                        </div>
-
-                        <AdminInteriorImages interior={property?.photos} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </div>
             {/* End .col-8 */}
 
@@ -524,22 +485,14 @@ const AdminSingleV5 = () => {
 
                 <div className=" mb20 d-md-flex align-items-center">
                   <p
-                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    className="text fz13 mb-0 pr10 "
                     style={styles.textShadowDesktop}
                   >
                     {property?.location || "Location"}
                   </p>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <h4
-                    className="price mb-0 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h4>
-                  <h3 className="price mb-0 d-lg-none">
+                  <h3 className="price mb-0 ">
                     {getPriceDisplay() === "Ask for price"
                       ? "Ask for price"
                       : "AED " + getPriceDisplay()}
@@ -548,22 +501,7 @@ const AdminSingleV5 = () => {
                     <div className="property-action text-lg-end">
                       <div className="d-flex  align-items-center justify-content-lg-end">
                         <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            strokeWidth={1}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                            className="pb5"
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 d-lg-none"
+                          className="icon mr10 "
                           href="#"
                           onClick={handleFavoriteClick}
                         >
@@ -576,17 +514,10 @@ const AdminSingleV5 = () => {
                         </a>
 
                         <a
-                          className="icon mr10 d-none d-lg-block"
+                          className="icon mr10"
                           href="#"
                           onClick={handleShareClick}
                           style={styles.textShadowDesktop}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                        <a
-                          className="icon mr10 d-lg-none"
-                          href="#"
-                          onClick={handleShareClick}
                         >
                           <span className="flaticon-share-1" />
                         </a>
@@ -599,13 +530,7 @@ const AdminSingleV5 = () => {
                   const pricePerSqft = getPricePerSqftDisplay();
                   return pricePerSqft ? (
                     <>
-                      <p
-                        className="text space fz13 d-none d-lg-block"
-                        style={styles.textShadowDesktop}
-                      >
-                        Starting from AED {pricePerSqft} per sqft
-                      </p>
-                      <p className="text space fz13 d-lg-none">
+                      <p className="text space fz13 ">
                         Starting from AED {pricePerSqft} per sqft
                       </p>
                     </>
@@ -703,61 +628,30 @@ const AdminSingleV5 = () => {
                     {property?.location || "Location"}
                   </p>
                 </div>
-                <div className="d-flex justify-content-between">
-                  <h4
-                    className="price mb-0 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
+                <div className="d-flex flex-column justify-content-between">
+                  <h5 className="price mb-3 d-lg-none d-block">
                     {getPriceDisplay() === "Ask for price"
                       ? "Ask for price"
                       : "AED " + getPriceDisplay()}
-                  </h4>
-                  <h3 className="price mb-0 d-lg-none">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h3>
-                  <div className="single-property-content">
+                  </h5>
+                  <div className="single-property-content mb-3">
                     <div className="property-action text-lg-end">
                       <div className="d-flex  align-items-center justify-content-lg-end">
                         <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <Heart
-                            strokeWidth={1}
-                            fill={isFavorite ? "red" : "none"}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                            className="pb5"
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 d-lg-none"
+                          className="icon mr10 "
                           href="#"
                           onClick={handleFavoriteClick}
                         >
                           <Heart
-                            strokeWidth={1}
                             fill={isFavorite ? "red" : "none"}
+                            strokeWidth={1}
                             color={isFavorite ? "red" : "currentColor"}
                             size={20}
                           />
                         </a>
 
                         <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleShareClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                        <a
-                          className="icon mr10 d-lg-none"
+                          className="icon mr10 "
                           href="#"
                           onClick={handleShareClick}
                         >
@@ -773,19 +667,19 @@ const AdminSingleV5 = () => {
                   return pricePerSqft ? (
                     <>
                       <p
-                        className="text space fz13 d-none d-lg-block"
+                        className="text space fz13 d-none d-lg-block mb-1"
                         style={styles.textShadowDesktop}
                       >
                         Starting from AED {pricePerSqft} per sqft
                       </p>
-                      <p className="text space fz13 d-lg-none">
+                      <p className="text space fz13 d-lg-none mb-1">
                         Starting from AED {pricePerSqft} per sqft
                       </p>
                     </>
                   ) : null;
                 })()}
-                <div className="row mt20">
-                  <div className="row">
+                <div className="row  text-center mx-auto">
+                  <div className="row p-0" style={{ marginLeft: "1px" }}>
                     <button
                       type="button"
                       className="ud-btn btn-white2 luxury-heading w-100"
@@ -864,14 +758,14 @@ const AdminSingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt80 pb90" ref={bottomRef}>
+      <section className="similar-items pt0-md pb0-md pt80 pb90" ref={bottomRef}>
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
               <div className="main-title">
                 <h2 className="title">Nearby Similar Homes</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Discover homes in this area with similar style and price.
                 </p>
               </div>
             </div>

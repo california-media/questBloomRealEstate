@@ -38,7 +38,7 @@ const HeroContent = ({
   return (
     <div className="advance-style3 mb30 mx-auto animate-up-2 ">
       <div
-        className="tab-content px-2 pb-4 bg-white bg-opacity-50 backdrop-blur"
+        className="tab-content px-2 px-md-3 pb-4 bg-white bg-opacity-50 backdrop-blur"
         id="backdrop-blur"
       >
         {buyRentTabs.map((tab) => (

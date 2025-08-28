@@ -131,8 +131,8 @@ const UnitPlans = ({ units = [] }) => {
   }
 
   return (
-    <div className="row w-100 align-items-center pt-2">
-      <div className="row row-cols-1 row-cols-md-2 g-3 pl0 mt-0">
+    <div className="row w-100 p-0 justify-content-center align-items-center pt-2">
+      <div className="row row-cols-1  row-cols-md-2 g-3 mt-0">
         {units.map((unit, index) => (
           <div
             className="col d-flex flex-column m-0 mb-3"

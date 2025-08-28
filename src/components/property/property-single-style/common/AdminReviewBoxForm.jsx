@@ -234,11 +234,11 @@ const AdminReviewBoxForm = ({
     }
   };
   return (
-    <form className="comments_form mt10" onSubmit={handleSubmit}>
+    <form className="comments_form mt10  px-0 px-md-3" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-12">
-          <div className="mb-4 ">
-            <label className="fw600 ff-heading mb-2">Name</label>
+          <div className="mb-4 text-start">
+            <label className="fw600 ff-heading mb-2 ">Name</label>
             <input
               type="text"
               name="name"
@@ -257,7 +257,7 @@ const AdminReviewBoxForm = ({
         </div>
 
         <div className="col-md-6">
-          <div className="mb-4">
+          <div className="mb-4 text-start">
             <label className="fw600 ff-heading mb-2">Email</label>
             <input
               type="email"
@@ -277,7 +277,7 @@ const AdminReviewBoxForm = ({
         </div>
 
         <div className="col-md-6">
-          <div className="mb-4">
+          <div className="mb-4 text-start">
             <label className="fw600 ff-heading mb-2">Phone</label>
             <PhoneInput
               inputClass={`form-control ${errors.phone ? "is-invalid" : ""}`}
@@ -315,7 +315,7 @@ const AdminReviewBoxForm = ({
         </div>
 
         <div className="col-md-12">
-          <div className="mb-4">
+          <div className="mb-4 text-start">
             <label className="fw600 ff-heading mb-2">Notes</label>
             <textarea
               className={`pt15 form-control ${

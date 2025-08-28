@@ -403,7 +403,7 @@ const SingleV5 = () => {
       {/* End Mobile Nav  */}
       <SocialLinksNavbar />
       {/* Property All Single V4 */}
-      <section className="pt30  pb90 bgc-f7 ">
+      <section className="pt30 pb0-md pb90 bgc-f7 ">
         <div
           className="container-fluid  mx-auto"
           style={{ maxWidth: "1600px" }}
@@ -425,7 +425,11 @@ const SingleV5 = () => {
                       : "sp-v5-property-details-admin"
                   }`}
                 >
-                  <PropertyHeader property={property} prefixedId={prefixedId} />
+                  <PropertyHeader
+                    property={property}
+                    prefixedId={prefixedId}
+                    loading={loading}
+                  />
                 </div>
               </div>
               {/* {property && contactInfo && (
@@ -439,7 +443,10 @@ const SingleV5 = () => {
                 </PDFViewer>
               )} */}
               <div className="ps-widget    mb40 overflow-hidden position-relative">
-                <h3 className="title  mb20">Visualisations</h3>
+                <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
+                  Visualisations
+                </h3>
+
                 <div className="row">
                   <ImageTabs
                     architecture={property?.architecture}
@@ -453,13 +460,15 @@ const SingleV5 = () => {
                 <div className="row"></div>
               </div> */}
               <div className="ps-widget mb-0  overflow-hidden position-relative">
-                <h3 className="title">Typical units and prices</h3>
+                <h3 className="title mb10 fs-5 fs-md-3 fs-lg-2">
+                  Typical units and prices
+                </h3>
                 <div className="row  justify-content-center">
                   <FloorPlans units={property?.unit_blocks} />
                 </div>
               </div>
               <div className="ps-widget  mt40  mb30 overflow-hidden position-relative">
-                <h3 className="title  mb15">Overview</h3>
+                <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">Overview</h3>
                 <div className="row">
                   {property?.overview ? (
                     <DescriptionRenderer text={property?.overview} />
@@ -468,83 +477,28 @@ const SingleV5 = () => {
                   )}
                 </div>
               </div>
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Overview</h4>
-                <div className="row">
-                  <AdminOverView property={property} prefixedId={prefixedId} />
-                  <div className="row">
-                    <button
-                      type="button"
-                      className="ud-btn btn-white2"
-                      onClick={() => setShowModal(true)}
-                    >
-                      Download PDF
-                      <i className="fal fa-arrow-right-long" />
-                    </button>
-                  </div>
-                  {showModal && (
-                    <div
-                      style={{ display: "block" }}
-                      tabIndex="-1"
-                      className=" modal fade show "
-                      onClick={() => setShowModal(false)}
-                    >
-                      <div
-                        className="modal-dialog  modal-dialog-centered modal-lg"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">Download PDF</h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              onClick={() => setShowModal(false)}
-                            ></button>
-                          </div>
-                          <div className="modal-body  pb50 px-4">
-                            <div className="row">
-                              <AdminReviewBoxForm
-                                property={property}
-                                prefixedId={prefixedId}
-                                downloadPDF={true}
-                                contactInfo={contactInfo}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div> */}
-              {/* End .ps-widget */}
 
-              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Property Description</h4>
-                <AdminProperytyDescriptions property={property} />
-
-                <h4 className="title fz17 mb30 mt50">Property Details</h4>
-                <div className="row">
-                  <AdminPropertyDetails
-                    property={property}
-                    prefixedId={prefixedId}
-                  />
-                </div>
-              </div> */}
               {/* End .ps-widget */}
               {property?.video_url &&
                 !property.video_url.includes("v=null") && (
                   <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                    <h3 className="title mb-3">Video onboarding for agents</h3>
+                    <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
+                      Video onboarding for agents
+                    </h3>
                     <div className="row  justify-content-center">
                       <YoutubeVideoEmbed url={property.video_url} />
                     </div>
                   </div>
                 )}
 
-              <div className="ps-widget bgc-white  bdrs12 default-box-shadow2 pt30  mb40 overflow-hidden position-relative">
-                <h4 className="title fz17 mb25 pl15">
+              <div className="ps-widget bgc-white  bdrs12 default-box-shadow2 pt30 pt20-md  mb40 overflow-hidden position-relative">
+                <h4 className="title  mb20-md mb25 pl15 fs-6 fs-md-3 fs-lg-2 d-md-none d-block ">
+                  <span className="mr10 aspect-square py-1 px-2 bg-danger rounded">
+                    <MapPin size={15} color="white" />
+                  </span>
+                  Location
+                </h4>
+                <h4 className="title  mb25 pl15 fs-6 fs-md-3 fs-lg-2 d-md-block d-none">
                   <span className="mr15 aspect-square p10 bg-danger rounded">
                     <MapPin size={22} color="white" />
                   </span>
@@ -560,8 +514,10 @@ const SingleV5 = () => {
               {/* End .ps-widget */}
 
               {/* General plan */}
-              <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                <h3 className="title mb-2">General plan</h3>
+              <div className="ps-widget mb50  overflow-hidden position-relative">
+                <h3 className="title mb10 fs-5 fs-md-3 fs-lg-2">
+                  General plan
+                </h3>
                 <div className="row justify-content-center">
                   <div className="col-md-12 rounded">
                     {property?.master_plan?.length > 0 ? (
@@ -580,27 +536,31 @@ const SingleV5 = () => {
                 </div>
               </div>
 
-              <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                <h3 className="title">Buildings in project</h3>
+              <div className="ps-widget mb30  overflow-hidden position-relative">
+                <h3 className="title mb10 fs-5 fs-md-3 fs-lg-2">
+                  Buildings in project
+                </h3>
                 <div className="row  justify-content-center">
                   <BuildingDetails buildings={property?.buildings} />
                 </div>
               </div>
-              <div className="ps-widget mb20 p10 overflow-hidden position-relative">
-                <h3 className="title">Facilities</h3>
-                <div className="row  justify-content-center">
+              <div className="ps-widget mb20  overflow-hidden position-relative">
+                <h3 className="title mb5 fs-5 fs-md-3 fs-lg-2">Facilities</h3>
+                <div className="row  p-3 justify-content-center">
                   <PropertyFeaturesAminites facilities={property?.facilities} />
                 </div>
               </div>
 
               <div className="ps-widget mb30 p10 overflow-hidden position-relative">
-                <h3 className="title mb-2">Payment Plans</h3>
+                <h3 className="title mb10 fs-5 fs-md-3 fs-lg-2">
+                  Payment Plans
+                </h3>
                 <div className="row  justify-content-center">
                   <PaymentPlans payment_plans={property?.payment_plans} />
                 </div>
               </div>
               <div className="ps-widget mb20 p10 overflow-hidden position-relative">
-                <h3 className="title">Parkings</h3>
+                <h3 className="title mb10 fs-5 fs-md-3 fs-lg-2">Parkings</h3>
                 <div className="row  justify-content-center">
                   <Parkings parkings={property?.parkings} />
                 </div>
@@ -617,7 +577,7 @@ const SingleV5 = () => {
               style={{ marginBottom: "27px" }}
             >
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
-                <h4 className="title fz19 mb7">{property?.name}</h4>
+                <h4 className="title  fs-5 fs-md-3 mb7">{property?.name}</h4>
 
                 <div className=" mb20  d-md-flex align-items-center">
                   <p
@@ -628,19 +588,15 @@ const SingleV5 = () => {
                   </p>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <h4
-                    className="price mb-0 d-none d-lg-block"
+                  <h3
+                    className="price mb-0 d-none d-lg-block  "
                     style={styles.textShadowDesktop}
                   >
                     {getPriceDisplay() === "Ask for price"
                       ? "Ask for price"
                       : "AED " + getPriceDisplay()}
-                  </h4>
-                  <h3 className="price mb-0 d-lg-none">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
                   </h3>
+
                   <div className="single-property-content">
                     <div className="property-action text-lg-end">
                       <div className="d-flex  align-items-center justify-content-lg-end">
@@ -660,30 +616,10 @@ const SingleV5 = () => {
                         </a>
 
                         <a
-                          className="icon mr10 d-lg-none"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                            strokeWidth={1}
-                          />
-                        </a>
-
-                        <a
                           className="icon mr10 d-none d-lg-block"
                           href="#"
                           onClick={handleShareClick}
                           style={styles.textShadowDesktop}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                        <a
-                          className="icon mr10 d-lg-none"
-                          href="#"
-                          onClick={handleShareClick}
                         >
                           <span className="flaticon-share-1" />
                         </a>
@@ -789,51 +725,28 @@ const SingleV5 = () => {
             </div>
             {/* on mobile */}
             <div className="col-lg-4 d-lg-none d-block ">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 mb30 overflow-hidden ">
                 <h4 className="title fz19 mb7">{property?.name}</h4>
 
-                <div className=" mb20  d-md-flex align-items-center">
+                <div className=" mb10  d-md-flex align-items-center">
                   <p
-                    className="text fz13 mb-0 pr10 d-none d-lg-block"
+                    className="text fz13 mb-0 pr10 "
                     style={styles.textShadowDesktop}
                   >
                     {property?.area}, {property?.country}
                   </p>
                 </div>
-                <div className="d-flex justify-content-between">
-                  <h4
-                    className="price mb-0 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
+                <div className="d-flex flex-column justify-content-between">
+                  <h5 className="price mb-3 d-lg-none d-block">
                     {getPriceDisplay() === "Ask for price"
                       ? "Ask for price"
                       : "AED " + getPriceDisplay()}
-                  </h4>
-                  <h3 className="price mb-0 d-lg-none">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h3>
-                  <div className="single-property-content">
+                  </h5>
+                  <div className="single-property-content mb-3">
                     <div className="property-action text-lg-end">
                       <div className="d-flex  align-items-center justify-content-lg-end">
                         <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleFavoriteClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            strokeWidth={1}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                            className="pb5"
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 d-lg-none"
+                          className="icon mr10 "
                           href="#"
                           onClick={handleFavoriteClick}
                         >
@@ -846,15 +759,7 @@ const SingleV5 = () => {
                         </a>
 
                         <a
-                          className="icon mr10 d-none d-lg-block"
-                          href="#"
-                          onClick={handleShareClick}
-                          style={styles.textShadowDesktop}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                        <a
-                          className="icon mr10 d-lg-none"
+                          className="icon mr10 "
                           href="#"
                           onClick={handleShareClick}
                         >
@@ -870,19 +775,19 @@ const SingleV5 = () => {
                   return pricePerSqft ? (
                     <>
                       <p
-                        className="text space fz13 d-none d-lg-block"
+                        className="text space fz13 d-none d-lg-block mb-1"
                         style={styles.textShadowDesktop}
                       >
                         Starting from AED {pricePerSqft} per sqft
                       </p>
-                      <p className="text space fz13 d-lg-none">
+                      <p className="text space fz13 d-lg-none mb-1">
                         Starting from AED {pricePerSqft} per sqft
                       </p>
                     </>
                   ) : null;
                 })()}
-                <div className="row mt20">
-                  <div className="row">
+                <div className="row  text-center mx-auto">
+                  <div className="row p-0" style={{ marginLeft: "1px" }}>
                     <button
                       type="button"
                       className="ud-btn btn-white2 luxury-heading w-100"
@@ -961,14 +866,14 @@ const SingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt80 pb90" ref={bottomRef}>
+      <section className="similar-items pt80 pt0-md pb0-md pb90" ref={bottomRef}>
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
               <div className="main-title">
                 <h2 className="title">Nearby Similar Homes</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Discover homes in this area with similar style and price.
                 </p>
               </div>
             </div>

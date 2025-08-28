@@ -45,7 +45,7 @@ const PropertyNearby = ({ map_points }) => {
                         >
                           <MapPin size={22} color="white" />
                         </span>
-                        <p className="dark-color fw600 mb-0">{detail.name}</p>
+                        <p className="dark-color fw600 fs-6 fs-md-4 mb-0">{detail.name}</p>
                       </div>
                       <p className="text text-muted mb-0"> {detail.distance}</p>
                     </div>

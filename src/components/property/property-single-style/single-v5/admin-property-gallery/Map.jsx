@@ -32,7 +32,8 @@ const GoogleMapEmbed = ({ googleMapsLink }) => {
   return (
     <div
       style={{
-        aspectRatio: "3.2",
+        aspectRatio: "1.8",
+
         width: "100%",
         display: "flex",
         justifyContent: "center",

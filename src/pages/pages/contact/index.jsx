@@ -95,7 +95,7 @@ const Contact = () => {
       {/* End Our Contact With Map */}
 
       {/* Start Our Contact Form */}
-      <section className="pt-0  pb50">
+      <section className="pt-0 pb0 pb-md-50">
         <div className="container mt150  contact-us-form-section ">
           <div className="row d-flex align-items-end">
             <div className="col-lg-5 position-relative">
@@ -109,7 +109,7 @@ const Contact = () => {
             {/* End .col */}
 
             <div
-              className="col-lg-5 offset-lg-2 mt20  "
+              className="col-lg-5 offset-lg-2 text-center text-md-start mt100  "
               style={{ height: "250px" }}
               dangerouslySetInnerHTML={{
                 __html:
@@ -143,20 +143,20 @@ const Contact = () => {
             sections.find((section) => section.section_name === "Office")
               ?.html_content ||
             `<div class="container">
-  <div class="row align-items-center gx-5">
+  <div class="row align-items-center flex-wrap-reverse gx-5">
     <div
       class="col-lg-7"
-      data-aos="fade-right"
+      data-aos="fade-bottom"
       data-aos-delay="300"
     >
       <div class="container">
         <div class="row">
           <div
-            class="col-lg-12 m-auto"
+            class="col-lg-12 m-auto mt0 mt100-md"
             data-aos="fade-up"
             data-aos-delay="300"
           >
-            <div class="main-title text-start">
+            <div class="main-title text-center text-md-start">
               <h2 class="title">Visit Our Office</h2>
               <p class="paragraph mt25">
                 Office 1702, 17th Floor,

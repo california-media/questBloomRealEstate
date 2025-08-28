@@ -14,8 +14,10 @@ const PropertyFeaturesAmenities = ({ facilities = [] }) => {
   }
 
   return (
-    <div className={`row w-100 align-items-center  `}>
-      <div className="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-3 pl0 mt-0">
+    <div
+      className={`row  align-items-center  justify-content-center justify-content-md-start  p-0 `}
+    >
+      <div className="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-3 p-0 mt-0">
         {facilities.map((facility, i) => (
           <div className="col d-flex flex-column mt-0 mb-3" key={i}>
             <div className="card border-0 flex-grow-1">

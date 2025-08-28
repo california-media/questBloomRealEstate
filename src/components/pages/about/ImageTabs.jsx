@@ -63,7 +63,7 @@ const ImageTabs = ({ architecture, lobby, interior }) => {
     >
       <div className="container  ">
         <div className="row">
-          <div className="col-12  pl0">
+          <div className="col-12  px-0">
             {/* Tabs Navigation */}
             <div className="d-flex flex-wrap gap-2 ">
               {tabs.map((tab) => (
@@ -89,16 +89,16 @@ const ImageTabs = ({ architecture, lobby, interior }) => {
 
             {/* Content Area with fade animation */}
             <div
-              className={`row pl5 align-items-center fade-transition ${
+              className={`row  justify-content-center align-items-center fade-transition ${
                 transitioning ? "fade-out" : "fade-in"
               }`}
             >
-              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 ">
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 pr-0 ">
                 {activeTabData?.images.map((image, i) => (
-                  <div className="col" key={i}>
+                  <div className="col " key={i}>
                     <img
                       src={`${image}`}
-                      className="card-img-top img-fluid rounded"
+                      className="card-img-top img-fluid rounded "
                       alt={`${activeTabData.label} view ${i + 1}`}
                       style={{
                         height: "200px",

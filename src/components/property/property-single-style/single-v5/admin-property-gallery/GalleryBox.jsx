@@ -13,14 +13,37 @@ const GalleryBox = ({ photos = [], loading = true }) => {
         spaceBetween={0}
         modules={[Autoplay, Pagination]}
         slidesPerView={1}
-        loop={!isEmpty}
+        loop={!isEmpty && !loading}
         speed={1000}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
         }}
       >
-        {isEmpty ? (
+        {loading ? (
+          <SwiperSlide>
+            <div
+              style={{
+                aspectRatio: "2",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#6c757d",
+              }}
+              className="item"
+            >
+              <div className="text-center p-4">
+                <div
+                  className="spinner-border mx-auto m-5 text-light"
+                  role="status"
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ) : isEmpty ? (
           <SwiperSlide>
             <div
               style={{
@@ -59,6 +82,7 @@ const GalleryBox = ({ photos = [], loading = true }) => {
               >
                 {/* Semi-transparent dark overlay */}
                 <div
+                className="d-none d-md-block"
                   style={{
                     position: "absolute",
                     top: 0,
@@ -70,20 +94,14 @@ const GalleryBox = ({ photos = [], loading = true }) => {
                   }}
                 ></div>
 
-                {loading ? (
-                  <div className="spinner-border mx-auto m-5" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                ) : (
-                  <img
-                    className="w-100 h-100 position-absolute top-0 start-0 object-fit-cover"
-                    src={adminBaseUrl + imageUrl}
-                    alt={`Image ${index + 1}`}
-                    style={{
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
+                <img
+                  className="w-100 h-100 position-absolute top-0 start-0 object-fit-cover"
+                  src={adminBaseUrl + imageUrl}
+                  alt={`Image ${index + 1}`}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
               </div>
             </SwiperSlide>
           ))

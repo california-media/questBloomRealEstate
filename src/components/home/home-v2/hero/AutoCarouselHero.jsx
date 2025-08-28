@@ -49,10 +49,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
   if (loading) {
     return (
       <section className="home-banner-style3 p0">
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "760px" }}
-        >
+        <div className="d-flex home-style3 justify-content-center align-items-center">
           <div className="spinner-border mx-auto mt-3" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>

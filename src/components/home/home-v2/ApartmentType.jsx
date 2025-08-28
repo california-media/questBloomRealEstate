@@ -100,57 +100,71 @@ const ApartmentType = () => {
       </div>
     </div>
   ) : (
-    <Swiper
-      spaceBetween={30}
-      breakpoints={{
-        300: {
-          slidesPerView: 2,
-          spaceBetween: 15,
-        },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 15,
-        },
-        1024: {
-          slidesPerView: 4,
-        },
-        1200: {
-          slidesPerView: 5,
-        },
-      }}
-      autoplay={{ delay: 3000 }} // Set the desired delay for autoplay
-    >
-      {apartmentType
-        .filter((type) => type.count > 0)
-        .map((type) => (
-          <SwiperSlide key={type.id}>
-            <div className="item">
-              <Link
-                to="/off-plan"
-                onClick={(e) => {
-                  e.preventDefault();
+    <>
+      <Swiper
+        spaceBetween={30}
+        breakpoints={{
+          300: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+          1200: {
+            slidesPerView: 5,
+          },
+        }}
+        autoplay={{ delay: 3000 }} // Set the desired delay for autoplay
+        className="swiper-same-height"
+      >
+        {apartmentType
+          .filter((type) => type.count > 0)
+          .map((type) => (
+            <SwiperSlide key={type.id}>
+              <div className="item">
+                <Link
+                  to="/off-plan"
+                  onClick={(e) => {
+                    e.preventDefault();
 
-                  type.title && handlePropertyType(type.title);
+                    type.title && handlePropertyType(type.title);
 
-                  navigate("/off-plan", {
-                    state: {
-                      hasFilters: true,
-                    },
-                  });
-                }}
-              >
-                <div className="iconbox-style4">
-                  <span className={`icon ${type.icon}`} />
-                  <div className="iconbox-content">
-                    <h6 className="title ">{type.title}</h6>
-                    <p className="text mb-0">{`${type.count} Properties`}</p>
+                    navigate("/off-plan", {
+                      state: {
+                        hasFilters: true,
+                      },
+                    });
+                  }}
+                >
+                  <div className="iconbox-style4">
+                    <span className={`icon ${type.icon}`} />
+                    <div className="iconbox-content">
+                      <h6 className="title ">{type.title}</h6>
+                      <p className="text mb-0">{`${type.count} Properties`}</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
-    </Swiper>
+                </Link>
+              </div>
+            </SwiperSlide>
+          ))}
+      </Swiper>
+      <style>{`
+      @media (max-width: 576px) {
+  .swiper-same-height .iconbox-style4 {
+    height: 220px !important;
+  }
+}
+       
+        
+     
+      
+      `}</style>
+    </>
   );
 };
 
