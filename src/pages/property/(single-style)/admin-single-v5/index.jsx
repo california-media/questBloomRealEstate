@@ -337,7 +337,7 @@ const AdminSingleV5 = () => {
                   <AdminPropertyHeader loading={loading} property={property} />
                 </div>
               </div>
-              {/* {property && contactInfo && (
+              {property && contactInfo && (
                 <PDFViewer style={{ width: "100%", height: "100vh" }}>
                   <AdminPropertyPDF
                     property={property}
@@ -346,7 +346,7 @@ const AdminSingleV5 = () => {
                     qbc_copyright={contactInfo?.copyright}
                   />
                 </PDFViewer>
-              )} */}
+              )}
               <div className="ps-widget    mb40 overflow-hidden position-relative">
                 <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
                   Visualisations

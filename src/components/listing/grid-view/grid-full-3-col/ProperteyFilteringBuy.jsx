@@ -66,6 +66,7 @@ export default function ProperteyFilteringBuy({ region }) {
   const [hasMore, setHasMore] = useState(true);
   const [selectedCities, setSelectedCities] = useState([]);
   const [isNew, setIsNew] = useState(false);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
 
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -356,6 +357,8 @@ export default function ProperteyFilteringBuy({ region }) {
           setIsNew={setIsNew}
           setSelectedCities={setSelectedCities}
           setModalOpen={setModalOpen}
+          searchTerm={localSearchTerm}
+          setSearchTerm={setLocalSearchTerm}
         />
 
         {/* End TopFilterBar */}

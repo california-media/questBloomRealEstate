@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Parkings = ({ parkings = [] }) => {
-  if (!parkings.length) {
+  if (!parkings?.length) {
     return (
       <div className="col-md-12">
         <div className="text-center py-4">

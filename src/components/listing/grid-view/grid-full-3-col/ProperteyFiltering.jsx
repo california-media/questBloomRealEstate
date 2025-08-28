@@ -230,6 +230,7 @@ export default function ProperteyFiltering({ region }) {
       setListings([]); // Clear existing listings
       setInitialLoading(true);
       setHasMore(true); // Reset hasMore when filters change
+      console.log("Fetching initial data");
       try {
         const { data } = await api.get("/properties", {
           params: getRequestParams(),
@@ -273,7 +274,8 @@ export default function ProperteyFiltering({ region }) {
         setInitialLoading(false);
       }
     }
-
+    //search bar back to current state
+    setLocalSearchTerm(searchTerm);
     fetchInitialData();
   }, [
     searchTerm,
@@ -324,8 +326,6 @@ export default function ProperteyFiltering({ region }) {
       }
     };
 
-    //search bar back to current state
-    setLocalSearchTerm(searchTerm);
     fetchMoreData();
   }, [inView, initialLoading]);
   return (

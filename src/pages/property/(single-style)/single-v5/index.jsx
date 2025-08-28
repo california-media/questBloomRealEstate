@@ -866,7 +866,10 @@ const SingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt80 pt0-md pb0-md pb90" ref={bottomRef}>
+      <section
+        className="similar-items pt80 pt0-md pb0-md pb90"
+        ref={bottomRef}
+      >
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">

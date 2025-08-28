@@ -44,12 +44,9 @@ const TopFilterBar = ({
   setSelectedCities,
   localSearch,
   setModalOpen,
+  searchTerm,
+  setSearchTerm,
 }) => {
-  // Local state with default from filterFunctions
-  const [searchTerm, setSearchTerm] = useState(
-    filterFunctions?.searchTerm || ""
-  );
-
   // Sync local state when filterFunctions.searchTerm changes
   useEffect(() => {
     if (filterFunctions?.searchTerm !== undefined) {
@@ -249,7 +246,7 @@ const TopFilterBar = ({
                     type="text"
                     className="form-control border-none"
                     placeholder="Project Search"
-                    value={localSearch}
+                    value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                     style={{

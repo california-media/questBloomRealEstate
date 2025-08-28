@@ -48,11 +48,6 @@ const GridFull3Col = () => {
         ]);
       }
     };
-
-    fetchMenuItems();
-  }, []);
-
-  useEffect(() => {
     const fetchSections = async () => {
       try {
         const response = await adminApi.get("/pages/off-plan/sections");
@@ -63,6 +58,8 @@ const GridFull3Col = () => {
     };
 
     fetchSections();
+
+    fetchMenuItems();
   }, []);
 
   return (

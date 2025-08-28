@@ -84,6 +84,7 @@ export default function ProperteyFilteringBuy({ region }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
 
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -454,7 +455,8 @@ Logic for building payload:
         setInitialLoading(false);
       }
     }
-
+    //search bar back to current state
+    setLocalSearchTerm(searchTerm);
     fetchInitialData();
   }, [
     region,
@@ -577,6 +579,8 @@ Logic for building payload:
           selectedCities={selectedCities}
           setSelectedCities={setSelectedCities}
           setModalOpen={setModalOpen}
+          searchTerm={localSearchTerm}
+          setSearchTerm={setLocalSearchTerm}
         />
         {/* End TopFilterBar */}
         {searchTerm && (

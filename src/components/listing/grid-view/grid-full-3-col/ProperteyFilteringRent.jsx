@@ -67,6 +67,7 @@ export default function ProperteyFiltering({ region }) {
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
 
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -363,6 +364,8 @@ export default function ProperteyFiltering({ region }) {
           propertyTypes={propertyTypes}
           selectedCities={selectedCities}
           setSelectedCities={setSelectedCities}
+          searchTerm={localSearchTerm}
+          setSearchTerm={setLocalSearchTerm}
           setModalOpen={setModalOpen}
         />
 

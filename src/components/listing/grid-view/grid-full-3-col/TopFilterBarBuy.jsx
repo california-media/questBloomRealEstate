@@ -44,20 +44,16 @@ const TopFilterBar = ({
   setSelectedCities,
   setIsNew,
   isNew,
+  searchTerm,
+  setSearchTerm,
   setModalOpen,
 }) => {
-  // Local state with default from filterFunctions
-  const [searchTerm, setSearchTerm] = useState(
-    filterFunctions?.searchTerm || ""
-  );
-
   // Sync local state when filterFunctions.searchTerm changes
   useEffect(() => {
     if (filterFunctions?.searchTerm !== undefined) {
       setSearchTerm(filterFunctions.searchTerm);
     }
   }, [filterFunctions?.searchTerm]);
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       filterFunctions?.handleSearchTerm(searchTerm);

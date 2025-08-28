@@ -156,7 +156,7 @@ const ApartmentType = () => {
       <style>{`
       @media (max-width: 576px) {
   .swiper-same-height .iconbox-style4 {
-    height: 220px !important;
+    height: 210px !important;
   }
 }
        

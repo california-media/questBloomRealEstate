@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
   gradientOverlay: {
     position: "absolute",
     top: 0,
-    left: "-110px",
     width: "100%",
     height: "100%",
   },
@@ -932,10 +931,8 @@ const AdminPropertyPDF = ({
       {/* Page 1 - Cover Page */}
       <Page size={[920, 540]}>
         <Image src={HeroBackgroundImage} style={styles.coverBackgroundImage} />
-        <Image
-          src="/images/ltr-black-to-transparent.png"
-          style={styles.gradientOverlay}
-        />
+        <Image src="/images/ltr-gradient.png" style={styles.gradientOverlay} />
+
         <View style={styles.coverForeground}>
           {/* Main content container */}
           <View
@@ -1021,8 +1018,8 @@ const AdminPropertyPDF = ({
                 <Image
                   src="/images/Questrealstatewhite.png"
                   style={{
-                    width: 180,
-                    height: 50,
+                    width: 110,
+                    height: 30,
                     marginRight: 10,
                   }}
                 />
