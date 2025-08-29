@@ -504,15 +504,10 @@
           flex-shrink: 0;
         }
 
-        .icon-placeholder {
-          width: 100%;
-            margin-right: 1rem;
-          border-radius: 4px;
-        }
+   
       
         .icon-placeholder {
           width: 100%;
-            margin-right: 1rem;
           border-radius: 4px;
         }
 
@@ -532,9 +527,7 @@
           .accordion-header {
             padding: 12px 0;
           }
-             .icon-placeholder {
-            margin-right: 0;
-        }
+        
        
            .accordion-icon {
           width: 24px;
