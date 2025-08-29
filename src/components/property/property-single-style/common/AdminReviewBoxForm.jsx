@@ -350,7 +350,7 @@ const AdminReviewBoxForm = ({
 
           <button
             type="submit"
-            className="ud-btn btn-white2"
+            className="ud-btn btn-white2 d-none d-md-block"
             disabled={property === null || isSubmitting}
           >
             {isSubmitting ? (
@@ -369,6 +369,48 @@ const AdminReviewBoxForm = ({
               <>
                 {downloadPDF ? "Download PDF" : "Submit Enquiry"}
                 <i className="fal fa-arrow-right-long" />
+              </>
+            )}
+          </button>
+
+          {/* to make sure animations supported, mobile */}
+          <button
+            type="submit"
+            className=" d-block d-md-none"
+            style={{
+              backgroundColor: "transparent",
+              border: "1px solid black",
+              cursor: "pointer",
+              borderRadius: "12px",
+              padding: "12px 25px",
+              textAlign: "center",
+              fontWeight: 600,
+              fontFamily: "Poppins, sans-serif",
+              fontSize: "15px",
+              fontStyle: "normal",
+              outline: "none",
+            }}
+            disabled={property === null || isSubmitting}
+          >
+            {isSubmitting ? (
+              <div className="d-flex align-items-center gap-2">
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Loading...</span>
+                <span>
+                  {downloadPDF ? "Downloading PDF" : "Submitting Enquiry"}
+                </span>
+              </div>
+            ) : (
+              <>
+                {downloadPDF ? "Download PDF" : "Submit Enquiry"}
+                <i
+                  className="fal ms-2 fa-arrow-right-long"
+                  style={{ transform: "rotate(-45deg)" }}
+                />
               </>
             )}
           </button>

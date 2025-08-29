@@ -540,11 +540,11 @@ const AdminSingleV5 = () => {
                     </>
                   ) : null;
                 })()}
-                <div className="row mt20">
-                  <div className="row">
+                <div className="row mt20 m-auto">
+                  <div className="row m-auto px-0">
                     <button
                       type="button"
-                      className="ud-btn btn-white2 luxury-heading w-100"
+                      className="luxury-heading w-100"
                       onClick={() => setShowModal(true)}
                       style={{
                         fontSize: "14px",
@@ -686,7 +686,7 @@ const AdminSingleV5 = () => {
                   <div className="row p-0" style={{ marginLeft: "1px" }}>
                     <button
                       type="button"
-                      className="ud-btn btn-white2 luxury-heading w-100"
+                      className="luxury-heading w-100"
                       onClick={() => setShowModal(true)}
                       style={{
                         fontSize: "14px",
@@ -701,7 +701,10 @@ const AdminSingleV5 = () => {
                         className="mr10"
                       />
                       AI Presentation
-                      <i className="fal fa-arrow-right-long" />
+                      <i
+                        className="fal ms-2 fa-arrow-right-long"
+                        style={{ transform: "rotate(-45deg)" }}
+                      />
                     </button>
                   </div>
                   {showModal && (

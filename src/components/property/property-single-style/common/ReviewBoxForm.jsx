@@ -379,10 +379,11 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
               borderRadius: "12px",
               padding: "12px 25px",
               textAlign: "center",
-              fontWeight: "600px",
+              fontWeight: 600,
               fontFamily: "Poppins, sans-serif",
               fontSize: "15px",
               fontStyle: "normal",
+              outline: "none",
             }}
             disabled={property === null || isSubmitting}
           >

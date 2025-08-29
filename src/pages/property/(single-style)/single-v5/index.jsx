@@ -649,10 +649,10 @@ const SingleV5 = () => {
                   ) : null;
                 })()}
                 <div className="row mt20">
-                  <div className="row">
+                  <div className="row  m-auto">
                     <button
                       type="button"
-                      className="ud-btn btn-white2 luxury-heading w-100"
+                      className=" luxury-heading w-100"
                       onClick={() => setShowModal(true)}
                       style={{
                         fontSize: "14px",
@@ -794,7 +794,7 @@ const SingleV5 = () => {
                   <div className="row p-0" style={{ marginLeft: "1px" }}>
                     <button
                       type="button"
-                      className="ud-btn btn-white2 luxury-heading w-100"
+                      className=" luxury-heading w-100"
                       onClick={() => setShowModal(true)}
                       style={{
                         fontSize: "14px",
@@ -809,7 +809,10 @@ const SingleV5 = () => {
                         className="mr10"
                       />
                       AI Presentation
-                      <i className="fal fa-arrow-right-long" />
+                      <i
+                        className="fal ms-2 fa-arrow-right-long"
+                        style={{ transform: "rotate(-45deg)" }}
+                      />
                     </button>
                   </div>
                   {showModal && (
@@ -849,9 +852,14 @@ const SingleV5 = () => {
                 </div>
               </div>
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb10" style={{
-                  marginLeft: "-12px"
-                }}>Submit an Enquiry</h4>
+                <h4
+                  className="title fz17 mb10"
+                  style={{
+                    marginLeft: "-12px",
+                  }}
+                >
+                  Submit an Enquiry
+                </h4>
                 <div className="row">
                   <ReviewBoxForm
                     property={property}
