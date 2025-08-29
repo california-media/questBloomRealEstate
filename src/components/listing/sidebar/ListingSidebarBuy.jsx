@@ -16,11 +16,14 @@ import Bathroom from "./Bathroom";
 import { useEffect, useState } from "react";
 
 import DropdownSelect from "@/components/common/DropdownSelect";
+import { Search, X } from "lucide-react";
 
 const ListingSidebar = ({
   filterFunctions,
   propertyTypes,
   locationOptions,
+  searchTerm,
+  setSearchTerm,
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -106,7 +109,68 @@ const ListingSidebar = ({
   return (
     <div className="list-sidebar-style1">
       {/* End .widget-wrapper */}
+      <div className="widget-wrapper bdrb1 pb25 mb0 ">
+        <h6 className="list-title">Search</h6>
+        <div className="d-flex align-items-center gap-2">
+          <div className="form-style2 flex-grow-1 position-relative">
+            <Search
+              size={18}
+              className="position-absolute"
+              style={{
+                top: "50%",
+                left: "14px",
+                transform: "translateY(-50%)",
+                color: "#888",
+                pointerEvents: "none",
+              }}
+            />
+            <input
+              type="text"
+              className="form-control border-none"
+              placeholder="Project Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                padding: "10px 10px 10px 40px",
+                backgroundColor: "white",
+              }}
+            />
+            <X
+              size={18}
+              className="position-absolute "
+              onClick={() => setSearchTerm("")}
+              style={{
+                cursor: "pointer",
+                top: "50%",
+                right: "14px",
+                transform: "translateY(-50%)",
+                color: "#888",
+              }}
+            />
+          </div>
 
+          <button
+            type="button"
+            data-bs-dismiss="offcanvas"
+            className="open-btn  position-relative d-flex align-items-center border justify-content-center "
+            style={{
+              color: "#797631",
+              width: "45px",
+              height: "45px",
+              maringBottom: 0,
+              borderRadius: "50%",
+            }}
+            onClick={() => filterFunctions?.handleSearchTerm(searchTerm)}
+          >
+            <i
+              className="flaticon-search mt-1 "
+              style={{
+                color: "#797631",
+              }}
+            />
+          </button>
+        </div>
+      </div>
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper ">

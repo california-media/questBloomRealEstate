@@ -333,11 +333,13 @@ export default function ProperteyFiltering({ region }) {
               aria-label="Close"
             ></button>
           </div>
-          <div className="offcanvas-body p-0">
+          <div className="offcanvas-body p-0 d-block d-lg-none">
             <ListingSidebarRent
               locationOptions={rentalLocationOptions}
               propertyTypes={propertyTypes}
               filterFunctions={filterFunctions}
+              setSearchTerm={setLocalSearchTerm}
+              searchTerm={localSearchTerm}
             />
           </div>
         </div>

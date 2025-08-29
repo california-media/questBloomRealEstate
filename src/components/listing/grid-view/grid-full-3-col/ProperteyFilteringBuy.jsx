@@ -328,6 +328,8 @@ export default function ProperteyFilteringBuy({ region }) {
               locationOptions={buyLocationOptions}
               propertyTypes={propertyTypes}
               filterFunctions={filterFunctions}
+              setSearchTerm={setLocalSearchTerm}
+              searchTerm={localSearchTerm}
             />
           </div>
         </div>

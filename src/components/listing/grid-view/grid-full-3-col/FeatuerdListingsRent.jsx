@@ -69,17 +69,23 @@ const FeaturedListings = ({ data, colstyle }) => {
                   </h6>
                   <p className="list-text mb-1">{listing.location}</p>
                 </div>
-             
-                <hr className="mt-1 mb-1 bg-secondary"  style={{ borderColor: "gray" }} />
+
+                <hr
+                  className="mt-1 mb-1 bg-secondary"
+                  style={{ borderColor: "gray" }}
+                />
 
                 <div className="list-meta2 d-flex   justify-content-between align-items-center">
                   <div>
                     Price from{" "}
-                    <h6 className="fw-semibold pb-0 mb-0 ">
+                    <h6 className="fw-semibold  pb-0 mb-0 " style={{
+                      fontSize: "14px"
+                    }}>
                       {Number(listing.price.split("$")[1]) === 0
                         ? "Ask for price"
                         : "AED " +
                           Number(listing.price.split("$")[1]).toLocaleString()}
+                      {listing.rent_duration}
                     </h6>
                   </div>
                   <div>

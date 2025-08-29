@@ -547,6 +547,8 @@ Logic for building payload:
               propertyTypes={propertyTypes}
               saleStatuses={saleStatuses}
               filterFunctions={filterFunctions}
+              searchTerm={localSearchTerm}
+              setSearchTerm={setLocalSearchTerm}
             />
           </div>
         </div>

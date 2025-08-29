@@ -354,12 +354,15 @@ export default function ProperteyFiltering({ region }) {
               aria-label="Close"
             ></button>
           </div>
-          <div className="offcanvas-body p-0">
+          <div className="offcanvas-body p-0 d-block d-lg-none">
             <ListingSidebar
               locationOptions={locationOptions}
               propertyTypes={propertyTypes}
               filterFunctions={filterFunctions}
               saleStatuses={saleStatuses}
+              setSearchTerm={setLocalSearchTerm}
+              searchTerm={localSearchTerm}
+              setModalOpen={setModalOpen}
             />
           </div>
         </div>

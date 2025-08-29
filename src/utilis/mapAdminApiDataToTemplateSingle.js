@@ -11,6 +11,7 @@ export default function mapAdminApiDataToTemplateSingle(
   } catch {
     imageUrl = "";
   }
+
   return {
     id: apiData.id,
     listing_prefix,
@@ -53,6 +54,7 @@ export default function mapAdminApiDataToTemplateSingle(
     description: apiData.property_description, //9
     service_charges: apiData.service_charges,
     parking_available: apiData.parking_available,
+    rent_duration: durationMap[apiData?.rent_duration] || "",
   };
 }
 
@@ -70,3 +72,9 @@ function formatEnumValue(value) {
 
   return formatted;
 }
+const durationMap = {
+  Yearly: " / year",
+  Monthly: " / mo",
+  Weekly: " / week",
+  Daily: " / day",
+};
