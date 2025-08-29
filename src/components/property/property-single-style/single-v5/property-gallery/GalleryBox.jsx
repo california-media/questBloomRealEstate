@@ -19,7 +19,7 @@ const GalleryBox = ({ imageUrls = [], loading = true }) => {
           disableOnInteraction: false,
         }}
       >
-        {loading ? (
+        {true ? (
           <SwiperSlide>
             <div
               style={{
@@ -28,10 +28,9 @@ const GalleryBox = ({ imageUrls = [], loading = true }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "start",
-                paddingTop: "50px",
                 backgroundColor: "#6c757d",
               }}
-              className="item"
+              className="item pt-3 pt-md-5"
             >
               <div
                 className="spinner-border mx-auto m-5 text-light"
