@@ -221,7 +221,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
       <ScrollRevealSection sections={sections} />
       <ScrollRevealSectionMobile sections={sections} />
-      <section className="contact-info-section  pt-0 pb30 pb60-md">
+      <section className="contact-info-section mt30-md pt-0 pb30 pb60-md">
         <div className="accordion-section">
           <div className="container-fluid">
             <div className="row justify-content-center">
@@ -386,7 +386,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Funfact */}
       {/* Exclusive Agents */}
 
-      <section className="pb70 pt80">
+      <section className="pb0-md pb70  pt50-md pt80">
         <div className="container">
           <div
             className="row  justify-content-center mb30"
@@ -409,7 +409,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
           <div className="row">
             <div
-              className="col-lg-11 mx-auto  "
+              className="col-lg-11 mx-auto px0-md "
               data-aos="fade-up"
               data-aos-delay="300"
             >

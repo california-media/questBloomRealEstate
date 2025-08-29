@@ -121,7 +121,7 @@ const Contact = () => {
   We’d love to hear <br class="d-none d-lg-block" />
   from you.
 </h2>
-<p class="text">
+<p class="text mb-0">
   Let us know how we can help! Fill out our contact form and we
   will get back to you as soon as possible.
 </p>

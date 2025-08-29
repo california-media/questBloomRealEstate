@@ -526,13 +526,15 @@
 
         @media (max-width: 768px) {
           .accordion-title {
-            font-size: 1.5rem;
+            font-size: 1.9rem;
           }
           
           .accordion-header {
             padding: 12px 0;
           }
-          
+             .icon-placeholder {
+            margin-right: 0;
+        }
        
            .accordion-icon {
           width: 24px;
@@ -547,7 +549,9 @@
         }
           
             .icon-placeholder.is-icon {
-          width: 50%;
+          width: 40%;
+          margin-bottom: 1rem;
+          margin-top: 1rem;
       
         }
           .content-wrapper {
@@ -698,7 +702,11 @@
   }
   .reveal-text-left h3,
 .reveal-text-right h3 {
-  font-size: 27px;
+  font-size: 25px;
+}
+  .reveal-text-left p,
+.reveal-text-right p {
+  font-size: 15px;
 }
   .reveal-image {
     max-height: 400px;            /* control height */

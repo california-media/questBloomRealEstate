@@ -167,9 +167,15 @@ const Agents = ({ agents }) => {
         .swiper-equal-height  {
         padding: 50px 35px; !important;
         width: 100%;
-
         }
         
+         @media (max-width: 991.98px) {
+         .swiper-equal-height  {
+        padding: 20px 15px; !important;
+        width: 100%;
+        }
+
+        }
        
         
      

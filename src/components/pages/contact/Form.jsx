@@ -150,11 +150,26 @@ const Form = () => {
           <div className="d-grid">
             <button
               type="submit"
-              className="ud-btn btn-thm"
+              style={{
+                backgroundColor: "transparent",
+                border: "1px solid black",
+                cursor: "pointer",
+                borderRadius: "12px",
+                padding: "12px 25px",
+                textAlign: "center",
+                fontWeight: 600,
+                fontFamily: "Poppins, sans-serif",
+                fontSize: "15px",
+                fontStyle: "normal",
+                outline: "none",
+              }}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Sending..." : "Submit"}
-              <i className="fal fa-arrow-right-long" />
+              <i
+                className="fal ms-2 fa-arrow-right-long"
+                style={{ transform: "rotate(-45deg)" }}
+              />
             </button>
           </div>
           {submitStatus && (

@@ -100,7 +100,7 @@ const ScrollRevealSectionMobile = ({ sections }) => {
       {/* Add some content before the section for testing */}
 
       <section
-        className="scroll-reveal-section pb-0 pt40 d-block d-lg-none"
+        className="scroll-reveal-section pb-0 pt20 d-block d-lg-none"
         style={{ position: "relative" }}
       >
         <div className="container-fluid bg-dnger  h-100 p-0 d-flex align-items-center justify-content-center position-relative">
@@ -146,7 +146,7 @@ const ScrollRevealSectionMobile = ({ sections }) => {
 
           {/* Right text */}
           <motion.div
-            className="reveal-text-right mt-4"
+            className="reveal-text-right mb-5"
             dangerouslySetInnerHTML={{
               __html:
                 sections.find(
