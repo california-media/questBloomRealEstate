@@ -19,7 +19,7 @@ const GalleryBox = ({ imageUrls = [], loading = true }) => {
           disableOnInteraction: false,
         }}
       >
-        {true ? (
+        {loading ? (
           <SwiperSlide>
             <div
               style={{
