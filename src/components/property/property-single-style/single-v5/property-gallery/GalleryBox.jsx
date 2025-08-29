@@ -27,7 +27,8 @@ const GalleryBox = ({ imageUrls = [], loading = true }) => {
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "start",
+                paddingTop: "50px",
                 backgroundColor: "#6c757d",
               }}
               className="item"

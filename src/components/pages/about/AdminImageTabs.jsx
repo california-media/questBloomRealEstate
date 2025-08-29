@@ -39,7 +39,13 @@ const ImageTabs = ({ photos }) => {
 
   // If no tabs with images, return null or some placeholder
   if (tabs.length === 0) {
-    return null;
+    return (
+      <div className="col-md-12">
+        <div className="text-center py-4">
+          <p>No Visualisations available</p>
+        </div>
+      </div>
+    );
   }
 
   const activeTabData = tabs.find((tab) => tab.id === activeTab);

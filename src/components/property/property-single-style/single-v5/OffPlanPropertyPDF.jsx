@@ -742,7 +742,7 @@ const DescriptionRenderer = ({ text }) => {
         const content =
           firstNewline === -1
             ? ""
-            : section.substring(firstNewline + 1).replace(/^\s+/, "");
+            : section.substring(firstNewline + 1)?.replace(/^\s+/, "");
         return (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionHeading}>{heading}</Text>
@@ -1058,8 +1058,8 @@ const OffPlanPropertyPDF = ({
                     src="/images/questBloomTransparentSmall.png"
                     style={{
                       borderRadius: 30,
-                      width: 50,
-                      height: 60,
+                      width: 60,
+                      height: 70,
                       borderRadius: 30,
                       backgroundColor: "#e5e7eb",
                       alignItems: "center",
@@ -1284,8 +1284,7 @@ const OffPlanPropertyPDF = ({
                     justifyContent: "center",
                     minWidth: 40,
                     textDecoration: "none",
-                      position: "relative",
-
+                    position: "relative",
                   }}
                 >
                   <Image
@@ -1347,6 +1346,1359 @@ const OffPlanPropertyPDF = ({
           qbc_phone={qbc_phone}
         />
       </Page> */}
+
+      <Page size={[920, 540]} style={styles.contentPage}>
+        {/* Property Details */}
+        <Text style={styles.pageTitle}>{property?.name}</Text>
+
+        {/* Basic Information Cards */}
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: 12,
+            marginBottom: 8,
+          }}
+        >
+          {/* Furnishing Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6", // Very light gray
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="bed" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Furnishing
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563", // Darker gray for secondary text
+                  fontSize: 12,
+                }}
+              >
+                {property?.furnishing}
+              </Text>
+            </View>
+          </View>
+
+          {/* Property Type Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6",
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="building" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Property Type
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563",
+                  fontSize: 12,
+                }}
+              >
+                {getPropertyType()}
+              </Text>
+            </View>
+          </View>
+
+          {/* Status Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6",
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="status" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Status
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563",
+                  fontSize: 12,
+                }}
+              >
+                {property?.status}
+              </Text>
+            </View>
+          </View>
+
+          {/* Starting Area Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6",
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="area" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Starting Area
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563",
+                  fontSize: 12,
+                }}
+              >
+                {getMinArea()} sq ft
+              </Text>
+            </View>
+          </View>
+
+          {/* Unit Types Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6",
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="units" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Unit Types
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563",
+                  fontSize: 12,
+                }}
+              >
+                {property?.unit_blocks?.length || 0} Options
+              </Text>
+            </View>
+          </View>
+
+          {/* Total Units Card */}
+          <View
+            style={{
+              backgroundColor: "#f3f4f6",
+              borderRadius: 8,
+              padding: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              minWidth: 200,
+            }}
+          >
+            <Icon type="all" color="black" size={20} />
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Total Units
+              </Text>
+              <Text
+                style={{
+                  color: "#4b5563",
+                  fontSize: 12,
+                }}
+              >
+                {property?.buildings?.[0]?.[0]?.Description || "Multiple Units"}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <DescriptionRenderer text={property?.overview} />
+        <ContactFooter />
+      </Page>
+
+      {/* Interior images */}
+
+      {property?.interior?.length > 0 && (
+        <Page size={[920, 540]}>
+          {/* Image grid - 2 columns */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "stretch",
+              height: "100%",
+              gap: 2,
+            }}
+          >
+            {/* Left column - single image */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[0]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </View>
+
+            {/* Right column - two stacked images */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[1]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  marginBottom: 2,
+                }}
+              />
+              <Image
+                src={property.interior[2]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </View>
+          </View>
+
+          {/* Title on the page */}
+          <Text
+            style={{
+              ...styles.pageTitle,
+              position: "absolute",
+              top: 30,
+              left: 30,
+              color: "white",
+            }}
+          >
+            Interior Images
+          </Text>
+
+          {/* Footer */}
+          <ContactFooter />
+        </Page>
+      )}
+
+      {/* Page 4 - Location & Contact */}
+      <Page size={[920, 540]}>
+        <View style={{ height: "100%", marginBottom: 0 }}>
+          {/* Add the map image */}
+          {property?.coordinates && (
+            <>
+              <Image
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                src={getStaticOpenStreetMapUrl(property?.coordinates)}
+              />
+              <Link
+                src={getGoogleMapsRedirectUrl(property?.coordinates)}
+                style={{
+                  ...styles.mapLink,
+                  position: "absolute",
+                  bottom: 60,
+                  left: 40,
+                }}
+              >
+                View on Google Maps
+              </Link>
+            </>
+          )}
+        </View>
+        <Text
+          style={{
+            ...styles.pageTitle,
+            position: "absolute",
+            top: 40,
+            left: 40,
+            color: "white",
+            backgroundColor: "rgba(0,0,0,0.3)",
+            padding: 4,
+            borderRadius: 2,
+          }}
+        >
+          Location
+        </Text>
+        <ContactFooter />
+      </Page>
+
+      {/* Page 8 - Master Plan */}
+      {property?.master_plan &&
+        property.master_plan.length > 0 &&
+        property.master_plan.map((image, index) => (
+          <Page key={index} size={[920, 540]} style={styles.contentPage}>
+            <View style={{ width: "100%", height: "100%" }}>
+              <Image src={image.url} style={styles.masterPlanImage} />
+            </View>
+            <ContactFooter />
+          </Page>
+        ))}
+
+      {/* Page 3 - Amenities & Features */}
+
+      {property?.facilities?.length > 0 && (
+        <Page
+          key="facilities-page"
+          size={[920, 540]}
+          style={styles.contentPage}
+        >
+          <Text style={styles.pageTitle}>Facilities</Text>
+
+          <View style={styles.amenitiesGrid}>
+            {property.facilities.slice(0, 8).map((facility, index) => (
+              <View key={index} style={styles.amenityCard}>
+                {facility?.image?.url ? (
+                  <Image src={facility.image.url} style={styles.amenityPhoto} />
+                ) : (
+                  <View
+                    style={[
+                      styles.amenityPhoto,
+                      {
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#f3f4f6",
+                      },
+                    ]}
+                  >
+                    <Icon type="no-image" size={24} color="#9ca3af" />
+                  </View>
+                )}
+
+                <Text style={styles.amenityText}>
+                  {facility.name || "No info"}
+                </Text>
+                <Text style={styles.amenitySubText}>
+                  {facility.image_source || " "}
+                </Text>
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter />
+        </Page>
+      )}
+
+      {/* Payment Plans Pages - 4 per page (2x2 grid) */}
+      {property?.payment_plans && property.payment_plans.length > 0 && (
+        <>
+          {/* Calculate number of pages needed (4 plans per page) */}
+          {Array.from(
+            { length: Math.ceil(property.payment_plans.length / 4) },
+            (_, pageIndex) => (
+              <Page
+                key={`payment-plans-${pageIndex}`}
+                size={[920, 540]}
+                style={{
+                  padding: "40px",
+                  backgroundColor: "#f5f5f5",
+                }}
+              >
+                {/* Page Title */}
+                <Text
+                  style={{
+                    fontSize: "22px",
+                    color: "#1a1a1a",
+                    marginBottom: "25px",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Payment plan
+                </Text>
+
+                {/* Payment Plans Grid - 2x2 layout */}
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    gap: "20px",
+                  }}
+                >
+                  {/* First Row - 2 columns */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: "20px",
+                      height: "45%",
+                    }}
+                  >
+                    {property.payment_plans
+                      .slice(pageIndex * 4, pageIndex * 4 + 2)
+                      .map((plan, planIndex) => (
+                        <View
+                          key={planIndex}
+                          style={{
+                            flex: 1,
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            padding: "20px",
+                          }}
+                        >
+                          {/* Payment Plan Header */}
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {/* Yellow icon circle */}
+
+                            <Image
+                              src={"/images/pie-chart2.png"}
+                              style={{
+                                width: "24px",
+                                height: "24px",
+                                marginRight: "8px",
+                                padding: 2,
+                              }}
+                            ></Image>
+
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#1a1a1a",
+                              }}
+                            >
+                              {plan.Plan_name || "Payment Plan"}
+                            </Text>
+                          </View>
+
+                          {/* Payment Steps */}
+                          <View
+                            style={{
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {plan.Payments?.map((payment, paymentIndex) => (
+                              <View
+                                key={paymentIndex}
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  paddingVertical: "6px",
+                                  borderBottom:
+                                    paymentIndex < plan.Payments.length - 1
+                                      ? "1px solid #e0e0e0"
+                                      : "none",
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#1a1a1a",
+                                  }}
+                                >
+                                  {payment[0]?.Percent_of_payment}%{" "}
+                                  <Text style={{ color: "#999" }}>payment</Text>
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#666",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {payment[0]?.Payment_time}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+
+                          {/* Condition for unit resale */}
+                          <View
+                            style={{
+                              paddingTop: "10px",
+                              borderTop: "1px solid #e0e0e0",
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#999",
+                                }}
+                              >
+                                Condition for the unit resale
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#1a1a1a",
+                                }}
+                              >
+                                Not specified
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+
+                    {/* Fill empty space if only 1 plan in first row */}
+                    {property.payment_plans.slice(
+                      pageIndex * 4,
+                      pageIndex * 4 + 2
+                    ).length < 2 && <View style={{ flex: 1 }} />}
+                  </View>
+
+                  {/* Second Row - 2 columns */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: "20px",
+                      height: "45%",
+                    }}
+                  >
+                    {property.payment_plans
+                      .slice(pageIndex * 4 + 2, pageIndex * 4 + 4)
+                      .map((plan, planIndex) => (
+                        <View
+                          key={planIndex + 2}
+                          style={{
+                            flex: 1,
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            padding: "20px",
+                          }}
+                        >
+                          {/* Payment Plan Header */}
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {/* Yellow icon circle */}
+                            <Image
+                              src={"/images/pie-chart2.png"}
+                              style={{
+                                width: "24px",
+                                height: "24px",
+                                marginRight: "8px",
+                                padding: 2,
+                              }}
+                            ></Image>
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#1a1a1a",
+                              }}
+                            >
+                              {plan.Plan_name || "Payment Plan"}
+                            </Text>
+                          </View>
+
+                          {/* Payment Steps */}
+                          <View
+                            style={{
+                              marginBottom: "15px",
+                            }}
+                          >
+                            {plan.Payments?.map((payment, paymentIndex) => (
+                              <View
+                                key={paymentIndex}
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  paddingVertical: "6px",
+                                  borderBottom:
+                                    paymentIndex < plan.Payments.length - 1
+                                      ? "1px solid #e0e0e0"
+                                      : "none",
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#1a1a1a",
+                                  }}
+                                >
+                                  {payment[0]?.Percent_of_payment}%{" "}
+                                  <Text style={{ color: "#999" }}>payment</Text>
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "#666",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {payment[0]?.Payment_time}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+
+                          {/* Condition for unit resale */}
+                          <View
+                            style={{
+                              paddingTop: "10px",
+                              borderTop: "1px solid #e0e0e0",
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#999",
+                                }}
+                              >
+                                Condition for the unit resale
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: "11px",
+                                  color: "#1a1a1a",
+                                }}
+                              >
+                                Not specified
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+
+                    {/* Fill empty spaces for remaining slots */}
+                    {Array.from(
+                      {
+                        length:
+                          2 -
+                          property.payment_plans.slice(
+                            pageIndex * 4 + 2,
+                            pageIndex * 4 + 4
+                          ).length,
+                      },
+                      (_, emptyIndex) => (
+                        <View key={`empty-${emptyIndex}`} style={{ flex: 1 }} />
+                      )
+                    )}
+                  </View>
+                </View>
+
+                {/* Contact Footer */}
+                <ContactFooter />
+              </Page>
+            )
+          )}
+        </>
+      )}
+
+      {/* Unit Plans Pages - 3 per page layout */}
+      {property?.unit_blocks && property.unit_blocks.length > 0 && (
+        <>
+          {/* Calculate number of pages needed (3 units per page) */}
+          {Array.from(
+            { length: Math.ceil(property.unit_blocks.length / 3) },
+            (_, pageIndex) => (
+              <Page
+                key={pageIndex}
+                size={[920, 540]}
+                style={{
+                  padding: 40,
+                  backgroundColor: "#f5f5f5",
+                }}
+              >
+                {/* Page Title */}
+                <Text style={styles.pageTitle}>Typical units and prices</Text>
+
+                {/* Units Container - 3 columns */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: "15px",
+                    flex: 1,
+                  }}
+                >
+                  {property.unit_blocks
+                    .slice(pageIndex * 3, pageIndex * 3 + 3)
+                    .map((unit, unitIndex) => (
+                      <View
+                        key={unitIndex}
+                        style={{
+                          borderRadius: "12px",
+                          padding: "5px",
+                          flex: 1,
+                          maxWidth: "280px",
+                          shadowColor: "#000",
+                          shadowOffset: { width: 0, height: 2 },
+                          shadowOpacity: 0.1,
+                          shadowRadius: 8,
+                          elevation: 3,
+                          backgroundColor: "#f5f5f5",
+                        }}
+                      >
+                        {/* Unit Plan Image */}
+                        {unit.typical_unit_image_url &&
+                          JSON.parse(unit.typical_unit_image_url)?.[0]?.url && (
+                            <View
+                              style={{
+                                marginBottom: "15px",
+                                borderRadius: "8px",
+                                overflow: "hidden",
+                                position: "relative",
+                              }}
+                            >
+                              <Image
+                                src={
+                                  JSON.parse(unit.typical_unit_image_url)[0].url
+                                }
+                                style={{
+                                  width: "100%",
+                                  objectFit: "contain",
+                                }}
+                              />
+                            </View>
+                          )}
+
+                        {/* Unit Details */}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: "8px",
+                            marginBottom: "12px",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <View
+                            style={{
+                              backgroundColor: "white",
+                              paddingVertical: "4px",
+                              paddingHorizontal: "8px",
+                              borderRadius: "4px",
+                              flex: 1,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: "bold",
+                                textAlign: "center",
+
+                                color: "#666",
+                              }}
+                            >
+                              {unit.unit_type || "Apartments"}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              backgroundColor: "white",
+                              paddingVertical: "4px",
+                              paddingHorizontal: "8px",
+                              borderRadius: "4px",
+                              flex: 1,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: "10px",
+                                color: "#666",
+                                fontWeight: "bold",
+                                textAlign: "center",
+                              }}
+                            >
+                              {unit?.name?.split(" - ")[0] || "Unit"}
+                            </Text>
+                          </View>
+                        </View>
+
+                        {/* Price Section */}
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            marginBottom: "5px",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "10px",
+                              color: "#999",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            FROM
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: "10px",
+                              color: "#999",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.5px",
+                              textAlign: "left",
+                              width: "45%",
+                            }}
+                          >
+                            TO
+                          </Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            marginBottom: "10px",
+                            gap: 3,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "16px",
+                              color: "#1a1a1a",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {formatPrice(unit.units_price_from) || "AED 0"}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: "16px",
+                              color: "#1a1a1a",
+                              width: "45%",
+
+                              textAlign: "left",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {formatPrice(unit.units_price_to) || "No info"}
+                          </Text>
+                        </View>
+
+                        {/* Area Section */}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "start",
+                          }}
+                        >
+                          {/* Area From */}
+                          <Text
+                            style={{
+                              fontSize: "11px",
+                              color: "#333",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {unit.units_area_from_m2
+                              ? `${Math.round(
+                                  parseFloat(unit.units_area_from_m2) * 10.764
+                                )} sqft / ${Math.round(
+                                  parseFloat(unit.units_area_from_m2)
+                                )} m²`
+                              : "No info"}
+                          </Text>
+
+                          {/* Area To */}
+                          <Text
+                            style={{
+                              fontSize: "11px",
+                              color: "#333",
+                              fontWeight: "bold",
+                              width: "45%",
+
+                              textAlign: "left",
+                            }}
+                          >
+                            {unit.units_area_to_m2
+                              ? `${Math.round(
+                                  parseFloat(unit.units_area_to_m2) * 10.764
+                                )} sqft / ${Math.round(
+                                  parseFloat(unit.units_area_to_m2)
+                                )} m²`
+                              : "No info"}
+                          </Text>
+                        </View>
+                      </View>
+                    ))}
+
+                  {/* Fill empty spaces if less than 3 units on the last page */}
+                  {property.unit_blocks.slice(pageIndex * 3, pageIndex * 3 + 3)
+                    .length < 3 &&
+                    Array.from(
+                      {
+                        length:
+                          3 -
+                          property.unit_blocks.slice(
+                            pageIndex * 3,
+                            pageIndex * 3 + 3
+                          ).length,
+                      },
+                      (_, emptyIndex) => (
+                        <View
+                          key={`empty-${emptyIndex}`}
+                          style={{
+                            flex: 1,
+                            maxWidth: "280px",
+                          }}
+                        />
+                      )
+                    )}
+                </View>
+
+                {/* Contact Footer */}
+                <ContactFooter />
+              </Page>
+            )
+          )}
+        </>
+      )}
+      {/* Page 5 - Building Details */}
+      {/* <Page size={[920, 540]} style={styles.contentPage}>
+        <Text style={styles.pageTitle}>Building Details</Text>
+
+        {property?.buildings?.[0]?.map((building, index) => (
+          <View key={index} style={styles.buildingSection}>
+            <View style={styles.buildingHeader}>
+              <Text style={styles.buildingName}>{building?.Name}</Text>
+              <Text style={styles.buildingCompletion}>
+                {building?.Completion_date
+                  ? `Completion: ${new Date(
+                      building.Completion_date
+                    ).toLocaleDateString()}`
+                  : "Completion: TBA"}
+              </Text>
+            </View>
+
+            <View style={styles.buildingContent}>
+              {building?.Building_image?.[0]?.url && (
+                <View style={styles.buildingImageContainer}>
+                  <Image
+                    src={building.Building_image[0].url}
+                    style={styles.buildingImage}
+                  />
+                </View>
+              )}
+
+              <View style={styles.buildingInfo}>
+                <Text style={styles.buildingDescription}>
+                  {building?.Description}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ))}
+
+        <ContactFooter
+      
+        />
+      </Page> */}
+
+      {/* Page 6 - Interior Images */}
+      {/* {property?.interior && property.interior.length > 0 && (
+        <Page size={[920, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Interior Design</Text>
+
+          <View style={styles.imageGallery}>
+            {property.interior.slice(0, 4).map((image, index) => (
+              <View key={index} style={styles.galleryImageContainer}>
+                <Image src={image.url} style={styles.galleryImage} />
+              </View>
+            ))}
+          </View>
+
+          <ContactFooter
+        
+          />
+        </Page>
+      )} */}
+
+      {/* Page 7 - Lobby Images */}
+      {/* {property?.lobby && property.lobby.length > 0 && (
+        <Page size={[920, 540]} style={styles.contentPage}>
+          <Text style={styles.pageTitle}>Lobby</Text>
+
+          {property.lobby.map((image, index) => (
+            <Image src={image.url} style={styles.lobbyImage} />
+          ))}
+
+          <ContactFooter
+     
+          />
+        </Page>
+      )} */}
+
+      {/* Final Page - Contact & Summary */}
+      <Page size={[920, 540]}>
+        <View style={{ height: "100%" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              backgroundColor: "#f3f4f6",
+              marginBottom: "30px",
+            }}
+          >
+            {/* Left Column - Two stacked sections */}
+            <View
+              style={{
+                flex: 1,
+                padding: 40,
+                paddingRight: 15,
+              }}
+            >
+              {/* Top Section - Call to Action */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 32,
+                  marginBottom: 22,
+                  flex: 1,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 26,
+                    fontWeight: "bold",
+                    color: "#1f2937",
+                    lineHeight: 1.2,
+                    marginBottom: 8,
+                  }}
+                >
+                  Do you have any questions? Contact me.
+                </Text>
+              </View>
+
+              {/* Bottom Section - Contact Information */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 16,
+                  padding: 26,
+                  flex: 1,
+                }}
+              >
+                {/* Contact Profile */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 24,
+                  }}
+                >
+                  {/* Profile Image */}
+
+                  <Image
+                    src="/images/questBloomTransparentSmall.png"
+                    style={{
+                      width: 100,
+                      height: 100,
+                      borderRadius: 80,
+                    }}
+                  />
+
+                  {/* Contact Details */}
+                  <View style={{ flex: 1, marginLeft: 5 }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+
+                        fontWeight: "bold",
+                        color: "#1f2937",
+                        marginBottom: 8,
+                      }}
+                    >
+                      Questbloom Real Estate LLC
+                    </Text>
+
+                    <View
+                      style={{
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Phone
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_phone || "N/A"}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        marginBottom: 6,
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#6b7280",
+                          marginBottom: 2,
+                        }}
+                      >
+                        Email
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {qbc_email || "N/A"}
+                      </Text>
+                    </View>
+
+                    {/* <View>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#6b7280",
+                        marginBottom: 2,
+                      }}
+                    >
+                      Instagram
+                    </Text>
+                  </View> */}
+                  </View>
+                </View>
+
+                {/* Action buttons */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 10,
+                    gap: 8,
+                  }}
+                >
+                  {/* WhatsApp */}
+                  <Link
+                    src={`https://wa.me/${qbc_phone?.replace(/\D/g, "")}`} // removes spaces, +, etc.
+                    style={{
+                      flex: 1,
+                      backgroundColor: "black", // Tailwind's lime-400
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Image
+                      src="/images/whatsapp-icon-white.png"
+                      style={{
+                        width: 21,
+                        height: 21,
+                        marginRight: 6,
+                        padding: 3,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 12,
+                        fontWeight: "500",
+                      }}
+                    >
+                      WhatsApp
+                    </Text>
+                  </Link>
+
+                  {/* Email */}
+                  <Link
+                    src={`mailto:${qbc_email}`}
+                    style={{
+                      flex: 1,
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 9,
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon
+                      type={"email"}
+                      style={{ marginRight: 6 }}
+                      color="white"
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 12,
+                        fontWeight: "500",
+                      }}
+                    >
+                      Email
+                    </Text>
+                  </Link>
+
+                  {/* Phone */}
+                  <Link
+                    src={`tel:${qbc_phone}`}
+                    style={{
+                      backgroundColor: "black",
+                      borderRadius: 8,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: 40,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon type={"phone"} color="white" fill={true} />
+                  </Link>
+                </View>
+              </View>
+            </View>
+
+            {/* Right Column - Property Image */}
+            <View
+              style={{
+                flex: 1,
+                padding: 40,
+                paddingLeft: 0,
+              }}
+            >
+              <View
+                style={{
+                  height: "100%",
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                <Image
+                  src={HeroBackgroundImage}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+
+          {/* Footer with timestamp */}
+          <View
+            style={{
+              position: "absolute",
+              bottom: 28,
+              left: 40,
+              right: 40,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 10,
+                color: "#6b7280",
+                textAlign: "center",
+                marginBottom: 20,
+              }}
+            >
+              This brochure was generated on{" "}
+              {new Date().toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
+              .
+            </Text>
+          </View>
+          <ContactFooter />
+        </View>
+      </Page>
     </Document>
   );
 };

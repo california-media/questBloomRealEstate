@@ -744,9 +744,9 @@ const renderHtmlToPdf = (htmlString) => {
 
   // Simple tag replacements
   const withLineBreaks = htmlString
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<p>/gi, "\n")
-    .replace(/<\/p>/gi, "\n\n");
+    ?.replace(/<br\s*\/?>/gi, "\n")
+    ?.replace(/<p>/gi, "\n")
+    ?.replace(/<\/p>/gi, "\n\n");
 
   // Remove remaining HTML tags
   const plainText = withLineBreaks.replace(/<[^>]+>/g, "");
@@ -943,6 +943,7 @@ const AdminPropertyPDF = ({
               flexDirection: "row",
               height: "100%",
               padding: 40,
+              paddingBottom: 30,
             }}
           >
             {/* Left Column - Property Information */}
@@ -978,7 +979,7 @@ const AdminPropertyPDF = ({
                       opacity: 0.9,
                     }}
                   >
-                    Completion - {property?.year_built || "N/A"}
+                    Completion - {property?.year_built || "No info"}
                   </Text>
                 </View>
 
@@ -990,6 +991,7 @@ const AdminPropertyPDF = ({
                     fontWeight: "bold",
                     lineHeight: 1.2,
                     marginBottom: 10,
+                    marginLeft: "-2px",
                   }}
                 >
                   {property?.property_title || "No info"}
@@ -1015,7 +1017,7 @@ const AdminPropertyPDF = ({
                   justifySelf: "end",
                   position: "absolute",
                   bottom: 0,
-                  left: 0,
+                  left: "-2px",
                 }}
               >
                 <Image
@@ -1032,18 +1034,33 @@ const AdminPropertyPDF = ({
             {/* Right Column - Contact Form */}
             <View
               style={{
-                width: 300,
-                alignSelf: "center",
+                width: 270,
+                alignSelf: "flex-end",
+                justifyContent: "center",
               }}
             >
               <View
                 style={{
-                  width: 300,
-                  backgroundColor: "rgba(255, 255, 255, 0.95)",
+                  width: 270,
+                  height: 240,
+                  // backgroundColor: "rgba(255, 255, 255, 0.95)",
                   borderRadius: 16,
                   padding: 24,
+                  position: "relative",
+
+                  paddingTop: 15,
                 }}
               >
+                <Image
+                  src="/images/card.png"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
                 {/* Profile section */}
                 <View
                   style={{
@@ -1051,32 +1068,29 @@ const AdminPropertyPDF = ({
                     marginBottom: 20,
                   }}
                 >
-                  <View
+                  <Image
+                    src="/images/questBloomTransparentSmall.png"
                     style={{
+                      borderRadius: 30,
                       width: 60,
-                      height: 60,
+                      height: 75,
                       borderRadius: 30,
                       backgroundColor: "#e5e7eb",
                       alignItems: "center",
                       justifyContent: "center",
                       marginBottom: 12,
                     }}
-                  >
-                    <Image
-                      src="/images/questBloomTransparentSmall.png"
-                      style={{ borderRadius: 30 }}
-                    ></Image>
-                  </View>
+                  ></Image>
 
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: 15,
                       fontWeight: "bold",
                       color: "#1f2937",
                       marginBottom: 4,
                     }}
                   >
-                    Quest Real Estate LLC
+                    Questbloom Real Estate LLC
                   </Text>
 
                   <Text
@@ -1239,7 +1253,6 @@ const AdminPropertyPDF = ({
                   src={`mailto:${qbc_email}`}
                   style={{
                     flex: 1,
-                    backgroundColor: "rgba(255, 255, 255, 0.95)",
                     borderRadius: 8,
                     paddingVertical: 10,
                     paddingHorizontal: 9,
@@ -1247,8 +1260,20 @@ const AdminPropertyPDF = ({
                     flexDirection: "row",
                     justifyContent: "center",
                     textDecoration: "none",
+                    position: "relative",
                   }}
                 >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
                   <Icon
                     type={"email"}
                     style={{ marginRight: 6 }}
@@ -1265,16 +1290,27 @@ const AdminPropertyPDF = ({
                 <Link
                   src={`tel:${qbc_phone}`}
                   style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.95)",
                     borderRadius: 8,
                     paddingVertical: 10,
                     paddingHorizontal: 12,
                     alignItems: "center",
                     justifyContent: "center",
                     minWidth: 40,
+                    position: "relative",
                     textDecoration: "none",
                   }}
                 >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
                   <Icon type={"phone"} color="black" />
                 </Link>
               </View>
@@ -1304,7 +1340,6 @@ const AdminPropertyPDF = ({
 
         <ContactFooter />
       </Page> */}
-
       <Page size={[920, 540]} style={styles.contentPage}>
         {/* Property Details */}
         <Text style={styles.pageTitle}>
@@ -1872,13 +1907,13 @@ const AdminPropertyPDF = ({
                   <View style={{ flex: 1, marginLeft: 5 }}>
                     <Text
                       style={{
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: "bold",
                         color: "#1f2937",
-                        marginBottom: 8,
+                        marginBottom: 4,
                       }}
                     >
-                      Quest Real Estate LLC
+                      Questbloom Real Estate LLC
                     </Text>
 
                     <View

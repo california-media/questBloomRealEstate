@@ -28,7 +28,8 @@ const GalleryBox = ({ photos = [], loading = true }) => {
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "start",
+                paddingTop: "50px",
                 backgroundColor: "#6c757d",
               }}
               className="item"
@@ -82,7 +83,7 @@ const GalleryBox = ({ photos = [], loading = true }) => {
               >
                 {/* Semi-transparent dark overlay */}
                 <div
-                className="d-none d-md-block"
+                  className="d-none d-md-block"
                   style={{
                     position: "absolute",
                     top: 0,

@@ -4,6 +4,19 @@ import React, { useEffect, useState } from "react";
 const ImageTabs = ({ architecture, lobby, interior }) => {
   const [activeTab, setActiveTab] = useState("architecture");
   const [transitioning, setTransitioning] = useState(false);
+  if (
+    architecture?.length === 0 &&
+    lobby?.length === 0 &&
+    interior?.length === 0
+  ) {
+    return (
+      <div className="col-md-12">
+        <div className="text-center py-4">
+          <p>No Visualisations available</p>
+        </div>
+      </div>
+    );
+  }
 
   const tabs = [
     {

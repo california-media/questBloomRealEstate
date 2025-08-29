@@ -42,7 +42,7 @@ const Agents = ({ agents }) => {
             <SwiperSlide key={agent.id}>
               <div className="item h-100 ">
                 <a href="#" onClick={(e) => e.preventDefault()}>
-                  <div className="team-style1 rounded-3">
+                  <div className="team-style1 rounded-4">
                     <div className="team-img  ">
                       <div
                         style={{

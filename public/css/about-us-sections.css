@@ -352,10 +352,10 @@
             box-shadow: 0 10px 20px rgba(121, 118, 49, 0.5);
             background: #9d9a4a;
             color: white;
+
         }
        .team-style1 {
        transition: all 0.4s ease-in;
-
        }
        .team-style1:hover a, .team-style1:hover span, .team-style1:hover p {
         color: white;

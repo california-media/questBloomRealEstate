@@ -337,7 +337,7 @@ const AdminSingleV5 = () => {
                   <AdminPropertyHeader loading={loading} property={property} />
                 </div>
               </div>
-              {property && contactInfo && (
+              {/* {property && contactInfo && (
                 <PDFViewer style={{ width: "100%", height: "100vh" }}>
                   <AdminPropertyPDF
                     property={property}
@@ -346,7 +346,7 @@ const AdminSingleV5 = () => {
                     qbc_copyright={contactInfo?.copyright}
                   />
                 </PDFViewer>
-              )}
+              )} */}
               <div className="ps-widget    mb40 overflow-hidden position-relative">
                 <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
                   Visualisations
@@ -372,7 +372,11 @@ const AdminSingleV5 = () => {
                       }}
                     ></p>
                   ) : (
-                    <p className="mb30 text-secondary">No Description</p>
+                    <div className="col-md-12">
+                      <div className="text-center py-4">
+                        <p>No Description Available.</p>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -758,7 +762,10 @@ const AdminSingleV5 = () => {
       {/* End Property All Single V4  */}
 
       {/* Start similar-items  */}
-      <section className="similar-items pt0-md pb0-md pt80 pb90" ref={bottomRef}>
+      <section
+        className="similar-items pt0-md pb0-md pt80 pb90"
+        ref={bottomRef}
+      >
         <div className="container">
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
