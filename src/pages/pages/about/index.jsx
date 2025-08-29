@@ -386,7 +386,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
       {/* End Funfact */}
       {/* Exclusive Agents */}
 
-      <section className="pb0-md pb70  pt50-md pt80">
+      <section className="pb10-md pb70  pt50-md pt80">
         <div className="container">
           <div
             className="row  justify-content-center mb30"
