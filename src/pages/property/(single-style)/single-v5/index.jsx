@@ -716,7 +716,7 @@ const SingleV5 = () => {
                 }}
                 className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 "
               >
-                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <h4 className="title fz17 mb20">Submit an Enquiry</h4>
                 <div className="row">
                   <ReviewBoxForm
                     property={property}
@@ -849,7 +849,9 @@ const SingleV5 = () => {
                 </div>
               </div>
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
-                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <h4 className="title fz17 mb10" style={{
+                  marginLeft: "-12px"
+                }}>Submit an Enquiry</h4>
                 <div className="row">
                   <ReviewBoxForm
                     property={property}
