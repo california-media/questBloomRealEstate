@@ -74,6 +74,8 @@ export default function ProperteyFilteringBuy({ region }) {
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
+  const [filtersReset, setFiltersReset] = useState(false);
+
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
     resetAllFilters();
@@ -99,7 +101,8 @@ export default function ProperteyFilteringBuy({ region }) {
     if (!hasFilters) {
       resetFilter();
     }
-  }, [hasFilters]);
+    setFiltersReset(true); ////so that we can avoiding fetching initial data AGAIN because of the rerender caused by the above resetFilter() call
+  }, []);
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
@@ -192,11 +195,14 @@ export default function ProperteyFilteringBuy({ region }) {
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
-      console.log("Fetching initial data");
+      if (!filtersReset) return;
+
       setLoading(true);
       setListings([]);
       setHasMore(true);
       setInitialLoading(true);
+      console.log("Fetching initial data");
+
       try {
         // Fire all requests in parallel
         const [listingsRes, propertyTypesRes, locationsRes] = await Promise.all(
@@ -244,6 +250,7 @@ export default function ProperteyFilteringBuy({ region }) {
 
     fetchInitialData();
   }, [
+    filtersReset,
     region,
     searchTerm,
     adminPropertyType,

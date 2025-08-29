@@ -85,6 +85,7 @@ export default function ProperteyFilteringBuy({ region }) {
   const [posthandover, setPosthandover] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
+  const [filtersReset, setFiltersReset] = useState(false);
 
   const [colstyle, setColstyle] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -136,7 +137,8 @@ export default function ProperteyFilteringBuy({ region }) {
     if (!hasFilters) {
       resetFilter();
     }
-  }, [hasFilters]);
+    setFiltersReset(true); ////so that we can avoiding fetching initial data AGAIN because of the rerender caused by the above resetFilter() call
+  }, []);
 
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
@@ -381,11 +383,13 @@ Logic for building payload:
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
-      console.log("Fetching initial data");
+      if (!filtersReset) return;
+
       setLoading(true);
       setListings([]);
       setHasMore(true);
       setInitialLoading(true);
+      console.log("Fetching initial data");
 
       // Reset pagination state
       setPaginationState({
@@ -460,6 +464,7 @@ Logic for building payload:
     fetchInitialData();
   }, [
     region,
+    filtersReset,
     searchTerm,
     adminPropertyType,
     bathrooms,

@@ -77,6 +77,9 @@ export default function ProperteyFiltering({ region }) {
   const { ref, inView } = useInView({
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
+
+  const [filtersReset, setFiltersReset] = useState(false);
+
   const resetFilter = () => {
     setCurrentSortingOption("Newest");
     resetAllFilters();
@@ -102,7 +105,8 @@ export default function ProperteyFiltering({ region }) {
     if (!hasFilters) {
       resetFilter();
     }
-  }, [hasFilters]);
+    setFiltersReset(true); ////so that we can avoiding fetching initial data AGAIN because of the rerender caused by the above resetFilter() call
+  }, []);
 
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
@@ -200,11 +204,13 @@ export default function ProperteyFiltering({ region }) {
   // Initial data fetch
   useEffect(() => {
     async function fetchInitialData() {
-      console.log("Fetching initial data");
+      if (!filtersReset) return;
+
       setLoading(true);
       setListings([]); // Clear existing listings
       setHasMore(true); // Reset hasMore when filters change
       setInitialLoading(true);
+      console.log("Fetching initial data");
 
       try {
         const { data: adminListings } = await adminApi.get(
@@ -252,6 +258,7 @@ export default function ProperteyFiltering({ region }) {
     ///reset search text
     fetchInitialData();
   }, [
+    filtersReset,
     searchTerm,
     selectedCities,
     adminPropertyType,
