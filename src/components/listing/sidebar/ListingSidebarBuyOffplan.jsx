@@ -18,7 +18,7 @@ import DropdownSelectYearBuild from "@/components/common/DropdownSelectYearBuild
 import PercentagePreHandover from "@/components/common/PercentagePreHandover";
 import { Search, X } from "lucide-react";
 
-const ListingSidebar = ({
+const ListingSidebarBuyOffplan = ({
   filterFunctions,
   propertyTypes,
   locationOptions,
@@ -27,6 +27,8 @@ const ListingSidebar = ({
   setSearchTerm,
   setPosthandover,
   posthandover,
+  isNew,
+  setIsNew,
 }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -191,7 +193,7 @@ const ListingSidebar = ({
         </div>
         <h6 className="list-title">Handover</h6>
         <div
-          className=" justify-content-start d-flex  align-items-center form-check form-switch custom-switch "
+          className=" justify-content-start d-flex mb25 align-items-center form-check form-switch custom-switch "
           style={{
             margin: 0,
             paddingLeft: 0,
@@ -209,6 +211,29 @@ const ListingSidebar = ({
           />
           <label className="form-check-label " htmlFor="flexSwitchCheckDefault">
             {posthandover ? "Post-handover" : "Pre-handover"}
+          </label>
+        </div>
+        <h6 className="list-title">New or Pre-owned</h6>
+        <div
+          className=" justify-content-start d-flex  align-items-center form-check form-switch custom-switch "
+          style={{
+            margin: 0,
+            paddingLeft: 0,
+          }}
+        >
+          <input
+            className="form-check-input ms-1 me-2 "
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            style={{
+              maringBottom: "0px",
+              border: "none",
+            }}
+            onChange={(e) => setIsNew(e.target.checked ? true : false)}
+          />
+          <label className="form-check-label " htmlFor="flexSwitchCheckDefault">
+            {isNew ? "New" : "Pre-owned"}
           </label>
         </div>
       </div>
@@ -445,4 +470,4 @@ const ListingSidebar = ({
   );
 };
 
-export default ListingSidebar;
+export default ListingSidebarBuyOffplan;

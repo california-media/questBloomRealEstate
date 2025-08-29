@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import ListingSidebar from "../../sidebar";
+import ListingSidebarBuyOffplan from "../../sidebar/ListingSidebarBuyOffplan";
 import AdvanceFilterModal from "@/components/common/advance-filter-two"; ////using off-plan's advance filter
 import TopFilterBarBuyOffplan from "./TopFilterBarBuyOffplan";
 import FeatuerdListingsBuyOffplan from "./FeatuerdListingsBuyOffplan";
@@ -83,6 +83,8 @@ export default function ProperteyFilteringBuy({ region }) {
   // Local component states
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
   const [posthandover, setPosthandover] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+
   const [selectedCities, setSelectedCities] = useState([]);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
   const [filtersReset, setFiltersReset] = useState(false);
@@ -233,9 +235,11 @@ export default function ProperteyFilteringBuy({ region }) {
         squirefeet[1] !== 0 && {
           unit_area_to: squirefeet[1],
         }),
-      ...(isOffPlan && {
-        post_handover: posthandover,
-      }),
+      ...(isOffPlan
+        ? {
+            post_handover: posthandover,
+          }
+        : { is_new: isNew }),
 
       /*
 Logic for building payload:
@@ -464,6 +468,7 @@ Logic for building payload:
     fetchInitialData();
   }, [
     region,
+    isNew,
     filtersReset,
     searchTerm,
     adminPropertyType,
@@ -542,13 +547,17 @@ Logic for building payload:
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            <ListingSidebar
+            <ListingSidebarBuyOffplan
               locationOptions={offplanBuyLocationOptions}
               propertyTypes={propertyTypes}
               saleStatuses={saleStatuses}
               filterFunctions={filterFunctions}
               searchTerm={localSearchTerm}
               setSearchTerm={setLocalSearchTerm}
+              setPosthandover={setPosthandover}
+              posthandover={posthandover}
+              isNew={isNew}
+              setIsNew={setIsNew}
             />
           </div>
         </div>
@@ -588,6 +597,8 @@ Logic for building payload:
           setModalOpen={setModalOpen}
           searchTerm={localSearchTerm}
           setSearchTerm={setLocalSearchTerm}
+          setIsNew={setIsNew}
+          isNew={isNew}
         />
         {/* End TopFilterBar */}
         {searchTerm && (

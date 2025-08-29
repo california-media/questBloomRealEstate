@@ -363,6 +363,8 @@ export default function ProperteyFiltering({ region }) {
               setSearchTerm={setLocalSearchTerm}
               searchTerm={localSearchTerm}
               setModalOpen={setModalOpen}
+              setPosthandover={setPosthandover}
+              posthandover={posthandover}
             />
           </div>
         </div>

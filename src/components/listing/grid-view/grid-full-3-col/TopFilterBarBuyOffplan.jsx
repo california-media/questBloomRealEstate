@@ -44,6 +44,8 @@ const TopFilterBar = ({
   propertyTypes,
   setPosthandover,
   posthandover,
+  setIsNew,
+  isNew,
   selectedCities,
   setSelectedCities,
   activeFilterCount,
@@ -395,7 +397,7 @@ const TopFilterBar = ({
 
         <div className="col-xl-12 d-none d-lg-block">
           <div className="dropdown-lists">
-            <ul className="p-0 text-center d-flex align-items-center text-xl-start ">
+            <ul className="p-0 text-center d-flex flex-wrap align-items-center text-xl-start ">
               <li
                 className="list-inline-item position-relative "
                 style={{ paddingBottom: "0.75rem" }}
@@ -422,10 +424,41 @@ const TopFilterBar = ({
                     }
                   />
                   <label
-                    className="form-check-label "
+                    className="form-check-label text-nowrap"
                     htmlFor="flexSwitchCheckDefault"
                   >
                     {posthandover ? "Post-handover" : "Pre-handover"}
+                  </label>
+                </div>
+              </li>
+              <li
+                className="list-inline-item position-relative "
+                style={{ paddingBottom: "0.75rem" }}
+              >
+                <div
+                  type="button"
+                  className="open-btn  position-relative d-flex gap-1  align-items-center form-check form-switch custom-switch "
+                  style={{
+                    paddingTop: "0.4rem",
+                    paddingBottom: "0.4rem",
+                  }}
+                >
+                  <input
+                    className="form-check-input ms-1 me-2 "
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    style={{
+                      maringBottom: "0px",
+                      border: "none",
+                    }}
+                    onChange={(e) => setIsNew(e.target.checked ? true : false)}
+                  />
+                  <label
+                    className="form-check-label text-nowrap"
+                    htmlFor="flexSwitchCheckDefault"
+                  >
+                    {isNew ? "New" : "Pre-owned"}
                   </label>
                 </div>
               </li>
@@ -458,7 +491,7 @@ const TopFilterBar = ({
                       className="city-checkbox-label"
                     >
                       <div
-                        className={`open-btn open-btn-city mb-3 d-flex align-items-center justify-content-center ${
+                        className={`open-btn open-btn-city mb-3 d-flex align-items-center justify-content-center text-nowrap ${
                           selectedCities.find((c) => c.label === city.label)
                             ? "selected"
                             : ""
