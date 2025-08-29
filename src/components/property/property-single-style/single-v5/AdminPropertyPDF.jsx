@@ -931,7 +931,10 @@ const AdminPropertyPDF = ({
       {/* Page 1 - Cover Page */}
       <Page size={[920, 540]}>
         <Image src={HeroBackgroundImage} style={styles.coverBackgroundImage} />
-        <Image src="/images/ltr-gradient.png" style={styles.gradientOverlay} />
+        <Image
+          src="/images/ltr-black-to-transparent.png"
+          style={styles.gradientOverlay}
+        />
 
         <View style={styles.coverForeground}>
           {/* Main content container */}

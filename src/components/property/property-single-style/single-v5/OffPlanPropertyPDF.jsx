@@ -976,6 +976,7 @@ const OffPlanPropertyPDF = ({
                     fontWeight: "bold",
                     lineHeight: 1.2,
                     marginBottom: 10,
+                    marginLeft: "-2px",
                   }}
                 >
                   {property?.name}
@@ -1001,7 +1002,7 @@ const OffPlanPropertyPDF = ({
                   justifySelf: "end",
                   position: "absolute",
                   bottom: 0,
-                  left: 0,
+                  left: "-2px",
                 }}
               >
                 <Image
