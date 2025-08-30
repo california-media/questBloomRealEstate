@@ -288,30 +288,25 @@ const Contact = () => {
 
       <div class="col-lg-5 col-xl-6" data-aos="fade-left">
         <div class="cta-btns-style1 d-block d-sm-flex align-items-center justify-content-lg-end ">
-         <a 
+    <a 
   href="/contact" 
   class="d-block d-md-none" 
-  style="background-color: transparent; border: 1px solid black; cursor: pointer; border-radius: 12px; padding: 12px 25px; text-align: center; font-weight: 600; font-size: 15px; font-style: normal; outline: none;"
+  style="background-color: transparent; border: 1px solid black; cursor: pointer; border-radius: 12px; padding: 12px 25px; text-align: center; font-weight: 600; font-size: 15px; font-style: normal; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif; outline: none; -webkit-appearance: none; color: black; display: inline-flex; align-items: center; justify-content: center;"
 >
   Enquire now 
- <i 
-  class="fal ms-2 fa-arrow-right-long" 
-  style="transform: rotate(-45deg);"
-></i>
-
+  <i 
+    class="fal ms-2 fa-arrow-right-long" 
+    style="transform: rotate(-45deg);"
+  ></i>
 </a>
-         <a 
-  href="/contact" 
-  class="d-none d-md-block" 
-  style="background-color: transparent; border: 1px solid black; cursor: pointer; border-radius: 12px; padding: 12px 25px; text-align: center; font-weight: 600; font-size: 15px; font-style: normal; outline: none;"
->
-  Enquire now 
- <i 
-  class="fal ms-2 fa-arrow-right-long" 
-  style="transform: rotate(-45deg);"
-></i>
 
-</a>
+        <a
+            href="/contact"
+            class="ud-btn btn-transparent mr30 mr0-xs d-none d-md-block"
+          >
+            Enquire now
+            <i class="fal fa-arrow-right-long"></i>
+          </a>
         </div>
       </div>
     </div>
