@@ -385,7 +385,6 @@ const AdminReviewBoxForm = ({
               padding: "12px 25px",
               textAlign: "center",
               fontWeight: 600,
-              fontFamily: "Poppins, sans-serif",
               fontSize: "15px",
               fontStyle: "normal",
               outline: "none",
