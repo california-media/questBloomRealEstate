@@ -382,6 +382,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
               fontWeight: 600,
               fontSize: "15px",
               fontStyle: "normal",
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif',
               outline: "none",
             }}
             disabled={property === null || isSubmitting}
