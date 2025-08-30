@@ -369,7 +369,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
           </button>
 
           {/* to make sure animations supported, mobile */}
-          {/* <button
+          <button
             type="submit"
             className=" d-block d-md-none"
             style={{
@@ -385,6 +385,11 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif',
               outline: "none",
+              WebkitAppearance: "none", // iOS fix
+              color: "black", // ensure visible text
+              display: "inline-flex", // prevents text collapse
+              alignItems: "center",
+              justifyContent: "center",
             }}
             disabled={property === null || isSubmitting}
           >
@@ -409,9 +414,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
                 />
               </>
             )}
-          </button> */}
-
-         smaple test
+          </button>
         </div>
       </div>
     </form>
