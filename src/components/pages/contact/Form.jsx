@@ -158,10 +158,16 @@ const Form = () => {
                 padding: "12px 25px",
                 textAlign: "center",
                 fontWeight: 600,
-                fontFamily: "Poppins, sans-serif",
                 fontSize: "15px",
                 fontStyle: "normal",
+                fontFamily:
+                  '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif',
                 outline: "none",
+                WebkitAppearance: "none", // iOS fix
+                color: "black", // ensure visible text
+                display: "inline-flex", // prevents text collapse
+                alignItems: "center",
+                justifyContent: "center",
               }}
               disabled={isSubmitting}
             >

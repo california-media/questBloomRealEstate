@@ -488,9 +488,36 @@ const Home_V2 = () => {
                     Buying a Property With Questbloom
                   </h2>
                   <p className="cta-text">Browse through more properties.</p>
-                  <a href="/off-plan" className="ud-btn btn-dark mt10">
+
+                  <a
+                    href="/off-plan"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "1px solid black",
+                      cursor: "pointer",
+                      borderRadius: "12px",
+                      padding: "12px 25px",
+                      textAlign: "center",
+                      fontWeight: 600,
+                      fontSize: "15px",
+                      backgroundColor: "#181a20",
+                      fontStyle: "normal",
+                      fontFamily:
+                        '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif',
+                      outline: "none",
+                      WebkitAppearance: "none", // iOS fix
+                      color: "white", // ensure visible text
+                      display: "inline-flex", // prevents text collapse
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    className=" mt10 "
+                  >
                     Let's Get Started{" "}
-                    <i className="fal fa-arrow-right-long"></i>
+                    <i
+                      className="fal ms-2 fa-arrow-right-long"
+                      style={{ transform: "rotate(-45deg)" }}
+                    />
                   </a>
                 </div>
               </div>
@@ -509,7 +536,7 @@ const Home_V2 = () => {
           </div>
         </div>
       </section>
-      {/* mobile CTA */}
+      {/* desktop CTA */}
       <section className="our-cta2 p0 px20 d-lg-block d-none">
         <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt15 pb15 justify-content-between align-items-center  bdrs12 position-relative overflow-hidden">
           <div className="container d-flex justify-content-center pl60  ">
@@ -524,6 +551,7 @@ const Home_V2 = () => {
                     Buying a Property With Questbloom
                   </h2>
                   <p className="cta-text">Browse through more properties.</p>
+
                   <a href="/off-plan" className="ud-btn btn-dark mt10">
                     Let's Get Started{" "}
                     <i className="fal fa-arrow-right-long"></i>

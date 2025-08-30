@@ -124,9 +124,7 @@ const AdminPropertyHeader = ({ property, loading }) => {
                 <div
                   className="pr10 bdrrn-sm d-none d-lg-block "
                   style={styles.textShadowDesktop}
-                >
-                </div>
-              
+                ></div>
               </div>
 
               {/* Loading state for property meta */}
@@ -179,11 +177,12 @@ const AdminPropertyHeader = ({ property, loading }) => {
                     className="ff-heading bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm d-lg-none"
                     href="#"
                     style={{
-                      padding: "6px 12px",
+                      padding: "3px 7px",
                       backgroundColor: "rgba(128, 128, 128, 0.2)",
                       borderRadius: "4px",
                       display: "inline-block", // Ensures width fits content
                       whiteSpace: "nowrap", // Prevents text from wrapping
+                      fontSize: "0.8rem",
                     }}
                   >
                     <i className="far fa-clock pe-2" />

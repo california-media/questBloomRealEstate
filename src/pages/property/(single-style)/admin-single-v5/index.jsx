@@ -321,7 +321,7 @@ const AdminSingleV5 = () => {
             {/* dummy */}
             <div className="col-lg-2"></div>
             <div className="col-lg-6 ">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2  mb30 overflow-hidden position-relative">
+              <div className="ps-widget bgc-white bdrs12 default-box-shadow2  mb20 overflow-hidden position-relative">
                 <AdminPropertyGallery
                   loading={loading}
                   photos={property?.photos}
@@ -347,6 +347,123 @@ const AdminSingleV5 = () => {
                   />
                 </PDFViewer>
               )} */}
+              <div className="col-lg-4 d-lg-none d-block">
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 mb30 overflow-hidden ">
+                  <div className="d-flex flex-column justify-content-between">
+                    <h5 className="price mb-1 d-lg-none d-block">
+                      {getPriceDisplay() === "Ask for price"
+                        ? "Ask for price"
+                        : "AED " + getPriceDisplay()}
+                    </h5>
+                    {(() => {
+                      const pricePerSqft = getPricePerSqftDisplay();
+                      return pricePerSqft ? (
+                        <>
+                          <p
+                            className="text space fz13 d-none d-lg-block mb-3"
+                            style={styles.textShadowDesktop}
+                          >
+                            Starting from AED {pricePerSqft} per sqft
+                          </p>
+                          <p className="text space fz13 d-lg-none mb-3">
+                            Starting from AED {pricePerSqft} per sqft
+                          </p>
+                        </>
+                      ) : null;
+                    })()}
+                    <div className="single-property-content mb-2">
+                      <div className="property-action text-lg-end">
+                        <div className="d-flex  align-items-center justify-content-lg-end">
+                          <a
+                            className="icon mr10 "
+                            href="#"
+                            onClick={handleFavoriteClick}
+                          >
+                            <Heart
+                              fill={isFavorite ? "red" : "none"}
+                              strokeWidth={1}
+                              color={isFavorite ? "red" : "currentColor"}
+                              size={17}
+                            />
+                          </a>
+
+                          <a
+                            className="icon  "
+                            href="#"
+                            onClick={handleShareClick}
+                          >
+                            <span
+                              style={{ fontSize: "17px" }}
+                              className="flaticon-share-1"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row  text-center mx-auto">
+                    <div className="row p-0" style={{ marginLeft: "1px" }}>
+                      <button
+                        type="button"
+                        className="luxury-heading w-100"
+                        onClick={() => setShowModal(true)}
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: 400,
+                          border: "none",
+                          fontFamily: "Poppins",
+                        }}
+                      >
+                        <Sparkles
+                          strokeWidth={1.5}
+                          fill="white"
+                          className="mr10"
+                        />
+                        AI Presentation
+                        <i
+                          className="fal ms-2 fa-arrow-right-long"
+                          style={{ transform: "rotate(-45deg)" }}
+                        />
+                      </button>
+                    </div>
+                    {showModal && (
+                      <div
+                        style={{ display: "block" }}
+                        tabIndex="-1"
+                        className=" modal fade show "
+                        onClick={() => setShowModal(false)}
+                      >
+                        <div
+                          className="modal-dialog  modal-dialog-centered modal-lg"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title">AI Presentation</h5>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                onClick={() => setShowModal(false)}
+                              ></button>
+                            </div>
+                            <div className="modal-body  pb50 px-4">
+                              <div className="row">
+                                <AdminReviewBoxForm
+                                  property={property}
+                                  prefixedId={prefixedId}
+                                  downloadPDF={true}
+                                  contactInfo={contactInfo}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="ps-widget    mb40 overflow-hidden position-relative">
                 <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
                   Visualisations
@@ -620,141 +737,7 @@ const AdminSingleV5 = () => {
 
             {/* on mobile */}
 
-            <div className="col-lg-4 d-lg-none d-block">
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden ">
-                <h4 className="title fz19 mb7">{property?.property_title}</h4>
-
-                <div className=" mb20 d-md-flex align-items-center">
-                  <p
-                    className="text fz13 mb-0 pr10 d-none d-lg-block"
-                    style={styles.textShadowDesktop}
-                  >
-                    {property?.location || "Location"}
-                  </p>
-                </div>
-                <div className="d-flex flex-column justify-content-between">
-                  <h5 className="price mb-3 d-lg-none d-block">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
-                  </h5>
-                  <div className="single-property-content mb-3">
-                    <div className="property-action text-lg-end">
-                      <div className="d-flex  align-items-center justify-content-lg-end">
-                        <a
-                          className="icon mr10 "
-                          href="#"
-                          onClick={handleFavoriteClick}
-                        >
-                          <Heart
-                            fill={isFavorite ? "red" : "none"}
-                            strokeWidth={1}
-                            color={isFavorite ? "red" : "currentColor"}
-                            size={20}
-                          />
-                        </a>
-
-                        <a
-                          className="icon mr10 "
-                          href="#"
-                          onClick={handleShareClick}
-                        >
-                          <span className="flaticon-share-1" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {(() => {
-                  const pricePerSqft = getPricePerSqftDisplay();
-                  return pricePerSqft ? (
-                    <>
-                      <p
-                        className="text space fz13 d-none d-lg-block mb-1"
-                        style={styles.textShadowDesktop}
-                      >
-                        Starting from AED {pricePerSqft} per sqft
-                      </p>
-                      <p className="text space fz13 d-lg-none mb-1">
-                        Starting from AED {pricePerSqft} per sqft
-                      </p>
-                    </>
-                  ) : null;
-                })()}
-                <div className="row  text-center mx-auto">
-                  <div className="row p-0" style={{ marginLeft: "1px" }}>
-                    <button
-                      type="button"
-                      className="luxury-heading w-100"
-                      onClick={() => setShowModal(true)}
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: 400,
-                        border: "none",
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      <Sparkles
-                        strokeWidth={1.5}
-                        fill="white"
-                        className="mr10"
-                      />
-                      AI Presentation
-                      <i
-                        className="fal ms-2 fa-arrow-right-long"
-                        style={{ transform: "rotate(-45deg)" }}
-                      />
-                    </button>
-                  </div>
-                  {showModal && (
-                    <div
-                      style={{ display: "block" }}
-                      tabIndex="-1"
-                      className=" modal fade show "
-                      onClick={() => setShowModal(false)}
-                    >
-                      <div
-                        className="modal-dialog  modal-dialog-centered modal-lg"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">AI Presentation</h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              onClick={() => setShowModal(false)}
-                            ></button>
-                          </div>
-                          <div className="modal-body  pb50 px-4">
-                            <div className="row">
-                              <AdminReviewBoxForm
-                                property={property}
-                                prefixedId={prefixedId}
-                                downloadPDF={true}
-                                contactInfo={contactInfo}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div
-                className={`ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 `}
-              >
-                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
-                <div className="row">
-                  <AdminReviewBoxForm
-                    property={property}
-                    prefixedId={prefixedId}
-                  />
-                </div>
-              </div>
-            </div>
+           
           </div>
 
           {/* End .row */}

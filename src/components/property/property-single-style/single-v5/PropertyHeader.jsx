@@ -151,7 +151,7 @@ const PropertyHeader = ({ property, loading }) => {
                 <>
                   {/* Desktop version */}
                   <a
-                    className="ff-heading fz15 pr10 ml0-sm bdrrn-sm d-none  d-lg-block"
+                    className="ff-heading fz15 pr10 ml0-sm bdrrn-sm d-none d-lg-block"
                     href="#"
                     style={{
                       ...styles.textShadowDesktop,
@@ -169,14 +169,15 @@ const PropertyHeader = ({ property, loading }) => {
 
                   {/* Mobile version */}
                   <a
-                    className="ff-heading bdrr1 fz15 pr10 mb10 ml10 ml0-sm bdrrn-sm d-lg-none"
+                    className="ff-heading bdrr1 fz15 pr10 mb10  ml0-sm bdrrn-sm d-lg-none"
                     href="#"
                     style={{
-                      padding: "6px 12px",
+                      padding: "3px 7px",
                       backgroundColor: "rgba(128, 128, 128, 0.2)",
                       borderRadius: "4px",
                       display: "inline-block", // Ensures width fits content
                       whiteSpace: "nowrap", // Prevents text from wrapping
+                      fontSize: "0.8rem",
                     }}
                   >
                     <i className="far fa-clock pe-2" />
@@ -241,6 +242,7 @@ const PropertyHeader = ({ property, loading }) => {
                   </>
                 )}
               </div>
+              
             </>
           )}
         </div>
