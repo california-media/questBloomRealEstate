@@ -207,7 +207,7 @@ const AdminSingleV5 = () => {
   useEffect(() => {
     if (property) {
       setMetaInformation({
-        title: property?.name || "Property",
+        title: property?.property_title || "Property",
       });
     }
   }, [property]);
@@ -736,8 +736,19 @@ const AdminSingleV5 = () => {
             </div>
 
             {/* on mobile */}
-
-           
+            <div className="col-lg-4 d-lg-none d-block">
+              <div
+                className={`ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 `}
+              >
+                <h4 className="title fz17 mb30">Submit an Enquiry</h4>
+                <div className="row">
+                  <AdminReviewBoxForm
+                    property={property}
+                    prefixedId={prefixedId}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* End .row */}
