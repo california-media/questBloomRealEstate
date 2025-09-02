@@ -3,7 +3,7 @@ import React from "react";
 const ContactMeta = () => {
   const contactInfoList = [
     {
-      title: "Total Free Customer Care",
+      title: "Customer Care",
       phone: "+(0) 123 050 945 02",
       phoneLink: "tel:+012305094502", // Change this to use "tel" URI scheme
     },

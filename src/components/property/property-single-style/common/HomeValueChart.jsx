@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   XAxis,
@@ -19,7 +18,7 @@ const data = [
   },
   {
     name: "Page B",
-    uv: 3000,
+    uv: 50000,
     pv: 1398,
     amt: 2210,
   },
@@ -58,7 +57,7 @@ const data = [
 const HomeValueChart = () => {
   return (
     <div className="col-md-12" style={{ height: "400px" }}>
-      <ResponsiveContainer   width="100%" height={400} maxHeight={'100%'} >
+      <ResponsiveContainer width="100%" height={400} maxHeight={"100%"}>
         <AreaChart
           width={500}
           height={200}

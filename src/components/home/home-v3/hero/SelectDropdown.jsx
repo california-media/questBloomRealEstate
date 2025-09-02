@@ -1,43 +1,85 @@
-
 import Select from "react-select";
 
-const SelectDropdown = () => {
-  const catOptions = [
-    { value: "Apartments", label: "Apartments" },
-    { value: "Bungalow", label: "Bungalow" },
-    { value: "Houses", label: "Houses" },
-    { value: "Loft", label: "Loft" },
-    { value: "Office", label: "Office" },
-    { value: "Townhome", label: "Townhome" },
-    { value: "Villa", label: "Villa" },
-  ];
-
+const SelectDropdown = ({ saleStatuses = [], filterFunctions }) => {
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#DDE5C2"
           : isFocused
-          ? "#eb675312"
+          ? "#DDE5C2"
           : undefined,
       };
     },
+    control: (provided) => ({
+      ...provided,
+      cursor: "pointer",
+      padding: "0px",
+      paddingRight: "10px",
+      paddingLeft: "5px",
+      backgroundColor: "buttonface",
+      borderRadius: "12px",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      display:  "inline",
+      padding: "0px",
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: "inline",
+      padding: "0px",
+      paddingRight: "10px",
+      paddingLeft: "5px",
+    }),
+    // Add padding to input to make space for the icon
+    input: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingRight: "5px",
+      paddingLeft: "5px",
+    }),
+    // Ensure the placeholder also has proper spacing
+    placeholder: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingLeft: "5px",
+    }),
+    // Style the single value (selected value) to have proper spacing
+    singleValue: (provided) => ({
+      ...provided,
+      paddingLeft:  "10px",
+      padding: "0px",
+      paddingLeft: "5px",
+    }),
   };
 
+  const statuses = [
+    { value: "All", label: "All Sale Satuses" },
+    ...saleStatuses.map((type) => ({
+      value: type,
+      label: type,
+    })),
+  ];
   return (
     <>
       <Select
-        defaultValue={[catOptions[0]]}
+        defaultValue={statuses[1] || null}
         name="colors"
-        options={catOptions}
+        options={statuses}
         styles={customStyles}
-        className="text-start select-borderless btn-light"
+        className="text-start select-borderless"
+        value={statuses.find(
+          (status) => status.value === filterFunctions?.listingStatus
+        )}
         classNamePrefix="select"
+        onChange={(e) => filterFunctions?.handlelistingStatus(e.value)}
         required
-        isSearchable={false}
       />
     </>
   );

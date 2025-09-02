@@ -58,6 +58,7 @@ import SingleV2 from "./pages/property/(single-style)/single-v2";
 import SingleV3 from "./pages/property/(single-style)/single-v3";
 import SingleV4 from "./pages/property/(single-style)/single-v4";
 import SingleV5 from "./pages/property/(single-style)/single-v5";
+import AdminSingleV5 from "./pages/property/(single-style)/admin-single-v5";
 import SingleV6 from "./pages/property/(single-style)/single-v6";
 import SingleV7 from "./pages/property/(single-style)/single-v7";
 import SingleV8 from "./pages/property/(single-style)/single-v8";
@@ -71,6 +72,9 @@ import SearchProperties from "./pages/listings/(map-style)/search-properties";
 import BuyFull3Col from "./pages/listings/(grid-view)/buy";
 import Rent3Col from "./pages/listings/(grid-view)/rent";
 import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
+import { Toaster } from "react-hot-toast";
+import adminApi, { adminBaseUrl } from "./api/adminApi";
+import BuyOffplan3Col from "./pages/listings/(grid-view)/buy-off-plan";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -82,12 +86,34 @@ function App() {
       duration: 1200,
       once: true,
     });
+
+    // Function to update favicon
+    const updateFavicon = async () => {
+      try {
+        const { data } = await adminApi.get("/media/theme-images");
+
+        if (data.favicon) {
+          const favicon =
+            document.querySelector("link[rel*='icon']") ||
+            document.createElement("link");
+          favicon.type = "image/x-icon";
+          favicon.rel = "shortcut icon";
+          favicon.href = adminBaseUrl + data.favicon;
+          document.head.appendChild(favicon);
+        }
+      } catch (error) {
+        console.error("Failed to update favicon:", error);
+      }
+    };
+
+    updateFavicon();
   }, []);
 
   return (
     <>
       <div className="wrapper ovh">
         <BrowserRouter>
+          <Toaster position="bottom-right" />
           <ScrollTopBehaviour />
           <Routes>
             <Route path="/">
@@ -108,6 +134,7 @@ function App() {
               <Route path="off-plan" element={<GridFull3Col />} />
               <Route path="rent" element={<Rent3Col />} />
               <Route path="listings" element={<ListingsFull3Col />} />
+              <Route path="buy-off-plan" element={<BuyOffplan3Col />} />
               <Route path="grid-full-4-col" element={<GridFull4Col />} />
               <Route path="grid-full-2-col" element={<GridFull2Col />} />
               <Route path="grid-full-1-col-v1" element={<GridFull1ColV1 />} />
@@ -183,7 +210,13 @@ function App() {
               <Route path="single-v2/:id" element={<SingleV2 />} />
               <Route path="single-v3/:id" element={<SingleV3 />} />
               <Route path="single-v4/:id" element={<SingleV4 />} />
+
+              {/* relevant */}
               <Route path="off-plan/:id" element={<SingleV5 />} />
+              <Route path="buy/:id" element={<AdminSingleV5 />} />
+              <Route path="rent/:id" element={<AdminSingleV5 />} />
+              {/* /relevant */}
+
               <Route path="single-v6/:id" element={<SingleV6 />} />
               <Route path="single-v7/:id" element={<SingleV7 />} />
               <Route path="single-v8/:id" element={<SingleV8 />} />

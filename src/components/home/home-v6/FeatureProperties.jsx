@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -118,7 +116,7 @@ const FeatureProperties = () => {
                         <div className="col-auto">
                           <div className="contact-info">
                             <p className="info-title ff-heading mb-2">
-                              Total Free Customer Care
+                              Customer Care
                             </p>
                             <h6 className="info-phone">
                               <a href="tel:+012305094502">
@@ -178,7 +176,6 @@ const FeatureProperties = () => {
 
                     <div className="list-thumb col-lg-6 col-xl-6 offset-xl-1 p-xl-0">
                       <img
-                       
                         className="img-1 cover w-100 h-00"
                         src={property.imageSrc}
                         alt="property image"

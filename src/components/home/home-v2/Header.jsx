@@ -1,11 +1,13 @@
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
+import "/public/css/home-header-links.css";
 
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import adminApi, { adminBaseUrl } from "@/api/adminApi";
 
-const Header = () => {
+const Header = ({ menuItems, error }) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
@@ -15,6 +17,33 @@ const Header = () => {
       setNavbar(false);
     }
   };
+
+  const [logos, setLogos] = useState({
+    whiteLogo: "/images/Questrealstatewhite.svg",
+    normalLogo: "/images/QMC-logo.webp",
+  });
+  const [hotline, setHotline] = useState("+971 4 529 9247");
+
+  // Fetch theme images on component mount
+  useEffect(() => {
+    const fetchThemeImages = async () => {
+      try {
+        const { data } = await adminApi.get("/media/theme-images");
+        const { data: hotlineData } = await adminApi.get(
+          "/theme-options/general"
+        );
+        setLogos((prev) => ({
+          whiteLogo: data.logo_white || prev.whiteLogo,
+          normalLogo: data.logo || prev.normalLogo,
+        }));
+        setHotline((prev) => hotlineData.data.hotline || prev.hotline);
+      } catch (error) {
+        console.error("Failed to fetch theme images:", error);
+      }
+    };
+
+    fetchThemeImages();
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
@@ -29,6 +58,9 @@ const Header = () => {
         className={`header-nav nav-homepage-style at-home2  main-menu ${
           navbar ? "sticky slideInDown animated" : ""
         }`}
+        style={{
+          zIndex: 20,
+        }}
       >
         <nav className="posr">
           <div className="container maxw1600 posr">
@@ -39,21 +71,29 @@ const Header = () => {
                     <Link className="header-logo logo1" to="/">
                       <img
                         style={{ height: "50px" }}
-                        src="/images/Questrealstatewhite.svg"
-                        alt="Header Logo"
+                        src={adminBaseUrl + logos.whiteLogo}
+                        alt="Header Logo White"
+                        onError={(e) => {
+                          e.target.src = "/images/Questrealstatewhite.svg";
+                        }}
                       />
                     </Link>
+
+                    {/* Normal logo (shown on light backgrounds) */}
                     <Link className="header-logo logo2" to="/">
                       <img
                         style={{ height: "50px" }}
-                        src="/images/QMC-logo.webp"
+                        src={adminBaseUrl + logos.normalLogo}
                         alt="Header Logo"
+                        onError={(e) => {
+                          e.target.src = "/images/QMC-logo.webp";
+                        }}
                       />
                     </Link>
                   </div>
                   {/* End Logo */}
 
-                  <MainMenu />
+                  <MainMenu menuItems={menuItems} error={error} />
                   {/* End Main Menu */}
                 </div>
               </div>
@@ -63,23 +103,13 @@ const Header = () => {
                 <div className="d-flex align-items-center">
                   <a
                     className="login-info d-flex align-items-center me-3"
-                    href="tel:+9710564065672"
+                    href={`tel:${hotline}`}
                   >
                     <i className="far fa-phone fz16 me-2"></i>{" "}
-                    <span className="d-none d-xl-block">
-                      +971 (56) 406 5672
-                    </span>
+                    <span className="d-none d-xl-block">{hotline}</span>
                   </a>
-                  <a
-                    href="#"
-                    className="login-info d-flex align-items-center"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginSignupModal"
-                    role="button"
-                  >
-                    {/* <i className="far fa-user-circle fz16 me-2" />{" "} */}
-                    {/* <span className="d-none d-xl-block">Login / Register</span> */}
-                  </a>
+                  {/* Updated social links with better styling */}
+                  
                   {/* <Link
                     className="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"

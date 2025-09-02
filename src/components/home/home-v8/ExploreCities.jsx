@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -74,7 +72,7 @@ const ExploreCities = () => {
           },
         }}
         autoplay={{
-          delay: 3000, // Set the desired delay for autoplay
+          delay: 50000, // Set the desired delay for autoplay
           disableOnInteraction: false, // Keep autoplaying even when user interacts with the swiper
         }}
       >
@@ -85,7 +83,6 @@ const ExploreCities = () => {
                 <div className="feature-style2 mb30">
                   <div className="feature-img">
                     <img
-                    
                       className="w-100 h-100 cover"
                       src={city.image}
                       alt="city listings"

@@ -1,34 +1,59 @@
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
-
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-const DefaultHeader = () => {
+const DefaultHeader = ({ menuItems, error }) => {
   const [navbar, setNavbar] = useState(false);
-
-  const changeBackground = () => {
-    if (window.scrollY >= 10) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null);
 
   useEffect(() => {
+    // Measure header height on mount and resize
+    const measureHeader = () => {
+      if (headerRef.current) {
+        const height = headerRef.current.offsetHeight;
+        setHeaderHeight(height);
+      }
+    };
+
+    measureHeader();
+    window.addEventListener("resize", measureHeader);
+
+    const changeBackground = () => {
+      const shouldBeSticky = window.scrollY >= 130;
+      if (!shouldBeSticky) {
+        if (window.scrollY === 0) setNavbar(false);
+      } else setNavbar(shouldBeSticky);
+    };
+
     window.addEventListener("scroll", changeBackground);
+
     return () => {
       window.removeEventListener("scroll", changeBackground);
+      window.removeEventListener("resize", measureHeader);
     };
-  }, []);
+  }, [navbar]);
 
   return (
     <>
+      <div style={{ height: navbar ? `${headerHeight}px` : "0px" }} />
+
       <header
-        className={`header-nav nav-homepage-style light-header menu-home4 main-menu ${
-          navbar ? "sticky slideInDown animated" : ""
-        }`}
+        ref={headerRef}
+        className={`header-nav nav-homepage-style light-header menu-home4 main-menu`}
+        style={{
+          position: navbar ? "fixed" : "static",
+          top: navbar ? "0" : "auto",
+          left: navbar ? "0" : "auto",
+          right: navbar ? "0" : "auto",
+          zIndex: navbar ? "9999" : "auto",
+          width: "100%",
+          transform: navbar ? "translateY(0)" : "none",
+          animation: navbar ? "slideInDown 0.3s ease-out" : "none",
+          transition: navbar ? "all 0.1s ease-out" : "all 0.1s ease-out",
+        }}
       >
         <nav className="posr">
           <div className="container posr menu_bdrt1 maxw1600 ">
@@ -53,7 +78,7 @@ const DefaultHeader = () => {
                   </div>
                   {/* End Logo */}
 
-                  <MainMenu />
+                  <MainMenu menuItems={menuItems} error={error} />
                   {/* End Main Menu */}
                 </div>
               </div>
@@ -105,33 +130,6 @@ const DefaultHeader = () => {
         </nav>
       </header>
       {/* End Header */}
-
-      {/* Signup Modal */}
-      <div className="signup-modal">
-        <div
-          className="modal fade"
-          id="loginSignupModal"
-          tabIndex={-1}
-          aria-labelledby="loginSignupModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
-            <LoginSignupModal />
-          </div>
-        </div>
-      </div>
-      {/* End Signup Modal */}
-
-      {/* DesktopSidebarMenu */}
-      {/* <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="SidebarPanel"
-        aria-labelledby="SidebarPanelLabel"
-      >
-        <SidebarPanel />
-      </div> */}
-      {/* Sidebar Panel End */}
     </>
   );
 };

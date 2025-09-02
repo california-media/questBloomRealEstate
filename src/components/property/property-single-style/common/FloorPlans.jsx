@@ -1,4 +1,7 @@
-const UnitPlans = ({ property }) => {
+import React from "react";
+import { ImageIcon } from "lucide-react";
+
+const UnitPlans = ({ units = [] }) => {
   // Helper function to extract image URL from the string format
   const getImageUrl = (imageUrlString) => {
     try {
@@ -13,13 +16,20 @@ const UnitPlans = ({ property }) => {
   const getBedroomCount = (name) => {
     // Extract bedroom info from name (e.g., "1 bedroom" or "1,5 bedroom")
     if (!name) return "N/A";
+
+    const nameLower = name.toLowerCase();
+
+    // Handle "Studio Apartments" case specifically
+    if (nameLower.includes("studio apartments")) {
+      return "Studio";
+    }
+
+    // Handle regular bedroom patterns
     const match = name.match(/(\d+(?:,\d+)?)\s*bedroom/i);
     if (match) {
       const bedrooms = match[1].replace(",", ".");
       const bedroomNum = parseFloat(bedrooms);
-      if (bedroomNum === 0 || name.toLowerCase().includes("studio")) {
-        return "Studio";
-      }
+
       // Convert decimal to range format (e.g., 1.5 becomes "1-2")
       if (bedroomNum % 1 !== 0) {
         const lower = Math.floor(bedroomNum);
@@ -28,113 +38,189 @@ const UnitPlans = ({ property }) => {
       }
       return Math.floor(bedroomNum).toString();
     }
+
     return "N/A";
   };
 
   // Helper function to format area
-  const formatArea = (areaM2, areaUnit = "sqft") => {
-    if (!areaM2 || areaM2 === "0") return "N/A";
+  const formatArea = (areaFromM2, areaToM2, areaUnit = "sqft") => {
+    const areaFrom = areaFromM2 ? parseFloat(areaFromM2) : null;
+    const areaTo = areaToM2 ? parseFloat(areaToM2) : null;
 
-    const area = parseFloat(areaM2);
-    if (areaUnit === "sqft") {
-      // Convert m2 to sqft (1 m2 = 10.764 sqft)
-      const sqft = Math.round(area * 10.764);
-      return `${sqft} sqft`;
+    if (!areaFrom && !areaTo) return "N/A";
+
+    const convertToSqft = (area) => {
+      if (areaUnit === "sqft") {
+        return Math.round(area * 10.764);
+      }
+      return Math.round(area);
+    };
+
+    const unit = areaUnit === "sqft" ? "sqft" : "m²";
+
+    if (areaFrom && !areaTo) {
+      return `Starting from ${convertToSqft(areaFrom)} ${unit}`;
     }
-    return `${Math.round(area)} m²`;
+
+    if (!areaFrom && areaTo) {
+      return `No info - ${convertToSqft(areaTo)} ${unit}`;
+    }
+
+    if (areaFrom && areaTo && areaFrom !== areaTo) {
+      return `${convertToSqft(areaFrom)} ${unit} — ${convertToSqft(
+        areaTo
+      )} ${unit}`;
+    }
+
+    const area = areaFrom || areaTo;
+    return `${convertToSqft(area)} ${unit}`;
+  };
+
+  // Helper function to extract property type from name
+  const getPropertyType = (name) => {
+    if (!name) return "Property";
+
+    const nameLower = name.toLowerCase();
+
+    // Handle "Studio Apartments" case specifically
+    if (nameLower.includes("studio apartments")) {
+      return "Apartments";
+    }
+
+    // Look for other property types
+    const propertyTypes = [
+      { key: "apartment", display: "Apartments" },
+      { key: "villa", display: "Villas" },
+      { key: "townhouse", display: "Townhouses" },
+      { key: "penthouse", display: "Penthouses" },
+    ];
+
+    for (const type of propertyTypes) {
+      if (nameLower.includes(type.key)) {
+        return type.display;
+      }
+    }
+
+    return "Property";
   };
 
   // Helper function to format price
   const formatPrice = (priceFromAed, priceToAed, currency = "AED") => {
-    if (!priceFromAed && !priceToAed) return "Price on Request";
+    if (!priceFromAed && !priceToAed) return "Ask for Price";
 
     if (priceFromAed && priceToAed && priceFromAed !== priceToAed) {
       return `${currency} ${parseInt(
         priceFromAed
-      ).toLocaleString()} - ${parseInt(priceToAed).toLocaleString()}`;
+      ).toLocaleString()} — ${currency} ${parseInt(
+        priceToAed
+      ).toLocaleString()}`;
     }
 
     const price = priceFromAed || priceToAed;
     return `${currency} ${parseInt(price).toLocaleString()}`;
   };
 
-  const units = property?.unit_blocks || [];
-
   if (!units.length) {
     return (
-      <div className="text-center py-4">
-        <p>No unit information available</p>
+      <div className="col-md-12">
+        <div className="text-center py-4">
+          <p>No unit information available</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="accordion" id="accordionExample">
-      {units.map((unit, index) => (
-        <div
-          className={`accordion-item ${index === 0 ? "active" : ""}`}
-          key={unit.id}
-        >
-          <h2 className="accordion-header" id={`heading${index}`}>
-            <button
-              className={`accordion-button ${index === 0 ? "" : "collapsed"}`}
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target={`#collapse${index}`}
-              aria-expanded={index === 0 ? "true" : "false"}
-              aria-controls={`collapse${index}`}
-            >
-              <span className="w-100 d-md-flex align-items-center">
-                <span className="mr10-sm">Unit {index + 1}</span>
-                <span className="ms-auto d-md-flex align-items-center justify-content-end">
-                  <span className="me-2 me-md-4">
-                    <span className="fw600">Size: </span>
-                    <span className="text">
-                      {formatArea(unit.units_area_from_m2, unit.area_unit)}
-                    </span>
+    <div className="row w-100 p-0 justify-content-center align-items-center pt-2">
+      <div className="row row-cols-1  row-cols-md-2 g-3 mt-0">
+        {units.map((unit, index) => (
+          <div
+            className="col d-flex flex-column m-0 mb-3"
+            key={unit.id || index}
+          >
+            <div className="card border-0 flex-grow-1 h-100">
+              {getImageUrl(unit.typical_unit_image_url) ? (
+                <img
+                  src={getImageUrl(unit.typical_unit_image_url)}
+                  className="card-img-top img-fluid rounded-top"
+                  alt={`Unit ${index + 1} floor plan`}
+                  style={{
+                    height: "300px",
+                    aspectRatio: "1/1",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "300px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#f0f0f0",
+                  }}
+                  className="card-img-top img-fluid rounded-top"
+                >
+                  <ImageIcon size={24} color="#6c757d" />
+                </div>
+              )}
+
+              <div className="card-body flex-grow-1 p20 pb-25">
+                {/* Property Type and Bedroom Tags */}
+                <div className="mb-3">
+                  <span
+                    className="badge me-2 px-2 py-1 rounded"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      color: "#6c757d",
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {getPropertyType(unit.name)}
                   </span>
-                  <span className="me-2 me-md-4">
-                    <span className="fw600">Bedrooms: </span>
-                    <span className="text">{getBedroomCount(unit.name)}</span>
+                  <span
+                    className="badge px-2 py-1 rounded"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      color: "#6c757d",
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {getBedroomCount(unit.name) === "Studio"
+                      ? "Studio"
+                      : `${getBedroomCount(unit.name)} bedroom`}
                   </span>
-                  <span>
-                    <span className="fw600">Price: </span>
-                    <span className="text">
+                </div>
+
+                <div className="unit-details">
+                  <div className="price-section mb-2">
+                    <h5 className="text-dark mb-0">
                       {formatPrice(
                         unit.units_price_from_aed,
                         unit.units_price_to_aed,
                         unit.price_currency
                       )}
-                    </span>
-                  </span>
-                </span>
-              </span>
-            </button>
-          </h2>
-          <div
-            id={`collapse${index}`}
-            className={`accordion-collapse collapse ${
-              index === 0 ? "show" : ""
-            }`}
-            aria-labelledby={`heading${index}`}
-            data-parent="#accordionExample"
-          >
-            <div className="accordion-body text-center">
-              {getImageUrl(unit.typical_unit_image_url) ? (
-                <img
-                  className="w-100 h-100 cover"
-                  src={getImageUrl(unit.typical_unit_image_url)}
-                  alt={`Unit ${index + 1} floor plan`}
-                />
-              ) : (
-                <div className="text-muted py-4">
-                  <p>Floor plan image not available</p>
+                    </h5>
+                  </div>
+
+                  <div className="area-section">
+                    <p className="card-text text-muted small mb-0">
+                      {formatArea(
+                        unit.units_area_from_m2,
+                        unit.units_area_to_m2,
+                        unit.area_unit
+                      )}
+                    </p>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

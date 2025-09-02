@@ -4,15 +4,15 @@ const ContactInfo = () => {
   const contactInfo = [
     {
       id: 1,
-      title: "Total Free Customer Care",
-      phone: "+971 (56) 406 5672",
+      title: "Customer Care",
+      phone: "+971 4 529 9247",
       phoneHref: "tel:+9710564065672",
     },
     {
       id: 2,
       title: "Need Live Support?",
-      email: "Info@questbloom.ae",
-      emailHref: "mailto:Info@questbloom.ae",
+      email: "info@questrealestate.ae",
+      emailHref: "mailto:info@questrealestate.ae",
     },
   ];
 

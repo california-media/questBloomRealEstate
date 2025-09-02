@@ -1,5 +1,3 @@
-
-
 const YearBuilt = ({ filterFunctions }) => {
   return (
     <div className="space-area">
@@ -12,7 +10,7 @@ const YearBuilt = ({ filterFunctions }) => {
                 [
                   e.target.value || 1800,
                   document.getElementById("maxFeet2").value / 1,
-                ] || 2050
+                ] || 50000
               )
             }
             className="form-control filterInput"
@@ -27,7 +25,7 @@ const YearBuilt = ({ filterFunctions }) => {
             onChange={(e) =>
               filterFunctions?.handleyearBuild([
                 document.getElementById("minFeet2").value / 1 || 1800,
-                e.target.value || 2050,
+                e.target.value || 50000,
               ])
             }
             className="form-control filterInput"

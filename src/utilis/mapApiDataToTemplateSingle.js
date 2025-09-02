@@ -1,4 +1,7 @@
-export default function mapApiDataToTemplateSingle(apiData) {
+export default function mapApiDataToTemplateSingle(
+  apiData,
+  listing_prefix = "op"
+) {
   let imageUrl = "";
   try {
     const parsedImage = JSON.parse(apiData.cover_image_url);
@@ -10,15 +13,12 @@ export default function mapApiDataToTemplateSingle(apiData) {
   const [lat, long] = apiData.coordinates
     .split(",")
     .map((coord) => parseFloat(coord.trim()));
-
   return {
     id: apiData.id,
+    listing_prefix,
     image: imageUrl || "/images/fallback.jpg", // fallback image
     title: apiData.name || "Untitled Property",
-    developer:
-      apiData.developer && apiData.developer != "Object 1"
-        ? apiData.developer
-        : "Unknown",
+    developer: apiData.developer ? apiData.developer : "Unknown",
     post_handover: apiData.post_handover || false,
     city: apiData.area || "Unknown",
     location: apiData.area || "Unknown", // you can enhance this with more context if needed
@@ -40,6 +40,7 @@ export default function mapApiDataToTemplateSingle(apiData) {
     status: apiData.status,
     lat,
     long,
+    completion_datetime: apiData?.completion_datetime,
     features: [], // You may fill this manually or enhance the API if possible
   };
 }

@@ -3,10 +3,10 @@ import Partner from "@/components/common/Partner";
 import Agents from "@/components/home/home-v2/Agents";
 import ApartmentType from "@/components/home/home-v2/ApartmentType";
 import ExploreCities from "@/components/home/home-v2/ExploreCities";
-import FeaturedListings from "@/components/home/home-v2/FeatuerdListings";
+import FeaturedListingsHome from "@/components/home/home-v2/FeatuerdListingsHome";
 import Header from "@/components/home/home-v2/Header";
 import Testimonial from "@/components/home/home-v2/Testimonial";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "@/components/common/default-footer";
 import Cta from "@/components/home/home-v2/Cta";
 
@@ -14,6 +14,10 @@ import { Link } from "react-router-dom";
 
 import MetaData from "@/components/common/MetaData";
 import AutoCarouselHero from "@/components/home/home-v2/hero/AutoCarouselHero";
+import Hero from "@/components/home/home-v3/hero";
+import adminApi from "@/api/adminApi";
+import AnimatedText from "@/components/home/home-v2/hero/AnimatedText";
+import SocialLinksNavbar from "./SocialLinksNavbar";
 
 const metaInformation = {
   title: "Rent, Buy or Sell, Off-plan Residential & Commercial Properties in Dubai. Quest Bloom Realestate also offers Property Consulting Services",
@@ -24,10 +28,7 @@ const beachAreaProperties = [
     id: 139,
     name: "Al Raha Beach, Abu Dhabi",
   },
-  {
-    id: 242,
-    name: "Dreamland Beach, Bali",
-  },
+
   {
     id: 119,
     name: "Emaar Beachfront",
@@ -35,14 +36,6 @@ const beachAreaProperties = [
   {
     id: 63,
     name: "Jumeirah Beach Residence (JBR)",
-  },
-  {
-    id: 162,
-    name: "Nai Yang Beach, Phuket",
-  },
-  {
-    id: 175,
-    name: "Surin Beach, Phuket",
   },
 ];
 
@@ -52,90 +45,165 @@ const sobhaDeveloper = {
   website: "https://www.sobharealty.com/",
 };
 
+const sections = [
+  {
+    title: "Luxury Villas",
+    paragraph: "Luxury villas with premium amenities and stunning views",
+    params: {
+      unit_types: "Villa,Villas",
+    },
+    seeAll: "See More Luxury Villas",
+  },
+  {
+    title: "Apartments",
+    paragraph: "Modern apartments in prime locations with excellent facilities",
+    params: {
+      unit_types: "Apartments",
+    },
+    seeAll: "See All Apartments",
+  },
+
+  {
+    title: "Properties under 1 Million",
+    paragraph: "Handpicked premium homes that offer great value",
+    params: {
+      unit_price_to: 1000000,
+    },
+    seeAll: "See All Properties under 1 Million",
+  },
+  {
+    title: "Properties between 1 Million to 2 Million",
+    paragraph: "Luxury properties priced between 1 Million and 2 Million",
+    params: {
+      unit_price_from: 1000000,
+      unit_price_to: 2000000,
+    },
+    seeAll: "See All Properties between 1 Million to 2 Million",
+  },
+  {
+    title: "Properties by Sobha",
+    paragraph: "Premium Properties by Sobha with excellent facilities",
+    params: {
+      developer: String(sobhaDeveloper.id),
+    },
+    seeAll: "See All Properties by Sobha",
+  },
+  {
+    title: "Beachfront Properties",
+    paragraph: "Premium Beachfront Properties",
+    params: {
+      areas: beachAreaProperties.map((item) => item.id).join(","),
+    },
+    seeAll: "See All Beachfront Properties",
+  },
+  {
+    title: "Featured Listings",
+    paragraph: " Premium homes designed to match your lifestyle",
+    seeAll: "See All Listings",
+  },
+];
+
 const Home_V2 = () => {
   // const [visibleSections, setVisibleSections] = useState(0);
-  const sections = [
-    {
-      title: "Discover Villas",
-      paragraph: "Luxury villas with premium amenities and stunning views",
-      params: {
-        unit_types: "Villa,Villas",
-      },
-    },
-    {
-      title: "Discover Apartments",
-      paragraph:
-        "Modern apartments in prime locations with excellent facilities",
-      params: {
-        unit_types: "Townhouse",
-      },
-    },
-    {
-      title: "Discover Beachfront Properties",
-      paragraph: "Premium Beachfront Properties",
-      params: {
-        areas: beachAreaProperties.map((item) => item.id).join(","),
-      },
-    },
-    {
-      title: "Discover Properties by Sobha",
-      paragraph: "Premium Properties by Sobha with excellent facilities",
-      params: {
-        developer: String(sobhaDeveloper.id),
-      },
-    },
-    {
-      title: "Discover Properties under 1 Million",
-      paragraph:
-        "Explore handpicked premium homes that offer great value for less than AED 1 Million",
-      params: {
-        unit_price_to: 1000000,
-      },
-    },
-    {
-      title: "Discover Properties between 1 Million to 2 Million",
-      paragraph:
-        "Step into luxury with a curated selection of upscale properties priced between AED 1 Million and 2 Million",
-      params: {
-        unit_price_from: 1000000,
-        unit_price_to: 2000000,
-      },
-    },
-  ];
-  const handleViewMore = () => {
-    setShowAllSections(true);
-  };
+  const [metaInformation, setMetaInformation] = useState({
+    title: "Quest Bloom  Real Estate LLC",
+    description: "Quest Bloom Real Estate LLC Home page",
+  });
+  const [pageSections, setPageSections] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [error, setError] = useState(null);
 
-  // const getButtonText = () => {
-  //   if (visibleSections === sections.length) {
-  //     return "Collapse All";
-  //   }
-  //   return "View More Properties";
-  // };
+  // Fetch menu items from API (same logic as MainMenu)
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await adminApi.get("/appearance/menus", {
+          params: {
+            type: "header",
+          },
+        });
 
-  // const getButtonIcon = () => {
-  //   if (visibleSections === sections.length) {
-  //     return "fa-arrow-up-long";
-  //   }
-  //   return "fa-arrow-down-long";
-  // };
+        setMenuItems(response.data || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching menu items:", err);
+        setError("Failed to load menu items");
+        // Fallback to default menu structure if API fails
+        setMenuItems([
+          { id: 1, name: "Home", page: "Home" },
+          { id: 2, name: "Off-Plan", page: "Off-Plan" },
+          { id: 3, name: "Buy", page: "Buy" },
+          { id: 4, name: "Listings", page: "Listings" },
+          { id: 5, name: "Rent", page: "Rent" },
+          { id: 6, name: "Agents", page: "Agents" },
+          { id: 7, name: "Who We Are", page: "Who we are" },
+          { id: 8, name: "Contact Us", page: "Contact Us" },
+        ]);
+      }
+    };
 
+    fetchMenuItems();
+  }, []);
+
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const response = await adminApi.get("/pages/home/sections");
+        setPageSections(response.data.data.sections || []);
+      } catch (err) {
+        console.error("Failed to fetch sections:", err);
+      }
+    };
+
+    fetchSections();
+  }, []);
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      try {
+        // Fetch only the needed fields using query params
+        const response = await adminApi.get(
+          "/theme-options/general?keys=site_title,seo_description"
+        );
+
+        if (response.data.success) {
+          setMetaInformation({
+            title:
+              response.data.data.site_title || "Quest Bloom Real Estate LLC",
+            description:
+              response.data.data.seo_description ||
+              "Quest Bloom Real Estate LLC",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching meta data:", error);
+      }
+    };
+
+    fetchMetaData();
+  }, []);
   return (
     <>
       {" "}
       <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
-      <Header />
+      <Header menuItems={menuItems} error={error} />
       {/* End Main Header Nav */}
       {/* Mobile Nav  */}
-      <MobileMenu />
+      <MobileMenu menuItems={menuItems} error={error} />
+      <SocialLinksNavbar />
       {/* End Mobile Nav  */}
       {/* Home Banner Style V2 */}
-      <AutoCarouselHero />
+      <AutoCarouselHero
+        HeroTitle={
+          pageSections.find((sec) => sec.section_name === "Hero Title")
+            ?.html_content
+        }
+      />
       {/* End Home Banner Style V2 */}
       {/* Explore Apartment */}
-      <section className="pb90 pb30-md z-1">
-        <div className="container">
+      <section className="pb-0 pt80 z-1 ">
+        <div className="container custom-max-width" id="custom-max-width">
           <div className="row justify-content-center" data-aos="fade">
             <div className="col-lg-12">
               <ApartmentType />
@@ -146,106 +214,25 @@ const Home_V2 = () => {
       {/* End Explore Apartment */}
       {/* Featured Listings */}
       <>
-        {/* Main Featured Listings Section */}
-        <section className="pt0 pb0 pb0  bgc-white">
-          <div className="container ">
-            <div className="row align-items-center" data-aos="fade-up">
-              <div className="col-lg-9">
-                <div className="main-title2">
-                  <h2 className="title">Discover Featured Listings</h2>
-                  <p className="paragraph">
-                    Aliquam lacinia diam quis lacus euismod
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="text-start text-lg-end mb-3">
-                  <a className="ud-btn2" href="/off-plan">
-                    See All Properties
-                    <i className="fal fa-arrow-right-long" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="">
-              <div
-                className="col-lg-12"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <div className="feature-listing-slider ">
-                  {/* FeaturedListings component would go here */}
-                  <div className="text-center  ">
-                    <FeaturedListings />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* View More Button - Only shows when sections are hidden */}
-            {/* {!showAllSections && (
-              <div style={{ marginTop: "-30px" }} className="row mb20">
-                <div className="col-lg-12">
-                  <div className="text-end ">
-                    <button
-                      className="ud-btn2"
-                      onClick={handleViewMore}
-                      style={{
-                        border: "none",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      View More Properties
-                      <i className="fal fa-arrow-down-long" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )} */}
-          </div>
-        </section>
-
         {/* Additional Sections - Show all at once with fade animation */}
         {sections.map((section, index) => (
-          <div
+          <FeaturedListingsHome
+            pageSections={pageSections}
+            section={section}
             key={index}
-            style={{
-              maxHeight: "900px",
-              overflow: "hidden",
-
-              opacity: 1,
-            }}
-          >
-            <section className="pt20  pb0 pb10-md bgc-white" data-aos="fade-up">
-              <div className="container">
-                <div className="row align-items-center">
-                  <div className="col-lg-12">
-                    <div className="main-title2 text-left">
-                      <h2 className="title">{section.title}</h2>
-                      <p className="paragraph">{section.paragraph}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div
-                    className="col-lg-12"
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                  >
-                    <div className="feature-listing-slider">
-                      {/* Component would go here */}
-                      <div className="text-center ">
-                        <FeaturedListings params={section.params} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
+            index={index}
+          />
         ))}
+        {/* Main Featured Listings Section */}
+
+        {/* <FeaturedListingsHome
+          pageSections={pageSections}
+          section={{
+            title: "Featured Listings",
+            paragraph: " Premium homes designed to match your lifestyle",
+            seeAll: "See All Listings",
+          }}
+        /> */}
       </>
       {/* Explore Featured Listings */}
       {/* Property Cities */}
@@ -257,12 +244,21 @@ const Home_V2 = () => {
                 className="main-title"
                 data-aos="fade-up"
                 data-aos-delay="100"
-              >
-                <h2 className="title">Explore Cities</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
-              </div>
+                dangerouslySetInnerHTML={{
+                  __html:
+                    pageSections.find(
+                      (sec) => sec.section_name === "Section 8 Header"
+                    )?.html_content ||
+                    `<h2 className="title">
+
+                  Explore Cities
+                  </h2>
+                <p className="paragraph mt10 ">
+                  Browse prime real estate opportunities in the most
+                  sought-after cities.
+                </p>`,
+                }}
+              ></div>
             </div>
             {/* End header */}
 
@@ -292,7 +288,7 @@ const Home_V2 = () => {
           </div>
           {/* End .row */}
 
-          <div className="row">
+          <div className="row mt20">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
               <div className="property-city-slider">
                 <ExploreCities />
@@ -336,35 +332,77 @@ const Home_V2 = () => {
       </section> */}
       {/* End About Us */}
       {/* Our Testimonials */}
-      <section className="our-testimonial p-0">
-        <div className="cta-banner2 bgc-f7 maxw1600 mx-auto pt60 pt60-md pb110 pb60-md bdrs12 position-relative">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-lg-6 mx-auto"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <div className="main-title text-center">
-                  <h2>Testimonials</h2>
-                  <p className="paragraph">What our customers saying</p>
-                </div>
+      <section
+        className="our-testimonial p-0"
+        dangerouslySetInnerHTML={{
+          __html:
+            pageSections.find((sec) => sec.section_name === "Testimonials")
+              ?.html_content ||
+            `<div class="cta-banner2 bgc-f7 maxw1600 mx-auto pt60 pt60-md pb110 pb60-md bdrs12 position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto" data-aos="fade-up" data-aos-delay="100">
+        <div class="main-title text-center">
+           <h2 className="hero-title  animate-up-1">Testimonials</h2>
+          <p class="paragraph">What our customers saying</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 m-auto" data-aos="fade-up" data-aos-delay="300">
+        <div class="testimonial-style2">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade" id="pills-1st" role="tabpanel" aria-labelledby="pills-1st-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Questbloom Real Estate exceeded expectations, finding us a dream home in Dubai's iconic Downtown.</h4>
+                <h6 class="name">Ali Bin Saleh</h6>
+                <p class="design">Customer</p>
               </div>
             </div>
-            <div className="row">
-              <div
-                className="col-lg-8 m-auto"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <div className="testimonial-style2">
-                  <Testimonial />
-                </div>
+            <div class="tab-pane fade show active" id="pills-2nd" role="tabpanel" aria-labelledby="pills-2nd-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Unmatched service and luxury properties – Questbloom made our Dubai home search effortless and enjoyable.</h4>
+                <h6 class="name">Nour Mohamed</h6>
+                <p class="design">Customer</p>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-third" role="tabpanel" aria-labelledby="pills-third-tab">
+              <div class="testi-content text-center">
+                <span class="icon fas fa-quote-left"></span>
+                <h4 class="testi-text">Questbloom Real Estate's expertise and dedication led us to the perfect home in Dubai Marina.</h4>
+                <h6 class="name">Lina Kamal-Eddin</h6>
+                <p class="design">Customer</p>
               </div>
             </div>
           </div>
+          <div class="tab-list position-relative">
+            <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link ps-0" id="pills-1st-tab" data-bs-toggle="pill" data-bs-target="#pills-1st" type="button" role="tab" aria-controls="pills-1st" aria-selected="false">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-1.webp" alt="">
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-2nd-tab" data-bs-toggle="pill" data-bs-target="#pills-2nd" type="button" role="tab" aria-controls="pills-2nd" aria-selected="true">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-2.webp" alt="">
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-third-tab" data-bs-toggle="pill" data-bs-target="#pills-third" type="button" role="tab" aria-controls="pills-third" aria-selected="false">
+                  <img style="width: 70px; height: 71px;" src="/images/testimonials/testi-3.webp" alt="">
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</div>`,
+        }}
+      ></section>
       {/* End Our Testimonials */}
       {/* Exclusive Agents */}
       {/* <section className="pb90">
@@ -436,7 +474,109 @@ const Home_V2 = () => {
       </section> */}
       {/* End Our Partners */}
       {/* Our CTA */}
-      <Cta />
+      <section className="our-cta2 p0 px20 d-lg-none d-block">
+        <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt100 pt50-md pb85 pb50-md px30-md bdrs12 position-relative overflow-hidden">
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-lg-7 col-xl-5"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                <div className="cta-style2">
+                  <h2 className="cta-title">
+                    Buying a Property With Questbloom
+                  </h2>
+                  <p className="cta-text">Browse through more properties.</p>
+
+                  <a
+                    href="/off-plan"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "1px solid black",
+                      cursor: "pointer",
+                      borderRadius: "12px",
+                      padding: "12px 25px",
+                      textAlign: "center",
+                      fontWeight: 600,
+                      fontSize: "15px",
+                      backgroundColor: "#181a20",
+                      fontStyle: "normal",
+                      fontFamily:
+                        '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif',
+                      outline: "none",
+                      WebkitAppearance: "none", // iOS fix
+                      color: "white", // ensure visible text
+                      display: "inline-flex", // prevents text collapse
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    className=" mt10 "
+                  >
+                    Let's Get Started{" "}
+                    <i
+                      className="fal ms-2 fa-arrow-right-long"
+                      style={{ transform: "rotate(-45deg)" }}
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="cta-style2 d-none d-lg-block"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <img
+              style={{ width: "35%", borderRadius: "30px" }}
+              src="/images/cta-image.jpg"
+              alt="element"
+            />
+          </div>
+        </div>
+      </section>
+      {/* desktop CTA */}
+      <section className="our-cta2 p0 px20 d-lg-block d-none">
+        <div className="cta-banner2 bgc-thm maxw1600 d-flex mx-auto pt15 pb15 justify-content-between align-items-center  bdrs12 position-relative overflow-hidden">
+          <div className="container d-flex justify-content-center pl60  ">
+            <div className="row ">
+              <div
+                className="col-lg-10 col-12"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                <div className="cta-style2">
+                  <h2 className="cta-title">
+                    Buying a Property With Questbloom
+                  </h2>
+                  <p className="cta-text">Browse through more properties.</p>
+
+                  <a href="/off-plan" className="ud-btn btn-dark mt10">
+                    Let's Get Started{" "}
+                    <i className="fal fa-arrow-right-long"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="cta-style2 d-none  text-end d-lg-block  "
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <img
+              style={{
+                width: "80%",
+                borderRadius: "30px",
+                marginRight: "40px",
+              }}
+              src="/images/cta-image.jpg"
+              alt="element"
+            />
+          </div>
+        </div>
+      </section>
       {/* End Our CTA */}
       {/* Start Our Footer */}
       <section className="footer-style1 at-home2 pb-0">

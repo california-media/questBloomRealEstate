@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const PaymentPlans = ({ payment_plans }) => {
-  const [activePlan, setActivePlan] = useState(0);
   const plans = payment_plans || [];
 
   if (!plans.length) {
@@ -14,266 +13,164 @@ const PaymentPlans = ({ payment_plans }) => {
     );
   }
 
-  // Helper function to get payment icon based on payment time
-  //   const getPaymentIcon = (paymentTime) => {
-  //     const timeText = paymentTime?.toLowerCase() || "";
-  //     if (timeText.includes("booking")) return "📝";
-  //     if (timeText.includes("construction")) return "🏗️";
-  //     if (timeText.includes("handover")) return "🔑";
-  //     if (timeText.includes("completion")) return "✅";
-  //     return "💰";
-  //   };
-
-  // Helper function to get progress color based on order
-  const getProgressColor = (order, totalSteps) => {
-    const colors = ["#28a745", "#007bff", "#ffc107", "#dc3545", "#6f42c1"];
-    return colors[(order - 1) % colors.length];
+  const formatEOI = (plan) => {
+    const payments = plan.Payments[0] || [];
+    const ranges = payments.map((p) => `${p.Percent_of_payment}%`);
+    return ranges.join(", ");
   };
 
   return (
-    <div className="payment-plans-container">
-      {/* Plan Tabs */}
-      <div className="plan-tabs mb-4">
-        <div className="d-flex flex-wrap gap-2">
-          {plans.map((plan, index) => (
-            <button
-              key={index}
-              className={`btn ${
-                activePlan === index ? "btn-primary" : "btn-outline-primary"
-              } plan-tab`}
-              onClick={() => setActivePlan(index)}
+    <div className="container-fluid ">
+      <div className="row g-3">
+        {plans.map((plan, index) => (
+          <div key={index} className="col-md-6">
+            <div
+              className="card h-100"
               style={{
-                borderRadius: "25px",
-                padding: "8px 20px",
-                fontSize: "14px",
-                fontWeight: "500",
-                transition: "all 0.3s ease",
+                border: "none",
+                borderRadius: "12px",
+                backgroundColor: "#ffffff",
               }}
             >
-              {plan.Plan_name}
-              {plan.months_after_handover > 0 && (
-                <small
-                  className="d-block"
-                  style={{ fontSize: "11px", opacity: 0.8 }}
-                >
-                  {plan.months_after_handover} months after handover
-                </small>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Active Plan Details */}
-      {plans[activePlan] && (
-        <div className="active-plan">
-          <div className="row">
-            <div className="col-md-12">
-              <div
-                className="payment-plan-card"
-                style={{
-                  backgroundColor: "#f8f9fa",
-                  borderRadius: "12px",
-                  padding: "24px",
-                  border: "1px solid #e9ecef",
-                }}
-              >
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="mb-0 text-dark">
-                    {plans[activePlan].Plan_name}
-                  </h5>
-                  {plans[activePlan].months_after_handover > 0 && (
-                    <span
-                      className="badge bg-info text-white"
-                      style={{ borderRadius: "20px" }}
-                    >
-                      {plans[activePlan].months_after_handover} months
-                      post-handover
-                    </span>
-                  )}
+              <div className="card-body" style={{ padding: "20px" }}>
+                {/* Header with Icon and Title */}
+                <div className="d-flex align-items-center mb-3">
+                  <img
+                    className="me-3"
+                    src="/images/pie-chart.svg"
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      backgroundColor: "#ffc107",
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  ></img>
+                  <h4
+                    className="mb-0 "
+                    style={{
+                      fontSize: "18px",
+                      color: "#333333",
+                      lineHeight: "1.2",
+                    }}
+                  >
+                    {plan.Plan_name}
+                  </h4>
                 </div>
 
                 {/* Payment Steps */}
-                <div className="payment-steps">
-                  {plans[activePlan].Payments.map(
-                    (paymentGroup, groupIndex) => (
-                      <div key={groupIndex}>
-                        {paymentGroup.map((payment, paymentIndex) => (
-                          <div
-                            key={paymentIndex}
-                            className="payment-step mb-3"
+                {plans.map((plan, index) => (
+                  <div key={index}>
+                    {/* Payment Steps */}
+                    <div className="mb-2">
+                      {plan.Payments.flat().map((payment, paymentIndex) => (
+                        <div
+                          key={paymentIndex}
+                          className="d-flex justify-content-between align-items-center"
+                          style={{
+                            marginBottom:
+                              paymentIndex === plan.Payments.flat().length - 1
+                                ? "0"
+                                : "12px",
+                          }}
+                        >
+                          <div className="d-flex align-items-center">
+                            <span
+                              className="fw-semibold me-2"
+                              style={{
+                                fontSize: "14px",
+                                color: "#333333",
+                                minWidth: "30px",
+                              }}
+                            >
+                              {payment.Percent_of_payment}%
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "14px",
+                                color: "#777777",
+                                fontWeight: "400",
+                              }}
+                            >
+                              payment
+                            </span>
+                          </div>
+                          <span
                             style={{
-                              backgroundColor: "white",
-                              borderRadius: "10px",
-                              padding: "20px",
-                              border: "1px solid #e9ecef",
-                              position: "relative",
-                              transition: "all 0.3s ease",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.boxShadow =
-                                "0 4px 12px rgba(0,0,0,0.1)";
-                              e.currentTarget.style.transform =
-                                "translateY(-2px)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.boxShadow = "none";
-                              e.currentTarget.style.transform = "translateY(0)";
+                              fontSize: "14px",
+                              color: "#777777",
+                              fontWeight: "400",
+                              textAlign: "right",
                             }}
                           >
-                            <div className="d-flex align-items-center">
-                              {/* Step Number & Icon */}
-                              <div
-                                className="step-indicator me-3"
-                                style={{
-                                  width: "50px",
-                                  height: "50px",
-                                  borderRadius: "50%",
-                                  backgroundColor: getProgressColor(
-                                    payment.Order,
-                                    plans[activePlan].Payments.length
-                                  ),
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  color: "white",
-                                  fontWeight: "bold",
-                                  fontSize: "16px",
-                                  flexShrink: 0,
-                                }}
-                              >
-                                {payment.Order}
-                              </div>
-
-                              {/* Payment Details */}
-                              <div className="payment-details flex-grow-1">
-                                <div className="d-flex justify-content-between align-items-start">
-                                  <div>
-                                    <h6 className="mb-1 text-dark d-flex align-items-center">
-                                      {/* <span
-                                        className="me-2"
-                                        style={{ fontSize: "18px" }}
-                                      >
-                                        {getPaymentIcon(payment.Payment_time)}
-                                      </span> */}
-                                      {payment.Payment_time}
-                                    </h6>
-                                    <p
-                                      className="mb-0 text-muted"
-                                      style={{ fontSize: "14px" }}
-                                    >
-                                      Step {payment.Order} of{" "}
-                                      {plans[activePlan].Payments.length}
-                                    </p>
-                                  </div>
-                                  <div className="text-end">
-                                    <div
-                                      className="payment-percentage"
-                                      style={{
-                                        fontSize: "24px",
-                                        fontWeight: "bold",
-                                        color: getProgressColor(
-                                          payment.Order,
-                                          plans[activePlan].Payments.length
-                                        ),
-                                      }}
-                                    >
-                                      {payment.Percent_of_payment}%
-                                    </div>
-                                    <small className="text-muted">
-                                      of total price
-                                    </small>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Progress Bar */}
-                            <div className="mt-3">
-                              <div
-                                className="progress"
-                                style={{ height: "6px", borderRadius: "3px" }}
-                              >
-                                <div
-                                  className="progress-bar"
-                                  style={{
-                                    width: `${payment.Percent_of_payment}%`,
-                                    backgroundColor: getProgressColor(
-                                      payment.Order,
-                                      plans[activePlan].Payments.length
-                                    ),
-                                    borderRadius: "3px",
-                                  }}
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )
-                  )}
-                </div>
-
-                {/* Plan Summary */}
-                <div
-                  className="plan-summary mt-4 p-3"
-                  style={{
-                    backgroundColor: "#e3f2fd",
-                    borderRadius: "8px",
-                    border: "1px solid #bbdefb",
-                  }}
-                >
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span className="fw-bold text-primary">Total Payment:</span>
+                            {payment.Payment_time}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <hr className="text-muted h-1" />
+                {/* EOI Section */}
+                <div className="mb-1">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
                     <span
-                      className="fw-bold text-primary"
-                      style={{ fontSize: "18px" }}
+                      className="fw-semibold"
+                      style={{
+                        fontSize: "14px",
+                        color: "#333333",
+                      }}
                     >
-                      {plans[activePlan].Payments.reduce(
-                        (total, group) =>
-                          total +
-                          group.reduce(
-                            (groupTotal, payment) =>
-                              groupTotal + parseInt(payment.Percent_of_payment),
-                            0
-                          ),
-                        0
-                      )}
-                      %
+                      EOI
+                    </span>
+                    <span
+                      className="fw-semibold"
+                      style={{
+                        fontSize: "14px",
+                        color: "#333333",
+                      }}
+                    >
+                      {formatEOI(plan)}
                     </span>
                   </div>
-                  <small className="text-muted mt-1 d-block">
-                    Payment schedule spread across{" "}
-                    {plans[activePlan].Payments.length} milestones
-                  </small>
+                </div>
+
+                {/* Conditions Section */}
+                <div>
+                  <div className="d-flex justify-content-between align-items-baseline">
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#777777",
+                        fontWeight: "400",
+                        lineHeight: "1.4",
+                      }}
+                    >
+                      Conditions for the unit resale
+                    </span>
+                    <span
+                      className="fw-semibold"
+                      style={{
+                        fontSize: "14px",
+                        color: "#333333",
+                        textAlign: "right",
+                        marginLeft: "12px",
+                      }}
+                    >
+                      {plan.months_after_handover > 0
+                        ? `${plan.months_after_handover} months after handover`
+                        : "Not specified"}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      <style jsx>{`
-        .plan-tab:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          color: #f1f3f4 !important; /* Bootstrap primary blue */
-        }
-        .btn-primary.plan-tab {
-          color: #fff !important; /* Text color for active tab */
-        }
-        .payment-step {
-          transition: all 0.3s ease;
-        }
-
-        .step-indicator {
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .progress {
-          background-color: #f1f3f4;
-        }
-      `}</style>
+        ))}
+      </div>
     </div>
   );
 };

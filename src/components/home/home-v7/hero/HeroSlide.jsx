@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper";
@@ -37,7 +36,7 @@ const HeroSlide = () => {
     <>
       <Swiper
         autoplay={{
-          delay: 3000, // 3 seconds between slides
+          delay: 50000, // 3 seconds between slides
           disableOnInteraction: false, // Autoplay will not be disabled on user interaction
         }}
         scrollbar={{
@@ -52,7 +51,6 @@ const HeroSlide = () => {
             <div className="listing-style13">
               <div className="list-thumb">
                 <img
-                
                   className="w-100 h-100 cover"
                   src={listing.imageUrl}
                   alt="thumb"

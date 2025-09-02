@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -83,7 +81,7 @@ const FeatureProperties = () => {
                   <div className="list-tag2 fz12">{property.status}</div>
                 </div>
                 <h4 className="list-title">
-                  <Link  to={`/single-v4/${property.id}`}>{property.title}</Link>
+                  <Link to={`/single-v4/${property.id}`}>{property.title}</Link>
                 </h4>
                 <p className="list-text fz15">{property.location}</p>
                 <div className="list-meta d-block d-sm-flex align-items-center mt30 mb40">
@@ -112,7 +110,7 @@ const FeatureProperties = () => {
                   <div className="col-auto">
                     <div className="contact-info">
                       <p className="info-title ff-heading mb-2">
-                        Total Free Customer Care
+                        Customer Care
                       </p>
                       <h6 className="info-phone">
                         <a href="tel:+012305094502">+(0) 123 050 945 02</a>

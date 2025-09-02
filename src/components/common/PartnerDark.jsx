@@ -1,5 +1,3 @@
-
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 
@@ -26,7 +24,7 @@ const PartnerDark = () => {
       }}
       loop
       autoplay={{
-        delay: 3000, // Adjust the autoplay delay (in milliseconds) as per your preference
+        delay: 50000, // Adjust the autoplay delay (in milliseconds) as per your preference
         disableOnInteraction: false,
       }}
       className="swiper-container"
@@ -36,7 +34,6 @@ const PartnerDark = () => {
           <div className="item">
             <div className="partner_item">
               <img
-               
                 style={{ objectFit: "contain" }}
                 className="wa m-auto"
                 src={`/images/partners/${imageName}.png`}

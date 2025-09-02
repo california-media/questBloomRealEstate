@@ -1,10 +1,12 @@
-import React from "react";
-
-const getCurrentYear = () => {
-  return new Date().getFullYear();
-};
+import adminApi from "@/api/adminApi";
+import React, { useEffect, useState } from "react";
 
 const Footer = () => {
+  const [copyrightText, setCopyrightText] = useState(
+    "© Quest Bloom Real Estate LLC - All rights reserved"
+  );
+  const [loading, setLoading] = useState(false);
+
   const footerMenuItems = [
     {
       label: "Privacy",
@@ -20,13 +22,35 @@ const Footer = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchCopyright = async () => {
+      try {
+        setLoading(true);
+        const response = await adminApi.get(
+          "/theme-options/general?keys=copyright"
+        );
+
+        if (response.data.success && response.data.data.copyright) {
+          setCopyrightText(response.data.data.copyright);
+        }
+      } catch (error) {
+        console.error("Error fetching copyright text:", error);
+        // Keep default copyright text if fetch fails
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCopyright();
+  }, []);
+
   return (
     <div className="container white-bdrt1 py-4">
       <div className="row">
         <div className="col-sm-6">
           <div className="text-center text-lg-start">
             <p className="copyright-text text-gray ff-heading">
-              © Questbloom - All rights reserved
+              {copyrightText}
             </p>
           </div>
         </div>

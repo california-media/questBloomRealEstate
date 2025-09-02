@@ -1,5 +1,3 @@
-
-
 import listings from "@/data/listings";
 import React, { useState, useEffect } from "react";
 import ListingSidebar from "../../sidebar";
@@ -36,7 +34,7 @@ export default function PropertyFiltering() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [bedrooms, setBedrooms] = useState(0);
-  const [bathroms, setBathroms] = useState(0);
+  const [bathrooms, setBathroms] = useState(0);
   const [location, setLocation] = useState("All Cities");
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
@@ -51,7 +49,7 @@ export default function PropertyFiltering() {
     setBathroms(0);
     setLocation("All Cities");
     setSquirefeet([]);
-    setyearBuild([0, 2050]);
+    setyearBuild([0, 50000]);
     setCategories([]);
     setCurrentSortingOption("Newest");
     document.querySelectorAll(".filterInput").forEach(function (element) {
@@ -78,7 +76,7 @@ export default function PropertyFiltering() {
   const handlebedrooms = (elm) => {
     setBedrooms(elm);
   };
-  const handlebathroms = (elm) => {
+  const handleBathrooms = (elm) => {
     setBathroms(elm);
   };
   const handlelocation = (elm) => {
@@ -105,7 +103,7 @@ export default function PropertyFiltering() {
     handlepropertyTypes,
     handlepriceRange,
     handlebedrooms,
-    handlebathroms,
+    handleBathrooms,
     handlelocation,
     handlesquirefeet,
     handleyearBuild,
@@ -116,7 +114,7 @@ export default function PropertyFiltering() {
     resetFilter,
 
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
@@ -150,7 +148,7 @@ export default function PropertyFiltering() {
     ];
     filteredArrays = [
       ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
+      refItems.filter((el) => el.bath >= bathrooms),
     ];
     filteredArrays = [
       ...filteredArrays,
@@ -225,7 +223,7 @@ export default function PropertyFiltering() {
     propertyTypes,
     priceRange,
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
@@ -270,23 +268,23 @@ export default function PropertyFiltering() {
 
           {/* start mobile filter sidebar */}
           <div
-              className="offcanvas offcanvas-start p-0"
+            className="offcanvas offcanvas-start p-0"
             tabIndex="-1"
             id="listingSidebarFilter"
             aria-labelledby="listingSidebarFilterLabel"
           >
-            <div   className="offcanvas-header">
-              <h5   className="offcanvas-title" id="listingSidebarFilterLabel">
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="listingSidebarFilterLabel">
                 Listing Filter
               </h5>
               <button
                 type="button"
-                  className="btn-close text-reset"
+                className="btn-close text-reset"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
             </div>
-            <div   className="offcanvas-body p-0">
+            <div className="offcanvas-body p-0">
               <ListingSidebar filterFunctions={filterFunctions} />
             </div>
           </div>

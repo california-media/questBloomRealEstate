@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap');
+
+.luxury-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 1.7rem;
+  color: #f8f4e6;
+  position: relative;
+  display: inline-block;
+  padding: .4rem 1.8rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  
+  /* Safari-compatible gradient with fallback */
+  background: #797631; /* Fallback color */
+  background: -webkit-linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%);
+  background: linear-gradient(135deg, #797631 0%, #a5a24a 50%, #797631 100%);
+  
+  /* Safari-compatible background-size */
+  -webkit-background-size: 200% auto;
+  background-size: 200% auto;
+  
+  border-radius: 4px;
+  
+  /* Safari-compatible box-shadow */
+  -webkit-box-shadow: 0 8px 20px rgba(121, 118, 49, 0.3);
+  box-shadow: 0 8px 20px rgba(121, 118, 49, 0.3);
+  
+  text-shadow: .5px .5px 2px rgba(0, 0, 0, 0.3);
+  
+  /* Safari-compatible transition */
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  
+  margin-bottom: .5rem;
+  overflow: hidden;
+  
+  /* Ensure proper stacking context for Safari */
+  z-index: 1;
+}
+
+.luxury-heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  
+  /* Safari-compatible gradient */
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  
+  /* Safari-compatible animation */
+  -webkit-animation: shine 5s infinite;
+  animation: shine 5s infinite;
+  
+  /* Ensure proper layering in Safari */
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Safari-compatible keyframes */
+@-webkit-keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.luxury-heading:hover {
+  background-position: right center;
+  
+  /* Safari-compatible transform */
+  -webkit-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  transform: translateY(-2px);
+  
+  /* Safari-compatible box-shadow */
+  -webkit-box-shadow: 0 12px 28px rgba(121, 118, 49, 0.4);
+  box-shadow: 0 12px 28px rgba(121, 118, 49, 0.4);
+  
+  cursor: pointer;
+}
+
+.luxury-heading-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  
+  /* Safari-compatible transform */
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  
+  width: 60%;
+  height: 3px;
+  
+  /* Safari-compatible gradient with fallback */
+  background: #f8f4e6; /* Fallback */
+  background: -webkit-linear-gradient(90deg, rgba(248, 244, 230, 0), #f8f4e6, rgba(248, 244, 230, 0));
+  background: linear-gradient(90deg, transparent, #f8f4e6, transparent);
+  
+  opacity: 0.7;
+}
+
+/* Mobile-only adjustments */
+@media (max-width: 768px) {
+  .luxury-heading {
+    font-size: 1.3rem;
+    padding: 0.5rem 1.2rem;
+    margin: 0.8rem 0;
+    letter-spacing: 1px;
+    
+    /* Safari-compatible box-shadow */
+    -webkit-box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
+    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
+  }
+  
+  .luxury-heading::before {
+    /* Ensure animation works on mobile Safari */
+    -webkit-animation: shine 5s infinite;
+    animation: shine 5s infinite;
+  }
+  
+  .luxury-heading:hover {
+    /* Remove transform on mobile for better Safari compatibility */
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    
+    -webkit-box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
+    box-shadow: 0 4px 12px rgba(121, 118, 49, 0.3);
+  }
+  
+  .luxury-heading-decoration {
+    width: 50%;
+    height: 2px;
+  }
+}
+
+/* Extra small devices adjustment */
+@media (max-width: 480px) {
+  .luxury-heading {
+    font-size: 1.1rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-appearance: none) {
+  .luxury-heading {
+    /* Force hardware acceleration for smoother animations */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  .luxury-heading::before {
+    /* Ensure the shine effect works properly in Safari */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}

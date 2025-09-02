@@ -1,5 +1,17 @@
 
 // @import '../../node_modules/react-modal-video/scss/modal-video.scss';
+:root {
+  --primary-color: #797631; // Your default color
+  --primary-color-rgb: 121, 118, 49; // RGB version for opacity needs
+  --primary-color-light: #c2bf9f;
+  --primary-color-mobile-nav-bg: rgba(101, 235, 83, 0.07);
+  --primary-color-nav-text-hover: #a3a075;
+  --primary-color-animated-text-underline: #93914F;
+  
+
+}
+
+
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "./swiper-custom";
 @import "./style";

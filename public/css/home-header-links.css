@@ -1,0 +1,44 @@
+  .social-links-navbar {
+    position: fixed;
+    display: flex;
+    right:45px;  
+    top: 32%;
+    z-index: 1000;
+    flex-direction: column;
+    gap: 18px;
+    align-items: baseline;
+  }
+
+  .social-link-navbar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #797631, #9d9a4a);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+.social-link-navbar i{
+    font-size: 1.2rem;
+}
+  .social-link-navbar:hover {
+    transform: translateY(-3px) scale(1.05);
+    color: white;
+    box-shadow: 0 5px 15px rgba(121, 118, 49, 0.3);
+  }
+ @media (max-width: 768px) {
+   .social-links-navbar{
+    right: 7px;
+    
+   }  .social-link-navbar{
+    width: 44px;
+    height: 44px;
+   }
+   .social-link-navbar i{
+    font-size: 1rem;
+}
+  }

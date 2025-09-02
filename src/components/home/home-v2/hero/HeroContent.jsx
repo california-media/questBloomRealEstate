@@ -3,7 +3,6 @@ import SelectDropdown from "./SelectDropdown";
 import { useNavigate } from "react-router-dom";
 
 const HeroContent = ({
-  propertyTypes,
   saleStatuses,
   filterFunctions,
   searchTerm,
@@ -19,7 +18,6 @@ const HeroContent = ({
   const tabs = [
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
-    { id: "sold", label: "Sold" },
   ];
 
   return (

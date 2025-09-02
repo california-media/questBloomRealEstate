@@ -1,4 +1,3 @@
-
 import Select from "react-select";
 import InputRange from "react-input-range";
 import { useState } from "react";
@@ -37,11 +36,11 @@ const FilterItems = () => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#79763112"
           : isFocused
-          ? "#eb675312"
+          ? "#79763112"
           : undefined,
       };
     },

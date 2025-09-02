@@ -1,0 +1,19 @@
+import axios from "axios";
+const isDev = import.meta.env.DEV;
+// const adminBaseUrl = isDev
+//   ? "http://localhost:8000"
+//   : "https://admin.questrealestate.ae";
+
+const adminBaseUrl = "https://admin.questrealestate.ae";
+
+const adminApi = axios.create({
+  baseURL: adminBaseUrl + "/api",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-API-Key": "T3SDUBKCS6tfWhyATbOuiBe5YYqR4sMr",
+  },
+  withCredentials: true,
+});
+export { adminBaseUrl };
+export default adminApi;

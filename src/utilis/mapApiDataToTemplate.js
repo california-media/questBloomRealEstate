@@ -58,10 +58,7 @@ export default function mapApiDataToTemplate(normalData, detailedData) {
     image: imageUrl || "/images/fallback.jpg", // fallback image
     location: normalData.area || "Unknown",
     title: normalData.name || "Untitled Property",
-    developer:
-      normalData.developer && normalData.developer != "Object 1"
-        ? normalData.developer
-        : "Unknown",
+    developer: normalData.developer ? normalData.developer : "Unknown",
     post_handover: normalData.post_handover || false,
     city: normalData.area || "Unknown",
     bed: uniqueBedrooms[uniqueBedrooms.length - 1], ///max number of bedrooms

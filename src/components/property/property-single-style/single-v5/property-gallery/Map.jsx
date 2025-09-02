@@ -14,7 +14,7 @@ const GoogleMapEmbed = ({ location }) => {
   return (
     <div
       style={{
-        aspectRatio: "3.2",
+        aspectRatio: "2.5",
         width: "100%",
         display: "flex",
         justifyContent: "center",

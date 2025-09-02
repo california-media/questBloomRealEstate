@@ -1,4 +1,3 @@
-
 import agents from "@/data/agents";
 
 import { Link } from "react-router-dom";
@@ -27,18 +26,17 @@ const Agents = () => {
           },
         }}
         autoplay={{
-          delay: 3000, // Set the desired delay for autoplay
+          delay: 50000, // Set the desired delay for autoplay
           disableOnInteraction: false, // Keep autoplaying even when user interacts with the swiper
         }}
       >
         {agents.slice(0, 7).map((agent, index) => (
           <SwiperSlide key={index}>
             <div className="item" key={index}>
-              <Link  to={`/agent-single/${agent.id}`}>
+              <Link to={`/agent-single/${agent.id}`}>
                 <div className="team-style1 mb30">
                   <div className="team-img">
                     <img
-                   
                       className="w-100 h-100 cover"
                       src={agent.image}
                       alt="agent team"

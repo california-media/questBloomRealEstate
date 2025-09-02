@@ -1,12 +1,11 @@
-
 import Select from "react-select";
 
-const Location = ({filterFunctions}) => {
+const Location = ({ filterFunctions }) => {
   const locationOptions = [
     { value: "All Cities", label: "All Cities" },
     { value: "California", label: "California" },
     { value: "Los Angeles", label: "Los Angeles" },
-   
+
     { value: "New York", label: "New York" },
     { value: "San Diego", label: "San Diego" },
     { value: "San Francisco", label: "San Francisco" },
@@ -18,11 +17,11 @@ const Location = ({filterFunctions}) => {
       return {
         ...styles,
         backgroundColor: isSelected
-          ? "#eb6753"
+          ? "#797631"
           : isHovered
-          ? "#eb675312"
+          ? "#79763112"
           : isFocused
-          ? "#eb675312"
+          ? "#79763112"
           : undefined,
       };
     },
@@ -37,8 +36,11 @@ const Location = ({filterFunctions}) => {
       className="select-custom"
       classNamePrefix="select"
       required
-      value={{value:filterFunctions.location,label:filterFunctions.location}}
-      onChange={(e)=>filterFunctions?.handlelocation(e.value)}
+      value={{
+        value: filterFunctions.location,
+        label: filterFunctions.location,
+      }}
+      onChange={(e) => filterFunctions?.handlelocation(e.value)}
     />
   );
 };

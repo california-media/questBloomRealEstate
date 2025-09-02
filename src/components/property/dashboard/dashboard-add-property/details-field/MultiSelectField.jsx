@@ -1,4 +1,3 @@
-
 import React from "react";
 import Select from "react-select";
 
@@ -13,11 +12,11 @@ const customStyles = {
     return {
       ...styles,
       backgroundColor: isSelected
-        ? "#eb6753"
+        ? "#797631"
         : isHovered
-        ? "#eb675312"
+        ? "#79763112"
         : isFocused
-        ? "#eb675312"
+        ? "#79763112"
         : undefined,
     };
   },

@@ -4,7 +4,7 @@ import ContactInfo from "./ContactInfo";
 import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
 
-const MobileMenu = () => {
+const MobileMenu = (menuItems, error) => {
   return (
     <div className="mobilie_header_nav stylehome1">
       <div className="mobile-menu">
@@ -22,14 +22,12 @@ const MobileMenu = () => {
               </a>
               <Link className="mobile_logo" to="/">
                 <img
-                  style={{ height: "50px" }}
+                  style={{ height: "40px" }}
                   src="/images/QMC-logo.webp"
                   alt="Header Logo"
                 />
               </Link>
-              <Link to="#">
-             
-              </Link>
+              <Link to="#"></Link>
             </div>
           </div>
         </div>
@@ -52,17 +50,17 @@ const MobileMenu = () => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">Welcome to Questbloom</h4>
+            <h4 className="title">Welcome to Quest Bloom Real Estate </h4>
           </div>
           {/* End header */}
 
           <div className="hsidebar-content ">
             <div className="hiddenbar_navbar_content">
-              <ProSidebarContent />
+              <ProSidebarContent menuItems={menuItems} error={error} />
               {/* End .hiddenbar_navbar_menu */}
 
               <div className="hiddenbar_footer position-relative bdrt1">
-                <div className="row pt45 pb30 pl30">
+                <div className="row pt45 pb30 gy-3 pl30">
                   <ContactInfo />
                 </div>
                 {/* End .row */}

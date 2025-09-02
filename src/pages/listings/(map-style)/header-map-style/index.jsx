@@ -8,10 +8,11 @@ import { useParams } from "react-router-dom";
 // import PropertyFilteringMap from "@/components/listing/map-style/header-map-style/PropertyFilteringMap";
 // import TopFilterBar from "@/components/listing/map-style/header-map-style/TopFilterBar";
 // import TopFilterBar2 from "@/components/listing/map-style/header-map-style/TopFilterBar2";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import MetaData from "@/components/common/MetaData";
 import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFiltering";
+import adminApi from "@/api/adminApi";
 
 const metaInformation = {
   title: "City Listings",
@@ -19,16 +20,50 @@ const metaInformation = {
 
 const HeaderMapStyle = () => {
   const { region } = useParams();
-  console.log(region);
+  const [menuItems, setMenuItems] = useState([]);
+  const [error, setError] = useState(null);
+
+  // Fetch menu items from API (same logic as MainMenu)
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await adminApi.get("/appearance/menus", {
+          params: {
+            type: "header",
+          },
+        });
+
+        setMenuItems(response.data || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching menu items:", err);
+        setError("Failed to load menu items");
+        // Fallback to default menu structure if API fails
+        setMenuItems([
+          { id: 1, name: "Home", page: "Home" },
+          { id: 2, name: "Off-Plan", page: "Off-Plan" },
+          { id: 3, name: "Buy", page: "Buy" },
+          { id: 4, name: "Listings", page: "Listings" },
+          { id: 5, name: "Rent", page: "Rent" },
+          { id: 6, name: "Agents", page: "Agents" },
+          { id: 7, name: "Who We Are", page: "Who we are" },
+          { id: 8, name: "Contact Us", page: "Contact Us" },
+        ]);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
+
   return (
     <>
       <MetaData meta={metaInformation} />
       {/* Main Header Nav */}
-      <DefaultHeader />
+      <DefaultHeader menuItems={menuItems} error={error} />
       {/* End Main Header Nav */}
 
       {/* Mobile Nav  */}
-      <MobileMenu />
+      <MobileMenu menuItems={menuItems} error={error} />
       {/* End Mobile Nav  */}
       {/* Breadcumb Sections */}
       <section className="breadcumb-section bgc-f7">

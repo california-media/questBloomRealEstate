@@ -5,9 +5,16 @@ const ListingStatus = ({
   saleStatuses = [],
   setDataFetched,
 }) => {
+  const formattedStatuses = [
+    { id: "flexRadioDefault0", label: "All", defaultChecked: true },
+    ...saleStatuses.map((status, index) => ({
+      id: `flexRadioDefault${index + 1}`,
+      label: status,
+    })),
+  ];
   return (
     <>
-      {saleStatuses.map((option) => (
+      {formattedStatuses.map((option) => (
         <div
           className="form-check d-flex align-items-center mb10"
           key={option.id}
