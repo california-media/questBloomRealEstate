@@ -20,7 +20,7 @@ import AnimatedText from "@/components/home/home-v2/hero/AnimatedText";
 import SocialLinksNavbar from "./SocialLinksNavbar";
 
 const metaInformation = {
-  title: "Home",
+  title: "Rent, Buy or Sell, Off-plan Residential & Commercial Properties in Dubai. Quest Bloom Realestate also offers Property Consulting Services",
 };
 
 const beachAreaProperties = [
