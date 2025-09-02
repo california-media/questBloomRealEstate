@@ -37,7 +37,6 @@ import OffPlanPropertyPDF from "@/components/property/property-single-style/sing
 import { PDFViewer } from "@react-pdf/renderer";
 import ImageTabs from "@/components/pages/about/ImageTabs";
 import { Heart, MapPin, Sparkles } from "lucide-react";
-import AdminPropertyPDF from "@/components/property/property-single-style/single-v5/AdminPropertyPDF";
 import Parkings from "@/components/property/property-single-style/common/Parkings";
 import YoutubeVideoEmbed from "@/components/property/property-single-style/single-v5/YoutubeVideoEmbed";
 import ProjectDetailsCard from "@/components/property/property-single-style/single-v5/ProjectDetailsCard";

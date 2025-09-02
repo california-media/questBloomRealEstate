@@ -1347,6 +1347,72 @@ const OffPlanPropertyPDF = ({
         />
       </Page> */}
 
+      {/* Interior images */}
+
+      {property?.interior?.length > 0 && (
+        <Page size={[920, 540]}>
+          {/* Image grid - 2 columns */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "stretch",
+              height: "100%",
+              gap: 2,
+            }}
+          >
+            {/* Left column - single image */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[0]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </View>
+
+            {/* Right column - two stacked images */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <Image
+                src={property.interior[1]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  marginBottom: 2,
+                }}
+              />
+              <Image
+                src={property.interior[2]?.url || ""}
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </View>
+          </View>
+
+          {/* Title on the page */}
+          <Text
+            style={{
+              ...styles.pageTitle,
+              position: "absolute",
+              top: 30,
+              left: 30,
+              color: "white",
+            }}
+          >
+            Interior Images
+          </Text>
+
+          {/* Footer */}
+          <ContactFooter />
+        </Page>
+      )}
+
       <Page size={[920, 540]} style={styles.contentPage}>
         {/* Property Details */}
         <Text style={styles.pageTitle}>{property?.name}</Text>
@@ -1568,72 +1634,6 @@ const OffPlanPropertyPDF = ({
         <DescriptionRenderer text={property?.overview} />
         <ContactFooter />
       </Page>
-
-      {/* Interior images */}
-
-      {property?.interior?.length > 0 && (
-        <Page size={[920, 540]}>
-          {/* Image grid - 2 columns */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "stretch",
-              height: "100%",
-              gap: 2,
-            }}
-          >
-            {/* Left column - single image */}
-            <View style={{ flex: 1, height: "100%" }}>
-              <Image
-                src={property.interior[0]?.url || ""}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </View>
-
-            {/* Right column - two stacked images */}
-            <View style={{ flex: 1, height: "100%" }}>
-              <Image
-                src={property.interior[1]?.url || ""}
-                style={{
-                  width: "100%",
-                  height: "50%",
-                  objectFit: "cover",
-                  marginBottom: 2,
-                }}
-              />
-              <Image
-                src={property.interior[2]?.url || ""}
-                style={{
-                  width: "100%",
-                  height: "50%",
-                  objectFit: "cover",
-                }}
-              />
-            </View>
-          </View>
-
-          {/* Title on the page */}
-          <Text
-            style={{
-              ...styles.pageTitle,
-              position: "absolute",
-              top: 30,
-              left: 30,
-              color: "white",
-            }}
-          >
-            Interior Images
-          </Text>
-
-          {/* Footer */}
-          <ContactFooter />
-        </Page>
-      )}
 
       {/* Page 4 - Location & Contact */}
       <Page size={[920, 540]}>

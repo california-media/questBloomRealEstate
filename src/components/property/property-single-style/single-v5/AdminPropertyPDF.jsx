@@ -1340,6 +1340,111 @@ const AdminPropertyPDF = ({
 
         <ContactFooter />
       </Page> */}
+
+      {/* Interior Images */}
+      {property?.photos?.length > 0 && (
+        <Page size={[920, 540]}>
+          {/* Image grid - 2 columns */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "stretch",
+              height: "100%",
+              gap: 2,
+            }}
+          >
+            {/* Left column - single image */}
+            <View
+              style={{
+                flex: 1,
+                height: "100%",
+                backgroundColor: "#f3f4f6",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {property.photos[0] ? (
+                <Image
+                  src={`${adminBaseUrl}/api/images${property.photos[0]}?format=jpeg`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <Icon type="no-image" size={48} color="#9ca3af" />
+              )}
+            </View>
+
+            {/* Right column - two stacked images */}
+            <View style={{ flex: 1, height: "100%" }}>
+              <View
+                style={{
+                  height: "50%",
+                  marginBottom: 2,
+                  backgroundColor: "#f3f4f6",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {property.photos[1] ? (
+                  <Image
+                    src={`${adminBaseUrl}/api/images${property.photos[1]}?format=jpeg`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <Icon type="no-image" size={32} color="#9ca3af" />
+                )}
+              </View>
+
+              <View
+                style={{
+                  height: "50%",
+                  backgroundColor: "#f3f4f6",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {property.photos[2] ? (
+                  <Image
+                    src={`${adminBaseUrl}/api/images${property.photos[2]}?format=jpeg`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <Icon type="no-image" size={32} color="#9ca3af" />
+                )}
+              </View>
+            </View>
+          </View>
+
+          {/* Title on the page */}
+          <Text
+            style={{
+              ...styles.pageTitle,
+              position: "absolute",
+              top: 30,
+              left: 30,
+              color: "white",
+            }}
+          >
+            Interior Images
+          </Text>
+
+          {/* Footer */}
+          <ContactFooter />
+        </Page>
+      )}
+
       <Page size={[920, 540]} style={styles.contentPage}>
         {/* Property Details */}
         <Text style={styles.pageTitle}>
@@ -1638,109 +1743,6 @@ const AdminPropertyPDF = ({
 
         <ContactFooter />
       </Page>
-      {/* Interior Images */}
-      {property?.photos?.length > 0 && (
-        <Page size={[920, 540]}>
-          {/* Image grid - 2 columns */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "stretch",
-              height: "100%",
-              gap: 2,
-            }}
-          >
-            {/* Left column - single image */}
-            <View
-              style={{
-                flex: 1,
-                height: "100%",
-                backgroundColor: "#f3f4f6",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {property.photos[0] ? (
-                <Image
-                  src={`${adminBaseUrl}/api/images${property.photos[0]}?format=jpeg`}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <Icon type="no-image" size={48} color="#9ca3af" />
-              )}
-            </View>
-
-            {/* Right column - two stacked images */}
-            <View style={{ flex: 1, height: "100%" }}>
-              <View
-                style={{
-                  height: "50%",
-                  marginBottom: 2,
-                  backgroundColor: "#f3f4f6",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {property.photos[1] ? (
-                  <Image
-                    src={`${adminBaseUrl}/api/images${property.photos[1]}?format=jpeg`}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  <Icon type="no-image" size={32} color="#9ca3af" />
-                )}
-              </View>
-
-              <View
-                style={{
-                  height: "50%",
-                  backgroundColor: "#f3f4f6",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {property.photos[2] ? (
-                  <Image
-                    src={`${adminBaseUrl}/api/images${property.photos[2]}?format=jpeg`}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  <Icon type="no-image" size={32} color="#9ca3af" />
-                )}
-              </View>
-            </View>
-          </View>
-
-          {/* Title on the page */}
-          <Text
-            style={{
-              ...styles.pageTitle,
-              position: "absolute",
-              top: 30,
-              left: 30,
-              color: "white",
-            }}
-          >
-            Interior Images
-          </Text>
-
-          {/* Footer */}
-          <ContactFooter />
-        </Page>
-      )}
 
       {/* Page 4 - Location  */}
       <Page size={[920, 540]}>
