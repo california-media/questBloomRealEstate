@@ -266,7 +266,7 @@ export default function ProperteyFiltering({ region }) {
         ];
         setPropertyTypes(propertyTypeArray);
 
-        const newLocationOptions = await api.get("/areas");
+        const newLocationOptions = await api.get("/areas", { params: { country: "United Arab Emirates" } });
         const locationArray = [
           { value: "All Locations", label: "All Locations" },
           ...newLocationOptions.data.map((area) => ({

@@ -421,7 +421,7 @@ Logic for building payload:
           api.get("/unit-types"),
           adminApi.get("/rental-property-types"), ///same as admin and off-plan
           adminApi.get("/resale-locations"),
-          api.get("/areas"),
+          api.get("/areas", { params: { country: "United Arab Emirates" } }),
           api.get("/sale-statuses"),
         ]);
 

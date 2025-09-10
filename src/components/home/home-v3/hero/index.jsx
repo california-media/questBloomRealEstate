@@ -193,7 +193,7 @@ const Hero = ({ HeroTitle }) => {
             console.error("Failed to fetch rental types", e);
             return null;
           }),
-          api.get("/areas").catch((e) => {
+          api.get("/areas", { params: { country: "United Arab Emirates" } }).catch((e) => {
             console.error("Failed to fetch areas", e);
             return null;
           }),

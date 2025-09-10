@@ -105,7 +105,9 @@ const Hero = () => {
         }
 
         if (locationOptions?.length === 0) {
-          const newLocationOptions = await api.get("/areas");
+          const newLocationOptions = await api.get("/areas", {
+            params: { country: "United Arab Emirates" },
+          });
           const options = [
             { value: "All Locations", label: "All Locations" },
             ...newLocationOptions.data.map((area) => ({
