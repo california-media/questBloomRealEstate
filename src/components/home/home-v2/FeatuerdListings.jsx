@@ -25,8 +25,8 @@ const FeaturedListings = ({ params }) => {
       setLoading(true);
       try {
         const { data } = params
-          ? await api.get("/properties", { params })
-          : await api.get("/properties");
+          ? await api.get("/properties", { params: {...params, country: "United Arab Emirates"} })
+          : await api.get("/properties", { params: { country: "United Arab Emirates" } });
         const newListings = data.items.map((item) =>
           mapApiDataToTemplateSingle(item, "op")
         );

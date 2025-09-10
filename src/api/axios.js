@@ -19,9 +19,9 @@ api.interceptors.request.use((config) => {
     (url.startsWith("/properties") || url.startsWith("/areas"))
   ) {
     config.params = config.params || {};
-    if (!config.params.country) {
-      config.params.country = "United Arab Emirates";
-    }
+    // if (!config.params.country) {
+    //   config.params.country = "United Arab Emirates";
+    // }
   }
 
   return config;

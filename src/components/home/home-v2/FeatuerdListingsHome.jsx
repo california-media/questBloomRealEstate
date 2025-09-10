@@ -40,8 +40,12 @@ const FeaturedListingsHome = ({ index, section, pageSections }) => {
       setLoading(true);
       try {
         const { data } = section.params
-          ? await api.get("/properties", { params: section.params })
-          : await api.get("/properties");
+          ? await api.get("/properties", {
+              params: { ...section.params, country: "United Arab Emirates" },
+            })
+          : await api.get("/properties", {
+              params: { country: "United Arab Emirates" },
+            });
         const newListings = data.items.map((item) =>
           mapApiDataToTemplateSingle(item, "op")
         );

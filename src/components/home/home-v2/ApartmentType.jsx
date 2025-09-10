@@ -58,7 +58,7 @@ const ApartmentType = () => {
           for (const type of relevantTypes) {
             try {
               const { data } = await api.get("/properties", {
-                params: { unit_types: type, per_page: 1 },
+                params: { unit_types: type, per_page: 1, country: "United Arab Emirates" },
               });
               totalCount += data.pagination?.total || 0;
             } catch (err) {

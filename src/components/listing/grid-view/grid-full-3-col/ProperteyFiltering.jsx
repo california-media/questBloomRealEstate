@@ -185,6 +185,10 @@ export default function ProperteyFiltering({ region }) {
     const params = {
       page: nextPage,
       per_page: 9,
+      // country: searchTerm != "" ? "" : "United Arab Emirates", // Unset (send as empty) if searchTerm exists, else use default
+      ...(searchTerm === "" && {
+        country: "United Arab Emirates",
+      }),
       ...(selectedPropertyType != "All Property Types" && {
         unit_types: selectedPropertyType,
       }),

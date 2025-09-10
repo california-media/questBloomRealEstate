@@ -205,6 +205,10 @@ export default function ProperteyFilteringBuy({ region }) {
     const params = {
       page: page,
       per_page: 9,
+      ...(isOffPlan &&
+        searchTerm === "" && {
+          country: "United Arab Emirates",
+        }),
       ...(adminPropertyType != "All Property Types" && {
         unit_types: adminPropertyType,
       }),

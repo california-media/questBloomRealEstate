@@ -129,7 +129,7 @@ const ExploreCities = () => {
         const cityData = await Promise.all(
           matchedCities.map(async (city) => {
             const propRes = await api.get("/properties", {
-              params: { region: city.name },
+              params: { region: city.name, country: "United Arab Emirates" },
             });
 
             return {
