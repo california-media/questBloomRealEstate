@@ -5,10 +5,7 @@ export default async function handler(req, res) {
     // Create a mutable URLSearchParams object
     const queryParams = new URLSearchParams(req.query);
 
-    // Add default country if not provided
-    if (!queryParams.has("country")) {
-      queryParams.set("country", "United Arab Emirates");
-    }
+    
 
     // Construct final URL
     const url = `${baseUrl}?${queryParams.toString()}`;

@@ -105,12 +105,22 @@ const Hero = () => {
         }
 
         if (locationOptions?.length === 0) {
-          const newLocationOptions = await api.get("/areas", {
-            params: { country: "United Arab Emirates" },
-          });
+          const newLocationOptions = await api.get("/areas");
+
+          const nonUaeIds = [
+            94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150, 151,
+            152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171, 172, 173,
+            175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197, 203, 206, 207,
+            227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256, 274, 275
+          ];
+
+          const filteredAreas = (newLocationOptions.data || []).filter(
+            (area) => !nonUaeIds.includes(Number(area.id))
+          );
+
           const options = [
             { value: "All Locations", label: "All Locations" },
-            ...newLocationOptions.data.map((area) => ({
+            ...filteredAreas.map((area) => ({
               value: area.name,
               label: area.name,
             })),
