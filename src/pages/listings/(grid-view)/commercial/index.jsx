@@ -56,7 +56,7 @@ const BuyFull3Col = () => {
   useEffect(() => {
     const fetchSections = async () => {
       try {
-        const response = await adminApi.get("/pages/buy/sections");
+        const response = await adminApi.get("/pages/commercial/sections");
         setSections(response.data.data.sections || []);
       } catch (err) {
         console.error("Failed to fetch sections:", err);

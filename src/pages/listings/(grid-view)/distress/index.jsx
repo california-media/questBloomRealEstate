@@ -56,7 +56,7 @@ const BuyFull3Col = () => {
   useEffect(() => {
     const fetchSections = async () => {
       try {
-        const response = await adminApi.get("/pages/buy/sections");
+        const response = await adminApi.get("/pages/distress/sections");
         setSections(response.data.data.sections || []);
       } catch (err) {
         console.error("Failed to fetch sections:", err);
@@ -82,8 +82,9 @@ const BuyFull3Col = () => {
         className="breadcumb-section bgc-f7 "
         dangerouslySetInnerHTML={{
           __html:
-            sections.find((section) => section.section_name === "Buy Header")
-              ?.html_content ||
+            sections.find(
+              (section) => section.section_name === "Distress Header"
+            )?.html_content ||
             `<div class="container">
           <div class="row">
             <div class="col-lg-12">
