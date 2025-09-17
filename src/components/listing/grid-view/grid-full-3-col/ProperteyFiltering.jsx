@@ -186,9 +186,10 @@ export default function ProperteyFiltering({ region }) {
       page: nextPage,
       per_page: 9,
       // country: searchTerm != "" ? "" : "United Arab Emirates", // Unset (send as empty) if searchTerm exists, else use default
-      ...(searchTerm === "" && {
-        country: "United Arab Emirates",
-      }),
+      ...(searchTerm === "" &&
+        location === "All Locations" && {
+          country: "United Arab Emirates",
+        }),
       ...(selectedPropertyType != "All Property Types" && {
         unit_types: selectedPropertyType,
       }),
@@ -266,10 +267,21 @@ export default function ProperteyFiltering({ region }) {
         ];
         setPropertyTypes(propertyTypeArray);
 
-        const newLocationOptions = await api.get("/areas", { params: { country: "United Arab Emirates" } });
+        const nonUaeIds = [
+          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150,
+          151, 152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171,
+          172, 173, 175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197,
+          203, 206, 207, 227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256,
+          274, 275,
+        ];
+
+        const newLocationOptions = await api.get("/areas");
+        const filteredAreas = newLocationOptions.data.filter(
+          (area) => !nonUaeIds.includes(Number(area.id))
+        );
         const locationArray = [
           { value: "All Locations", label: "All Locations" },
-          ...newLocationOptions.data.map((area) => ({
+          ...filteredAreas.map((area) => ({
             value: area.id,
             label: area.name,
           })),

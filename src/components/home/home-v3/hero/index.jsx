@@ -180,6 +180,13 @@ const Hero = ({ HeroTitle }) => {
         console.log("fetching options");
 
         // Create an array of promises with error handling for each one
+        const nonUaeIds = [
+          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150, 151,
+          152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171, 172, 173,
+          175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197, 203, 206, 207,
+          227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256, 274, 275
+        ];
+
         const promises = [
           api.get("/sale-statuses").catch((e) => {
             console.error("Failed to fetch sale statuses", e);
@@ -193,10 +200,19 @@ const Hero = ({ HeroTitle }) => {
             console.error("Failed to fetch rental types", e);
             return null;
           }),
-          api.get("/areas", { params: { country: "United Arab Emirates" } }).catch((e) => {
-            console.error("Failed to fetch areas", e);
-            return null;
-          }),
+          // Filter out non-UAE areas right after fetching
+          api
+            .get("/areas")
+            .then((res) => {
+              if (res && Array.isArray(res.data)) {
+          res.data = res.data.filter((area) => !nonUaeIds.includes(area.id));
+              }
+              return res;
+            })
+            .catch((e) => {
+              console.error("Failed to fetch areas", e);
+              return null;
+            }),
           adminApi.get("/rental-locations").catch((e) => {
             console.error("Failed to fetch rental locations", e);
             return null;

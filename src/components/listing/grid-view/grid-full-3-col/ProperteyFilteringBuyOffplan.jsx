@@ -206,7 +206,7 @@ export default function ProperteyFilteringBuy({ region }) {
       page: page,
       per_page: 9,
       ...(isOffPlan &&
-        searchTerm === "" && {
+        searchTerm === "" && offplanBuyLocation === "All Locations" && {
           country: "United Arab Emirates",
         }),
       ...(adminPropertyType != "All Property Types" && {
@@ -409,6 +409,13 @@ Logic for building payload:
 
       try {
         // Fire all requests in parallel
+        const nonUaeIds = [
+          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150, 151,
+          152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171, 172, 173,
+          175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197, 203, 206, 207,
+          227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256, 274, 275
+        ];
+
         const [
           combinedListings,
           adminPropertyTypesRes,
@@ -421,9 +428,14 @@ Logic for building payload:
           api.get("/unit-types"),
           adminApi.get("/rental-property-types"), ///same as admin and off-plan
           adminApi.get("/resale-locations"),
-          api.get("/areas", { params: { country: "United Arab Emirates" } }),
+          api.get("/areas"),
           api.get("/sale-statuses"),
         ]);
+
+        // Filter out non-UAE areas by id
+        if (areasRes && Array.isArray(areasRes.data)) {
+          areasRes.data = areasRes.data.filter((area) => !nonUaeIds.includes(area.id));
+        }
 
         // Set all states (unchanged logic)
         setSaleStatuses(saleStatusesResponse.data);
