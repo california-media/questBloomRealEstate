@@ -137,6 +137,28 @@ const Agents = ({ agents }) => {
                             <i className="fab fa-linkedin-in"></i>
                           </a>
                         )}
+                        {agent.youtube && (
+                          <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={agent.youtube}
+                            className="social-link linkedin"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <i className="fab fa-youtube"></i>
+                          </a>
+                        )}
+                        {agent.tiktok && (
+                          <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={agent.tiktok}
+                            className="social-link linkedin"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <i className="fab fa-tiktok"></i>
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -70,11 +70,13 @@ import ListV1 from "./pages/listings/(list-view)/list-v1";
 import ScrollTopBehaviour from "./components/common/ScrollTopBehaviour";
 import SearchProperties from "./pages/listings/(map-style)/search-properties";
 import BuyFull3Col from "./pages/listings/(grid-view)/buy";
+import Distress from "./pages/listings/(grid-view)/distress";
 import Rent3Col from "./pages/listings/(grid-view)/rent";
 import ListingsFull3Col from "./pages/listings/(grid-view)/listings";
 import { Toaster } from "react-hot-toast";
 import adminApi, { adminBaseUrl } from "./api/adminApi";
 import BuyOffplan3Col from "./pages/listings/(grid-view)/buy-off-plan";
+import Commercial from "./pages/listings/(grid-view)/commercial";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -132,6 +134,8 @@ function App() {
               <Route path="grid-default" element={<GridDefault />} />
               <Route path="buy" element={<BuyFull3Col />} />
               <Route path="off-plan" element={<GridFull3Col />} />
+              <Route path="commercial" element={<Commercial />} />
+              <Route path="distress" element={<Distress />} />
               <Route path="rent" element={<Rent3Col />} />
               <Route path="listings" element={<ListingsFull3Col />} />
               <Route path="buy-off-plan" element={<BuyOffplan3Col />} />

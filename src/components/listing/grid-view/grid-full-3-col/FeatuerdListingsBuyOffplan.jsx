@@ -49,10 +49,9 @@ const FeatuerdListingsBuyOffplan = ({ data, colstyle }) => {
                   <span className="text-muted">No Image Available</span>
                 </div>
               )}
-
-              <div className="list-price">
-                {listing.listing_prefix === "op" ? "Off-Plan" : "For Sale"}
-              </div>
+              {listing.listing_prefix === "op" ? null : (
+                <div className="list-price">For Sale</div>
+              )}
             </div>
 
             <div className="list-content flex-grow-1 d-flex flex-column justify-content-between">

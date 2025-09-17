@@ -277,8 +277,8 @@
         }
 
         .social-link {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -289,7 +289,9 @@
             transition: all 0.4s ease;
             font-size: 1.2rem;
         }
-
+   .social-link i {
+    font-size: 1rem;
+   }
         .social-link:hover {
             transform: translateY(-5px) scale(1.1);
             color: white;

@@ -13,6 +13,8 @@ const SITE_PAGES = {
   Buy: "/buy",
   Rent: "/rent",
   "Contact Us": "/contact",
+  Distress: "/distress",
+  Commercial: "/commercial",
 };
 
 // Reverse mapping for route to menu key
@@ -25,6 +27,8 @@ const ROUTE_TO_MENU_KEY = {
   "/buy": "buy",
   "/listings": "listings",
   "/rent": "rent",
+  "/distress": "distress",
+  "/commercial": "commercial",
 };
 
 const MainMenu = ({ menuItems, error }) => {

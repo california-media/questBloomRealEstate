@@ -60,7 +60,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
 
   return (
     <section className="home-banner-style3 p0">
-      <div className="home-style3 ">
+      <div className="home-style3">
         {/* Carousel Background */}
         <div className="carousel-container">
           {images.map((image, index) => (
@@ -77,7 +77,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
         {/* Content */}
         <div className="container ">
           <div className="row justify-content-center">
-            <div className="col-xl-10 px-2">
+            <div className="col-xl-10 px-2 ">
               <Hero HeroTitle={HeroTitle} />
             </div>
           </div>
@@ -93,7 +93,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
         .home-banner-style3 .home-style3 {
           -webkit-box-align: center;
           -ms-flex-align: center;
-          align-items: center;
+          align-items: end;
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
@@ -138,6 +138,7 @@ const AutoCarouselHero = ({ HeroTitle }) => {
          @media (max-width: 991.98px) {
           .home-banner-style3 .home-style3 {
             height: 860px;
+               align-items: center;
           }
 
           

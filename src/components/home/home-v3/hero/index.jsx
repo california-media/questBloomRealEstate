@@ -293,7 +293,7 @@ const Hero = ({ HeroTitle }) => {
   ]);
   return (
     <>
-      <div className="inner-banner-style3 ">
+      <div className="inner-banner-style3 " style={{marginBottom: "-8px"}}>
         <div className=" d-flex justify-content-center">
           <h2
             className="mb30 hero-title  animate-up-1"
