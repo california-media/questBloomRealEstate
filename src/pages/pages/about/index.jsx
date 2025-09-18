@@ -218,7 +218,7 @@ Discover a new standard of luxury living with Questbloom Real Estate, where ever
 
       {/* End Breadcrumb Sections */}
       {/* Our About Area */}
-{/* 
+      {/* 
       <ScrollRevealSection sections={sections} />
       <ScrollRevealSectionMobile sections={sections} /> */}
       <section className="contact-info-section mt30-md pt-0 pb30 pb60-md">

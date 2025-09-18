@@ -11,9 +11,16 @@ import { Link, useLocation } from "react-router-dom";
 
 const FeaturedListingsBuy = ({ data, colstyle }) => {
   const location = useLocation();
-  const basePath = location.pathname.split("/")[1];
+  let basePath = location.pathname.split("/")[1];
+  basePath =
+    basePath === "commercial" || basePath === "distress" ? "buy" : basePath;
+  console.log("basePath",basePath);
+
   const validPaths = ["off-plan", "buy", "rent", "listings"];
+
   const pathPrefix = validPaths.includes(basePath) ? basePath : "off-plan";
+  console.log("pathPrefix",pathPrefix);
+
   return (
     <>
       {data.map((listing) => {
@@ -86,7 +93,10 @@ const FeaturedListingsBuy = ({ data, colstyle }) => {
                     {listing.yearBuilding}
                   </a>
                 </div> */}
-                <hr className="mt-1 mb-1 bg-secondary" style={{ borderColor: "gray" }}  />
+                <hr
+                  className="mt-1 mb-1 bg-secondary"
+                  style={{ borderColor: "gray" }}
+                />
                 <div className="list-meta2 d-flex   justify-content-between align-items-center">
                   <div>
                     Price from{" "}

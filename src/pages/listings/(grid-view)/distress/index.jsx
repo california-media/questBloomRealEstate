@@ -65,6 +65,7 @@ const BuyFull3Col = () => {
 
     fetchSections();
   }, []);
+
   return (
     <>
       <MetaData meta={metaInformation} />
