@@ -1017,6 +1017,7 @@ const AdminPropertyPDF = ({
                   justifySelf: "end",
                   position: "absolute",
                   bottom: 0,
+                  gap: 10,
                   left: "-2px",
                 }}
               >
@@ -1028,6 +1029,109 @@ const AdminPropertyPDF = ({
                     marginRight: 10,
                   }}
                 />
+                <View
+                  style={{
+                    width: 250,
+                    height: 70,
+                    padding: 10,
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      borderRadius: 12,
+                      height: "100%",
+                    }}
+                  />
+                  {/* Profile section */}
+                  <View
+                    style={{
+                      alignItems: "center",
+                      width: "100%",
+                      padding: 10,
+                      paddingTop: 2,
+                      paddingBottom: 0,
+                    }}
+                  >
+                    {/* Contact details */}
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginBottom: 8,
+                      }}
+                    >
+                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
+                        Phone
+                      </Text>
+                      <Link
+                        src={`tel:${qbc_phone}`}
+                        style={{
+                          fontSize: 12,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {qbc_phone}
+                      </Link>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        marginBottom: 8,
+                      }}
+                    >
+                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
+                        Email
+                      </Text>
+                      <Link
+                        src={`mailto:${qbc_email}`}
+                        style={{
+                          fontSize: 12,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {qbc_email}
+                      </Link>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        marginBottom: 8,
+                      }}
+                    >
+                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
+                        Website
+                      </Text>
+                      <Link
+                        src="https://questrealestate.ae"
+                        style={{
+                          fontSize: 12,
+                          color: "#1f2937",
+                          fontWeight: "500",
+                          textDecoration: "none",
+                        }}
+                      >
+                        questrealestate.ae
+                      </Link>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
 
@@ -1042,13 +1146,11 @@ const AdminPropertyPDF = ({
               <View
                 style={{
                   width: 270,
-                  height: 240,
+                  height: 100,
                   // backgroundColor: "rgba(255, 255, 255, 0.95)",
-                  borderRadius: 16,
-                  padding: 24,
+                  padding: 15,
+                  paddingBottom: 10,
                   position: "relative",
-
-                  paddingTop: 15,
                 }}
               >
                 <Image
@@ -1058,6 +1160,7 @@ const AdminPropertyPDF = ({
                     top: 0,
                     left: 0,
                     width: "100%",
+                    borderRadius: 18,
                     height: "100%",
                   }}
                 />
@@ -1065,23 +1168,8 @@ const AdminPropertyPDF = ({
                 <View
                   style={{
                     alignItems: "center",
-                    marginBottom: 20,
                   }}
                 >
-                  <Image
-                    src="/images/questBloomTransparentSmall.png"
-                    style={{
-                      borderRadius: 30,
-                      width: 60,
-                      height: 75,
-                      borderRadius: 30,
-                      backgroundColor: "#e5e7eb",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 12,
-                    }}
-                  ></Image>
-
                   <Text
                     style={{
                       fontSize: 15,
@@ -1106,9 +1194,8 @@ const AdminPropertyPDF = ({
                   {/* Verified badge */}
                   <View
                     style={{
-                      backgroundColor: "#dbeafe",
                       paddingHorizontal: 12,
-                      paddingVertical: 4,
+                      paddingVertical: 2,
                       borderRadius: 12,
                       flexDirection: "row",
                       alignItems: "center",
@@ -1138,7 +1225,7 @@ const AdminPropertyPDF = ({
                 </View>
 
                 {/* Contact details */}
-                <View>
+                {/* <View>
                   <View
                     style={{
                       flexDirection: "row",
@@ -1207,7 +1294,7 @@ const AdminPropertyPDF = ({
                       questrealestate.ae
                     </Link>
                   </View>
-                </View>
+                </View> */}
               </View>
               {/* Action buttons */}
               <View
@@ -1321,7 +1408,6 @@ const AdminPropertyPDF = ({
           Property Code: {getPropertyCode()}
         </Text>
       </Page>
-
       {/* Page 2 - Property Photos & Details */}
       {/* <Page size={[720, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Property Gallery</Text>
