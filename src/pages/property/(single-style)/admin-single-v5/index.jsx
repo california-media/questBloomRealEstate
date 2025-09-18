@@ -215,13 +215,37 @@ const AdminSingleV5 = () => {
   // Helper function to format price
   const formatPrice = (price) => {
     if (!price) return "Ask for price";
-    return `${Math.round(price).toLocaleString()}`;
+
+    // divide by 100 and fix to 2 decimals
+    let value = (price / 100).toFixed(2);
+
+    // remove .00 if it ends with it
+    if (value.endsWith(".00")) {
+      value = parseInt(value, 10).toString();
+    }
+
+    return Number(value).toLocaleString();
   };
   // Get price display
 
   const getPriceDisplay = () => {
     if (property?.price) {
-      return formatPrice(property.price);
+      const formattedPrice = formatPrice(property.price);
+
+      // Add rent duration suffix if available
+      if (property?.rent_duration) {
+        const durationSuffix = {
+          Monthly: " <small style='font-size: 1rem; margin-top: -15px;'>/ month</small>",
+          Weekly: " <small>/ week</small>",
+          Yearly: " <small>/ year</small>",
+          Daily: " <small>/ day</small>",
+        };
+
+        const suffix = durationSuffix[property.rent_duration] || "";
+        return formattedPrice + suffix;
+      }
+
+      return formattedPrice;
     }
     return "Ask for price";
   };
@@ -230,12 +254,12 @@ const AdminSingleV5 = () => {
   const getPricePerSqftDisplay = () => {
     if (!property?.price || !property?.area) return null;
 
-    const priceAed = property.price;
+    const priceAed = property.price / 100;
     const areaM2 = parseFloat(property.area);
 
     if (areaM2 <= 0) return null;
 
-    const areaSqft = areaM2 * 10.764; // Convert m2 to sqft
+    const areaSqft = areaM2; // Convert m2 to sqft
     const pricePerSqft = priceAed / areaSqft;
 
     return isFinite(pricePerSqft)
@@ -298,7 +322,6 @@ const AdminSingleV5 = () => {
     }
     setIsFavorite(!isFavorite);
   };
-
   return (
     <>
       <MetaData meta={metaInformation} />
@@ -351,9 +374,15 @@ const AdminSingleV5 = () => {
                 <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p20 mb30 overflow-hidden ">
                   <div className="d-flex flex-column justify-content-between">
                     <h5 className="price mb-1 d-lg-none d-block">
-                      {getPriceDisplay() === "Ask for price"
-                        ? "Ask for price"
-                        : "AED " + getPriceDisplay()}
+                      <span
+                      className="d-flex align-items-center"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            getPriceDisplay() === "Ask for price"
+                              ? "Ask for price"
+                              : "AED " + getPriceDisplay(),
+                        }}
+                      />
                     </h5>
                     {(() => {
                       const pricePerSqft = getPricePerSqftDisplay();
@@ -614,9 +643,14 @@ const AdminSingleV5 = () => {
                 </div>
                 <div className="d-flex justify-content-between">
                   <h3 className="price mb-0 ">
-                    {getPriceDisplay() === "Ask for price"
-                      ? "Ask for price"
-                      : "AED " + getPriceDisplay()}
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          getPriceDisplay() === "Ask for price"
+                            ? "Ask for price"
+                            : "AED " + getPriceDisplay(),
+                      }}
+                    />
                   </h3>
                   <div className="single-property-content">
                     <div className="property-action text-lg-end">
@@ -676,7 +710,10 @@ const AdminSingleV5 = () => {
                         className="mr10"
                       />
                       AI Presentation
-                      <i className="fal fa-arrow-right-long" />
+                      <i
+                        className="fal  ms-2 fa-arrow-right-long"
+                        style={{ transform: "rotate(-45deg)" }}
+                      />
                     </button>
                   </div>
                   {showModal && (

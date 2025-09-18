@@ -1,6 +1,6 @@
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -115,6 +115,7 @@ const preset_cities = [
 const ExploreCities = () => {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCities = async () => {
       setLoading(true);
@@ -226,7 +227,17 @@ const ExploreCities = () => {
           cities.map((city, index) => (
             <SwiperSlide key={index}>
               <div className="item">
-                <Link to={`/city-properties/${city.name}`}>
+                <a
+                href="#"
+                className="cursor-pointer"
+                  onClick={() =>
+                    navigate(`/city-properties/${city.name}`, {
+                      state: {
+                        hasRegion: true,
+                      },
+                    })
+                  }
+                >
                   <div className="feature-style2 mb30">
                     <div className="feature-img " style={{ height: "180px" }}>
                       <img
@@ -240,7 +251,7 @@ const ExploreCities = () => {
                       <p className="text fz15">{city.number} Properties</p>
                     </div>
                   </div>
-                </Link>
+                </a>
               </div>
             </SwiperSlide>
           ))

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import adminApi from "@/api/adminApi";
 import { Sidebar, Menu } from "react-pro-sidebar";
 
-// Enum mapping for menu pages to routes (same as in MainMenu)
+// Enum mapping for menu pages to routes
 const SITE_PAGES = {
   Home: "/home",
   Agents: "/agents",
@@ -14,9 +14,11 @@ const SITE_PAGES = {
   Buy: "/buy",
   Rent: "/rent",
   "Contact Us": "/contact",
+  Distress: "/distress",
+  Commercial: "/commercial",
 };
 
-// Reverse mapping for route to menu key (same as in MainMenu)
+// Reverse mapping for route to menu key
 const ROUTE_TO_MENU_KEY = {
   "/home": "home",
   "/off-plan": "listing",
@@ -26,10 +28,12 @@ const ROUTE_TO_MENU_KEY = {
   "/buy": "buy",
   "/listings": "listings",
   "/rent": "rent",
+  "/distress": "distress",
+  "/commercial": "commercial",
 };
 
 const ProSidebarContent = ({ menuItems, error }) => {
-const { pathname } = useLocation();
+  const { pathname } = useLocation();
   const [topMenu, setTopMenu] = useState("home");
   // Set active menu based on current pathname (similar to MainMenu)
   useEffect(() => {

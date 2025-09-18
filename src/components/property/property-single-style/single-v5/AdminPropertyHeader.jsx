@@ -32,9 +32,7 @@ const AdminPropertyHeader = ({ property, loading }) => {
   // Get area display
   const getAreaDisplay = () => {
     if (property?.area && parseFloat(property.area) > 0) {
-      const areaM2 = parseFloat(property.area);
-      // Convert m2 to sqft (1 m2 = 10.764 sqft)
-      return Math.round(areaM2 * 10.764);
+      return Number(property.area).toFixed(2);
     }
     return null;
   };

@@ -84,7 +84,7 @@ export default function ProperteyFiltering({ region }) {
   const [colstyle, setColstyle] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || "");
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
   const routelocation = useLocation();
   const isOffPlan = routelocation.pathname.startsWith("/off-plan");
@@ -95,11 +95,17 @@ export default function ProperteyFiltering({ region }) {
     threshold: 0.1, // trigger when 10% of the loader is visible
   });
   const [filtersReset, setFiltersReset] = useState(false);
+
+  const navLocation = useLocation();
+  const hasFilters = navLocation.state?.hasFilters || false;
+  const hasRegion = navLocation.state?.hasRegion || false;
+
   const resetFilter = () => {
     resetAllFilters();
     setCurrentSortingOption("Newest");
     setListings([]); // Clear existing listings
     setHasMore(true); // Reset hasMore when filters change
+    hasRegion || handleSearchTerm("Dubai");
 
     document.querySelectorAll(".filterInput").forEach(function (element) {
       element.value = null;
@@ -113,16 +119,12 @@ export default function ProperteyFiltering({ region }) {
       element.value = "";
     });
   };
-
-  const navLocation = useLocation();
-  const hasFilters = navLocation.state?.hasFilters || false;
   useEffect(() => {
     if (!hasFilters) {
       resetFilter();
     }
     setFiltersReset(true); ////so that we can avoiding fetching initial data AGAIN because of the rerender caused by the above resetFilter() call
   }, []);
-
   // Filter functions object for components that need access to handlers
   const filterFunctions = {
     handlelistingStatus: handleListingStatus,
@@ -135,7 +137,6 @@ export default function ProperteyFiltering({ region }) {
     handleYearBuild: handleYearBuild,
     handlecategories: handleCategories,
     handlePropertyId: handlePropertyId,
-    handleSearchTerm: handleSearchTerm,
     handleSearchTerm: handleSearchTerm,
     handlePercentagePreHandover: handlePercentagePreHandover,
     priceRange,

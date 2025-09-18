@@ -551,7 +551,7 @@ const SingleV5 = () => {
                   </div>
                 </div>
               </div>
-              {/* {property && contactInfo && (
+              {property && contactInfo && (
                 <PDFViewer style={{ width: "100%", height: "100vh" }}>
                   <OffPlanPropertyPDF
                     property={property}
@@ -560,7 +560,7 @@ const SingleV5 = () => {
                     qbc_copyright={contactInfo?.copyright}
                   />
                 </PDFViewer>
-              )} */}
+              )}
               <div className="ps-widget    mb40 overflow-hidden position-relative">
                 <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
                   Visualisations
@@ -786,7 +786,10 @@ const SingleV5 = () => {
                         className="mr10"
                       />
                       AI Presentation
-                      <i className="fal fa-arrow-right-long" />
+                      <i
+                        className="fal ms-2 fa-arrow-right-long"
+                        style={{ transform: "rotate(-45deg)" }}
+                      />
                     </button>
                   </div>
                   {showModal && (
