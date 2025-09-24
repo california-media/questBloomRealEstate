@@ -930,6 +930,7 @@ const OffPlanPropertyPDF = ({
               height: "100%",
               padding: 40,
               paddingBottom: 30,
+              paddingRight: 30,
             }}
           >
             {/* Left Column - Property Information */}
@@ -1007,20 +1008,16 @@ const OffPlanPropertyPDF = ({
                   left: "-2px",
                 }}
               >
-                <Image
-                  src="/images/Questrealstatewhite.png"
-                  style={{
-                    width: 110,
-                    height: 30,
-                    marginRight: 10,
-                  }}
-                />
                 <View
                   style={{
-                    width: 250,
-                    height: 70,
+                    width: 340,
+                    height: 50,
                     padding: 10,
                     position: "relative",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
                   <Image
@@ -1030,18 +1027,27 @@ const OffPlanPropertyPDF = ({
                       top: 0,
                       left: 0,
                       width: "100%",
-                      borderRadius: 12,
+                      borderRadius: 15,
                       height: "100%",
+                    }}
+                  />
+                  <Image
+                    src="/images/QMC-logo-removebg-preview.png"
+                    style={{
+                      width: 140,
+                      height: 35,
+                      marginRight: 10,
                     }}
                   />
                   {/* Profile section */}
                   <View
                     style={{
                       alignItems: "center",
-                      width: "100%",
-                      padding: 10,
-                      paddingTop:2,
-                      paddingBottom:0,
+                      flex: 1,
+                      paddingLeft: 10,
+                      paddingTop: 2,
+                      paddingBottom: 0,
+                      paddingRight: 0,
                     }}
                   >
                     {/* Contact details */}
@@ -1049,13 +1055,14 @@ const OffPlanPropertyPDF = ({
                       style={{
                         width: "100%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginBottom: 8,
+                        justifyContent: "start",
+                        marginTop: 2,
+                        marginBottom: 5,
+                        gap: 10,
                       }}
                     >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Phone
-                      </Text>
+                      <Icon type={"phone"} color="black" />
+
                       <Link
                         src={`tel:${qbc_phone}`}
                         style={{
@@ -1072,15 +1079,13 @@ const OffPlanPropertyPDF = ({
                     <View
                       style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        gap: 10,
+                        marginBottom: 2,
                         width: "100%",
-
-                        marginBottom: 8,
                       }}
                     >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Email
-                      </Text>
+                      <Icon type={"email"} color="black" />
+
                       <Link
                         src={`mailto:${qbc_email}`}
                         style={{
@@ -1093,31 +1098,6 @@ const OffPlanPropertyPDF = ({
                         {qbc_email}
                       </Link>
                     </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        width: "100%",
-
-                        marginBottom: 8,
-                      }}
-                    >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Website
-                      </Text>
-                      <Link
-                        src="https://questrealestate.ae"
-                        style={{
-                          fontSize: 12,
-                          color: "#1f2937",
-                          fontWeight: "500",
-                          textDecoration: "none",
-                        }}
-                      >
-                        questrealestate.ae
-                      </Link>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -1126,16 +1106,15 @@ const OffPlanPropertyPDF = ({
             {/* Right Column - Contact Form */}
             <View
               style={{
-                width: 270,
+                width: 370,
                 alignSelf: "flex-end",
                 justifyContent: "center",
               }}
             >
-              <View
+              {/* <View
                 style={{
                   width: 270,
                   height: 100,
-                  // backgroundColor: "rgba(255, 255, 255, 0.95)",
                   padding: 15,
                   paddingBottom: 10,
                   position: "relative",
@@ -1152,25 +1131,12 @@ const OffPlanPropertyPDF = ({
                     height: "100%",
                   }}
                 />
-                {/* Profile section */}
                 <View
                   style={{
                     alignItems: "center",
                   }}
                 >
-                  {/* <Image
-                    src="/images/questBloomTransparentSmall.png"
-                    style={{
-                      borderRadius: 30,
-                      width: 60,
-                      height: 70,
-                      borderRadius: 30,
-                      backgroundColor: "#e5e7eb",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 12,
-                    }}
-                  ></Image> */}
+              
 
                   <Text
                     style={{
@@ -1193,7 +1159,6 @@ const OffPlanPropertyPDF = ({
                     United Arab Emirates
                   </Text>
 
-                  {/* Verified badge */}
                   <View
                     style={{
                       paddingHorizontal: 12,
@@ -1226,84 +1191,14 @@ const OffPlanPropertyPDF = ({
                   </View>
                 </View>
 
-                {/* Contact details */}
-                {/* <View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Phone
-                    </Text>
-                    <Link
-                      src={`tel:${qbc_phone}`}
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none", // optional, remove underline
-                      }}
-                    >
-                      {qbc_phone}
-                    </Link>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Email
-                    </Text>
-                    <Link
-                      src={`mailto:${qbc_email}`}
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {qbc_email}
-                    </Link>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Website
-                    </Text>
-                    <Link
-                      src="https://questrealestate.ae"
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none",
-                      }}
-                    >
-                      questrealestate.ae
-                    </Link>
-                  </View>
-                </View> */}
-              </View>
+                
+              </View> */}
               {/* Action buttons */}
               <View
                 style={{
                   flexDirection: "row",
                   marginTop: 10,
-                  width: 270,
+                  width: 370,
                   gap: 8,
                 }}
               >
@@ -1403,6 +1298,79 @@ const OffPlanPropertyPDF = ({
                   />
                   <Icon type={"phone"} color="black" />
                 </Link>
+                {/* Website */}
+                <Link
+                  src={`tel:${qbc_phone}`}
+                  style={{
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 40,
+                    textDecoration: "none",
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <Image
+                    src="/images/world-wide-web.png"
+                    style={{
+                      padding: 2,
+                      width: 18,
+                      height: 18,
+                    }}
+                  />
+                </Link>
+                {/* Verified */}
+                <Link
+                  src={`tel:${qbc_phone}`}
+                  style={{
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 40,
+                    textDecoration: "none",
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
+
+                  <View
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderRadius: 50,
+                      backgroundColor: "#3b82f6",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon type={"tick"} />
+                  </View>
+                </Link>
               </View>
             </View>
           </View>
@@ -1411,6 +1379,46 @@ const OffPlanPropertyPDF = ({
           Property Code: {getPropertyCode()}
         </Text>
       </Page>
+      {/* Page 2 - Property Photos & Details */}
+      {/* <Page size={[920, 540]} style={styles.contentPage}>
+        <Text style={styles.pageTitle}>Property Gallery </Text>
+
+        {property?.architecture && property.architecture.length > 0 ? (
+          <View style={styles.photoGrid}>
+            {property.architecture.map((photo, index) => (
+              <Image key={index} src={photo.url} style={styles.photo} />
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 40,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#6b7280", // grey
+                fontStyle: "italic",
+              }}
+            >
+              No photos available
+            </Text>
+          </View>
+        )}
+
+        <ContactFooter
+          qbc_copyright={qbc_copyright}
+          qbc_email={qbc_email}
+          qbc_phone={qbc_phone}
+        />
+      </Page> */}
+
+      {/* Interior images */}
+
       {property?.interior?.length > 0 && (
         <Page size={[920, 540]}>
           {/* Image grid - 2 columns */}

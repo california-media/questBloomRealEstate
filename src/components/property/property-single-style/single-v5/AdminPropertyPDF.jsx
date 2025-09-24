@@ -944,6 +944,7 @@ const AdminPropertyPDF = ({
               height: "100%",
               padding: 40,
               paddingBottom: 30,
+              paddingRight: 30,
             }}
           >
             {/* Left Column - Property Information */}
@@ -1021,20 +1022,16 @@ const AdminPropertyPDF = ({
                   left: "-2px",
                 }}
               >
-                <Image
-                  src="/images/Questrealstatewhite.png"
-                  style={{
-                    width: 110,
-                    height: 30,
-                    marginRight: 10,
-                  }}
-                />
                 <View
                   style={{
-                    width: 250,
-                    height: 70,
+                    width: 340,
+                    height: 50,
                     padding: 10,
                     position: "relative",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
                   <Image
@@ -1044,18 +1041,27 @@ const AdminPropertyPDF = ({
                       top: 0,
                       left: 0,
                       width: "100%",
-                      borderRadius: 12,
+                      borderRadius: 15,
                       height: "100%",
+                    }}
+                  />
+                  <Image
+                    src="/images/QMC-logo-removebg-preview.png"
+                    style={{
+                      width: 140,
+                      height: 35,
+                      marginRight: 10,
                     }}
                   />
                   {/* Profile section */}
                   <View
                     style={{
                       alignItems: "center",
-                      width: "100%",
-                      padding: 10,
+                      flex: 1,
+                      paddingLeft: 10,
                       paddingTop: 2,
                       paddingBottom: 0,
+                      paddingRight: 0,
                     }}
                   >
                     {/* Contact details */}
@@ -1063,20 +1069,21 @@ const AdminPropertyPDF = ({
                       style={{
                         width: "100%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginBottom: 8,
+                        justifyContent: "start",
+                        marginTop: 2,
+                        marginBottom: 5,
+                        gap: 10,
                       }}
                     >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Phone
-                      </Text>
+                      <Icon type={"phone"} color="black" />
+
                       <Link
                         src={`tel:${qbc_phone}`}
                         style={{
                           fontSize: 12,
                           color: "#1f2937",
                           fontWeight: "500",
-                          textDecoration: "none",
+                          textDecoration: "none", // optional, remove underline
                         }}
                       >
                         {qbc_phone}
@@ -1086,14 +1093,13 @@ const AdminPropertyPDF = ({
                     <View
                       style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        gap: 10,
+                        marginBottom: 2,
                         width: "100%",
-                        marginBottom: 8,
                       }}
                     >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Email
-                      </Text>
+                      <Icon type={"email"} color="black" />
+
                       <Link
                         src={`mailto:${qbc_email}`}
                         style={{
@@ -1106,30 +1112,6 @@ const AdminPropertyPDF = ({
                         {qbc_email}
                       </Link>
                     </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        marginBottom: 8,
-                      }}
-                    >
-                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        Website
-                      </Text>
-                      <Link
-                        src="https://questrealestate.ae"
-                        style={{
-                          fontSize: 12,
-                          color: "#1f2937",
-                          fontWeight: "500",
-                          textDecoration: "none",
-                        }}
-                      >
-                        questrealestate.ae
-                      </Link>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -1138,169 +1120,17 @@ const AdminPropertyPDF = ({
             {/* Right Column - Contact Form */}
             <View
               style={{
-                width: 270,
+                width: 370,
                 alignSelf: "flex-end",
                 justifyContent: "center",
               }}
             >
-              <View
-                style={{
-                  width: 270,
-                  height: 100,
-                  // backgroundColor: "rgba(255, 255, 255, 0.95)",
-                  padding: 15,
-                  paddingBottom: 10,
-                  position: "relative",
-                }}
-              >
-                <Image
-                  src="/images/card.png"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    borderRadius: 18,
-                    height: "100%",
-                  }}
-                />
-                {/* Profile section */}
-                <View
-                  style={{
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: "bold",
-                      color: "#1f2937",
-                      marginBottom: 4,
-                    }}
-                  >
-                    Questbloom Real Estate LLC
-                  </Text>
-
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: "#6b7280",
-                      marginBottom: 13,
-                    }}
-                  >
-                    United Arab Emirates
-                  </Text>
-
-                  {/* Verified badge */}
-                  <View
-                    style={{
-                      paddingHorizontal: 12,
-                      paddingVertical: 2,
-                      borderRadius: 12,
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 14,
-                        height: 14,
-                        borderRadius: 20,
-                        backgroundColor: "#3b82f6",
-                        marginRight: 6,
-                      }}
-                    >
-                      <Icon type={"tick"} />
-                    </View>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        color: "#3b82f6",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Verified
-                    </Text>
-                  </View>
-                </View>
-
-                {/* Contact details */}
-                {/* <View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Phone
-                    </Text>
-                    <Link
-                      src={`tel:${qbc_phone}`}
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {qbc_phone}
-                    </Link>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Email
-                    </Text>
-                    <Link
-                      src={`mailto:${qbc_email}`}
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {qbc_email}
-                    </Link>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                      Website
-                    </Text>
-                    <Link
-                      src="https://questrealestate.ae"
-                      style={{
-                        fontSize: 12,
-                        color: "#1f2937",
-                        fontWeight: "500",
-                        textDecoration: "none",
-                      }}
-                    >
-                      questrealestate.ae
-                    </Link>
-                  </View>
-                </View> */}
-              </View>
               {/* Action buttons */}
               <View
                 style={{
                   flexDirection: "row",
                   marginTop: 10,
+                  width: 370,
                   gap: 8,
                 }}
               >
@@ -1373,7 +1203,7 @@ const AdminPropertyPDF = ({
                   </Text>
                 </Link>
 
-                {/* Phone */}
+                
                 <Link
                   src={`tel:${qbc_phone}`}
                   style={{
@@ -1383,8 +1213,8 @@ const AdminPropertyPDF = ({
                     alignItems: "center",
                     justifyContent: "center",
                     minWidth: 40,
-                    position: "relative",
                     textDecoration: "none",
+                    position: "relative",
                   }}
                 >
                   <Image
@@ -1399,6 +1229,79 @@ const AdminPropertyPDF = ({
                     }}
                   />
                   <Icon type={"phone"} color="black" />
+                </Link>
+                {/* Website */}
+                <Link
+                  src={`tel:${qbc_phone}`}
+                  style={{
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 40,
+                    textDecoration: "none",
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <Image
+                    src="/images/world-wide-web.png"
+                    style={{
+                      padding: 2,
+                      width: 18,
+                      height: 18,
+                    }}
+                  />
+                </Link>
+                {/* Verified */}
+                <Link
+                  src={`tel:${qbc_phone}`}
+                  style={{
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 40,
+                    textDecoration: "none",
+                    position: "relative",
+                  }}
+                >
+                  <Image
+                    src="/images/card.png"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                  />
+
+                  <View
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderRadius: 50,
+                      backgroundColor: "#3b82f6",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon type={"tick"} />
+                  </View>
                 </Link>
               </View>
             </View>
