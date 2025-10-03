@@ -31,8 +31,8 @@ const AdminPropertyHeader = ({ property, loading }) => {
 
   // Get area display
   const getAreaDisplay = () => {
-    if (property?.area && parseFloat(property.area) > 0) {
-      return Number(property.area).toFixed(2);
+    if (property?.area && parseFloat(property?.area) > 0) {
+      return Number(property?.area).toFixed(2);
     }
     return null;
   };
@@ -41,8 +41,8 @@ const AdminPropertyHeader = ({ property, loading }) => {
   const getPropertyStatus = () => {
     if (property?.project_status) {
       return (
-        property.project_status.charAt(0).toUpperCase() +
-        property.project_status.slice(1)
+        property?.project_status?.charAt(0).toUpperCase() +
+        property?.project_status?.slice(1)
       );
     }
     return "Available";

@@ -8,13 +8,13 @@ const AdminOverView = ({ property, prefixedId }) => {
   // Helper function to get bedroom display
   const getBedroomDisplay = () => {
     if (!property?.bedrooms) return "N/A";
-    return `${property.bedrooms} BR`;
+    return `${property?.bedrooms} BR`;
   };
 
   // Helper function to get completion year
   const getYearBuilt = () => {
     if (!property?.year_built) return "Under Construction";
-    const year = property.year_built;
+    const year = property?.year_built;
     const currentYear = new Date().getFullYear();
     return year > currentYear
       ? `${!isOffPlan ? "Est. " : ""} ${year}`
@@ -23,11 +23,11 @@ const AdminOverView = ({ property, prefixedId }) => {
 
   // Helper function to get area in sqft
   const getAreaDisplay = () => {
-    if (!property?.area || parseFloat(property.area) <= 0) {
+    if (!property?.area || parseFloat(property?.area) <= 0) {
       return "N/A";
     }
 
-    const areaM2 = parseFloat(property.area);
+    const areaM2 = parseFloat(property?.area);
     const areaSqft = Math.round(areaM2 * 10.764); // Convert m2 to sqft
     return `${areaSqft.toLocaleString()} sqft`;
   };
@@ -37,7 +37,7 @@ const AdminOverView = ({ property, prefixedId }) => {
     if (!property?.property_type?.name) return "Residential";
 
     // Capitalize first letter of each word
-    return property.property_type.name
+    return property?.property_type?.name
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");

@@ -846,13 +846,13 @@ const OffPlanPropertyPDF = ({
 
   const getMinArea = () => {
     if (!property?.unit_blocks?.[0]) return "No info";
-    const minAreaM2 = property.unit_blocks[0].units_area_from_m2;
+    const minAreaM2 = property?.unit_blocks?.[0]?.units_area_from_m2;
     return minAreaM2 ? Math.round(parseFloat(minAreaM2) * 10.764) : "No info"; // Convert m2 to sqft
   };
 
   const getCompletionYear = () => {
     if (!property?.completion_datetime) return "N/A";
-    return new Date(property.completion_datetime).getFullYear();
+    return new Date(property?.completion_datetime).getFullYear();
   };
 
   const ContactFooter = () => (
@@ -913,8 +913,8 @@ const OffPlanPropertyPDF = ({
   );
 
   const HeroBackgroundImage =
-    property?.architecture && property.architecture.length > 0
-      ? property.architecture[0].url
+    property?.architecture && property?.architecture?.length > 0
+      ? property?.architecture?.[0]?.url
       : "";
   return (
     <Document>
@@ -1383,10 +1383,10 @@ const OffPlanPropertyPDF = ({
       {/* <Page size={[920, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Property Gallery </Text>
 
-        {property?.architecture && property.architecture.length > 0 ? (
+        {property?.architecture && property?.architecture?.length > 0 ? (
           <View style={styles.photoGrid}>
-            {property.architecture.map((photo, index) => (
-              <Image key={index} src={photo.url} style={styles.photo} />
+            {property?.architecture?.map((photo, index) => (
+              <Image key={index} src={photo?.url} style={styles.photo} />
             ))}
           </View>
         ) : (
@@ -1434,7 +1434,7 @@ const OffPlanPropertyPDF = ({
             {/* Left column - single image */}
             <View style={{ flex: 1, height: "100%" }}>
               <Image
-                src={property.interior[0]?.url || ""}
+                src={property?.interior?.[0]?.url || ""}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -1446,7 +1446,7 @@ const OffPlanPropertyPDF = ({
             {/* Right column - two stacked images */}
             <View style={{ flex: 1, height: "100%" }}>
               <Image
-                src={property.interior[1]?.url || ""}
+                src={property?.interior?.[1]?.url || ""}
                 style={{
                   width: "100%",
                   height: "50%",
@@ -1455,7 +1455,7 @@ const OffPlanPropertyPDF = ({
                 }}
               />
               <Image
-                src={property.interior[2]?.url || ""}
+                src={property?.interior?.[2]?.url || ""}
                 style={{
                   width: "100%",
                   height: "50%",
@@ -1748,11 +1748,11 @@ const OffPlanPropertyPDF = ({
 
       {/* Page 8 - Master Plan */}
       {property?.master_plan &&
-        property.master_plan.length > 0 &&
-        property.master_plan.map((image, index) => (
+        property?.master_plan?.length > 0 &&
+        property?.master_plan?.map((image, index) => (
           <Page key={index} size={[920, 540]} style={styles.contentPage}>
             <View style={{ width: "100%", height: "100%" }}>
-              <Image src={image.url} style={styles.masterPlanImage} />
+              <Image src={image?.url} style={styles.masterPlanImage} />
             </View>
             <ContactFooter />
           </Page>
@@ -1769,10 +1769,13 @@ const OffPlanPropertyPDF = ({
           <Text style={styles.pageTitle}>Facilities</Text>
 
           <View style={styles.amenitiesGrid}>
-            {property.facilities.slice(0, 8).map((facility, index) => (
+            {property?.facilities?.slice(0, 8).map((facility, index) => (
               <View key={index} style={styles.amenityCard}>
                 {facility?.image?.url ? (
-                  <Image src={facility.image.url} style={styles.amenityPhoto} />
+                  <Image
+                    src={facility?.image?.url}
+                    style={styles.amenityPhoto}
+                  />
                 ) : (
                   <View
                     style={[
@@ -1789,10 +1792,10 @@ const OffPlanPropertyPDF = ({
                 )}
 
                 <Text style={styles.amenityText}>
-                  {facility.name || "No info"}
+                  {facility?.name || "No info"}
                 </Text>
                 <Text style={styles.amenitySubText}>
-                  {facility.image_source || " "}
+                  {facility?.image_source || " "}
                 </Text>
               </View>
             ))}
@@ -1803,11 +1806,11 @@ const OffPlanPropertyPDF = ({
       )}
 
       {/* Payment Plans Pages - 4 per page (2x2 grid) */}
-      {property?.payment_plans && property.payment_plans.length > 0 && (
+      {property?.payment_plans && property?.payment_plans?.length > 0 && (
         <>
           {/* Calculate number of pages needed (4 plans per page) */}
           {Array.from(
-            { length: Math.ceil(property.payment_plans.length / 4) },
+            { length: Math.ceil(property?.payment_plans?.length / 4) },
             (_, pageIndex) => (
               <Page
                 key={`payment-plans-${pageIndex}`}
@@ -1846,7 +1849,7 @@ const OffPlanPropertyPDF = ({
                       height: "45%",
                     }}
                   >
-                    {property.payment_plans
+                    {property?.payment_plans
                       .slice(pageIndex * 4, pageIndex * 4 + 2)
                       .map((plan, planIndex) => (
                         <View
@@ -1966,7 +1969,7 @@ const OffPlanPropertyPDF = ({
                       ))}
 
                     {/* Fill empty space if only 1 plan in first row */}
-                    {property.payment_plans.slice(
+                    {property?.payment_plans?.slice(
                       pageIndex * 4,
                       pageIndex * 4 + 2
                     ).length < 2 && <View style={{ flex: 1 }} />}
@@ -1980,7 +1983,7 @@ const OffPlanPropertyPDF = ({
                       height: "45%",
                     }}
                   >
-                    {property.payment_plans
+                    {property?.payment_plans
                       .slice(pageIndex * 4 + 2, pageIndex * 4 + 4)
                       .map((plan, planIndex) => (
                         <View
@@ -2102,7 +2105,7 @@ const OffPlanPropertyPDF = ({
                       {
                         length:
                           2 -
-                          property.payment_plans.slice(
+                          property?.payment_plans?.slice(
                             pageIndex * 4 + 2,
                             pageIndex * 4 + 4
                           ).length,
@@ -2123,11 +2126,11 @@ const OffPlanPropertyPDF = ({
       )}
 
       {/* Unit Plans Pages - 3 per page layout */}
-      {property?.unit_blocks && property.unit_blocks.length > 0 && (
+      {property?.unit_blocks && property?.unit_blocks?.length > 0 && (
         <>
           {/* Calculate number of pages needed (3 units per page) */}
           {Array.from(
-            { length: Math.ceil(property.unit_blocks.length / 3) },
+            { length: Math.ceil(property?.unit_blocks?.length / 3) },
             (_, pageIndex) => (
               <Page
                 key={pageIndex}
@@ -2150,7 +2153,7 @@ const OffPlanPropertyPDF = ({
                     flex: 1,
                   }}
                 >
-                  {property.unit_blocks
+                  {property?.unit_blocks
                     .slice(pageIndex * 3, pageIndex * 3 + 3)
                     .map((unit, unitIndex) => (
                       <View
@@ -2169,8 +2172,9 @@ const OffPlanPropertyPDF = ({
                         }}
                       >
                         {/* Unit Plan Image */}
-                        {unit.typical_unit_image_url &&
-                          JSON.parse(unit.typical_unit_image_url)?.[0]?.url && (
+                        {unit?.typical_unit_image_url &&
+                          JSON.parse(unit?.typical_unit_image_url)?.[0]
+                            ?.url && (
                             <View
                               style={{
                                 marginBottom: "15px",
@@ -2181,7 +2185,8 @@ const OffPlanPropertyPDF = ({
                             >
                               <Image
                                 src={
-                                  JSON.parse(unit.typical_unit_image_url)[0].url
+                                  JSON.parse(unit?.typical_unit_image_url)?.[0]
+                                    ?.url
                                 }
                                 style={{
                                   width: "100%",
@@ -2218,7 +2223,7 @@ const OffPlanPropertyPDF = ({
                                 color: "#666",
                               }}
                             >
-                              {unit.unit_type || "Apartments"}
+                              {unit?.unit_type || "Apartments"}
                             </Text>
                           </View>
                           <View
@@ -2293,7 +2298,7 @@ const OffPlanPropertyPDF = ({
                               fontWeight: "bold",
                             }}
                           >
-                            {formatPrice(unit.units_price_from) || "AED 0"}
+                            {formatPrice(unit?.units_price_from) || "AED 0"}
                           </Text>
                           <Text
                             style={{
@@ -2306,7 +2311,7 @@ const OffPlanPropertyPDF = ({
                               fontWeight: "bold",
                             }}
                           >
-                            {formatPrice(unit.units_price_to) || "No info"}
+                            {formatPrice(unit?.units_price_to) || "No info"}
                           </Text>
                         </View>
 
@@ -2326,11 +2331,11 @@ const OffPlanPropertyPDF = ({
                               fontWeight: "bold",
                             }}
                           >
-                            {unit.units_area_from_m2
+                            {unit?.units_area_from_m2
                               ? `${Math.round(
-                                  parseFloat(unit.units_area_from_m2) * 10.764
+                                  parseFloat(unit?.units_area_from_m2) * 10.764
                                 )} sqft / ${Math.round(
-                                  parseFloat(unit.units_area_from_m2)
+                                  parseFloat(unit?.units_area_from_m2)
                                 )} m²`
                               : "No info"}
                           </Text>
@@ -2346,11 +2351,11 @@ const OffPlanPropertyPDF = ({
                               textAlign: "left",
                             }}
                           >
-                            {unit.units_area_to_m2
+                            {unit?.units_area_to_m2
                               ? `${Math.round(
-                                  parseFloat(unit.units_area_to_m2) * 10.764
+                                  parseFloat(unit?.units_area_to_m2) * 10.764
                                 )} sqft / ${Math.round(
-                                  parseFloat(unit.units_area_to_m2)
+                                  parseFloat(unit?.units_area_to_m2)
                                 )} m²`
                               : "No info"}
                           </Text>
@@ -2359,13 +2364,15 @@ const OffPlanPropertyPDF = ({
                     ))}
 
                   {/* Fill empty spaces if less than 3 units on the last page */}
-                  {property.unit_blocks.slice(pageIndex * 3, pageIndex * 3 + 3)
-                    .length < 3 &&
+                  {property?.unit_blocks?.slice(
+                    pageIndex * 3,
+                    pageIndex * 3 + 3
+                  ).length < 3 &&
                     Array.from(
                       {
                         length:
                           3 -
-                          property.unit_blocks.slice(
+                          property?.unit_blocks?.slice(
                             pageIndex * 3,
                             pageIndex * 3 + 3
                           ).length,
@@ -2400,7 +2407,7 @@ const OffPlanPropertyPDF = ({
               <Text style={styles.buildingCompletion}>
                 {building?.Completion_date
                   ? `Completion: ${new Date(
-                      building.Completion_date
+                      building?.Completion_date
                     ).toLocaleDateString()}`
                   : "Completion: TBA"}
               </Text>
@@ -2410,7 +2417,7 @@ const OffPlanPropertyPDF = ({
               {building?.Building_image?.[0]?.url && (
                 <View style={styles.buildingImageContainer}>
                   <Image
-                    src={building.Building_image[0].url}
+                    src={building?.Building_image?.[0]?.url}
                     style={styles.buildingImage}
                   />
                 </View>

@@ -21,12 +21,12 @@ const ProjectDetailsCard = ({ projectData }) => {
 
   // Helper function to get unit types
   const getUnitTypes = (unitBlocks) => {
-    if (!unitBlocks || !unitBlocks.length) return "No info";
+    if (!unitBlocks || !unitBlocks?.length) return "No info";
 
     // Get unique unit types from unit blocks
     const types = [
       ...new Set(
-        unitBlocks.map((unit) => unit.unit_type || unit.normalized_type)
+        unitBlocks.map((unit) => unit?.unit_type || unit?.normalized_type)
       ),
     ];
     return types.join(", ");
@@ -73,31 +73,31 @@ const ProjectDetailsCard = ({ projectData }) => {
   const details = [
     {
       label: "Completion date",
-      value: formatCompletionDate(projectData.completion_datetime),
+      value: formatCompletionDate(projectData?.completion_datetime),
     },
     {
       label: "Status",
-      value: formatStatus(projectData.status || projectData.sale_status),
+      value: formatStatus(projectData?.status || projectData?.sale_status),
     },
     {
       label: "Unit types",
-      value: getUnitTypes(projectData.unit_blocks),
+      value: getUnitTypes(projectData?.unit_blocks),
     },
     {
       label: "Floors",
-      value: getFloorsInfo(projectData.buildings),
+      value: getFloorsInfo(projectData?.buildings),
     },
     {
       label: "Furnishing",
-      value: formatFurnishing(projectData.furnishing),
+      value: formatFurnishing(projectData?.furnishing),
     },
     {
       label: "Service Charge",
-      value: formatServiceCharge(projectData.service_charge),
+      value: formatServiceCharge(projectData?.service_charge),
     },
     {
       label: "Readiness progress",
-      value: formatReadinessProgress(projectData.readiness),
+      value: formatReadinessProgress(projectData?.readiness),
     },
   ];
 

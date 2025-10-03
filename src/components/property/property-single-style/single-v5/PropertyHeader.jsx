@@ -37,9 +37,10 @@ const PropertyHeader = ({ property, loading }) => {
       const areas = property?.unit_blocks
         .filter(
           (block) =>
-            block.units_area_from_m2 && parseFloat(block.units_area_from_m2) > 0
+            block?.units_area_from_m2 &&
+            parseFloat(block?.units_area_from_m2) > 0
         )
-        .map((block) => parseFloat(block.units_area_from_m2));
+        .map((block) => parseFloat(block?.units_area_from_m2));
 
       if (areas.length > 0) {
         const minArea = Math.min(...areas);
@@ -242,7 +243,6 @@ const PropertyHeader = ({ property, loading }) => {
                   </>
                 )}
               </div>
-              
             </>
           )}
         </div>

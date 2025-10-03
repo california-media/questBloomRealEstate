@@ -924,7 +924,7 @@ const AdminPropertyPDF = ({
   );
   const HeroBackgroundImage =
     property?.photos && property?.photos?.length > 0
-      ? `${adminBaseUrl}/api/images${property.photos[0]}?format=jpeg`
+      ? `${adminBaseUrl}/api/images${property?.photos?.[0]}?format=jpeg`
       : "";
   return (
     <Document>
@@ -1203,7 +1203,6 @@ const AdminPropertyPDF = ({
                   </Text>
                 </Link>
 
-                
                 <Link
                   src={`tel:${qbc_phone}`}
                   style={{
@@ -1315,9 +1314,9 @@ const AdminPropertyPDF = ({
       {/* <Page size={[720, 540]} style={styles.contentPage}>
         <Text style={styles.pageTitle}>Property Gallery</Text>
 
-        {property?.photos && property.photos.length > 0 && (
+        {property?.photos && property?.photos?.length > 0 && (
           <View style={styles.photoGrid}>
-            {property.photos.map((photo, index) => (
+            {property?.photos?.map((photo, index) => (
               <Image
                 key={index}
                 src={`${adminBaseUrl}/api/images${photo}?format=jpeg`}
@@ -1353,9 +1352,9 @@ const AdminPropertyPDF = ({
                 alignItems: "center",
               }}
             >
-              {property.photos[0] ? (
+              {property?.photos?.[0] ? (
                 <Image
-                  src={`${adminBaseUrl}/api/images${property.photos[0]}?format=jpeg`}
+                  src={`${adminBaseUrl}/api/images${property?.photos?.[0]}?format=jpeg`}
                   style={{
                     width: "100%",
                     height: "100%",
@@ -1378,9 +1377,9 @@ const AdminPropertyPDF = ({
                   alignItems: "center",
                 }}
               >
-                {property.photos[1] ? (
+                {property?.photos?.[1] ? (
                   <Image
-                    src={`${adminBaseUrl}/api/images${property.photos[1]}?format=jpeg`}
+                    src={`${adminBaseUrl}/api/images${property?.photos?.[1]}?format=jpeg`}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -1400,9 +1399,9 @@ const AdminPropertyPDF = ({
                   alignItems: "center",
                 }}
               >
-                {property.photos[2] ? (
+                {property?.photos?.[2] ? (
                   <Image
-                    src={`${adminBaseUrl}/api/images${property.photos[2]}?format=jpeg`}
+                    src={`${adminBaseUrl}/api/images${property?.photos?.[2]}?format=jpeg`}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -1580,7 +1579,7 @@ const AdminPropertyPDF = ({
                   fontSize: 12,
                 }}
               >
-                {property?.area ? `${property.area} sq ft` : "No info"}
+                {property?.area ? `${property?.area} sq ft` : "No info"}
               </Text>
             </View>
           </View>
@@ -1615,7 +1614,7 @@ const AdminPropertyPDF = ({
                   }}
                 >
                   {property?.balcony_size
-                    ? `${property.balcony_size} sq ft`
+                    ? `${property?.balcony_size} sq ft`
                     : "No info"}
                 </Text>
               </View>
@@ -1796,11 +1795,11 @@ const AdminPropertyPDF = ({
           <Text style={styles.pageTitle}>Amenities & Features</Text>
 
           <View style={styles.amenitiesGrid}>
-            {property.amenities.slice(0, 8).map((amenity, index) => (
+            {property?.amenities?.slice(0, 8).map((amenity, index) => (
               <View key={index} style={styles.amenityCard}>
                 {amenity?.image_url ? (
                   <Image
-                    src={`${adminBaseUrl}/api/images${amenity.image_url}?format=jpeg`}
+                    src={`${adminBaseUrl}/api/images${amenity?.image_url}?format=jpeg`}
                     style={styles.amenityPhoto}
                   />
                 ) : (
@@ -1818,7 +1817,7 @@ const AdminPropertyPDF = ({
                   </View>
                 )}
                 <Text style={styles.amenityText}>
-                  {amenity.title || "No info"}
+                  {amenity?.title || "No info"}
                 </Text>
               </View>
             ))}

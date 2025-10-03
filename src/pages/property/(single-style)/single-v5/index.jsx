@@ -91,7 +91,7 @@ const SingleV5 = () => {
         const response = await adminApi.get(
           "/theme-options/general?keys=hotline,email,copyright"
         );
-        setContactInfo(response.data.data);
+        setContactInfo(response?.data?.data);
       } catch (error) {
         console.error("Error fetching contact info:", error);
       }
@@ -128,7 +128,7 @@ const SingleV5 = () => {
           },
         });
 
-        setMenuItems(response.data || []);
+        setMenuItems(response?.data || []);
         setError(null);
       } catch (err) {
         console.error("Error fetching menu items:", err);
@@ -191,7 +191,7 @@ const SingleV5 = () => {
         return;
       }
       const existingProperty = detailedListings.find(
-        (listing) => listing.id == id
+        (listing) => listing?.id == id
       );
 
       if (existingProperty) {
@@ -212,8 +212,8 @@ const SingleV5 = () => {
                 id,
               },
             });
-        setProperty({ ...response.data, id });
-        setDetailedListings([...detailedListings, { ...response.data, id }]);
+        setProperty({ ...response?.data, id });
+        setDetailedListings([...detailedListings, { ...response?.data, id }]);
       } catch (error) {
         console.error("Failed to fetch property:", error);
         // Handle error appropriately
@@ -243,21 +243,21 @@ const SingleV5 = () => {
 
   // Helper function to get price per sqft display
   const getPricePerSqftDisplay = () => {
-    if (!property?.unit_blocks || property.unit_blocks.length === 0)
+    if (!property?.unit_blocks || property?.unit_blocks?.length === 0)
       return null;
 
-    const validBlocks = property.unit_blocks.filter(
+    const validBlocks = property?.unit_blocks?.filter(
       (block) =>
-        block.units_price_from_aed &&
-        block.units_area_from_m2 &&
-        parseFloat(block.units_area_from_m2) > 0
+        block?.units_price_from_aed &&
+        block?.units_area_from_m2 &&
+        parseFloat(block?.units_area_from_m2) > 0
     );
     if (validBlocks.length === 0) return null;
 
     const minPricePerSqft = Math.min(
       ...validBlocks.map((block) => {
-        const priceAed = block.units_price_from_aed;
-        const areaM2 = parseFloat(block.units_area_from_m2);
+        const priceAed = block?.units_price_from_aed;
+        const areaM2 = parseFloat(block?.units_area_from_m2);
         const areaSqft = areaM2 * 10.764; // Convert m2 to sqft
         return priceAed / areaSqft;
       })
@@ -272,8 +272,8 @@ const SingleV5 = () => {
   const getPriceDisplay = () => {
     if (property?.unit_blocks && property?.unit_blocks.length > 0) {
       const prices = property?.unit_blocks
-        .filter((block) => block.units_price_from_aed)
-        .map((block) => block.units_price_from_aed);
+        .filter((block) => block?.units_price_from_aed)
+        .map((block) => block?.units_price_from_aed);
 
       if (prices.length > 0) {
         const minPrice = Math.min(...prices);
@@ -603,13 +603,13 @@ const SingleV5 = () => {
 
               {/* End .ps-widget */}
               {property?.video_url &&
-                !property.video_url.includes("v=null") && (
+                !property?.video_url?.includes("v=null") && (
                   <div className="ps-widget mb30 p10 overflow-hidden position-relative">
                     <h3 className="title mb20 fs-5 fs-md-3 fs-lg-2">
                       Video onboarding for agents
                     </h3>
                     <div className="row  justify-content-center">
-                      <YoutubeVideoEmbed url={property.video_url} />
+                      <YoutubeVideoEmbed url={property?.video_url} />
                     </div>
                   </div>
                 )}
@@ -644,10 +644,10 @@ const SingleV5 = () => {
                 <div className="row justify-content-center">
                   <div className="col-md-12 rounded">
                     {property?.master_plan?.length > 0 ? (
-                      property.master_plan.map((plan, index) => (
+                      property?.master_plan?.map((plan, index) => (
                         <img
                           key={index}
-                          src={plan.url}
+                          src={plan?.url}
                           alt={`Master Plan ${index + 1}`}
                           className="img-fluid rounded"
                         />

@@ -8,37 +8,37 @@ const AdminPropertyDetails = ({ property, prefixedId }) => {
   // Helper function to get bedroom count
   const getBedroomList = () => {
     if (!property?.bedrooms) return "N/A";
-    return `${property.bedrooms} BR`;
+    return `${property?.bedrooms} BR`;
   };
 
   // Helper function to get completion year
   const getYearBuilt = () => {
     if (!property?.year_built) return "Under Construction";
     const currentYear = new Date().getFullYear();
-    return property.year_built > currentYear
-      ? `${!isOffPlan ? "Est. " : ""}${property.year_built}`
-      : property.year_built.toString();
+    return property?.year_built > currentYear
+      ? `${!isOffPlan ? "Est. " : ""}${property?.year_built}`
+      : property?.year_built?.toString();
   };
 
   // Helper function to get area in sqft
   const getArea = () => {
     if (!property?.area) return "N/A";
-    const areaSqft = Math.round(parseFloat(property.area) * 10.764); // Convert to sqft if needed
+    const areaSqft = Math.round(parseFloat(property?.area) * 10.764); // Convert to sqft if needed
     return `${areaSqft.toLocaleString()} sqft`;
   };
 
   // Helper function to get property type
   const getPropertyType = () => {
     return (
-      (property?.property_type.name || "Residential").charAt(0).toUpperCase() +
-      property?.property_type.name?.slice(1)
+      (property?.property_type?.name || "Residential").charAt(0).toUpperCase() +
+      property?.property_type?.name?.slice(1)
     );
   };
 
   // Helper function to get price
   const getPrice = () => {
     if (!property?.price) return "Ask for price";
-    return `AED ${property.price.toLocaleString()}`;
+    return `AED ${property?.price?.toLocaleString()}`;
   };
 
   const columns = [

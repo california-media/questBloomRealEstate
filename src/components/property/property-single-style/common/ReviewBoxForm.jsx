@@ -38,7 +38,7 @@ const ReviewBoxForm = ({ property, prefixedId, downloadPDF, contactInfo }) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${property.name}_brochure.pdf`;
+      link.download = `${property?.name}_brochure.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

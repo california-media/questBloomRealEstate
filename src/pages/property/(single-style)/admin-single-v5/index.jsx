@@ -230,18 +230,19 @@ const AdminSingleV5 = () => {
 
   const getPriceDisplay = () => {
     if (property?.price) {
-      const formattedPrice = formatPrice(property.price);
+      const formattedPrice = formatPrice(property?.price);
 
       // Add rent duration suffix if available
       if (property?.rent_duration) {
         const durationSuffix = {
-          Monthly: " <small style='font-size: 1rem; margin-top: -15px;'>/ month</small>",
+          Monthly:
+            " <small style='font-size: 1rem; margin-top: -15px;'>/ month</small>",
           Weekly: " <small>/ week</small>",
           Yearly: " <small>/ year</small>",
           Daily: " <small>/ day</small>",
         };
 
-        const suffix = durationSuffix[property.rent_duration] || "";
+        const suffix = durationSuffix[property?.rent_duration] || "";
         return formattedPrice + suffix;
       }
 
@@ -254,8 +255,8 @@ const AdminSingleV5 = () => {
   const getPricePerSqftDisplay = () => {
     if (!property?.price || !property?.area) return null;
 
-    const priceAed = property.price / 100;
-    const areaM2 = parseFloat(property.area);
+    const priceAed = property?.price / 100;
+    const areaM2 = parseFloat(property?.area);
 
     if (areaM2 <= 0) return null;
 
@@ -375,7 +376,7 @@ const AdminSingleV5 = () => {
                   <div className="d-flex flex-column justify-content-between">
                     <h5 className="price mb-1 d-lg-none d-block">
                       <span
-                      className="d-flex align-items-center"
+                        className="d-flex align-items-center"
                         dangerouslySetInnerHTML={{
                           __html:
                             getPriceDisplay() === "Ask for price"

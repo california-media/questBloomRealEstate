@@ -6,11 +6,11 @@ const PropertyDetails = ({ property, prefixedId }) => {
   const isOffPlan = location.pathname.startsWith("/off-plan");
   // Helper function to get comma-separated bedroom list
   const getBedroomList = () => {
-    if (!property?.unit_blocks || property.unit_blocks.length === 0) {
+    if (!property?.unit_blocks || property?.unit_blocks?.length === 0) {
       return "N/A";
     }
     const bedrooms = [];
-    property.unit_blocks.forEach((block) => {
+    property?.unit_blocks?.forEach((block) => {
       const name = block?.name?.toLowerCase() || "";
 
       // Skip studios
@@ -39,7 +39,7 @@ const PropertyDetails = ({ property, prefixedId }) => {
   // Helper function to get completion year
   const getYearBuilt = () => {
     if (!property?.completion_datetime) return "Under Construction";
-    const year = new Date(property.completion_datetime).getFullYear();
+    const year = new Date(property?.completion_datetime).getFullYear();
     const currentYear = new Date().getFullYear();
     return year > currentYear
       ? `${!isOffPlan ? "Est. " : ""} ${year}`
@@ -47,17 +47,17 @@ const PropertyDetails = ({ property, prefixedId }) => {
   };
   // Helper function to get area range in sqft
   const getAreaRange = () => {
-    if (!property?.unit_blocks || property.unit_blocks.length === 0) {
+    if (!property?.unit_blocks || property?.unit_blocks?.length === 0) {
       return "N/A";
     }
 
-    const areas = property.unit_blocks
+    const areas = property?.unit_blocks
       .filter(
         (block) =>
-          block?.units_area_from_m2 && parseFloat(block.units_area_from_m2) > 0
+          block?.units_area_from_m2 && parseFloat(block?.units_area_from_m2) > 0
       )
       .map((block) =>
-        Math.round(parseFloat(block.units_area_from_m2) * 10.764)
+        Math.round(parseFloat(block?.units_area_from_m2) * 10.764)
       ); // Convert m2 to sqft
 
     if (areas.length === 0) return "N/A";
@@ -74,13 +74,13 @@ const PropertyDetails = ({ property, prefixedId }) => {
 
   // Helper function to get all unique property types
   const getPropertyType = () => {
-    if (!property?.unit_blocks || property.unit_blocks.length === 0) {
+    if (!property?.unit_blocks || property?.unit_blocks?.length === 0) {
       return "Residential";
     }
 
     const uniqueTypes = [
       ...new Set(
-        property.unit_blocks
+        property?.unit_blocks
           .map((block) => block?.normalized_type)
           .filter((type) => type) // Remove null/undefined values
       ),
@@ -91,17 +91,17 @@ const PropertyDetails = ({ property, prefixedId }) => {
 
   // Helper function to get price range
   const getPriceRange = () => {
-    if (!property?.unit_blocks || property.unit_blocks.length === 0) {
+    if (!property?.unit_blocks || property?.unit_blocks?.length === 0) {
       return "Ask for price";
     }
 
-    const prices = property.unit_blocks
+    const prices = property?.unit_blocks
       .filter(
         (block) =>
           block?.units_price_from_aed &&
-          parseFloat(block.units_price_from_aed) > 0
+          parseFloat(block?.units_price_from_aed) > 0
       )
-      .map((block) => parseFloat(block.units_price_from_aed));
+      .map((block) => parseFloat(block?.units_price_from_aed));
 
     if (prices.length === 0) return "Ask for price";
 

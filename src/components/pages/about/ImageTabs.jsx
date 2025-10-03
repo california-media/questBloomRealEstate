@@ -22,17 +22,17 @@ const ImageTabs = ({ architecture, lobby, interior }) => {
     {
       id: "architecture",
       label: "Architecture",
-      images: architecture?.map((image) => image.url) || [],
+      images: architecture?.map((image) => image?.url) || [],
     },
     {
       id: "lobby",
       label: "Lobby",
-      images: lobby?.map((image) => image.url) || [],
+      images: lobby?.map((image) => image?.url) || [],
     },
     {
       id: "interior",
       label: "Interior",
-      images: interior?.map((image) => image.url) || [],
+      images: interior?.map((image) => image?.url) || [],
     },
   ].filter((tab) => tab.images.length > 0); // Only show tabs with images
 
