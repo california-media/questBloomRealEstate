@@ -10,7 +10,7 @@ const Footer = () => {
   const footerMenuItems = [
     {
       label: "Privacy",
-      link: "#",
+      link: "/privacy-policy",
     },
     {
       label: "Terms",

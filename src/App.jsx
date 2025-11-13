@@ -46,6 +46,7 @@ import BlogV3 from "./pages/blogs/blog-list-v3";
 import About from "./pages/pages/about";
 import Compare from "./pages/pages/compare";
 import Contact from "./pages/pages/contact";
+import PrivacyPolicy from "./pages/pages/privacy-policy";
 import Faq from "./pages/pages/faq";
 import Invoice from "./pages/pages/invoice";
 import Login from "./pages/pages/login";
@@ -202,6 +203,7 @@ function App() {
 
               <Route path="about" element={<About />} />
               <Route path="contact" element={<Contact />} />
+              <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="compare" element={<Compare />} />
               <Route path="pricing" element={<PricingPlan />} />
               <Route path="faq" element={<Faq />} />
