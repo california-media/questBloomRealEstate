@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ListingStatus from "../../sidebar/ListingStatus";
 // import PropertyType from "../../sidebar/PropertyType";
 // import PriceRange from "../../sidebar/PriceRange";
@@ -6,6 +6,8 @@ import ListingStatus from "../../sidebar/ListingStatus";
 // import Bathroom from "../../sidebar/Bathroom";
 import Select from "react-select";
 import { Search } from "lucide-react";
+import { useDebounce } from "@/hooks/useDebounce";
+import api from "@/api/axios";
 
 const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -51,6 +53,14 @@ const TopFilterBar = ({
   setSearchTerm,
   setModalOpen,
 }) => {
+  // Search suggestions state
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const searchDropdownRef = useRef(null);
+  const ignoreNextFetch = useRef(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
   // Sync local state when filterFunctions.searchTerm changes
   useEffect(() => {
     if (filterFunctions?.searchTerm !== undefined) {
@@ -58,10 +68,76 @@ const TopFilterBar = ({
     }
   }, [filterFunctions?.searchTerm]);
 
+  // Fetch search suggestions
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      console.log("fetching suggestions for:", debouncedSearchTerm);
+      if (!debouncedSearchTerm || debouncedSearchTerm.length < 1) {
+        setSearchSuggestions([]);
+        setShowSuggestions(false);
+        return;
+      }
+      if (ignoreNextFetch.current) {
+        ignoreNextFetch.current = false;
+        return;
+      }
+      setLoadingSuggestions(true);
+      try {
+        const { data } = await api.get("/properties", {
+          params: {
+            search_query: debouncedSearchTerm,
+            country: "United Arab Emirates",
+            per_page: 1000000000,
+            page: 1,
+          },
+        });
+
+        const suggestions =
+          data.items?.map((property) => ({
+            id: property.id,
+            name: property.name || "N/A",
+          })) || [];
+        setSearchSuggestions(suggestions);
+        setShowSuggestions(suggestions.length > 0);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSearchSuggestions([]);
+        setShowSuggestions(false);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
+
+    fetchSuggestions();
+  }, [debouncedSearchTerm]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchDropdownRef.current &&
+        !searchDropdownRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       filterFunctions?.handleSearchTerm(searchTerm);
-    }
+      setShowSuggestions(false);
+    } else if (!showSuggestions) setShowSuggestions(true);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    ignoreNextFetch.current = true;
+    setSearchTerm(suggestion.name);
+    filterFunctions?.handleSearchTerm(suggestion.name);
+    setShowSuggestions(false);
   };
 
   const handleCityChange = (city) => {
@@ -204,6 +280,7 @@ const TopFilterBar = ({
               <li
                 className="list-inline-item position-relative font-bold"
                 style={{ width: "190px" }}
+                ref={searchDropdownRef}
               >
                 <div className="form-style2 position-relative">
                   <Search
@@ -224,11 +301,61 @@ const TopFilterBar = ({
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
+                    onFocus={() =>
+                      searchSuggestions.length > 0 && setShowSuggestions(true)
+                    }
                     style={{
                       padding: "10px 10px 10px 40px",
                       backgroundColor: "white",
                     }}
                   />
+                  {/* Search Suggestions Dropdown */}
+                  {showSuggestions && (
+                    <div
+                      className="position-absolute w-100 bg-white border rounded shadow-sm"
+                      style={{
+                        top: "calc(100% + 5px)",
+                        left: 0,
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                        zIndex: 1000,
+                      }}
+                    >
+                      {loadingSuggestions ? (
+                        <div className="p-3 text-center">
+                          <div
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <ul className="list-unstyled m-0">
+                          {searchSuggestions.map((suggestion) => (
+                            <li
+                              key={suggestion.id}
+                              className="px-3 py-2 cursor-pointer"
+                              style={{
+                                cursor: "pointer",
+                                borderBottom: "1px solid #f0f0f0",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor =
+                                  "#f7f7f7";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = "white";
+                              }}
+                              onClick={() => handleSuggestionClick(suggestion)}
+                            >
+                              {suggestion.name}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
                 </div>
               </li>
 

@@ -1,12 +1,14 @@
 import DropdownSelect from "@/components/common/DropdownSelect";
 import DropdownSelectLocation from "@/components/common/DropdownSelectLocation";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "react-input-range/lib/css/index.css";
 import { useNavigate } from "react-router-dom";
 import SelectDropdown from "./SelectDropdown";
 import PercentagePreHandover from "@/components/common/PercentagePreHandover";
 import PriceRange from "@/components/common/advance-filter-two/PriceRange";
 import { Search } from "lucide-react";
+import { useDebounce } from "@/hooks/useDebounce";
+import api from "@/api/axios";
 const HeroContent = ({
   propertyTypes,
   locationOptions,
@@ -22,6 +24,87 @@ const HeroContent = ({
   let propertyTypesStrings = propertyTypes.map((item) => item.value);
   const navigate = useNavigate();
 
+  // Search suggestions state
+  const [heroSearchTerm, setHeroSearchTerm] = useState("");
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const searchDropdownRef = useRef(null);
+  const debouncedSearchTerm = useDebounce(heroSearchTerm, 300);
+  const ignoreNextFetch = useRef(false);
+
+  // Fetch search suggestions
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!debouncedSearchTerm || debouncedSearchTerm.length < 1) {
+        setSearchSuggestions([]);
+        setShowSuggestions(false);
+        return;
+      }
+      if (ignoreNextFetch.current) {
+        ignoreNextFetch.current = false;
+        return;
+      }
+      setLoadingSuggestions(true);
+      try {
+        const { data } = await api.get("/properties", {
+          params: {
+            search_query: debouncedSearchTerm,
+            country: "United Arab Emirates",
+            per_page: 1000000000,
+            page: 1,
+          },
+        });
+
+        const suggestions =
+          data.items?.map((property) => ({
+            id: property.id,
+            name: property.name || "N/A",
+          })) || [];
+        setSearchSuggestions(suggestions);
+        setShowSuggestions(suggestions.length > 0);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSearchSuggestions([]);
+        setShowSuggestions(false);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
+
+    fetchSuggestions();
+  }, [debouncedSearchTerm]);
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchDropdownRef.current &&
+        !searchDropdownRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      filterFunctions?.handleSearchTerm(searchTerm);
+      setShowSuggestions(false);
+    } else if (!showSuggestions) setShowSuggestions(true);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    ignoreNextFetch.current = true;
+
+    console.log(suggestion.name, "handleSuggestionClick");
+
+    setHeroSearchTerm(suggestion.name);
+    filterFunctions?.handleSearchTerm(suggestion.name);
+    setShowSuggestions(false);
+  };
+
   const buyRentTabs = [
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
@@ -34,7 +117,6 @@ const HeroContent = ({
   ];
 
   const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
-
   return (
     <div className="advance-style3 mb30 mx-auto animate-up-2 ">
       <div
@@ -81,8 +163,8 @@ const HeroContent = ({
                     </div>
                   </div>
                 </div> */}
-                <div className="col-4">
-                  <div className="  d-flex  h-100 w-100 ">
+                <div className="col-4" ref={searchDropdownRef}>
+                  <div className="  d-flex  h-100 w-100 position-relative">
                     <div
                       style={{
                         backgroundColor: "#f7f7f7",
@@ -106,8 +188,13 @@ const HeroContent = ({
                         type="text"
                         className=" w-100 border-none bg-transparent"
                         placeholder="Project Search"
-                        onInput={(e) =>
-                          filterFunctions?.handleSearchTerm(e.target.value)
+                        value={heroSearchTerm}
+                        autoComplete="off"
+                        onChange={(e) => setHeroSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onFocus={() =>
+                          searchSuggestions.length > 0 &&
+                          setShowSuggestions(true)
                         }
                         style={{
                           padding: "13px 15px",
@@ -115,6 +202,64 @@ const HeroContent = ({
                         }}
                       />
                     </div>
+                    {/* Search Suggestions Dropdown */}
+                    {showSuggestions && (
+                      <div
+                        className="position-absolute w-100 bg-white border rounded shadow"
+                        style={{
+                          top: "calc(100% + 5px)",
+                          left: 0,
+                          maxHeight: "300px",
+                          overflowY: "auto",
+                          zIndex: 1000,
+                        }}
+                      >
+                        {loadingSuggestions ? (
+                          <div className="p-3 text-center">
+                            <div
+                              className="spinner-border spinner-border-sm"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <ul className="list-unstyled m-0">
+                            {searchSuggestions.map((suggestion) => (
+                              <li
+                                key={suggestion.id}
+                                className="px-3 py-2"
+                                style={{
+                                  cursor: "pointer",
+                                  borderBottom: "1px solid #f0f0f0",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.backgroundColor =
+                                    "#f7f7f7";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor =
+                                    "white";
+                                }}
+                                onMouseDown={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  console.log(
+                                    "Suggestion clicked:",
+                                    suggestion.name
+                                  );
+                                  handleSuggestionClick(suggestion);
+                                }}
+                              >
+                                {suggestion.name}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
                 {/* Location Input */}
@@ -332,7 +477,7 @@ const HeroContent = ({
 
                 {/* Search - full width on mobile */}
                 <div className="col-12">
-                  <div className="  d-flex  h-100 w-100 ">
+                  <div className="  d-flex  h-100 w-100 position-relative">
                     <div
                       style={{
                         backgroundColor: "#f7f7f7",
@@ -352,12 +497,15 @@ const HeroContent = ({
                         }}
                       />
                       <input
-                        id="home-page-hero-search"
+                        id="home-page-hero-search-mobile"
                         type="text"
                         className=" w-100 border-none bg-transparent"
                         placeholder="Project Search"
-                        onInput={(e) =>
-                          filterFunctions?.handleSearchTerm(e.target.value)
+                        value={heroSearchTerm}
+                        onChange={(e) => setHeroSearchTerm(e.target.value)}
+                        onFocus={() =>
+                          searchSuggestions.length > 0 &&
+                          setShowSuggestions(true)
                         }
                         style={{
                           padding: "13px 15px",
@@ -365,6 +513,64 @@ const HeroContent = ({
                         }}
                       />
                     </div>
+                    {/* Search Suggestions Dropdown */}
+                    {showSuggestions && (
+                      <div
+                        className="position-absolute w-100 bg-white border rounded shadow"
+                        style={{
+                          top: "calc(100% + 5px)",
+                          left: 0,
+                          maxHeight: "300px",
+                          overflowY: "auto",
+                          zIndex: 1000,
+                        }}
+                      >
+                        {loadingSuggestions ? (
+                          <div className="p-3 text-center">
+                            <div
+                              className="spinner-border spinner-border-sm"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <ul className="list-unstyled m-0">
+                            {searchSuggestions.map((suggestion) => (
+                              <li
+                                key={suggestion.id}
+                                className="px-3 py-2"
+                                style={{
+                                  cursor: "pointer",
+                                  borderBottom: "1px solid #f0f0f0",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.backgroundColor =
+                                    "#f7f7f7";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor =
+                                    "white";
+                                }}
+                                onMouseDown={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  console.log(
+                                    "Suggestion clicked (mobile):",
+                                    suggestion.name
+                                  );
+                                  handleSuggestionClick(suggestion);
+                                }}
+                              >
+                                {suggestion.name}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
                 {/* Location Input - full width on mobile */}
