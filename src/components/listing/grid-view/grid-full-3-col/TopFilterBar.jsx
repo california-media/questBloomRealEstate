@@ -59,6 +59,7 @@ const TopFilterBar = ({
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const searchDropdownRef = useRef(null);
   const ignoreNextFetch = useRef(false);
+  const ignoreInitialFetch = useRef(true);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   // Sync local state when filterFunctions.searchTerm changes
@@ -78,9 +79,15 @@ const TopFilterBar = ({
         return;
       }
       if (ignoreNextFetch.current) {
+        console.log("ignoring fetch for:", debouncedSearchTerm);
         ignoreNextFetch.current = false;
         return;
+      } else if (ignoreInitialFetch.current) {
+        console.log("ignoring initial fetch for:", debouncedSearchTerm);
+        ignoreInitialFetch.current = false;
+        return;
       }
+      console.log("still fetching");
       setLoadingSuggestions(true);
       try {
         const { data } = await api.get("/properties", {
