@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import ListingSidebar from "../../sidebar";
 import AdvanceFilterModal from "@/components/common/advance-filter-two";
 import TopFilterBar from "./TopFilterBar";
@@ -99,8 +99,10 @@ export default function ProperteyFiltering({ region }) {
   const navLocation = useLocation();
   const hasFilters = navLocation.state?.hasFilters || false;
   const hasRegion = navLocation.state?.hasRegion || false;
+  const initialSearchSync = useRef(true);
 
   const resetFilter = () => {
+    console.log("Resetting all filters to default");
     resetAllFilters();
     setCurrentSortingOption("Newest");
     setListings([]); // Clear existing listings
@@ -296,7 +298,14 @@ export default function ProperteyFiltering({ region }) {
       }
     }
     //search bar back to current state
-    setLocalSearchTerm(searchTerm);
+    if (initialSearchSync.current) {
+      initialSearchSync.current = false;
+      console.log(
+        "Applying Initial search term from store to local state:",
+        localSearchTerm
+      );
+      setLocalSearchTerm(searchTerm);
+    }
     fetchInitialData();
   }, [
     searchTerm,
@@ -352,7 +361,7 @@ export default function ProperteyFiltering({ region }) {
   }, [inView, initialLoading]);
   return (
     <section className="pt0 pb90 bgc-f7">
-      <div className="container">
+      <div className="container" >
         {/* start mobile filter sidebar */}
         <div
           className="offcanvas offcanvas-start p-0"
