@@ -624,6 +624,10 @@ const HeroContent = ({
                         placeholder="Project Search"
                         value={heroSearchTerm}
                         onChange={(e) => setHeroSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onInput={(e) =>
+                          filterFunctions?.handleSearchTerm(e.target.value)
+                        }
                         onFocus={() =>
                           searchSuggestions.length > 0 &&
                           setShowSuggestions(true)
@@ -637,7 +641,7 @@ const HeroContent = ({
                     {/* Search Suggestions Dropdown */}
                     {showSuggestions && (
                       <div
-                        className="position-absolute w-100 bg-white border rounded shadow"
+                        className="position-absolute w-100 bg-white border rounded shadow-sm"
                         style={{
                           top: "calc(100% + 5px)",
                           left: 0,
@@ -658,37 +662,115 @@ const HeroContent = ({
                             </div>
                           </div>
                         ) : (
-                          <ul className="list-unstyled m-0">
-                            {searchSuggestions.map((suggestion) => (
-                              <li
-                                key={suggestion.id}
-                                className="px-3 py-2"
-                                style={{
-                                  cursor: "pointer",
-                                  borderBottom: "1px solid #f0f0f0",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.backgroundColor =
-                                    "#f7f7f7";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.backgroundColor =
-                                    "white";
-                                }}
-                                onMouseDown={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  console.log(
-                                    "Suggestion clicked (mobile):",
-                                    suggestion.name
-                                  );
-                                  handleSuggestionClick(suggestion);
-                                }}
-                              >
-                                {suggestion.name}
-                              </li>
-                            ))}
-                          </ul>
+                          <>
+                            {searchSuggestions.length > 0 && (
+                              <>
+                                <div
+                                  className="px-3 py-2 fw-bold text-muted"
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    backgroundColor: "#f9f9f9",
+                                  }}
+                                >
+                                  Projects
+                                </div>
+                                <ul
+                                  className="list-unstyled m-0"
+                                  style={{
+                                    borderBottom: "1px solid #e0e0e0",
+                                  }}
+                                >
+                                  {searchSuggestions.map((suggestion) => (
+                                    <li
+                                      key={suggestion.id}
+                                      className="px-3 py-2 cursor-pointer d-flex align-items-center gap-2"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "#f7f7f7";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "white";
+                                      }}
+                                      onMouseDown={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        console.log(
+                                          "Suggestion clicked:",
+                                          suggestion.name
+                                        );
+                                        handleSuggestionClick(suggestion);
+                                      }}
+                                    >
+                                      <i
+                                        className="fas fa-building"
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#797631",
+                                        }}
+                                      />
+                                      {suggestion.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
+                            {locationSuggestions.length > 0 && (
+                              <>
+                                <div
+                                  className="px-3 py-2 fw-bold text-muted"
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    backgroundColor: "#f9f9f9",
+                                  }}
+                                >
+                                  Districts
+                                </div>
+                                <ul className="list-unstyled m-0">
+                                  {locationSuggestions.map((suggestion) => (
+                                    <li
+                                      key={suggestion.id}
+                                      className="px-3 py-2 cursor-pointer d-flex align-items-center gap-2"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "#f7f7f7";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "white";
+                                      }}
+                                      onMouseDown={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        console.log(
+                                          "Suggestion clicked:",
+                                          suggestion.name
+                                        );
+                                        handleLocationSuggestionClick(
+                                          suggestion
+                                        );
+                                      }}
+                                    >
+                                      <i
+                                        className="fas fa-map-pin"
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#797631",
+                                        }}
+                                      />
+                                      {suggestion.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
+                          </>
                         )}
                       </div>
                     )}
