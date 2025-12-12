@@ -25,6 +25,8 @@ const HeroContent = ({
   const navigate = useNavigate();
 
   // Search suggestions state
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
+
   const [heroSearchTerm, setHeroSearchTerm] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -36,36 +38,66 @@ const HeroContent = ({
   // Fetch search suggestions
   useEffect(() => {
     const fetchSuggestions = async () => {
+      console.log("fetching suggestions for:", debouncedSearchTerm);
       if (!debouncedSearchTerm || debouncedSearchTerm.length < 1) {
         setSearchSuggestions([]);
+        setLocationSuggestions([]);
         setShowSuggestions(false);
         return;
       }
       if (ignoreNextFetch.current) {
+        console.log("ignoring fetch for:", debouncedSearchTerm);
         ignoreNextFetch.current = false;
         return;
       }
       setLoadingSuggestions(true);
       try {
-        const { data } = await api.get("/properties", {
+        const { data: propertyData } = await api.get("/properties", {
           params: {
             search_query: debouncedSearchTerm,
             country: "United Arab Emirates",
-            per_page: 1000000000,
+            per_page: 4,
             page: 1,
           },
         });
+        const nonUaeIds = [
+          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150,
+          151, 152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171,
+          172, 173, 175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197,
+          203, 206, 207, 227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256,
+          274, 275,
+        ];
+        const { data: locationData } = await api.get("/areas", {
+          params: {
+            search: debouncedSearchTerm,
+            country: "United Arab Emirates",
+          },
+        });
+        const filteredAreas = locationData.filter(
+          (area) => !nonUaeIds.includes(Number(area.id))
+        );
+        const locationDataSuggestions =
+          filteredAreas.slice(0, 4).map((area) => ({
+            id: area.id,
+            name: area.name || "N/A",
+          })) || [];
 
-        const suggestions =
-          data.items?.map((property) => ({
+        const propertyDataSuggestions =
+          propertyData.items?.map((property) => ({
             id: property.id,
             name: property.name || "N/A",
           })) || [];
-        setSearchSuggestions(suggestions);
-        setShowSuggestions(suggestions.length > 0);
+        setSearchSuggestions(propertyDataSuggestions);
+        setLocationSuggestions(locationDataSuggestions);
+
+        setShowSuggestions(
+          propertyDataSuggestions.length > 0 ||
+            locationDataSuggestions.length > 0
+        );
       } catch (error) {
         console.error("Error fetching suggestions:", error);
         setSearchSuggestions([]);
+        setLocationSuggestions([]);
         setShowSuggestions(false);
       } finally {
         setLoadingSuggestions(false);
@@ -105,6 +137,15 @@ const HeroContent = ({
     setShowSuggestions(false);
   };
 
+  const handleLocationSuggestionClick = (suggestion) => {
+    ignoreNextFetch.current = true;
+    // setSearchTerm(suggestion.name);
+    console.log("location suggestion clicked:", suggestion.name);
+    filterFunctions?.handlelocation(suggestion.id);
+
+    setShowSuggestions(false);
+  };
+
   const buyRentTabs = [
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
@@ -115,7 +156,6 @@ const HeroContent = ({
     { id: "ready", label: "Ready" },
     { id: "off", label: "Off-Plan" },
   ];
-
   const rentDurationOptions = ["Yearly", "Monthly", "Weekly", "Daily"];
   return (
     <div className="advance-style3 mb30 mx-auto animate-up-2 ">
@@ -192,6 +232,9 @@ const HeroContent = ({
                         autoComplete="off"
                         onChange={(e) => setHeroSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
+                        onInput={(e) =>
+                          filterFunctions?.handleSearchTerm(e.target.value)
+                        }
                         onFocus={() =>
                           searchSuggestions.length > 0 &&
                           setShowSuggestions(true)
@@ -205,7 +248,7 @@ const HeroContent = ({
                     {/* Search Suggestions Dropdown */}
                     {showSuggestions && (
                       <div
-                        className="position-absolute w-100 bg-white border rounded shadow"
+                        className="position-absolute w-100 bg-white border rounded shadow-sm"
                         style={{
                           top: "calc(100% + 5px)",
                           left: 0,
@@ -226,37 +269,115 @@ const HeroContent = ({
                             </div>
                           </div>
                         ) : (
-                          <ul className="list-unstyled m-0">
-                            {searchSuggestions.map((suggestion) => (
-                              <li
-                                key={suggestion.id}
-                                className="px-3 py-2"
-                                style={{
-                                  cursor: "pointer",
-                                  borderBottom: "1px solid #f0f0f0",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.backgroundColor =
-                                    "#f7f7f7";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.backgroundColor =
-                                    "white";
-                                }}
-                                onMouseDown={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  console.log(
-                                    "Suggestion clicked:",
-                                    suggestion.name
-                                  );
-                                  handleSuggestionClick(suggestion);
-                                }}
-                              >
-                                {suggestion.name}
-                              </li>
-                            ))}
-                          </ul>
+                          <>
+                            {searchSuggestions.length > 0 && (
+                              <>
+                                <div
+                                  className="px-3 py-2 fw-bold text-muted"
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    backgroundColor: "#f9f9f9",
+                                  }}
+                                >
+                                  Projects
+                                </div>
+                                <ul
+                                  className="list-unstyled m-0"
+                                  style={{
+                                    borderBottom: "1px solid #e0e0e0",
+                                  }}
+                                >
+                                  {searchSuggestions.map((suggestion) => (
+                                    <li
+                                      key={suggestion.id}
+                                      className="px-3 py-2 cursor-pointer d-flex align-items-center gap-2"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "#f7f7f7";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "white";
+                                      }}
+                                      onMouseDown={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        console.log(
+                                          "Suggestion clicked:",
+                                          suggestion.name
+                                        );
+                                        handleSuggestionClick(suggestion);
+                                      }}
+                                    >
+                                      <i
+                                        className="fas fa-building"
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#797631",
+                                        }}
+                                      />
+                                      {suggestion.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
+                            {locationSuggestions.length > 0 && (
+                              <>
+                                <div
+                                  className="px-3 py-2 fw-bold text-muted"
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    backgroundColor: "#f9f9f9",
+                                  }}
+                                >
+                                  Districts
+                                </div>
+                                <ul className="list-unstyled m-0">
+                                  {locationSuggestions.map((suggestion) => (
+                                    <li
+                                      key={suggestion.id}
+                                      className="px-3 py-2 cursor-pointer d-flex align-items-center gap-2"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "#f7f7f7";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "white";
+                                      }}
+                                      onMouseDown={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        console.log(
+                                          "Suggestion clicked:",
+                                          suggestion.name
+                                        );
+                                        handleLocationSuggestionClick(
+                                          suggestion
+                                        );
+                                      }}
+                                    >
+                                      <i
+                                        className="fas fa-map-pin"
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#797631",
+                                        }}
+                                      />
+                                      {suggestion.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
+                          </>
                         )}
                       </div>
                     )}

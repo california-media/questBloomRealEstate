@@ -170,6 +170,7 @@ const Hero = ({ HeroTitle }) => {
     setDataFetched,
     setSaleStatuses,
   };
+
   useEffect(() => {
     async function fetchOptions() {
       // Must refetch this since the format in which they are fetched on home page is different
@@ -181,10 +182,11 @@ const Hero = ({ HeroTitle }) => {
 
         // Create an array of promises with error handling for each one
         const nonUaeIds = [
-          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150, 151,
-          152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171, 172, 173,
-          175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197, 203, 206, 207,
-          227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256, 274, 275
+          94, 124, 125, 127, 128, 129, 130, 131, 132, 133, 143, 148, 149, 150,
+          151, 152, 153, 154, 158, 159, 160, 161, 162, 164, 167, 168, 170, 171,
+          172, 173, 175, 178, 181, 182, 185, 186, 187, 188, 189, 190, 196, 197,
+          203, 206, 207, 227, 231, 233, 236, 237, 239, 242, 244, 249, 253, 256,
+          274, 275,
         ];
 
         const promises = [
@@ -205,7 +207,9 @@ const Hero = ({ HeroTitle }) => {
             .get("/areas")
             .then((res) => {
               if (res && Array.isArray(res.data)) {
-          res.data = res.data.filter((area) => !nonUaeIds.includes(area.id));
+                res.data = res.data.filter(
+                  (area) => !nonUaeIds.includes(area.id)
+                );
               }
               return res;
             })
@@ -309,7 +313,7 @@ const Hero = ({ HeroTitle }) => {
   ]);
   return (
     <>
-      <div className="inner-banner-style3 " style={{marginBottom: "-8px"}}>
+      <div className="inner-banner-style3 " style={{ marginBottom: "-8px" }}>
         <div className=" d-flex justify-content-center">
           <h2
             className="mb30 hero-title  animate-up-1"
